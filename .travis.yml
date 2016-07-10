@@ -8,6 +8,8 @@ notifications:
     email:
         on_success: never
         on_failure: always
+before_install:
+    - npm install -g jshint jscs mocha
 before_script:
     - npm prune
 script:
