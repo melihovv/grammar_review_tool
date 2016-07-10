@@ -1,10 +1,10 @@
 {
   "name": "grammar_review_tool",
-  "version": "0.0.1",
-  "description": "Tool for review formal grammars in Bison/Lemon format.",
+  "version": "0.1.1",
+  "description": "Tool for review formal grammars in Lemon format.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha src/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,9 @@
   "homepage": "https://github.com/melihovv/grammar_review_tool",
   "devDependencies": {
     "commitizen": "^2.8.2",
-    "cz-conventional-changelog": "^1.1.6"
+    "cz-conventional-changelog": "^1.1.6",
+    "mocha": "^2.5.3",
+    "must": "^0.13.1"
   },
   "config": {
     "commitizen": {
