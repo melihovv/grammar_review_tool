@@ -1,10 +1,10 @@
 {
   "name": "grammar_review_tool",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "description": "Tool for review formal grammars in Lemon format.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/*.spec.js"
+    "test": "mocha --opts ./mocha.opts src/*.spec.js"
   },
   "repository": {
     "type": "git",
