@@ -4,8 +4,11 @@
   "description": "Tool for review formal grammars in Lemon format.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run unit-test && npm run lint",
+    "test": "npm run cover && npm run check-coverage && npm run lint",
     "unit-test": "mocha --opts ./mocha.opts src/*.spec.js",
+    "cover": "istanbul cover -x *.spec.js node_modules/mocha/bin/_mocha -- --opts ./mocha.opts src/*.spec.js",
+    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "report-coverage": "cat ./coverage/lcov.info | node_modules/bin/codecov",
     "lint": "jshint . && jscs -c .jscs.js ."
   },
   "repository": {
@@ -23,9 +26,11 @@
   },
   "homepage": "https://github.com/melihovv/grammar_review_tool",
   "devDependencies": {
+    "codecov.io": "^0.1.6",
     "commitizen": "^2.8.2",
     "cz-conventional-changelog": "^1.1.6",
     "ghooks": "^1.3.2",
+    "istanbul": "^0.4.4",
     "mocha": "^2.5.3",
     "must": "^0.13.1"
   },

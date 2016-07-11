@@ -9,8 +9,10 @@ notifications:
         on_success: never
         on_failure: always
 before_install:
-    - npm install -g jshint jscs mocha
+    - npm install -g jshint jscs mocha istanbul
 before_script:
     - npm prune
 script:
     - npm test
+after_success:
+    - npm run report-coverage
