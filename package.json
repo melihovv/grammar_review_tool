@@ -2,14 +2,15 @@
   "name": "grammar_review_tool",
   "version": "0.0.1",
   "description": "Tool for review formal grammars in Lemon format.",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "npm run cover && npm run check-coverage && npm run lint",
-    "unit-test": "mocha --opts ./mocha.opts src/*.spec.js",
-    "cover": "istanbul cover -x *.spec.js node_modules/mocha/bin/_mocha -- --opts ./mocha.opts src/*.spec.js",
-    "check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "test": "mocha --opts ./mocha.opts src/index.spec.js",
+    "cover": "nyc npm t",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "cat ./coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
-    "lint": "jshint . && jscs -c .jscs.js ."
+    "lint": "jshint . && jscs -c .jscs.js .",
+    "prebuild": "node_modules/.bin/rimraf dist",
+    "build": "node_modules/.bin/babel --out-dir dist --ignore *.spec.js src"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "keywords": [
     "grammar",
+    "lemon",
     "review"
   ],
   "author": "Alexander Melihov <amelihovv@ya.ru>",
@@ -26,20 +28,31 @@
   },
   "homepage": "https://github.com/melihovv/grammar_review_tool",
   "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.11.0",
+    "babel-register": "^6.9.0",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.8.2",
     "cz-conventional-changelog": "^1.1.6",
     "ghooks": "^1.3.2",
-    "istanbul": "^0.4.4",
     "mocha": "^2.5.3",
-    "must": "^0.13.1"
+    "must": "^0.13.1",
+    "nyc": "^6.6.1",
+    "rimraf": "^2.5.3"
   },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run cover && npm run check-coverage && npm run-lint"
     }
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
   }
 }

@@ -4,7 +4,8 @@ module.exports =
         'node_modules/**',
         'coverage/**',
         'docs/**',
-        'metrics/**'
+        'metrics/**',
+        'dist/**',
     ],
     requireSpaceAfterKeywords: ['if', 'else', 'for', 'while', 'do', 'switch', 'return', 'try', 'catch'],
     requireSpaceBeforeBlockStatements: true,
