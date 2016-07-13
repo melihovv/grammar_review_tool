@@ -1,6 +1,6 @@
 {
   "name": "grammar_review_tool",
-  "version": "0.0.1",
+  "version": "0.0.0-semantically-released",
   "description": "Tool for review formal grammars in Lemon format.",
   "private": true,
   "scripts": {
@@ -10,7 +10,8 @@
     "report-coverage": "cat ./coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
     "lint": "jshint . && jscs -c .jscs.js .",
     "prebuild": "node_modules/.bin/rimraf dist",
-    "build": "node_modules/.bin/babel --out-dir dist --ignore *.spec.js src"
+    "build": "node_modules/.bin/babel --out-dir dist --ignore *.spec.js src",
+    "semantic-release": "semantic-release pre && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,8 @@
     "mocha": "^2.5.3",
     "must": "^0.13.1",
     "nyc": "^7.0.0",
-    "rimraf": "^2.5.3"
+    "rimraf": "^2.5.3",
+    "semantic-release": "^4.3.5"
   },
   "config": {
     "commitizen": {
