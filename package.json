@@ -41,7 +41,8 @@
     "must": "^0.13.1",
     "nyc": "^7.0.0",
     "rimraf": "^2.5.3",
-    "semantic-release": "^4.3.5"
+    "semantic-release": "^4.3.5",
+    "validate-commit-msg": "^2.6.1"
   },
   "config": {
     "commitizen": {
