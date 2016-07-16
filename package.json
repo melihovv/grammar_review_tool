@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "mocha --opts ./mocha.opts src/*.spec.js",
-    "cover": "nyc --exclude=src/*.spec.js --reporter=lcov npm t",
+    "cover": "nyc --exclude=src/*.spec.js --reporter=lcov --reporter=text npm t",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "cat ./coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
     "lint": "jshint . && jscs -c .jscs.js .",
