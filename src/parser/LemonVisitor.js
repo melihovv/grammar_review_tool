@@ -17,18 +17,18 @@ LemonVisitor.prototype.visitFile = function(ctx) {
 };
 
 
-// Visit a parse tree produced by LemonParser#grammar_rule.
-LemonVisitor.prototype.visitGrammar_rule = function(ctx) {
+// Visit a parse tree produced by LemonParser#grammarRule.
+LemonVisitor.prototype.visitGrammarRule = function(ctx) {
 };
 
 
-// Visit a parse tree produced by LemonParser#left_side.
-LemonVisitor.prototype.visitLeft_side = function(ctx) {
+// Visit a parse tree produced by LemonParser#leftSide.
+LemonVisitor.prototype.visitLeftSide = function(ctx) {
 };
 
 
-// Visit a parse tree produced by LemonParser#right_side.
-LemonVisitor.prototype.visitRight_side = function(ctx) {
+// Visit a parse tree produced by LemonParser#rightSide.
+LemonVisitor.prototype.visitRightSide = function(ctx) {
 };
 
 

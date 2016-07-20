@@ -20,30 +20,30 @@ LemonListener.prototype.exitFile = function(ctx) {
 };
 
 
-// Enter a parse tree produced by LemonParser#grammar_rule.
-LemonListener.prototype.enterGrammar_rule = function(ctx) {
+// Enter a parse tree produced by LemonParser#grammarRule.
+LemonListener.prototype.enterGrammarRule = function(ctx) {
 };
 
-// Exit a parse tree produced by LemonParser#grammar_rule.
-LemonListener.prototype.exitGrammar_rule = function(ctx) {
-};
-
-
-// Enter a parse tree produced by LemonParser#left_side.
-LemonListener.prototype.enterLeft_side = function(ctx) {
-};
-
-// Exit a parse tree produced by LemonParser#left_side.
-LemonListener.prototype.exitLeft_side = function(ctx) {
+// Exit a parse tree produced by LemonParser#grammarRule.
+LemonListener.prototype.exitGrammarRule = function(ctx) {
 };
 
 
-// Enter a parse tree produced by LemonParser#right_side.
-LemonListener.prototype.enterRight_side = function(ctx) {
+// Enter a parse tree produced by LemonParser#leftSide.
+LemonListener.prototype.enterLeftSide = function(ctx) {
 };
 
-// Exit a parse tree produced by LemonParser#right_side.
-LemonListener.prototype.exitRight_side = function(ctx) {
+// Exit a parse tree produced by LemonParser#leftSide.
+LemonListener.prototype.exitLeftSide = function(ctx) {
+};
+
+
+// Enter a parse tree produced by LemonParser#rightSide.
+LemonListener.prototype.enterRightSide = function(ctx) {
+};
+
+// Exit a parse tree produced by LemonParser#rightSide.
+LemonListener.prototype.exitRightSide = function(ctx) {
 };
 
 

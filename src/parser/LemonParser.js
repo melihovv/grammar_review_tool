@@ -66,7 +66,7 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, "TERMINAL"
                       "NONTERMINAL", "INT", "LINE_COMMENT", "MULTI_LINE_COMMENT", 
                       "NEWLINE", "WS", "TARGET_CODE_SECTION", "TARGET_CODE" ];
 
-var ruleNames =  [ "file", "grammar_rule", "left_side", "right_side", "precedence", 
+var ruleNames =  [ "file", "grammarRule", "leftSide", "rightSide", "precedence", 
                    "symbol", "param", "directive" ];
 
 function LemonParser (input) {
@@ -106,9 +106,9 @@ LemonParser.TARGET_CODE_SECTION = 15;
 LemonParser.TARGET_CODE = 16;
 
 LemonParser.RULE_file = 0;
-LemonParser.RULE_grammar_rule = 1;
-LemonParser.RULE_left_side = 2;
-LemonParser.RULE_right_side = 3;
+LemonParser.RULE_grammarRule = 1;
+LemonParser.RULE_leftSide = 2;
+LemonParser.RULE_rightSide = 3;
 LemonParser.RULE_precedence = 4;
 LemonParser.RULE_symbol = 5;
 LemonParser.RULE_param = 6;
@@ -130,14 +130,14 @@ function FileContext(parser, parent, invokingState) {
 FileContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 FileContext.prototype.constructor = FileContext;
 
-FileContext.prototype.grammar_rule = function(i) {
+FileContext.prototype.grammarRule = function(i) {
     if(i===undefined) {
         i = null;
     }
     if(i===null) {
-        return this.getTypedRuleContexts(Grammar_ruleContext);
+        return this.getTypedRuleContexts(GrammarRuleContext);
     } else {
-        return this.getTypedRuleContext(Grammar_ruleContext,i);
+        return this.getTypedRuleContext(GrammarRuleContext,i);
     }
 };
 
@@ -192,7 +192,7 @@ LemonParser.prototype.file = function() {
             switch(this._input.LA(1)) {
             case LemonParser.NONTERMINAL:
                 this.state = 16;
-                this.grammar_rule();
+                this.grammarRule();
                 break;
             case LemonParser.T__6:
                 this.state = 17;
@@ -219,7 +219,7 @@ LemonParser.prototype.file = function() {
     return localctx;
 };
 
-function Grammar_ruleContext(parser, parent, invokingState) {
+function GrammarRuleContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -228,36 +228,36 @@ function Grammar_ruleContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LemonParser.RULE_grammar_rule;
+    this.ruleIndex = LemonParser.RULE_grammarRule;
     return this;
 }
 
-Grammar_ruleContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Grammar_ruleContext.prototype.constructor = Grammar_ruleContext;
+GrammarRuleContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+GrammarRuleContext.prototype.constructor = GrammarRuleContext;
 
-Grammar_ruleContext.prototype.left_side = function() {
-    return this.getTypedRuleContext(Left_sideContext,0);
+GrammarRuleContext.prototype.leftSide = function() {
+    return this.getTypedRuleContext(LeftSideContext,0);
 };
 
-Grammar_ruleContext.prototype.right_side = function() {
-    return this.getTypedRuleContext(Right_sideContext,0);
+GrammarRuleContext.prototype.rightSide = function() {
+    return this.getTypedRuleContext(RightSideContext,0);
 };
 
-Grammar_ruleContext.prototype.enterRule = function(listener) {
+GrammarRuleContext.prototype.enterRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.enterGrammar_rule(this);
+        listener.enterGrammarRule(this);
 	}
 };
 
-Grammar_ruleContext.prototype.exitRule = function(listener) {
+GrammarRuleContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.exitGrammar_rule(this);
+        listener.exitGrammarRule(this);
 	}
 };
 
-Grammar_ruleContext.prototype.accept = function(visitor) {
+GrammarRuleContext.prototype.accept = function(visitor) {
     if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitGrammar_rule(this);
+        return visitor.visitGrammarRule(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -266,20 +266,20 @@ Grammar_ruleContext.prototype.accept = function(visitor) {
 
 
 
-LemonParser.Grammar_ruleContext = Grammar_ruleContext;
+LemonParser.GrammarRuleContext = GrammarRuleContext;
 
-LemonParser.prototype.grammar_rule = function() {
+LemonParser.prototype.grammarRule = function() {
 
-    var localctx = new Grammar_ruleContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 2, LemonParser.RULE_grammar_rule);
+    var localctx = new GrammarRuleContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 2, LemonParser.RULE_grammarRule);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 22;
-        this.left_side();
+        this.leftSide();
         this.state = 23;
         this.match(LemonParser.T__0);
         this.state = 24;
-        this.right_side();
+        this.rightSide();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -294,7 +294,7 @@ LemonParser.prototype.grammar_rule = function() {
     return localctx;
 };
 
-function Left_sideContext(parser, parent, invokingState) {
+function LeftSideContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -303,36 +303,36 @@ function Left_sideContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LemonParser.RULE_left_side;
+    this.ruleIndex = LemonParser.RULE_leftSide;
     return this;
 }
 
-Left_sideContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Left_sideContext.prototype.constructor = Left_sideContext;
+LeftSideContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+LeftSideContext.prototype.constructor = LeftSideContext;
 
-Left_sideContext.prototype.NONTERMINAL = function() {
+LeftSideContext.prototype.NONTERMINAL = function() {
     return this.getToken(LemonParser.NONTERMINAL, 0);
 };
 
-Left_sideContext.prototype.param = function() {
+LeftSideContext.prototype.param = function() {
     return this.getTypedRuleContext(ParamContext,0);
 };
 
-Left_sideContext.prototype.enterRule = function(listener) {
+LeftSideContext.prototype.enterRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.enterLeft_side(this);
+        listener.enterLeftSide(this);
 	}
 };
 
-Left_sideContext.prototype.exitRule = function(listener) {
+LeftSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.exitLeft_side(this);
+        listener.exitLeftSide(this);
 	}
 };
 
-Left_sideContext.prototype.accept = function(visitor) {
+LeftSideContext.prototype.accept = function(visitor) {
     if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitLeft_side(this);
+        return visitor.visitLeftSide(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -341,12 +341,12 @@ Left_sideContext.prototype.accept = function(visitor) {
 
 
 
-LemonParser.Left_sideContext = Left_sideContext;
+LemonParser.LeftSideContext = LeftSideContext;
 
-LemonParser.prototype.left_side = function() {
+LemonParser.prototype.leftSide = function() {
 
-    var localctx = new Left_sideContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, LemonParser.RULE_left_side);
+    var localctx = new LeftSideContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 4, LemonParser.RULE_leftSide);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
@@ -373,7 +373,7 @@ LemonParser.prototype.left_side = function() {
     return localctx;
 };
 
-function Right_sideContext(parser, parent, invokingState) {
+function RightSideContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -382,22 +382,22 @@ function Right_sideContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LemonParser.RULE_right_side;
+    this.ruleIndex = LemonParser.RULE_rightSide;
     return this;
 }
 
-Right_sideContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-Right_sideContext.prototype.constructor = Right_sideContext;
+RightSideContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+RightSideContext.prototype.constructor = RightSideContext;
 
-Right_sideContext.prototype.precedence = function() {
+RightSideContext.prototype.precedence = function() {
     return this.getTypedRuleContext(PrecedenceContext,0);
 };
 
-Right_sideContext.prototype.TARGET_CODE_SECTION = function() {
+RightSideContext.prototype.TARGET_CODE_SECTION = function() {
     return this.getToken(LemonParser.TARGET_CODE_SECTION, 0);
 };
 
-Right_sideContext.prototype.symbol = function(i) {
+RightSideContext.prototype.symbol = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -408,7 +408,7 @@ Right_sideContext.prototype.symbol = function(i) {
     }
 };
 
-Right_sideContext.prototype.param = function(i) {
+RightSideContext.prototype.param = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -419,21 +419,21 @@ Right_sideContext.prototype.param = function(i) {
     }
 };
 
-Right_sideContext.prototype.enterRule = function(listener) {
+RightSideContext.prototype.enterRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.enterRight_side(this);
+        listener.enterRightSide(this);
 	}
 };
 
-Right_sideContext.prototype.exitRule = function(listener) {
+RightSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.exitRight_side(this);
+        listener.exitRightSide(this);
 	}
 };
 
-Right_sideContext.prototype.accept = function(visitor) {
+RightSideContext.prototype.accept = function(visitor) {
     if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitRight_side(this);
+        return visitor.visitRightSide(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -442,12 +442,12 @@ Right_sideContext.prototype.accept = function(visitor) {
 
 
 
-LemonParser.Right_sideContext = Right_sideContext;
+LemonParser.RightSideContext = RightSideContext;
 
-LemonParser.prototype.right_side = function() {
+LemonParser.prototype.rightSide = function() {
 
-    var localctx = new Right_sideContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, LemonParser.RULE_right_side);
+    var localctx = new RightSideContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, LemonParser.RULE_rightSide);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);

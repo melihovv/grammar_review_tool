@@ -1,10 +1,10 @@
 grammar Lemon;
 
-file: (grammar_rule|directive)+;
+file: (grammarRule|directive)+;
 
-grammar_rule: left_side '::=' right_side;
-left_side: NONTERMINAL param?;
-right_side: ((symbol param?)+)? '.' precedence? TARGET_CODE_SECTION?;
+grammarRule: leftSide '::=' rightSide;
+leftSide: NONTERMINAL param?;
+rightSide: ((symbol param?)+)? '.' precedence? TARGET_CODE_SECTION?;
 
 precedence: '[' TERMINAL ']';
 symbol: TERMINAL|NONTERMINAL;
