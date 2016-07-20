@@ -5,11 +5,11 @@ import LemonLexer;
 prog: (grammar_rule|directive)+;
 
 grammar_rule: left_side '::=' right_side;
-left_side: NON_TERMINAL param?;
+left_side: NONTERMINAL param?;
 right_side: ((symbol param?)+)? '.' precedence? TARGET_CODE_SECTION?;
 
 precedence: '[' TERMINAL ']';
-symbol: TERMINAL|NON_TERMINAL;
+symbol: TERMINAL|NONTERMINAL;
 param: '(' symbol ')';
 directive
     : '%' (
@@ -30,8 +30,8 @@ directive
                 'token_type'
             ) TARGET_CODE_SECTION
         ) |
-        ('start_symbol' NON_TERMINAL) |
+        ('start_symbol' NONTERMINAL) |
         ('stack_size' INT) |
-        ('type' NON_TERMINAL TARGET_CODE_SECTION)
+        ('type' NONTERMINAL TARGET_CODE_SECTION)
     )
     ;
