@@ -1,4 +1,4 @@
-grammar LemonParser;
+grammar Lemon;
 
 prog: (grammar_rule|directive)+;
 
