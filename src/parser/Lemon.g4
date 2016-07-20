@@ -10,27 +10,15 @@ precedence: '[' TERMINAL ']';
 symbol: TERMINAL|NONTERMINAL;
 param: '(' symbol ')';
 directive
-    : '%' (
-        (('name'|'token_prefix') symbol) |
-        (('left'|'right'|'nonassoc') TERMINAL+ '.') |
-        (
-            (
-                'declare_class' |
-                'destructor' |
-                'extra_argument' |
-                'include_class' |
-                'include' |
-                'parse_accept' |
-                'parse_failure' |
-                'stack_overflow' |
-                'syntax_error' |
-                'token_destructor' |
-                'token_type'
-            ) TARGET_CODE_SECTION
-        ) |
-        ('start_symbol' NONTERMINAL) |
-        ('stack_size' INT) |
-        ('type' NONTERMINAL TARGET_CODE_SECTION)
+    : '%' NONTERMINAL (
+        (symbol) | // name, token_prefix
+        (TERMINAL+ '.') | // left, right, nonassoc
+        (TARGET_CODE_SECTION) | // declare_class destructor extra_argument
+        // include_class include parse_accept parse_failure stack_overflow
+        // syntax_error token_destructor token_type
+        (NONTERMINAL) | // start_symbol
+        (INT) | // stack_size
+        (NONTERMINAL TARGET_CODE_SECTION) // type
     )
     ;
 

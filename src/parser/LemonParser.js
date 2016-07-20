@@ -7,54 +7,51 @@ var LemonVisitor = require('./LemonVisitor').LemonVisitor;
 var grammarFileName = "Lemon.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003%Q\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t\u0004",
-    "\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004\b",
-    "\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0006\u0002\u0015\n\u0002\r",
-    "\u0002\u000e\u0002\u0016\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0004\u0003\u0004\u0005\u0004\u001f\n\u0004\u0003\u0005\u0003",
-    "\u0005\u0005\u0005#\n\u0005\u0006\u0005%\n\u0005\r\u0005\u000e\u0005",
-    "&\u0005\u0005)\n\u0005\u0003\u0005\u0003\u0005\u0005\u0005-\n\u0005",
-    "\u0003\u0005\u0005\u00050\n\u0005\u0003\u0006\u0003\u0006\u0003\u0006",
-    "\u0003\u0006\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b",
-    "\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0006\tA\n\t\r\t\u000e\tB\u0003",
-    "\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0003",
-    "\t\u0005\tO\n\t\u0003\t\u0002\u0002\n\u0002\u0004\u0006\b\n\f\u000e",
-    "\u0010\u0002\u0006\u0003\u0002\u001d\u001e\u0003\u0002\n\u000b\u0003",
-    "\u0002\f\u000e\u0003\u0002\u000f\u0019V\u0002\u0014\u0003\u0002\u0002",
-    "\u0002\u0004\u0018\u0003\u0002\u0002\u0002\u0006\u001c\u0003\u0002\u0002",
-    "\u0002\b(\u0003\u0002\u0002\u0002\n1\u0003\u0002\u0002\u0002\f5\u0003",
-    "\u0002\u0002\u0002\u000e7\u0003\u0002\u0002\u0002\u0010;\u0003\u0002",
-    "\u0002\u0002\u0012\u0015\u0005\u0004\u0003\u0002\u0013\u0015\u0005\u0010",
-    "\t\u0002\u0014\u0012\u0003\u0002\u0002\u0002\u0014\u0013\u0003\u0002",
-    "\u0002\u0002\u0015\u0016\u0003\u0002\u0002\u0002\u0016\u0014\u0003\u0002",
-    "\u0002\u0002\u0016\u0017\u0003\u0002\u0002\u0002\u0017\u0003\u0003\u0002",
-    "\u0002\u0002\u0018\u0019\u0005\u0006\u0004\u0002\u0019\u001a\u0007\u0003",
-    "\u0002\u0002\u001a\u001b\u0005\b\u0005\u0002\u001b\u0005\u0003\u0002",
-    "\u0002\u0002\u001c\u001e\u0007\u001e\u0002\u0002\u001d\u001f\u0005\u000e",
-    "\b\u0002\u001e\u001d\u0003\u0002\u0002\u0002\u001e\u001f\u0003\u0002",
-    "\u0002\u0002\u001f\u0007\u0003\u0002\u0002\u0002 \"\u0005\f\u0007\u0002",
-    "!#\u0005\u000e\b\u0002\"!\u0003\u0002\u0002\u0002\"#\u0003\u0002\u0002",
-    "\u0002#%\u0003\u0002\u0002\u0002$ \u0003\u0002\u0002\u0002%&\u0003\u0002",
-    "\u0002\u0002&$\u0003\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002\'",
-    ")\u0003\u0002\u0002\u0002($\u0003\u0002\u0002\u0002()\u0003\u0002\u0002",
-    "\u0002)*\u0003\u0002\u0002\u0002*,\u0007\u0004\u0002\u0002+-\u0005\n",
-    "\u0006\u0002,+\u0003\u0002\u0002\u0002,-\u0003\u0002\u0002\u0002-/\u0003",
-    "\u0002\u0002\u0002.0\u0007$\u0002\u0002/.\u0003\u0002\u0002\u0002/0",
-    "\u0003\u0002\u0002\u00020\t\u0003\u0002\u0002\u000212\u0007\u0005\u0002",
-    "\u000223\u0007\u001d\u0002\u000234\u0007\u0006\u0002\u00024\u000b\u0003",
-    "\u0002\u0002\u000256\t\u0002\u0002\u00026\r\u0003\u0002\u0002\u0002",
-    "78\u0007\u0007\u0002\u000289\u0005\f\u0007\u00029:\u0007\b\u0002\u0002",
-    ":\u000f\u0003\u0002\u0002\u0002;N\u0007\t\u0002\u0002<=\t\u0003\u0002",
-    "\u0002=O\u0005\f\u0007\u0002>@\t\u0004\u0002\u0002?A\u0007\u001d\u0002",
-    "\u0002@?\u0003\u0002\u0002\u0002AB\u0003\u0002\u0002\u0002B@\u0003\u0002",
-    "\u0002\u0002BC\u0003\u0002\u0002\u0002CD\u0003\u0002\u0002\u0002DO\u0007",
-    "\u0004\u0002\u0002EF\t\u0005\u0002\u0002FO\u0007$\u0002\u0002GH\u0007",
-    "\u001a\u0002\u0002HO\u0007\u001e\u0002\u0002IJ\u0007\u001b\u0002\u0002",
-    "JO\u0007\u001f\u0002\u0002KL\u0007\u001c\u0002\u0002LM\u0007\u001e\u0002",
-    "\u0002MO\u0007$\u0002\u0002N<\u0003\u0002\u0002\u0002N>\u0003\u0002",
-    "\u0002\u0002NE\u0003\u0002\u0002\u0002NG\u0003\u0002\u0002\u0002NI\u0003",
-    "\u0002\u0002\u0002NK\u0003\u0002\u0002\u0002O\u0011\u0003\u0002\u0002",
-    "\u0002\f\u0014\u0016\u001e\"&(,/BN"].join("");
+    "\u0003\u0012L\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
+    "\b\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0006\u0002\u0015\n\u0002",
+    "\r\u0002\u000e\u0002\u0016\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0004\u0003\u0004\u0005\u0004\u001f\n\u0004\u0003\u0005",
+    "\u0003\u0005\u0005\u0005#\n\u0005\u0006\u0005%\n\u0005\r\u0005\u000e",
+    "\u0005&\u0005\u0005)\n\u0005\u0003\u0005\u0003\u0005\u0005\u0005-\n",
+    "\u0005\u0003\u0005\u0005\u00050\n\u0005\u0003\u0006\u0003\u0006\u0003",
+    "\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003",
+    "\b\u0003\t\u0003\t\u0003\t\u0003\t\u0006\t@\n\t\r\t\u000e\tA\u0003\t",
+    "\u0003\t\u0003\t\u0003\t\u0003\t\u0003\t\u0005\tJ\n\t\u0003\t\u0002",
+    "\u0002\n\u0002\u0004\u0006\b\n\f\u000e\u0010\u0002\u0003\u0003\u0002",
+    "\n\u000bQ\u0002\u0014\u0003\u0002\u0002\u0002\u0004\u0018\u0003\u0002",
+    "\u0002\u0002\u0006\u001c\u0003\u0002\u0002\u0002\b(\u0003\u0002\u0002",
+    "\u0002\n1\u0003\u0002\u0002\u0002\f5\u0003\u0002\u0002\u0002\u000e7",
+    "\u0003\u0002\u0002\u0002\u0010;\u0003\u0002\u0002\u0002\u0012\u0015",
+    "\u0005\u0004\u0003\u0002\u0013\u0015\u0005\u0010\t\u0002\u0014\u0012",
+    "\u0003\u0002\u0002\u0002\u0014\u0013\u0003\u0002\u0002\u0002\u0015\u0016",
+    "\u0003\u0002\u0002\u0002\u0016\u0014\u0003\u0002\u0002\u0002\u0016\u0017",
+    "\u0003\u0002\u0002\u0002\u0017\u0003\u0003\u0002\u0002\u0002\u0018\u0019",
+    "\u0005\u0006\u0004\u0002\u0019\u001a\u0007\u0003\u0002\u0002\u001a\u001b",
+    "\u0005\b\u0005\u0002\u001b\u0005\u0003\u0002\u0002\u0002\u001c\u001e",
+    "\u0007\u000b\u0002\u0002\u001d\u001f\u0005\u000e\b\u0002\u001e\u001d",
+    "\u0003\u0002\u0002\u0002\u001e\u001f\u0003\u0002\u0002\u0002\u001f\u0007",
+    "\u0003\u0002\u0002\u0002 \"\u0005\f\u0007\u0002!#\u0005\u000e\b\u0002",
+    "\"!\u0003\u0002\u0002\u0002\"#\u0003\u0002\u0002\u0002#%\u0003\u0002",
+    "\u0002\u0002$ \u0003\u0002\u0002\u0002%&\u0003\u0002\u0002\u0002&$\u0003",
+    "\u0002\u0002\u0002&\'\u0003\u0002\u0002\u0002\')\u0003\u0002\u0002\u0002",
+    "($\u0003\u0002\u0002\u0002()\u0003\u0002\u0002\u0002)*\u0003\u0002\u0002",
+    "\u0002*,\u0007\u0004\u0002\u0002+-\u0005\n\u0006\u0002,+\u0003\u0002",
+    "\u0002\u0002,-\u0003\u0002\u0002\u0002-/\u0003\u0002\u0002\u0002.0\u0007",
+    "\u0011\u0002\u0002/.\u0003\u0002\u0002\u0002/0\u0003\u0002\u0002\u0002",
+    "0\t\u0003\u0002\u0002\u000212\u0007\u0005\u0002\u000223\u0007\n\u0002",
+    "\u000234\u0007\u0006\u0002\u00024\u000b\u0003\u0002\u0002\u000256\t",
+    "\u0002\u0002\u00026\r\u0003\u0002\u0002\u000278\u0007\u0007\u0002\u0002",
+    "89\u0005\f\u0007\u00029:\u0007\b\u0002\u0002:\u000f\u0003\u0002\u0002",
+    "\u0002;<\u0007\t\u0002\u0002<I\u0007\u000b\u0002\u0002=J\u0005\f\u0007",
+    "\u0002>@\u0007\n\u0002\u0002?>\u0003\u0002\u0002\u0002@A\u0003\u0002",
+    "\u0002\u0002A?\u0003\u0002\u0002\u0002AB\u0003\u0002\u0002\u0002BC\u0003",
+    "\u0002\u0002\u0002CJ\u0007\u0004\u0002\u0002DJ\u0007\u0011\u0002\u0002",
+    "EJ\u0007\u000b\u0002\u0002FJ\u0007\f\u0002\u0002GH\u0007\u000b\u0002",
+    "\u0002HJ\u0007\u0011\u0002\u0002I=\u0003\u0002\u0002\u0002I?\u0003\u0002",
+    "\u0002\u0002ID\u0003\u0002\u0002\u0002IE\u0003\u0002\u0002\u0002IF\u0003",
+    "\u0002\u0002\u0002IG\u0003\u0002\u0002\u0002J\u0011\u0003\u0002\u0002",
+    "\u0002\f\u0014\u0016\u001e\"&(,/AI"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -63,19 +60,11 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'::='", "'.'", "'['", "']'", "'('", "')'", "'%'", 
-                     "'name'", "'token_prefix'", "'left'", "'right'", "'nonassoc'", 
-                     "'declare_class'", "'destructor'", "'extra_argument'", 
-                     "'include_class'", "'include'", "'parse_accept'", "'parse_failure'", 
-                     "'stack_overflow'", "'syntax_error'", "'token_destructor'", 
-                     "'token_type'", "'start_symbol'", "'stack_size'", "'type'" ];
+var literalNames = [ null, "'::='", "'.'", "'['", "']'", "'('", "')'", "'%'" ];
 
-var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, null, null, null, 
-                      null, null, null, null, null, null, null, null, null, 
-                      "TERMINAL", "NONTERMINAL", "INT", "LINE_COMMENT", 
-                      "MULTI_LINE_COMMENT", "NEWLINE", "WS", "TARGET_CODE_SECTION", 
-                      "TARGET_CODE" ];
+var symbolicNames = [ null, null, null, null, null, null, null, null, "TERMINAL", 
+                      "NONTERMINAL", "INT", "LINE_COMMENT", "MULTI_LINE_COMMENT", 
+                      "NEWLINE", "WS", "TARGET_CODE_SECTION", "TARGET_CODE" ];
 
 var ruleNames =  [ "file", "grammar_rule", "left_side", "right_side", "precedence", 
                    "symbol", "param", "directive" ];
@@ -106,34 +95,15 @@ LemonParser.T__3 = 4;
 LemonParser.T__4 = 5;
 LemonParser.T__5 = 6;
 LemonParser.T__6 = 7;
-LemonParser.T__7 = 8;
-LemonParser.T__8 = 9;
-LemonParser.T__9 = 10;
-LemonParser.T__10 = 11;
-LemonParser.T__11 = 12;
-LemonParser.T__12 = 13;
-LemonParser.T__13 = 14;
-LemonParser.T__14 = 15;
-LemonParser.T__15 = 16;
-LemonParser.T__16 = 17;
-LemonParser.T__17 = 18;
-LemonParser.T__18 = 19;
-LemonParser.T__19 = 20;
-LemonParser.T__20 = 21;
-LemonParser.T__21 = 22;
-LemonParser.T__22 = 23;
-LemonParser.T__23 = 24;
-LemonParser.T__24 = 25;
-LemonParser.T__25 = 26;
-LemonParser.TERMINAL = 27;
-LemonParser.NONTERMINAL = 28;
-LemonParser.INT = 29;
-LemonParser.LINE_COMMENT = 30;
-LemonParser.MULTI_LINE_COMMENT = 31;
-LemonParser.NEWLINE = 32;
-LemonParser.WS = 33;
-LemonParser.TARGET_CODE_SECTION = 34;
-LemonParser.TARGET_CODE = 35;
+LemonParser.TERMINAL = 8;
+LemonParser.NONTERMINAL = 9;
+LemonParser.INT = 10;
+LemonParser.LINE_COMMENT = 11;
+LemonParser.MULTI_LINE_COMMENT = 12;
+LemonParser.NEWLINE = 13;
+LemonParser.WS = 14;
+LemonParser.TARGET_CODE_SECTION = 15;
+LemonParser.TARGET_CODE = 16;
 
 LemonParser.RULE_file = 0;
 LemonParser.RULE_grammar_rule = 1;
@@ -769,16 +739,24 @@ function DirectiveContext(parser, parent, invokingState) {
 DirectiveContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 DirectiveContext.prototype.constructor = DirectiveContext;
 
+DirectiveContext.prototype.NONTERMINAL = function(i) {
+	if(i===undefined) {
+		i = null;
+	}
+    if(i===null) {
+        return this.getTokens(LemonParser.NONTERMINAL);
+    } else {
+        return this.getToken(LemonParser.NONTERMINAL, i);
+    }
+};
+
+
 DirectiveContext.prototype.symbol = function() {
     return this.getTypedRuleContext(SymbolContext,0);
 };
 
 DirectiveContext.prototype.TARGET_CODE_SECTION = function() {
     return this.getToken(LemonParser.TARGET_CODE_SECTION, 0);
-};
-
-DirectiveContext.prototype.NONTERMINAL = function() {
-    return this.getToken(LemonParser.NONTERMINAL, 0);
 };
 
 DirectiveContext.prototype.INT = function() {
@@ -831,89 +809,54 @@ LemonParser.prototype.directive = function() {
         this.enterOuterAlt(localctx, 1);
         this.state = 57;
         this.match(LemonParser.T__6);
-        this.state = 76;
-        switch(this._input.LA(1)) {
-        case LemonParser.T__7:
-        case LemonParser.T__8:
-            this.state = 58;
-            _la = this._input.LA(1);
-            if(!(_la===LemonParser.T__7 || _la===LemonParser.T__8)) {
-            this._errHandler.recoverInline(this);
-            }
-            else {
-                this.consume();
-            }
+        this.state = 58;
+        this.match(LemonParser.NONTERMINAL);
+        this.state = 71;
+        this._errHandler.sync(this);
+        var la_ = this._interp.adaptivePredict(this._input,9,this._ctx);
+        switch(la_) {
+        case 1:
             this.state = 59;
             this.symbol();
             break;
-        case LemonParser.T__9:
-        case LemonParser.T__10:
-        case LemonParser.T__11:
-            this.state = 60;
-            _la = this._input.LA(1);
-            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << LemonParser.T__9) | (1 << LemonParser.T__10) | (1 << LemonParser.T__11))) !== 0))) {
-            this._errHandler.recoverInline(this);
-            }
-            else {
-                this.consume();
-            }
-            this.state = 62; 
+
+        case 2:
+            this.state = 61; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 61;
+                this.state = 60;
                 this.match(LemonParser.TERMINAL);
-                this.state = 64; 
+                this.state = 63; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(_la===LemonParser.TERMINAL);
-            this.state = 66;
+            this.state = 65;
             this.match(LemonParser.T__1);
             break;
-        case LemonParser.T__12:
-        case LemonParser.T__13:
-        case LemonParser.T__14:
-        case LemonParser.T__15:
-        case LemonParser.T__16:
-        case LemonParser.T__17:
-        case LemonParser.T__18:
-        case LemonParser.T__19:
-        case LemonParser.T__20:
-        case LemonParser.T__21:
-        case LemonParser.T__22:
-            this.state = 67;
-            _la = this._input.LA(1);
-            if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << LemonParser.T__12) | (1 << LemonParser.T__13) | (1 << LemonParser.T__14) | (1 << LemonParser.T__15) | (1 << LemonParser.T__16) | (1 << LemonParser.T__17) | (1 << LemonParser.T__18) | (1 << LemonParser.T__19) | (1 << LemonParser.T__20) | (1 << LemonParser.T__21) | (1 << LemonParser.T__22))) !== 0))) {
-            this._errHandler.recoverInline(this);
-            }
-            else {
-                this.consume();
-            }
-            this.state = 68;
+
+        case 3:
+            this.state = 66;
             this.match(LemonParser.TARGET_CODE_SECTION);
             break;
-        case LemonParser.T__23:
-            this.state = 69;
-            this.match(LemonParser.T__23);
-            this.state = 70;
+
+        case 4:
+            this.state = 67;
             this.match(LemonParser.NONTERMINAL);
             break;
-        case LemonParser.T__24:
-            this.state = 71;
-            this.match(LemonParser.T__24);
-            this.state = 72;
+
+        case 5:
+            this.state = 68;
             this.match(LemonParser.INT);
             break;
-        case LemonParser.T__25:
-            this.state = 73;
-            this.match(LemonParser.T__25);
-            this.state = 74;
+
+        case 6:
+            this.state = 69;
             this.match(LemonParser.NONTERMINAL);
-            this.state = 75;
+            this.state = 70;
             this.match(LemonParser.TARGET_CODE_SECTION);
             break;
-        default:
-            throw new antlr4.error.NoViableAltException(this);
+
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

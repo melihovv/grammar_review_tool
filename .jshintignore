@@ -4,3 +4,5 @@ docs/
 metrics/
 dist/
 src/parser/*
+!src/parser/*.spec.js
+!src/parser/parser.js
