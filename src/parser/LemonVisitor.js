@@ -12,8 +12,8 @@ function LemonVisitor() {
 LemonVisitor.prototype = Object.create(antlr4.tree.ParseTreeVisitor.prototype);
 LemonVisitor.prototype.constructor = LemonVisitor;
 
-// Visit a parse tree produced by LemonParser#prog.
-LemonVisitor.prototype.visitProg = function(ctx) {
+// Visit a parse tree produced by LemonParser#file.
+LemonVisitor.prototype.visitFile = function(ctx) {
 };
 
 

@@ -1,6 +1,6 @@
 grammar Lemon;
 
-prog: (grammar_rule|directive)+;
+file: (grammar_rule|directive)+;
 
 grammar_rule: left_side '::=' right_side;
 left_side: NONTERMINAL param?;

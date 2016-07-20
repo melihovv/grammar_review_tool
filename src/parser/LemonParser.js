@@ -77,7 +77,7 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       "MULTI_LINE_COMMENT", "NEWLINE", "WS", "TARGET_CODE_SECTION", 
                       "TARGET_CODE" ];
 
-var ruleNames =  [ "prog", "grammar_rule", "left_side", "right_side", "precedence", 
+var ruleNames =  [ "file", "grammar_rule", "left_side", "right_side", "precedence", 
                    "symbol", "param", "directive" ];
 
 function LemonParser (input) {
@@ -135,7 +135,7 @@ LemonParser.WS = 33;
 LemonParser.TARGET_CODE_SECTION = 34;
 LemonParser.TARGET_CODE = 35;
 
-LemonParser.RULE_prog = 0;
+LemonParser.RULE_file = 0;
 LemonParser.RULE_grammar_rule = 1;
 LemonParser.RULE_left_side = 2;
 LemonParser.RULE_right_side = 3;
@@ -144,7 +144,7 @@ LemonParser.RULE_symbol = 5;
 LemonParser.RULE_param = 6;
 LemonParser.RULE_directive = 7;
 
-function ProgContext(parser, parent, invokingState) {
+function FileContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -153,14 +153,14 @@ function ProgContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = LemonParser.RULE_prog;
+    this.ruleIndex = LemonParser.RULE_file;
     return this;
 }
 
-ProgContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ProgContext.prototype.constructor = ProgContext;
+FileContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+FileContext.prototype.constructor = FileContext;
 
-ProgContext.prototype.grammar_rule = function(i) {
+FileContext.prototype.grammar_rule = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -171,7 +171,7 @@ ProgContext.prototype.grammar_rule = function(i) {
     }
 };
 
-ProgContext.prototype.directive = function(i) {
+FileContext.prototype.directive = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -182,21 +182,21 @@ ProgContext.prototype.directive = function(i) {
     }
 };
 
-ProgContext.prototype.enterRule = function(listener) {
+FileContext.prototype.enterRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.enterProg(this);
+        listener.enterFile(this);
 	}
 };
 
-ProgContext.prototype.exitRule = function(listener) {
+FileContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
-        listener.exitProg(this);
+        listener.exitFile(this);
 	}
 };
 
-ProgContext.prototype.accept = function(visitor) {
+FileContext.prototype.accept = function(visitor) {
     if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitProg(this);
+        return visitor.visitFile(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -205,12 +205,12 @@ ProgContext.prototype.accept = function(visitor) {
 
 
 
-LemonParser.ProgContext = ProgContext;
+LemonParser.FileContext = FileContext;
 
-LemonParser.prototype.prog = function() {
+LemonParser.prototype.file = function() {
 
-    var localctx = new ProgContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 0, LemonParser.RULE_prog);
+    var localctx = new FileContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 0, LemonParser.RULE_file);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);

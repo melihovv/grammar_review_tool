@@ -11,12 +11,12 @@ function LemonListener() {
 LemonListener.prototype = Object.create(antlr4.tree.ParseTreeListener.prototype);
 LemonListener.prototype.constructor = LemonListener;
 
-// Enter a parse tree produced by LemonParser#prog.
-LemonListener.prototype.enterProg = function(ctx) {
+// Enter a parse tree produced by LemonParser#file.
+LemonListener.prototype.enterFile = function(ctx) {
 };
 
-// Exit a parse tree produced by LemonParser#prog.
-LemonListener.prototype.exitProg = function(ctx) {
+// Exit a parse tree produced by LemonParser#file.
+LemonListener.prototype.exitFile = function(ctx) {
 };
 
 
