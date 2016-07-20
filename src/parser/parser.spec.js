@@ -69,5 +69,15 @@ NOW;
                 rule(p1) ::= A(p2) B(p3). [NOT] {echo 'hi';}
             `).must.not.throw();
         });
+
+        it('must understand single and multiline comments', () => {
+            parser.parse.bind(parser, `
+                // comment
+                rule(p1) ::= A(p2) B(p3)/*comment*/. [NOT] {
+                    // comment
+                    echo 'hi'/**/;
+                }
+            `).must.not.throw();
+        });
     });
 });
