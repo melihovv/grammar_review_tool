@@ -17,16 +17,16 @@ directive
         (('left'|'right'|'nonassoc') TERMINAL+ '.') |
         (
             (
-                'declare_class'|
-                'destructor'|
-                'extra_argument'|
-                'include_class'|
-                'include'|
-                'parse_accept'|
-                'parse_failure'|
-                'stack_overflow'|
-                'syntax_error'|
-                'token_destructor'|
+                'declare_class' |
+                'destructor' |
+                'extra_argument' |
+                'include_class' |
+                'include' |
+                'parse_accept' |
+                'parse_failure' |
+                'stack_overflow' |
+                'syntax_error' |
+                'token_destructor' |
                 'token_type'
             ) TARGET_CODE_SECTION
         ) |
