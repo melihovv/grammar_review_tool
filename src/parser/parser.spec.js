@@ -1,6 +1,6 @@
 'use strict';
 
-import Parser from './parser';
+import Parser from './Parser';
 
 describe('parser', function () {
     describe('syntax', () => {

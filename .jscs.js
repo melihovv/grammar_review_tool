@@ -6,7 +6,7 @@ module.exports =
         'docs/**',
         'metrics/**',
         'dist/**',
-        'src/parser/!(parser.js|parser.spec.js)',
+        'src/parser/!(Parser.js|parser.spec.js)',
     ],
     requireSpaceAfterKeywords: ['if', 'else', 'for', 'while', 'do', 'switch', 'return', 'try', 'catch'],
     requireSpaceBeforeBlockStatements: true,
