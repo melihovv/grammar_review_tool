@@ -61,5 +61,8 @@
       "es2015",
       "stage-2"
     ]
+  },
+  "dependencies": {
+    "antlr4": "^4.5.3"
   }
 }
