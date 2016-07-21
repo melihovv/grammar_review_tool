@@ -40,7 +40,6 @@ FinderListener.prototype.enterLeftSide = function (ctx) {
         this.ruleToCompare = {
             rule: ctx,
             symbols: [],
-            precedence: '',
         };
 
         for (const child of ctx.parentCtx.rightSide().children) {
@@ -48,8 +47,6 @@ FinderListener.prototype.enterLeftSide = function (ctx) {
                 this.ruleToCompare.symbols.push(
                     child.children[0].getText()
                 );
-            } else if (child instanceof LemonParser.PrecedenceContext) {
-                this.ruleToCompare.precedence = child.TERMINAL().getText();
             }
         }
     }
@@ -69,18 +66,15 @@ FinderListener.prototype.enterRightSide = function (ctx) {
     if (this.ruleToCompare !== null &&
         ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
         let symbols = [];
-        let precedence = '';
 
         for (const child of ctx.children) {
             if (child instanceof LemonParser.SymbolContext) {
                 symbols.push(child.children[0].getText());
-            } else if (child instanceof LemonParser.PrecedenceContext) {
-                precedence = child.TERMINAL().getText();
             }
         }
 
-        if (this.ruleToCompare.precedence === precedence &&
-            JSON.stringify(symbols) === JSON.stringify(this.ruleToCompare.symbols)) {
+        if (JSON.stringify(symbols) ===
+            JSON.stringify(this.ruleToCompare.symbols)) {
             this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide());
         }
     }

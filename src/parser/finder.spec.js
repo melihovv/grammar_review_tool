@@ -34,7 +34,7 @@ describe('finder', function () {
             h ::= .
         `);
         const finder = new Finder(tree);
-        finder.findRulesWithTheSameRightSide('a').length.must.be(1);
+        finder.findRulesWithTheSameRightSide('a').length.must.be(2);
     });
 
     it('must find rules with the same right side', () => {
@@ -47,6 +47,6 @@ describe('finder', function () {
             h ::= .
         `);
         const finder = new Finder(tree);
-        finder.findRulesWithTheSameRightSide('a').length.must.be(0);
+        finder.findRulesWithTheSameRightSide('a').length.must.be(2);
     });
 });
