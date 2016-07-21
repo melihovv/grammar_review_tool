@@ -6,7 +6,7 @@ import {LemonParser} from './LemonParser';
 function FinderListener({
     nonterminalToFindOnTheLeftSide,
     symbolToFind,
-    ruleWithTheSameRightSide
+    ruleToCompare
 }) {
     LemonListener.call(this);
 
@@ -16,9 +16,8 @@ function FinderListener({
     this.symbolToFind = symbolToFind;
     this.rulesWhichContainsSymbol = [];
 
-    this.ruleWithTheSameRightSide = ruleWithTheSameRightSide;
+    this.ruleToCompare = ruleToCompare;
     this.rulesWithTheSameRightSides = [];
-    this.ruleToCompare = null;
 
     return this;
 }
@@ -34,22 +33,6 @@ FinderListener.prototype.enterLeftSide = function (ctx) {
     if (ctx.NONTERMINAL().getText() === this.symbolToFind) {
         this.rulesWhichContainsSymbol.push(ctx);
     }
-
-    if (ctx.NONTERMINAL().getText() === this.ruleWithTheSameRightSide &&
-        this.ruleToCompare === null) {
-        this.ruleToCompare = {
-            rule: ctx,
-            symbols: [],
-        };
-
-        for (const child of ctx.parentCtx.rightSide().children) {
-            if (child instanceof LemonParser.SymbolContext) {
-                this.ruleToCompare.symbols.push(
-                    child.children[0].getText()
-                );
-            }
-        }
-    }
 };
 
 FinderListener.prototype.enterRightSide = function (ctx) {
@@ -63,7 +46,7 @@ FinderListener.prototype.enterRightSide = function (ctx) {
         }
     }
 
-    if (this.ruleToCompare !== null &&
+    if (this.ruleToCompare !== undefined &&
         ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
         let symbols = [];
 

@@ -47,6 +47,6 @@ describe('finder', function () {
             h ::= .
         `);
         const finder = new Finder(tree);
-        finder.findRulesWithTheSameRightSide('a').length.must.be(2);
+        finder.findRulesWithTheSameRightSide('g').length.must.be(2);
     });
 });
