@@ -1,6 +1,7 @@
 export default {
     entry: {
-        test: './src/parser/parser.spec.js',
+        'parser.spec': './src/parser/parser.spec.js',
+        'finder.spec': './src/parser/finder.spec.js',
     },
     output: {
         path: './dist/js',

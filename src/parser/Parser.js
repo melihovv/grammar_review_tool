@@ -1,8 +1,8 @@
 'use strict';
 
 import antlr4 from 'antlr4/index';
-import LemonLexer from './LemonLexer';
-import LemonParser from './LemonParser';
+import {LemonLexer} from './LemonLexer';
+import {LemonParser} from './LemonParser';
 
 class Parser {
     constructor() {
@@ -11,9 +11,9 @@ class Parser {
 
     parse(input) {
         const chars = new antlr4.InputStream(input);
-        const lexer = new LemonLexer.LemonLexer(chars);
+        const lexer = new LemonLexer(chars);
         const tokens = new antlr4.CommonTokenStream(lexer);
-        const parser = new LemonParser.LemonParser(tokens);
+        const parser = new LemonParser(tokens);
         parser.buildParseTrees = true;
 
         this.tree = parser.file();
@@ -22,6 +22,8 @@ class Parser {
             this.tree = null;
             throw new Error('Input contains syntax errors');
         }
+
+        return this.tree;
     }
 }
 

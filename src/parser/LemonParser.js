@@ -2,8 +2,6 @@
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var LemonListener = require('./LemonListener').LemonListener;
-var LemonVisitor = require('./LemonVisitor').LemonVisitor;
-
 var grammarFileName = "Lemon.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
@@ -164,14 +162,6 @@ FileContext.prototype.exitRule = function(listener) {
 	}
 };
 
-FileContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitFile(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
 
 
 
@@ -255,14 +245,6 @@ GrammarRuleContext.prototype.exitRule = function(listener) {
 	}
 };
 
-GrammarRuleContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitGrammarRule(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
 
 
 
@@ -328,14 +310,6 @@ LeftSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
         listener.exitLeftSide(this);
 	}
-};
-
-LeftSideContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitLeftSide(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
 };
 
 
@@ -429,14 +403,6 @@ RightSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
         listener.exitRightSide(this);
 	}
-};
-
-RightSideContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitRightSide(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
 };
 
 
@@ -535,14 +501,6 @@ PrecedenceContext.prototype.exitRule = function(listener) {
 	}
 };
 
-PrecedenceContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitPrecedence(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
 
 
 
@@ -610,14 +568,6 @@ SymbolContext.prototype.exitRule = function(listener) {
 	}
 };
 
-SymbolContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitSymbol(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
 
 
 
@@ -682,14 +632,6 @@ ParamContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
         listener.exitParam(this);
 	}
-};
-
-ParamContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitParam(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
 };
 
 
@@ -785,14 +727,6 @@ DirectiveContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonListener ) {
         listener.exitDirective(this);
 	}
-};
-
-DirectiveContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof LemonVisitor ) {
-        return visitor.visitDirective(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
 };
 
 
