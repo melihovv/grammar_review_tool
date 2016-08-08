@@ -1,8 +1,14 @@
 'use strict';
 
-import {LemonListener} from './LemonListener';
-import {LemonParser} from './LemonParser';
+import {LemonListener} from './parser/LemonListener';
+import {LemonParser} from './parser/LemonParser';
 
+/**
+ * @param {{nonterminalToFindOnTheLeftSide: string, symbolToFind: string, ruleToCompare: string}} params
+ * @returns {FinderListener}
+ * @constructor
+ * @extends LemonListener
+ */
 function FinderListener({
     nonterminalToFindOnTheLeftSide,
     symbolToFind,
@@ -25,6 +31,9 @@ function FinderListener({
 FinderListener.prototype = Object.create(LemonListener.prototype);
 FinderListener.prototype.constructor = FinderListener;
 
+/**
+ * @param {LeftSideContext} ctx
+ */
 FinderListener.prototype.enterLeftSide = function (ctx) {
     if (ctx.NONTERMINAL().getText() === this.nonterminalToFindOnTheLeftSide) {
         this.nonterminalsOnTheLeftSide.push(ctx);
@@ -35,6 +44,9 @@ FinderListener.prototype.enterLeftSide = function (ctx) {
     }
 };
 
+/**
+ * @param {RightSideContext} ctx
+ */
 FinderListener.prototype.enterRightSide = function (ctx) {
     for (const child of ctx.children) {
         if (child instanceof LemonParser.SymbolContext) {

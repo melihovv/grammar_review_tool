@@ -1,31 +1,48 @@
 import gulp from 'gulp';
-import util from 'gulp-util';
+import gulplog from 'gulplog';
 import webpack from 'webpack';
 import webpackConfig from './webpack.config.babel';
-
-gulp.task('default', () => {
-    gulp.start('webpack');
-    gulp.start('watch');
-});
-
-const runWebpack = (config) => {
-    return webpack(config, (error, stats) => {
-        if (error) {
-            throw new util.PluginError('runWebpack', error);
-        }
-
-        return util.log('[runWebpack]', stats.toString({colors: true}));
-    });
-};
+import browserSync from 'browser-sync';
 
 gulp.task('webpack', (cb) => {
-    runWebpack(webpackConfig);
-    return cb();
+    webpack(webpackConfig, (error, stats) => {
+        if (error) {
+            gulplog.error(error);
+        } else {
+            gulplog.info(stats.toString({colors: true}));
+        }
+
+        if (!webpackConfig.watch && error) {
+            cb(error);
+        } else {
+            cb();
+        }
+    });
 });
 
-gulp.task('watch', () => {
-    gulp.watch(
-        ['./src/**/*.js'],
-        ['webpack']
-    );
+gulp.task('serve', () => {
+    browserSync.init({
+        server: 'public',
+    });
+
+    browserSync.watch('public/**/*.*').on('change', browserSync.reload);
 });
+
+gulp.task('test', gulp.series('webpack', function watch() {
+    gulp.watch('./src/**/*.js', gulp.series('webpack'));
+}));
+
+gulp.task(
+    'dev',
+    gulp.series(
+        'webpack',
+        gulp.parallel(
+            'serve',
+            function watch() {
+                gulp.watch('./src/**/*.js', gulp.series('webpack'));
+            }
+        )
+    )
+);
+
+gulp.task('prod', gulp.series('webpack'));

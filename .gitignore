@@ -51,3 +51,5 @@ node_modules/
 .nyc_output/
 dist/
 coverage/
+temp/
+public/assets/

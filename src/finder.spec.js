@@ -1,7 +1,7 @@
 'use strict';
 
-import Parser from './Parser';
-import Finder from './Finder';
+import Parser from './parser';
+import Finder from './finder';
 
 describe('finder', function () {
     const parser = new Parser();

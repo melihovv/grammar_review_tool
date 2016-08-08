@@ -1,6 +1,6 @@
 'use strict';
 
-import Parser from './Parser';
+import Parser from './parser';
 
 describe('parser', function () {
     const parser = new Parser();

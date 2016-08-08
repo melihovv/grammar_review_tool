@@ -26,11 +26,11 @@ TERMINAL: UPPER ALPHANUM*;
 NONTERMINAL: LOWER ALPHANUM*;
 INT: DIGIT19 DIGIT*;
 
-LINE_COMMENT: '//' .*? NEWLINE -> skip;
-MULTI_LINE_COMMENT: '/*' .*? '*/' -> skip;
+LINE_COMMENT: '//' .*? NEWLINE -> channel(HIDDEN);
+MULTI_LINE_COMMENT: '/*' .*? '*/' -> channel(HIDDEN);
 
-NEWLINE: ('\r' '\n'?|'\n') -> skip;
-WS: [ \r\v\t]+ -> skip;
+NEWLINE: ('\r' '\n'?|'\n') -> channel(HIDDEN);
+WS: [ \r\v\t]+ -> channel(HIDDEN);
 
 TARGET_CODE_SECTION: '{' TARGET_CODE*? '}';
 TARGET_CODE
