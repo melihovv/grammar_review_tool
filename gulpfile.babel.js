@@ -39,7 +39,7 @@ gulp.task(
         gulp.parallel(
             'serve',
             function watch() {
-                gulp.watch('./src/**/*.js', gulp.series('webpack'));
+                gulp.watch('./src/**/*.{js,y}', gulp.series('webpack'));
             }
         )
     )
