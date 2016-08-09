@@ -29,7 +29,7 @@ gulp.task('serve', () => {
 });
 
 gulp.task('test', gulp.series('webpack', function watch() {
-    gulp.watch('./src/**/*.js', gulp.series('webpack'));
+    gulp.watch('./src/js/**/*.js', gulp.series('webpack'));
 }));
 
 gulp.task(
@@ -39,7 +39,7 @@ gulp.task(
         gulp.parallel(
             'serve',
             function watch() {
-                gulp.watch('./src/**/*.{js,y}', gulp.series('webpack'));
+                gulp.watch('./src/**/*.{js,y,styl}', gulp.series('webpack'));
             }
         )
     )

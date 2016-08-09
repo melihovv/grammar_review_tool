@@ -3,6 +3,6 @@ coverage/
 docs/
 metrics/
 dist/
-src/parser/
+src/js/parser/
 temp/
 public/assets

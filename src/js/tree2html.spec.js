@@ -15,14 +15,16 @@ describe('tree2html', function () {
     it('must convert tree to html keep comments and whitespaces 1', () => {
         test(
             `%name grammar`,
-            '<table><tr><td>1</td><td>%name grammar</td></tr></table>'
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>%name grammar</td></tr></table>'
         );
     });
 
     it('must convert tree to html keep comments and whitespaces 2', () => {
         test(
             ` /*hi*/%name grammar`,
-            '<table><tr><td>1</td><td> /*hi*/%name grammar</td></tr></table>'
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td> /*hi*/%name grammar</td></tr></table>'
         );
     });
 
@@ -30,7 +32,7 @@ describe('tree2html', function () {
         test(
             `
 %name grammar`,
-            '<table><tr><td>1</td><td></td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td><td></td></tr>' +
             '<tr><td>2</td><td>%name grammar</td></tr></table>'
         );
     });
@@ -40,7 +42,7 @@ describe('tree2html', function () {
             `
 /*hi*/
 %name grammar`,
-            '<table><tr><td>1</td><td></td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td><td></td></tr>' +
             '<tr><td>2</td><td>/*hi*/</td></tr>' +
             '<tr><td>3</td><td>%name grammar</td></tr></table>'
         );
@@ -50,7 +52,7 @@ describe('tree2html', function () {
         test(
             `
 /*comment1*/%name /*comment2*/grammar`,
-            '<table><tr><td>1</td><td></td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td><td></td></tr>' +
             '<tr><td>2</td>' +
             '<td>/*comment1*/%name /*comment2*/grammar</td></tr></table>'
         );
@@ -59,7 +61,7 @@ describe('tree2html', function () {
     it('must convert tree to html keep comments and whitespaces 6', () => {
         test(
             `%name /*comment1*/grammar/*comment2*/`,
-            '<table><tr><td>1</td>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
             '<td>%name /*comment1*/grammar/*comment2*/</td></tr></table>'
         );
     });
@@ -68,7 +70,8 @@ describe('tree2html', function () {
         test(
             `%name /*comment1*/grammar
 /*comment2*/`,
-            '<table><tr><td>1</td><td>%name /*comment1*/grammar</td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>%name /*comment1*/grammar</td></tr>' +
             '<tr><td>2</td><td>/*comment2*/</td></tr></table>'
         );
     });
@@ -80,7 +83,7 @@ describe('tree2html', function () {
 /*comment2*/
 
 `,
-            '<table><tr><td>1</td><td></td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td><td></td></tr>' +
             '<tr><td>2</td><td>%name /*comment1*/grammar</td></tr>' +
             '<tr><td>3</td><td>/*comment2*/</td></tr>' +
             '<tr><td>4</td><td></td></tr>' +
@@ -91,7 +94,7 @@ describe('tree2html', function () {
     it('must convert tree to html keep comments and whitespaces 9', () => {
         test(
             `%name/*comment1*/grammar/*comment2*/%name grammar2`,
-            '<table><tr><td>1</td>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
             '<td>%name/*comment1*/grammar/*comment2*/%name grammar2</td></tr>' +
             '</table>'
         );
@@ -101,7 +104,8 @@ describe('tree2html', function () {
         test(
             `%left /*comment*/T1
 T2 .`,
-            '<table><tr><td>1</td><td>%left /*comment*/T1</td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>%left /*comment*/T1</td></tr>' +
             '<tr><td>2</td><td>T2 .</td></tr></table>'
         );
     });
@@ -110,7 +114,8 @@ T2 .`,
         test(
             `%left /*comment*/T1
 T2 .`,
-            '<table><tr><td>1</td><td>%left /*comment*/T1</td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>%left /*comment*/T1</td></tr>' +
             '<tr><td>2</td><td>T2 .</td></tr></table>'
         );
     });
@@ -120,7 +125,8 @@ T2 .`,
             `%include {
 echo "hello"
 }`,
-            '<table><tr><td>1</td><td>%include {</td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>%include {</td></tr>' +
             '<tr><td>2</td><td>echo "hello"</td></tr>' +
             '<tr><td>3</td><td>}</td></tr></table>'
         );
@@ -134,7 +140,8 @@ rule(p1) ::= A(p2) B(p3)/*comment*/. [NOT] {
 echo 'hi'/**/;
 }
 `,
-            '<table><tr><td>1</td><td>// comment</td></tr>' +
+            '<table class="grammar-view"><tr><td>1</td>' +
+            '<td>// comment</td></tr>' +
             '<tr><td>2</td>' +
             '<td>rule(p1) ::= A(p2) B(p3)/*comment*/. [NOT] {</td></tr>' +
             '<tr><td>3</td><td>// comment</td></tr>' +

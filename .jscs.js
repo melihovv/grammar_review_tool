@@ -6,7 +6,7 @@ module.exports =
         'docs/**',
         'metrics/**',
         'dist/**',
-        'src/parser/**',
+        'src/js/parser/**',
         'public/assets/**',
         'temp/**',
         './*.js',

@@ -33,7 +33,7 @@ Tree2HtmlListener.prototype.enterFile = function (ctx) {
 
 Tree2HtmlListener.prototype.exitFile = function () {
     const lines = this._text.split(this._newLineRegex);
-    this.html += '<table>';
+    this.html += '<table class="grammar-view">';
 
     let number = 1;
     for (const line of lines) {
