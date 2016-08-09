@@ -1,6 +1,7 @@
 'use strict';
 
 import {LemonParserListener} from './parser/LemonParserListener';
+import {LemonParser} from './parser/LemonParser';
 
 /**
  * Create Tree2HtmlListener.
@@ -12,7 +13,7 @@ import {LemonParserListener} from './parser/LemonParserListener';
 function Tree2HtmlListener(tokens) {
     LemonParserListener.call(this);
 
-    this._text = '';
+    this._buffer = '';
     this.html = '';
     this._tokens = tokens;
     this._newLineRegex = /\r\n|\n|\r/;
@@ -27,17 +28,19 @@ Tree2HtmlListener.prototype.constructor = Tree2HtmlListener;
  * @param {FileContext} ctx
  */
 Tree2HtmlListener.prototype.enterFile = function (ctx) {
-    this._text +=
+    this._buffer +=
         this._textOfHiddenTokensToLeft(ctx.children[0].start.tokenIndex);
 };
 
 Tree2HtmlListener.prototype.exitFile = function () {
-    const lines = this._text.split(this._newLineRegex);
+    const lines = this._buffer.split(this._newLineRegex);
     this.html += '<table class="grammar-view">';
 
     let number = 1;
     for (const line of lines) {
-        this.html += `<tr><td>${number++}</td><td>${line}</td></tr>`;
+        this.html += `<tr data-row="${number}">` +
+            `<td class="grammar-view__row-number">${number++}</td>` +
+            `<td class="grammar-view__code">${line}</td></tr>`;
     }
 
     this.html += '</table>';
@@ -47,8 +50,26 @@ Tree2HtmlListener.prototype.exitFile = function () {
  * @param {TerminalNodeImpl} ctx
  */
 Tree2HtmlListener.prototype.visitTerminal = function (ctx) {
-    this._text += ctx.symbol.text;
-    this._text += this._textOfHiddenTokensToRight(ctx.symbol.tokenIndex);
+    if (ctx.parentCtx instanceof LemonParser.LeftSideContext) {
+        this._buffer += '<span class="grammar-view__ls-nonterminal">' +
+            `${ctx.symbol.text}</span>`;
+    } else if (ctx.parentCtx instanceof LemonParser.SymbolContext &&
+        ctx.parentCtx.parentCtx instanceof LemonParser.RightSideContext) {
+        const text = ctx.getText();
+
+        // Terminal.
+        if (text[0] === text[0].toUpperCase()) {
+            this._buffer += `<span class="grammar-view__terminal">${text}` +
+            '</span>';
+        } else { // Nonterminal.
+            this._buffer += '<span class="grammar-view__rs-nonterminal">' +
+                `${text}</span>`;
+        }
+    } else {
+        this._buffer += ctx.symbol.text;
+    }
+
+    this._buffer += this._textOfHiddenTokensToRight(ctx.symbol.tokenIndex);
 };
 
 /**
