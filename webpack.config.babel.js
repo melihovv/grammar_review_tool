@@ -50,8 +50,7 @@ if (env === 'test') {
             path: __dirname + '/public/assets',
             filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
         },
-        devtool: env === 'dev' ? 'eval' : null,
-        watch: env === 'dev',
+        devtool: env === 'dev' ? 'source-map' : null,
         module: {
             loaders: [
                 {
@@ -86,18 +85,14 @@ if (env === 'test') {
                         compiler.options.output.path + '/**',
                     ]);
                 },
-            }
-        );
-        config.plugins.push(
+            },
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
                     warnings: false,
                     drop_console: true,
                     unsafe: true,
                 },
-            })
-        );
-        config.plugins.push(
+            }),
             new ManifestPlugin({
                 fileName: 'rev-manifest.json',
             })
