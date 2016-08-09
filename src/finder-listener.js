@@ -1,20 +1,20 @@
 'use strict';
 
-import {LemonListener} from './parser/LemonListener';
+import {LemonParserListener} from './parser/LemonParserListener';
 import {LemonParser} from './parser/LemonParser';
 
 /**
  * @param {{nonterminalToFindOnTheLeftSide: string, symbolToFind: string, ruleToCompare: string}} params
  * @returns {FinderListener}
  * @constructor
- * @extends LemonListener
+ * @extends LemonParser
  */
 function FinderListener({
     nonterminalToFindOnTheLeftSide,
     symbolToFind,
     ruleToCompare
 }) {
-    LemonListener.call(this);
+    LemonParserListener.call(this);
 
     this.nonterminalToFindOnTheLeftSide = nonterminalToFindOnTheLeftSide;
     this.nonterminalsOnTheLeftSide = [];
@@ -28,7 +28,7 @@ function FinderListener({
     return this;
 }
 
-FinderListener.prototype = Object.create(LemonListener.prototype);
+FinderListener.prototype = Object.create(LemonParserListener.prototype);
 FinderListener.prototype.constructor = FinderListener;
 
 /**

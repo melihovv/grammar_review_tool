@@ -1,16 +1,16 @@
 'use strict';
 
-import {LemonListener} from './parser/LemonListener';
+import {LemonParserListener} from './parser/LemonParserListener';
 
 /**
  * Create Tree2HtmlListener.
  * @param {CommonTokenStream} tokens
  * @returns {Tree2HtmlListener}
  * @constructor
- * @extends LemonListener
+ * @extends LemonParserListener
  */
 function Tree2HtmlListener(tokens) {
-    LemonListener.call(this);
+    LemonParserListener.call(this);
 
     this._text = '';
     this.html = '';
@@ -20,7 +20,7 @@ function Tree2HtmlListener(tokens) {
     return this;
 }
 
-Tree2HtmlListener.prototype = Object.create(LemonListener.prototype);
+Tree2HtmlListener.prototype = Object.create(LemonParserListener.prototype);
 Tree2HtmlListener.prototype.constructor = Tree2HtmlListener;
 
 /**

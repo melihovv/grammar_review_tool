@@ -21,10 +21,15 @@ describe('parser', function () {
 
     it('must properly handle closing braces in php code sections', () => {
         parser.parse.bind(parser, `
-            %destructor {
-                '}'
-            }
+            %destructor {'}'}
+            %destructor {'\\'}'}
+            %destructor {'
+}'}
             %syntax_error {"}"}
+            %syntax_error {"\\"}"}
+            %syntax_error {"
+}"}
+            %declare_class {{{}}}
         `).must.not.throw();
     });
 
@@ -74,7 +79,7 @@ NOW;
             // comment
             rule(p1) ::= A(p2) B(p3)/*comment*/. [NOT] {
                 // comment
-                echo 'hi'/**/;
+                echo 'hi'/*}*/;
             }
         `).must.not.throw();
     });
