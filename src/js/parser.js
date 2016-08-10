@@ -1,6 +1,7 @@
 'use strict';
 
-import antlr4 from 'antlr4/index';
+import {InputStream} from 'antlr4/InputStream';
+import {CommonTokenStream} from 'antlr4/CommonTokenStream';
 import {LemonLexer} from './parser/LemonLexer';
 import {LemonParser} from './parser/LemonParser';
 
@@ -22,9 +23,9 @@ class Parser {
      * @returns {FileContext}
      */
     parse(input) {
-        const chars = new antlr4.InputStream(input);
+        const chars = new InputStream(input);
         const lexer = new LemonLexer(chars);
-        const tokens = new antlr4.CommonTokenStream(lexer);
+        const tokens = new CommonTokenStream(lexer);
         this.parser = new LemonParser(tokens);
         this.parser.buildParseTrees = true;
 

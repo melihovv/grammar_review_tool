@@ -1,6 +1,6 @@
 'use strict';
 
-import antlr4 from 'antlr4/index';
+import tree from 'antlr4/tree/index';
 import FinderListener from './finder-listener';
 import {LemonParser} from './parser/LemonParser';
 
@@ -25,7 +25,7 @@ class Finder {
         const finder = new FinderListener({
             nonterminalToFindOnTheLeftSide: nonterminal,
         });
-        antlr4.tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
+        tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
         return finder.nonterminalsOnTheLeftSide;
     }
 
@@ -36,7 +36,7 @@ class Finder {
      */
     findRulesWhichContains(symbol) {
         const finder = new FinderListener({symbolToFind: symbol});
-        antlr4.tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
+        tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
         return finder.rulesWhichContainsSymbol;
     }
 
@@ -59,7 +59,7 @@ class Finder {
         }
 
         const finder = new FinderListener({ruleToCompare});
-        antlr4.tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
+        tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
 
         return finder.rulesWithTheSameRightSides;
     }
