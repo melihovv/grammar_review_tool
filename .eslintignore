@@ -1,7 +1,7 @@
 node_modules/
+.nyc_output/
 coverage/
 docs/
-metrics/
 dist/
 src/js/parser/
 temp/
