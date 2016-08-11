@@ -1,9 +1,11 @@
-import del from 'del';
-import webpack from 'webpack';
-import glob from 'glob';
-import ManifestPlugin from 'webpack-manifest-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import path from 'path';
+'use strict';
+
+const del = require('del');
+const webpack = require('webpack');
+const glob = require('glob');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
 
 const env = process.env.NODE_ENV;
 let config = {};
@@ -34,7 +36,7 @@ if (env === 'test') {
         apply: (compiler) => {
           del.sync([
             compiler.options.output.path + '/**',
-          ]);
+          ], {force: true});
         },
       },
       new webpack.NoErrorsPlugin(),
@@ -113,4 +115,4 @@ if (env === 'test') {
   }
 }
 
-export default config;
+module.exports = config;

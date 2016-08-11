@@ -1,8 +1,10 @@
-import gulp from 'gulp';
-import gulplog from 'gulplog';
-import webpack from 'webpack';
-import webpackConfig from './webpack.config.babel';
-import browserSync from 'browser-sync';
+'use strict';
+
+const gulp = require('gulp');
+const gulplog = require('gulplog');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+const browserSync = require('browser-sync');
 
 gulp.task('webpack', (cb) => {
   webpack(webpackConfig, (error, stats) => {
