@@ -64,8 +64,6 @@ if (env === 'test') {
           exclude: /node_modules/,
           loader: 'babel',
           query: {
-            presets: ['es2015', 'stage-2'],
-            plugins: env === 'prod' ? ['transform-runtime'] : [],
             cacheDirectory: true,
           },
         },
