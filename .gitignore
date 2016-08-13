@@ -48,8 +48,8 @@ crashlytics.properties
 crashlytics-build.properties
 
 node_modules/
-.nyc_output/
-dist/
-coverage/
-temp/
-public/assets/
+docs/
+public/
+test/unit/coverage/
+test/unit/.chrome
+test/e2e/reports/

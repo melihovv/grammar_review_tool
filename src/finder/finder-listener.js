@@ -1,10 +1,12 @@
 'use strict';
 
-import {LemonParserListener} from './parser/LemonParserListener';
-import {LemonParser} from './parser/LemonParser';
+const LemonParserListener =
+  require('../parser/Lemon/LemonParserListener').LemonParserListener;
+const LemonParser = require('../parser/Lemon/LemonParser').LemonParser;
 
 /**
- * @param {{nonterminalToFindOnTheLeftSide: string, symbolToFind: string, ruleToCompare: string}} params
+ * @param {{nonterminalToFindOnTheLeftSide: string, symbolToFind: string,
+ * ruleToCompare: string}} params
  * @returns {FinderListener}
  * @constructor
  * @extends LemonParser
@@ -75,4 +77,4 @@ FinderListener.prototype.enterRightSide = function (ctx) {
   }
 };
 
-export default FinderListener;
+module.exports = FinderListener;

@@ -1,8 +1,5 @@
 node_modules/
-.nyc_output/
-coverage/
 docs/
-dist/
-src/js/parser/
-temp/
-public/assets
+test/unit/coverage/
+src/parser/Lemon
+public/

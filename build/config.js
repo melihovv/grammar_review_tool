@@ -1,0 +1,43 @@
+'use strict';
+
+const path = require('path');
+const merge = require('webpack-merge');
+
+const prodEnv = {
+  NODE_ENV: '"production"',
+};
+
+const devEnv = merge(prodEnv, {
+  NODE_ENV: '"development"',
+});
+
+const testEnv = merge(devEnv, {
+  NODE_ENV: '"testing"',
+});
+
+const productionConfig = {
+  env: prodEnv,
+  index: path.resolve(__dirname, '../public/index.html'),
+  assetsRoot: path.resolve(__dirname, '../public'),
+  assetsSubDirectory: 'assets',
+  assetsPublicPath: '/',
+  sourceMap: false,
+  staticDir: 'static',
+};
+
+const developmentConfig = merge(productionConfig, {
+  env: devEnv,
+  port: 8080,
+  proxyTable: {},
+  cssSourceMap: true,
+});
+
+const testingConfig = merge(developmentConfig, {
+  env: testEnv,
+});
+
+module.exports = {
+  production: productionConfig,
+  development: developmentConfig,
+  testing: testingConfig,
+};

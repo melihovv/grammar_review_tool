@@ -2,7 +2,8 @@ module.exports = {
   extends: 'standard',
   plugins: [
     'standard',
-    'promise'
+    'promise',
+    'html'
   ],
   rules: {
     semi: ['error', 'always'],

@@ -1,2 +1,0 @@
---require must
---compilers js:babel-register

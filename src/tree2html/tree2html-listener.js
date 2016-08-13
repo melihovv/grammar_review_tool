@@ -1,7 +1,8 @@
 'use strict';
 
-import {LemonParserListener} from './parser/LemonParserListener';
-import {LemonParser} from './parser/LemonParser';
+const LemonParserListener =
+  require('../parser/Lemon/LemonParserListener').LemonParserListener;
+const LemonParser = require('../parser/Lemon/LemonParser').LemonParser;
 
 /**
  * Create Tree2HtmlListener.
@@ -32,14 +33,17 @@ Tree2HtmlListener.prototype.enterFile = function (ctx) {
     this._textOfHiddenTokensToLeft(ctx.children[0].start.tokenIndex);
 };
 
-Tree2HtmlListener.prototype.exitFile = function () {
+/**
+ * @param {FileContext} ctx
+ */
+Tree2HtmlListener.prototype.exitFile = function (ctx) {
   const lines = this._buffer.split(this._newLineRegex);
   this.html += '<table class="grammar-view">';
 
   let number = 1;
   for (const line of lines) {
     this.html += `<tr data-row="${number}">` +
-      `<td class="grammar-view__row-number">${number++}</td>` +
+      `<td class="grammar-view__row-number" @click="addCommentToRow">${number++}</td>` +
       `<td class="grammar-view__code">${line}</td></tr>`;
   }
 
@@ -51,7 +55,8 @@ Tree2HtmlListener.prototype.exitFile = function () {
  */
 Tree2HtmlListener.prototype.visitTerminal = function (ctx) {
   if (ctx.parentCtx instanceof LemonParser.LeftSideContext) {
-    this._buffer += '<span class="grammar-view__ls-nonterminal">' +
+    this._buffer += '<span class="grammar-view__ls-nonterminal" ' +
+      '@click="addCommentToLsNonterminal">' +
       `${ctx.symbol.text}</span>`;
   } else if (ctx.parentCtx instanceof LemonParser.SymbolContext &&
     ctx.parentCtx.parentCtx instanceof LemonParser.RightSideContext) {
@@ -59,10 +64,12 @@ Tree2HtmlListener.prototype.visitTerminal = function (ctx) {
 
     // Terminal.
     if (text[0] === text[0].toUpperCase()) {
-      this._buffer += `<span class="grammar-view__terminal">${text}` +
+      this._buffer += `<span class="grammar-view__terminal" ` +
+        `@click="addCommentToTerminal">${text}` +
         '</span>';
     } else { // Nonterminal.
-      this._buffer += '<span class="grammar-view__rs-nonterminal">' +
+      this._buffer += '<span class="grammar-view__rs-nonterminal" ' +
+        '@click="addCommentToRsNonterminal">' +
         `${text}</span>`;
     }
   } else {
@@ -104,4 +111,4 @@ Tree2HtmlListener.prototype._tokensText = function (tokens) {
   return result;
 };
 
-export default Tree2HtmlListener;
+module.exports = Tree2HtmlListener;
