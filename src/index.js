@@ -1,5 +1,5 @@
-const Vue = require('vue');
-const App = require('./components/app/app');
+import Vue from 'vue';
+import App from './components/app/app';
 
 /* eslint-disable no-new */
 new Vue({

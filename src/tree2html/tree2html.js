@@ -1,18 +1,24 @@
 'use strict';
 
-const Antlr4Tree = require('antlr4/tree/index');
-const Tree2HtmlListener = require('./tree2html-listener');
+import Antlr4Tree from 'antlr4/tree/index';
+import Tree2HtmlListener from './tree2html-listener';
 
 /**
- * Convert tree to html.
- * @param {FileContext} tree
- * @param {CommonTokenStream} tokens
- * @returns {string}
+ * Tree to html converter.
  */
-function tree2Html(tree, tokens) {
-  const tree2HtmlListener = new Tree2HtmlListener(tokens);
-  Antlr4Tree.ParseTreeWalker.DEFAULT.walk(tree2HtmlListener, tree);
-  return tree2HtmlListener.html;
+class Tree2Html {
+  /**
+   * Convert tree to html.
+   * @param {FileContext} tree
+   * @param {CommonTokenStream} tokens
+   * @returns {string}
+   * @static
+   */
+  static convert(tree, tokens) {
+    const tree2HtmlListener = new Tree2HtmlListener(tokens);
+    Antlr4Tree.ParseTreeWalker.DEFAULT.walk(tree2HtmlListener, tree);
+    return tree2HtmlListener.html;
+  }
 }
 
-module.exports = tree2Html;
+export default Tree2Html;

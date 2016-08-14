@@ -2,8 +2,8 @@
 
 'use strict';
 
-const Vue = require('vue');
-const GrammarView = require('components/grammar-view/grammar-view');
+import Vue from 'vue';
+import GrammarView from 'components/grammar-view/grammar-view';
 
 describe('GrammarView', () => {
   it('should render correct contents', () => {

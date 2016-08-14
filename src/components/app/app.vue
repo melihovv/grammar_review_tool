@@ -3,9 +3,11 @@
 </template>
 
 <script>
-  module.exports = {
+  import GrammarView from 'components/grammar-view/grammar-view';
+
+  export default {
     components: {
-      GrammarView: require('components/grammar-view/grammar-view'),
+      GrammarView,
     },
   };
 </script>

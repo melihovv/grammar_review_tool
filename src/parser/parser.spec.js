@@ -2,7 +2,7 @@
 
 'use strict';
 
-const Parser = require('./parser');
+import Parser from './parser';
 
 describe('parser', () => {
   const parser = new Parser();

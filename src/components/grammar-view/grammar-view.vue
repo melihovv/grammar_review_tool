@@ -1,14 +1,15 @@
 <script>
   /* eslint-env browser */
 
-  const Parser = require('src/parser/parser');
-  const convert = require('src/tree2html/tree2html');
-  const parser = new Parser();
-  const grammar = require('./grammar.y');
-  const tree = parser.parse(grammar);
-  const template = convert(tree, parser.parser._input);
+  import Parser from 'src/parser/parser';
+  import Tree2Html from 'src/tree2html/tree2html';
+  import grammar from './grammar.y';
 
-  module.exports = {
+  const parser = new Parser();
+  const tree = parser.parse(grammar);
+  const template = Tree2Html.convert(tree, parser.parser._input);
+
+  export default {
     template: template,
     methods: {
       addCommentToRow() {

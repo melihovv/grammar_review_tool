@@ -2,8 +2,8 @@
 
 'use strict';
 
-const Parser = require('../parser/parser');
-const Finder = require('./finder');
+import Parser from '../parser/parser';
+import Finder from './finder';
 
 describe('finder', () => {
   const parser = new Parser();

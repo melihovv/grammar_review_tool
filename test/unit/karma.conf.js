@@ -27,13 +27,6 @@ const webpackConfig = merge(baseConfig, {
 
 delete webpackConfig.entry;
 
-webpackConfig.module.loaders.some(function (loader, i) {
-  if (loader.loader === 'babel') {
-    loader.include = path.resolve(projectRoot, 'test/unit');
-    return true;
-  }
-});
-
 module.exports = (config) => {
   const configuration = {
     basePath: projectRoot,
@@ -51,13 +44,20 @@ module.exports = (config) => {
     files: [
       './test/unit/tests.js',
     ],
-    exclude: [
-      './src/config.js',
-    ],
     preprocessors: {
       './test/unit/tests.js': ['webpack', 'sourcemap'],
     },
     frameworks: ['mocha', 'sinon-chai'],
+    plugins: [
+      ['coverage', {ignore: ['*.spec.js', 'Lemon*.js']}],
+      'karma-chrome-launcher',
+      'karma-coverage',
+      'karma-mocha',
+      'karma-sinon-chai',
+      'karma-sourcemap-loader',
+      'karma-spec-reporter',
+      'karma-webpack',
+    ],
     reporters: isWebStorm ? [] : ['spec', 'coverage'],
     webpack: webpackConfig,
     webpackMiddleware: {
@@ -77,6 +77,7 @@ module.exports = (config) => {
           lines: 100,
           excludes: [
             'src/components/**/*.vue',
+            'src/parser/Lemon/*.js',
           ],
         },
       },
