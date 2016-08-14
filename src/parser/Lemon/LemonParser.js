@@ -1,7 +1,9 @@
-// Generated from D:/Files/Projects/grammar_review_tool/src/parser\LemonParser.g4 by ANTLR 4.5.3
+// Generated from D:/Files/Projects/grammar_review_tool/src/parser/Lemon\LemonParser.g4 by ANTLR 4.5.3
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var LemonParserListener = require('./LemonParserListener').LemonParserListener;
+var LemonParserVisitor = require('./LemonParserVisitor').LemonParserVisitor;
+
 var grammarFileName = "LemonParser.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
@@ -171,6 +173,14 @@ FileContext.prototype.exitRule = function(listener) {
 	}
 };
 
+FileContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitFile(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -258,6 +268,14 @@ GrammarRuleContext.prototype.exitRule = function(listener) {
 	}
 };
 
+GrammarRuleContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitGrammarRule(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -323,6 +341,14 @@ LeftSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitLeftSide(this);
 	}
+};
+
+LeftSideContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitLeftSide(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -420,6 +446,14 @@ RightSideContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitRightSide(this);
 	}
+};
+
+RightSideContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitRightSide(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -526,6 +560,14 @@ PrecedenceContext.prototype.exitRule = function(listener) {
 	}
 };
 
+PrecedenceContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitPrecedence(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -591,6 +633,14 @@ SymbolContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitSymbol(this);
 	}
+};
+
+SymbolContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitSymbol(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -665,6 +715,14 @@ ParamContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitParam(this);
 	}
+};
+
+ParamContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitParam(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -768,6 +826,14 @@ DirectiveContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitDirective(this);
 	}
+};
+
+DirectiveContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitDirective(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -893,6 +959,14 @@ CodeBlockContext.prototype.exitRule = function(listener) {
     if(listener instanceof LemonParserListener ) {
         listener.exitCodeBlock(this);
 	}
+};
+
+CodeBlockContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof LemonParserVisitor ) {
+        return visitor.visitCodeBlock(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 

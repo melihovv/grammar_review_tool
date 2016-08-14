@@ -1,7 +1,6 @@
 'use strict';
 
-import Antlr4Tree from 'antlr4/tree/index';
-import Tree2HtmlListener from './tree2html-listener';
+import Tree2HtmlVisitor from './tree2html-visitor';
 
 /**
  * Tree to html converter.
@@ -15,9 +14,9 @@ class Tree2Html {
    * @static
    */
   static convert(tree, tokens) {
-    const tree2HtmlListener = new Tree2HtmlListener(tokens);
-    Antlr4Tree.ParseTreeWalker.DEFAULT.walk(tree2HtmlListener, tree);
-    return tree2HtmlListener.html;
+    const tree2HtmlVisitor = new Tree2HtmlVisitor(tokens);
+    tree2HtmlVisitor.visitFile(tree);
+    return tree2HtmlVisitor.html;
   }
 }
 

@@ -14,13 +14,6 @@ const isWebStorm = process.env.WEBSTORM === 'true';
 const webpackConfig = merge(baseConfig, {
   module: {
     loaders: utils.styleLoaders(),
-    postLoaders: isWebStorm ? [] : [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'istanbul-instrumenter',
-        exclude: /(\.spec\.js$|node_modules|Lemon|tree2html|test\/unit)/,
-      },
-    ],
   },
   devtool: '#inline-source-map',
 });
@@ -78,6 +71,7 @@ module.exports = (config) => {
           excludes: [
             'src/components/**/*.vue',
             'src/parser/Lemon/*.js',
+            'src/tree2html/*.js',
           ],
         },
       },

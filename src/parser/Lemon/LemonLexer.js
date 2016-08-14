@@ -1,4 +1,4 @@
-// Generated from D:/Files/Projects/grammar_review_tool/src/parser\LemonLexer.g4 by ANTLR 4.5.3
+// Generated from D:/Files/Projects/grammar_review_tool/src/parser/Lemon\LemonLexer.g4 by ANTLR 4.5.3
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 

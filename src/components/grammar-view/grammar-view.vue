@@ -54,15 +54,15 @@
       padding-left 10px
       color #333
 
+    &__ls-nonterminal, &__rs-nonterminal, &__terminal, &__symbol
+      color #AFD70B
+
     &__ls-nonterminal, &__rs-nonterminal, &__terminal
       cursor pointer
 
-    &__ls-nonterminal
-      color red
+    &__punct, &__directive
+      color #FF063F
 
-    &__rs-nonterminal
-      color green
-
-    &__terminal
-      color blue
+    &__param
+      color #3FBBFF
 </style>

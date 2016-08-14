@@ -56,7 +56,6 @@
     "html-webpack-plugin": "^2.22.0",
     "http-proxy-middleware": "^0.17.0",
     "inject-loader": "^2.0.1",
-    "istanbul-instrumenter-loader": "^0.2.0",
     "karma": "^1.1.2",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.1.1",
@@ -97,7 +96,14 @@
     },
     "nyc": {
       "sourceMap": false,
-      "instrument": false
+      "instrument": false,
+      "exclude": [
+        "**/*.spec.js",
+        "node_modules",
+        "Lemon*.js",
+        "tree2html*.js",
+        "test/unit/**/*.js"
+      ]
     }
   },
   "dependencies": {
