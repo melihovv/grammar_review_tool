@@ -41,10 +41,10 @@ Tree2HtmlListener.prototype.exitFile = function (ctx) {
 
   let number = 1;
   for (const line of lines) {
-    this.html += `<tr data-row="${number}">
-      <td class="grammar-view__row-number"
-          @click="addCommentToRow">${number++}</td>
-      <td class="grammar-view__code">${line}</td></tr>`;
+    this.html += `<tr data-row="${number}">` +
+      '<td class="grammar-view__row-number" ' +
+      `@click="addCommentToRow">${number++}</td>` +
+      `<td class="grammar-view__code">${line}</td></tr>`;
   }
 
   this.html += '</table>';
@@ -55,19 +55,19 @@ Tree2HtmlListener.prototype.exitFile = function (ctx) {
  */
 Tree2HtmlListener.prototype.visitTerminal = function (ctx) {
   if (ctx.parentCtx instanceof LemonParser.LeftSideContext) {
-    this._buffer += `<span class="grammar-view__ls-nonterminal"
-      @click="addCommentToLsNonterminal"> ${ctx.symbol.text}</span>`;
+    this._buffer += '<span class="grammar-view__ls-nonterminal" ' +
+      `@click="addCommentToLsNonterminal"> ${ctx.symbol.text}</span>`;
   } else if (ctx.parentCtx instanceof LemonParser.SymbolContext &&
     ctx.parentCtx.parentCtx instanceof LemonParser.RightSideContext) {
     const text = ctx.getText();
 
     // Terminal.
     if (text[0] === text[0].toUpperCase()) {
-      this._buffer += `<span class="grammar-view__terminal"
-        @click="addCommentToTerminal">${text}</span>`;
+      this._buffer += '<span class="grammar-view__terminal" ' +
+        `@click="addCommentToTerminal">${text}</span>`;
     } else { // Nonterminal.
-      this._buffer += `<span class="grammar-view__rs-nonterminal"
-        @click="addCommentToRsNonterminal">${text}</span>`;
+      this._buffer += '<span class="grammar-view__rs-nonterminal" ' +
+        `@click="addCommentToRsNonterminal">${text}</span>`;
     }
   } else {
     this._buffer += ctx.symbol.text;

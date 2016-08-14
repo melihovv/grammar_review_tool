@@ -10,7 +10,7 @@
   const template = Tree2Html.convert(tree, parser.parser._input);
 
   export default {
-    template: template,
+    template,
     methods: {
       addCommentToRow() {
         alert('add comment to row');
