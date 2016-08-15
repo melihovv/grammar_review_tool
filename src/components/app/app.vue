@@ -16,7 +16,5 @@
 </script>
 
 <style lang="styl" rel="stylesheet/stylus">
-  html, body
-    margin 0
-    padding 0
+  @import "../page/page.styl"
 </style>

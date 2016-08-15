@@ -50,8 +50,10 @@
       color rgba(0, 0, 0, 0.3)
       cursor pointer
 
+    &__row-number:hover
+      color rgba(0,0,0,0.6)
+
     &__code
-      padding-left 10px
       color #333
 
     &__ls-nonterminal, &__rs-nonterminal, &__terminal, &__symbol
@@ -65,4 +67,26 @@
 
     &__param
       color #0086b3
+
+    &__button
+      padding: 0
+      width 19px
+      height 19px
+      line-height 19px
+      background-color #4078c0
+      color white
+      opacity 0
+      font-size 20px
+      font-weight bold
+      position relative
+      left -10px
+      z-index 100
+      transition transform 0.1s ease-in-out
+      transform scale(0.8, 0.8)
+
+    &__row:hover &__button
+      opacity 1
+
+    &__button:hover
+      transform scale(1, 1)
 </style>
