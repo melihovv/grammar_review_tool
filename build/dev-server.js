@@ -6,11 +6,12 @@ const webpack = require('webpack');
 const proxyMiddleware = require('http-proxy-middleware');
 const config = require('./config');
 
-const webpackConfig = process.env.NODE_ENV === 'testing'
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const webpackConfig = NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf');
 
-const port = process.env.PORT || config.development.port;
+const port = process.env.PORT || config[NODE_ENV].port;
 const proxyTable = config.development.proxyTable;
 
 const app = express();

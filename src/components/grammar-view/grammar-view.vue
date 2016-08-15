@@ -55,14 +55,14 @@
       color #333
 
     &__ls-nonterminal, &__rs-nonterminal, &__terminal, &__symbol
-      color #AFD70B
+      color #183691
 
     &__ls-nonterminal, &__rs-nonterminal, &__terminal
       cursor pointer
 
     &__punct, &__directive
-      color #FF063F
+      color #a71d5d
 
     &__param
-      color #3FBBFF
+      color #0086b3
 </style>
