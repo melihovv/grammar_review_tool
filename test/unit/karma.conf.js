@@ -71,7 +71,7 @@ module.exports = (config) => {
           excludes: [
             'src/components/**/*.vue',
             'src/parser/Lemon/*.js',
-            'src/tree2html/*.js',
+            'src/components/grammar-view/tree2html/*.js',
           ],
         },
       },

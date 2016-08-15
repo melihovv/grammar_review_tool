@@ -2,7 +2,7 @@
   /* eslint-env browser */
 
   import Parser from 'src/parser/parser';
-  import Tree2Html from 'src/tree2html/tree2html';
+  import Tree2Html from './tree2html/tree2html';
   import grammar from './grammar.y';
 
   const parser = new Parser();

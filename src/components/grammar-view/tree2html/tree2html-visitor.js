@@ -1,8 +1,8 @@
 'use strict';
 
 import {TerminalNodeImpl} from 'antlr4/tree/Tree';
-import {LemonParserVisitor} from '../parser/Lemon/LemonParserVisitor';
-import {LemonParser} from '../parser/Lemon/LemonParser';
+import {LemonParserVisitor} from 'src/parser/Lemon/LemonParserVisitor';
+import {LemonParser} from 'src/parser/Lemon/LemonParser';
 
 /**
  * Create Tree2HtmlVisitor.

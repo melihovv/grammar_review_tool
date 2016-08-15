@@ -100,8 +100,8 @@
       "exclude": [
         "**/*.spec.js",
         "node_modules",
-        "Lemon*.js",
-        "tree2html*.js",
+        "**/Lemon*.js",
+        "**/tree2html*.js",
         "test/unit/**/*.js"
       ]
     }

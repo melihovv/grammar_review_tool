@@ -3,7 +3,7 @@
 'use strict';
 
 import Vue from 'vue';
-import GrammarView from 'components/grammar-view/grammar-view';
+import GrammarView from './grammar-view';
 
 describe('GrammarView', () => {
   it('should render correct contents', () => {
