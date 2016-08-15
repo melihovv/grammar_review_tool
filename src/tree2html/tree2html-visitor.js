@@ -5,11 +5,11 @@ import {LemonParserVisitor} from '../parser/Lemon/LemonParserVisitor';
 import {LemonParser} from '../parser/Lemon/LemonParser';
 
 /**
- * Create Tree2HtmlListener.
+ * Create Tree2HtmlVisitor.
  * @param {CommonTokenStream} tokens
  * @returns {Tree2HtmlVisitor}
  * @constructor
- * @extends LemonParserListener
+ * @extends LemonParserVisitor
  */
 function Tree2HtmlVisitor(tokens) {
   LemonParserVisitor.call(this);
