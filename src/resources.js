@@ -3,9 +3,8 @@ import VueResource from 'vue-resource';
 
 Vue.use(VueResource);
 
-Vue.http.interceptors.unshift((request, next) => {
-  next(request.respondWith(
-    `%name block_formal_langs_parser_cpp_language
+const response = {
+  grammar: `%name block_formal_langs_parser_cpp_language
 %declare_class {class block_formal_langs_parser_cpp_language}
 
 /* COMMENTS */
@@ -18,6 +17,17 @@ comment_list(R) ::= comment_list(A) COMMENT(B) .  {
 comment_list(R) ::= COMMENT(A) . {
      R = $this->create_node('comment_list', array( A ));
 }`,
-    {status: 200}
-  ));
+  comments: {
+    2: [
+      'comment1',
+    ],
+    6: [
+      'comment2',
+      'comment3',
+    ],
+  },
+};
+
+Vue.http.interceptors.unshift((request, next) => {
+  next(request.respondWith(JSON.stringify(response), {status: 200}));
 });

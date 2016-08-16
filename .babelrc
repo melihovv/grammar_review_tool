@@ -3,7 +3,17 @@
   "plugins": ["transform-runtime"],
   "env": {
     "testing": {
-      "plugins": [ "__coverage__" ]
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.spec.js",
+            "**/Lemon*.js",
+            "src/*.js",
+            "src/components/**/**.(js|vue)",
+            "test/unit/*.js"
+          ]
+        }]
+      ]
     }
   },
   "comments": false

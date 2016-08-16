@@ -2,6 +2,7 @@
 
 const path = require('path');
 const merge = require('webpack-merge');
+const shell = require('shelljs');
 
 process.env.NODE_ENV = 'testing';
 const baseConfig = require('../../build/webpack.base.conf');
@@ -19,6 +20,8 @@ const webpackConfig = merge(baseConfig, {
 });
 
 delete webpackConfig.entry;
+
+shell.rm('-rf', path.resolve(__dirname, './coverage'));
 
 module.exports = (config) => {
   const configuration = {
@@ -42,7 +45,6 @@ module.exports = (config) => {
     },
     frameworks: ['mocha', 'sinon-chai'],
     plugins: [
-      ['coverage', {ignore: ['*.spec.js', 'Lemon*.js']}],
       'karma-chrome-launcher',
       'karma-coverage',
       'karma-mocha',
@@ -68,12 +70,6 @@ module.exports = (config) => {
           statements: 100,
           functions: 100,
           lines: 100,
-          excludes: [
-            'src/components/**/*.vue',
-            'src/parser/Lemon/*.js',
-            'src/components/grammar-view/tree2html/*.js',
-            'src/resources.js',
-          ],
         },
       },
     },
