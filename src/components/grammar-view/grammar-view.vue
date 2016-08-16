@@ -1,29 +1,47 @@
+<template>
+  {{{ template }}}
+</template>
+
 <script>
   /* eslint-env browser */
 
+  import $ from 'jquery';
   import Parser from 'src/parser/parser';
   import Tree2Html from './tree2html/tree2html';
-  import grammar from './grammar.y';
 
-  const parser = new Parser();
-  const tree = parser.parse(grammar);
-  const template = Tree2Html.convert(tree, parser.parser._input);
+  $(() => {
+    $('.grammar-view__add-comment-to-row-button').click(() => {
+      alert('add comment to row');
+    });
+    $('.grammar-view__ls-nonterminal').click(() => {
+      alert('add comment to left side nonterminal');
+    });
+    $('.grammar-view__rs-nonterminal').click(() => {
+      alert('add comment to right side nonterminal');
+    });
+    $('.grammar-view__terminal').click(() => {
+      alert('add comment to terminal');
+    });
+  });
 
   export default {
-    template,
-    methods: {
-      addCommentToRow() {
-        alert('add comment to row');
-      },
-      addCommentToLsNonterminal() {
-        alert('add comment to left side nonterminal');
-      },
-      addCommentToRsNonterminal() {
-        alert('add comment to right side nonterminal');
-      },
-      addCommentToTerminal() {
-        alert('add comment to terminal');
-      },
+    data: () => {
+      return {
+        template: '',
+      };
+    },
+    ready() {
+      const resource = this.$resource('grammars{/id}');
+
+      resource.get({id: 1})
+        .then(response => {
+          const parser = new Parser();
+          const tree = parser.parse(response.body);
+          this.template = Tree2Html.convert(tree, parser.parser._input);
+        })
+        .catch(response => {
+          console.error(response);
+        });
     },
   };
 </script>
@@ -51,7 +69,7 @@
       cursor pointer
 
     &__row-number:hover
-      color rgba(0,0,0,0.6)
+      color rgba(0, 0, 0, 0.6)
 
     &__code
       color #333
@@ -68,7 +86,7 @@
     &__param
       color #0086b3
 
-    &__button
+    &__add-comment-to-row-button
       padding: 0
       width 19px
       height 19px
@@ -84,9 +102,9 @@
       transition transform 0.1s ease-in-out
       transform scale(0.8, 0.8)
 
-    &__row:hover &__button
+    &__row:hover &__add-comment-to-row-button
       opacity 1
 
-    &__button:hover
+    &__add-comment-to-row-button:hover
       transform scale(1, 1)
 </style>

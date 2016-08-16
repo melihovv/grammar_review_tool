@@ -72,6 +72,7 @@ module.exports = (config) => {
             'src/components/**/*.vue',
             'src/parser/Lemon/*.js',
             'src/components/grammar-view/tree2html/*.js',
+            'src/resources.js',
           ],
         },
       },
