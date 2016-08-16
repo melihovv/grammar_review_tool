@@ -4,76 +4,76 @@ import {LemonParserListener} from '../parser/Lemon/LemonParserListener';
 import {LemonParser} from '../parser/Lemon/LemonParser';
 
 /**
- * @param {{nonterminalToFindOnTheLeftSide: string, symbolToFind: string,
- * ruleToCompare: string}} params
- * @returns {FinderListener}
- * @constructor
- * @extends LemonParser
+ * @extends LemonParserListener
  */
-function FinderListener({
-  nonterminalToFindOnTheLeftSide,
-  symbolToFind,
-  ruleToCompare,
-}) {
-  LemonParserListener.call(this);
+class FinderListener extends LemonParserListener {
+  /**
+   * @param {string} [nonterminalToFindOnTheLeftSide]
+   * @param {string} [symbolToFind]
+   * @param {string} [ruleToCompare]
+   * @returns {FinderListener}
+   * @constructor
+   */
+  constructor({
+    nonterminalToFindOnTheLeftSide,
+    symbolToFind,
+    ruleToCompare,
+  }) {
+    super();
 
-  this.nonterminalToFindOnTheLeftSide = nonterminalToFindOnTheLeftSide;
-  this.nonterminalsOnTheLeftSide = [];
+    this.nonterminalToFindOnTheLeftSide = nonterminalToFindOnTheLeftSide;
+    this.nonterminalsOnTheLeftSide = [];
 
-  this.symbolToFind = symbolToFind;
-  this.rulesWhichContainsSymbol = [];
+    this.symbolToFind = symbolToFind;
+    this.rulesWhichContainsSymbol = [];
 
-  this.ruleToCompare = ruleToCompare;
-  this.rulesWithTheSameRightSides = [];
-
-  return this;
-}
-
-FinderListener.prototype = Object.create(LemonParserListener.prototype);
-FinderListener.prototype.constructor = FinderListener;
-
-/**
- * @param {LeftSideContext} ctx
- */
-FinderListener.prototype.enterLeftSide = function (ctx) {
-  if (ctx.NONTERMINAL().getText() === this.nonterminalToFindOnTheLeftSide) {
-    this.nonterminalsOnTheLeftSide.push(ctx);
+    this.ruleToCompare = ruleToCompare;
+    this.rulesWithTheSameRightSides = [];
   }
 
-  if (ctx.NONTERMINAL().getText() === this.symbolToFind) {
-    this.rulesWhichContainsSymbol.push(ctx);
-  }
-};
+  /**
+   * @param {LeftSideContext} ctx
+   */
+  enterLeftSide(ctx) {
+    if (ctx.NONTERMINAL().getText() === this.nonterminalToFindOnTheLeftSide) {
+      this.nonterminalsOnTheLeftSide.push(ctx);
+    }
 
-/**
- * @param {RightSideContext} ctx
- */
-FinderListener.prototype.enterRightSide = function (ctx) {
-  for (const child of ctx.children) {
-    if (child instanceof LemonParser.SymbolContext) {
-      if (child.children[0].getText() === this.symbolToFind) {
-        this.rulesWhichContainsSymbol.push(
-          ctx.parentCtx.children[0]
-        );
-      }
+    if (ctx.NONTERMINAL().getText() === this.symbolToFind) {
+      this.rulesWhichContainsSymbol.push(ctx);
     }
   }
 
-  if (this.ruleToCompare !== undefined &&
-    ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
-    let symbols = [];
-
+  /**
+   * @param {RightSideContext} ctx
+   */
+  enterRightSide(ctx) {
     for (const child of ctx.children) {
       if (child instanceof LemonParser.SymbolContext) {
-        symbols.push(child.children[0].getText());
+        if (child.children[0].getText() === this.symbolToFind) {
+          this.rulesWhichContainsSymbol.push(
+            ctx.parentCtx.children[0]
+          );
+        }
       }
     }
 
-    if (JSON.stringify(symbols) ===
-      JSON.stringify(this.ruleToCompare.symbols)) {
-      this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide());
+    if (this.ruleToCompare !== undefined &&
+      ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
+      let symbols = [];
+
+      for (const child of ctx.children) {
+        if (child instanceof LemonParser.SymbolContext) {
+          symbols.push(child.children[0].getText());
+        }
+      }
+
+      if (JSON.stringify(symbols) ===
+        JSON.stringify(this.ruleToCompare.symbols)) {
+        this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide());
+      }
     }
   }
-};
+}
 
 export default FinderListener;
