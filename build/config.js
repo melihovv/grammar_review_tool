@@ -35,6 +35,7 @@ const developmentConfig = merge(productionConfig, {
 const testingConfig = merge(developmentConfig, {
   env: testEnv,
   port: 8081,
+  baseUrl: 'http://localhost:8081',
 });
 
 module.exports = {
