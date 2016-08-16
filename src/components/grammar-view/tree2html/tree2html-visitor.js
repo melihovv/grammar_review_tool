@@ -45,7 +45,7 @@ Tree2HtmlVisitor.prototype.visitFile = function (ctx) {
 
   let number = 1;
   for (const line of lines) {
-    this.html += `<tr class="grammar-view__row" data-row="${number}">` +
+    this.html += '<tr class="grammar-view__row">' +
       `<td class="grammar-view__row-number">${number++}</td>` +
       '<td class="grammar-view__code"><a href="#" @click="addCommentToRow" ' +
       'class="button button_type_link button_theme_simple ' +
