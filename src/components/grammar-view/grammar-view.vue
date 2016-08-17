@@ -1,5 +1,7 @@
 <template>
-  {{{ template }}}
+  <div class="grammar-view">
+    {{{ template }}}
+  </div>
 </template>
 
 <script>
@@ -36,8 +38,13 @@
       resource.get({id: 1})
         .then(response => {
           const parser = new Parser();
-          const tree = parser.parse(response.body);
-          this.template = Tree2Html.convert(tree, parser.parser._input);
+          const {grammar, comments} = response.json();
+          const tree = parser.parse(grammar);
+          this.template = Tree2Html.convert(
+            tree,
+            parser.parser._input,
+            comments
+          );
         })
         .catch(response => {
           console.error(response);
@@ -47,10 +54,16 @@
 </script>
 
 <style lang="styl" rel="stylesheet/stylus">
-  .grammar-view
+  .grammar-view__table
     white-space pre
-    border-collapse collapse
+    border-spacing 0
     font-size 12px
+
+  .grammar-view
+    width 1024px
+    overflow-x auto
+    border 1px solid #d8d8d8
+    border-radius 3px
 
     &__row-number, &__code
       display table-cell
@@ -98,7 +111,6 @@
       font-weight bold
       position relative
       left -10px
-      z-index 100
       transition transform 0.1s ease-in-out
       transform scale(0.8, 0.8)
 
@@ -107,4 +119,18 @@
 
     &__add-comment-to-row-button:hover
       transform scale(1, 1)
+
+    &__line-comments
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding 10px
+      white-space normal
+      word-wrap break-word
+
+    &__comment-holder
+      max-width 800px
+      margin-bottom 10px
+      border 1px solid #bfccd1
+      border-radius 3px
+      padding 15px
 </style>

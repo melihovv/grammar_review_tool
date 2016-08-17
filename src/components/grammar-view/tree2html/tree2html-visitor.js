@@ -11,15 +11,17 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
   /**
    * Create Tree2HtmlVisitor.
    * @param {CommonTokenStream} tokens
+   * @param {Object} comments
    * @returns {Tree2HtmlVisitor}
    * @constructor
    */
-  constructor(tokens) {
+  constructor(tokens, comments) {
     super();
 
-    this._buffer = '';
+    this.tokens = tokens;
+    this.comments = comments;
     this.html = '';
-    this._tokens = tokens;
+    this._buffer = '';
     this._newLineRegex = /\r\n|\n|\r/;
   }
 
@@ -39,16 +41,32 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     });
 
     const lines = this._buffer.split(this._newLineRegex);
-    this.html += '<table class="grammar-view">';
+    this.html += '<table class="grammar-view__table">';
 
     let number = 1;
     for (const line of lines) {
       this.html += '<tr class="grammar-view__row">' +
-        `<td class="grammar-view__row-number">${number++}</td>` +
+        `<td class="grammar-view__row-number">${number}</td>` +
         '<td class="grammar-view__code"><a href="#" ' +
         'class="button button_type_link button_theme_simple ' +
         'grammar-view__add-comment-to-row-button">+</a>' +
         `${line}</td></tr>`;
+
+      if (number in this.comments) {
+        if (this.comments[number].length) {
+          this.html += '<tr><td class="grammar-view__line-comments" ' +
+            'colspan="2">';
+
+          for (const comment of this.comments[number]) {
+            this.html += '<div class="grammar-view__comment-holder">' +
+              `${comment}</div>`;
+          }
+
+          this.html += '</td></tr>';
+        }
+      }
+
+      ++number;
     }
 
     this.html += '</table>';
@@ -218,7 +236,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @private
    */
   _textOfHiddenTokensToLeft(index) {
-    return this._tokensText(this._tokens.getHiddenTokensToLeft(index));
+    return this._tokensText(this.tokens.getHiddenTokensToLeft(index));
   };
 
   /**
@@ -227,7 +245,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @private
    */
   _textOfHiddenTokensToRight(index) {
-    return this._tokensText(this._tokens.getHiddenTokensToRight(index));
+    return this._tokensText(this.tokens.getHiddenTokensToRight(index));
   };
 
   /**
