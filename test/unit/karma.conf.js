@@ -36,7 +36,7 @@ module.exports = (config) => {
         base: 'Chrome',
         chromeDataDir: projectRoot + '/test/unit/.chrome',
         flags: [
-          '-start-maximized',
+          '--start-maximized',
         ],
       },
     },
