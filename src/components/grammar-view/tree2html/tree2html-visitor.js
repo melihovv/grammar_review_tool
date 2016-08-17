@@ -11,15 +11,19 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
   /**
    * Create Tree2HtmlVisitor.
    * @param {CommonTokenStream} tokens
+   * @param {Object} grammar
    * @param {Object} comments
+   * @param {Object} users
    * @returns {Tree2HtmlVisitor}
    * @constructor
    */
-  constructor(tokens, comments) {
+  constructor(tokens, grammar, comments, users) {
     super();
 
     this.tokens = tokens;
+    this.grammar = grammar;
     this.comments = comments;
+    this.users = users;
     this.html = '';
     this._buffer = '';
     this._newLineRegex = /\r\n|\n|\r/;
@@ -40,10 +44,13 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
       }
     });
 
-    const lines = this._buffer.split(this._newLineRegex);
+    this.html += '<div class="grammar-view__info">';
+    this.html += `${this.grammar.name}</div>`;
+
     this.html += '<table class="grammar-view__table">';
 
     let number = 1;
+    const lines = this._buffer.split(this._newLineRegex);
     for (const line of lines) {
       this.html += '<tr class="grammar-view__row">' +
         `<td class="grammar-view__row-number">${number}</td>` +
@@ -59,7 +66,10 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
           for (const comment of this.comments[number]) {
             this.html += '<div class="grammar-view__comment-holder">' +
-              `${comment}</div>`;
+              '<div class="grammar-view__comment-header">' +
+              `${this.users[comment.user].name}</div>` +
+              `<div class="grammar-view__comment-content">${comment.content}` +
+              '</div></div>';
           }
 
           this.html += '</td></tr>';

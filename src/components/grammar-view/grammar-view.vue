@@ -38,12 +38,14 @@
       resource.get({id: 1})
         .then(response => {
           const parser = new Parser();
-          const {grammar, comments} = response.json();
-          const tree = parser.parse(grammar);
+          const {grammar, comments, users} = response.json();
+          const tree = parser.parse(grammar.content);
           this.template = Tree2Html.convert(
             tree,
             parser.parser._input,
-            comments
+            grammar,
+            comments,
+            users
           );
         })
         .catch(response => {
@@ -132,5 +134,21 @@
       margin-bottom 10px
       border 1px solid #bfccd1
       border-radius 3px
+
+    &__comment-header
+      background-color #f2f8fa
+      padding: 10px 15px
+      color #767676
+      border-bottom 1px solid #bfccd1
+      border-top-left-radius 3px
+      border-top-right-radius 3px
+
+    &__comment-content
       padding 15px
+
+    &__info
+      padding 5px 10px
+      background-color #f7f7f7
+      border-bottom 1px solid #d8d8d8
+      word-wrap break-word
 </style>
