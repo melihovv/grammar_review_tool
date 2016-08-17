@@ -17,4 +17,5 @@
 
 <style lang="styl" rel="stylesheet/stylus">
   @import "../page/page.styl"
+  @import "../loader/loader.styl"
 </style>
