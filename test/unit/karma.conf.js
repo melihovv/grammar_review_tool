@@ -26,7 +26,7 @@ shell.rm('-rf', path.resolve(__dirname, './coverage'));
 module.exports = (config) => {
   const configuration = {
     basePath: projectRoot,
-    browsers: ['Chrome'],
+    browsers: ['Chrome_with_debugging'],
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'Chrome',
@@ -35,6 +35,9 @@ module.exports = (config) => {
       Chrome_with_debugging: {
         base: 'Chrome',
         chromeDataDir: projectRoot + '/test/unit/.chrome',
+        flags: [
+          '-start-maximized',
+        ],
       },
     },
     files: [
