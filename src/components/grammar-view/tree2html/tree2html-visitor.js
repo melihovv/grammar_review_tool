@@ -3,6 +3,7 @@
 import {TerminalNodeImpl} from 'antlr4/tree/Tree';
 import {LemonParserVisitor} from 'src/parser/Lemon/LemonParserVisitor';
 import {LemonParser} from 'src/parser/Lemon/LemonParser';
+import common from '../common';
 
 /**
  * @extends LemonParserVisitor
@@ -44,9 +45,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
       }
     });
 
-    this.html += '<div class="grammar-view__info">';
-    this.html += `${this.grammar.name}</div>`;
-
+    this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`;
     this.html += '<table class="grammar-view__table">';
 
     let number = 1;
@@ -67,15 +66,14 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
           for (const comment of this.comments[number]) {
             this.html += '<div class="grammar-view__comment-holder">' +
               '<div class="grammar-view__comment-header">' +
-              `${this.users[comment.user].name}</div>` +
+              `${this.users[comment.user].name}` +
+              common.svgDeleteComment + common.svgEditComment +
+              '</div>' +
               `<div class="grammar-view__comment-content">${comment.content}` +
               '</div></div>';
           }
 
-          this.html += '<div><a href="#" ' +
-            'class="button button_type_link button_theme_simple ' +
-            'grammar-view__add-comment-to-row-button">Comment</a></div>';
-          this.html += '</td></tr>';
+          this.html += common.addCommentToRowButton + '</td></tr>';
         }
       }
 

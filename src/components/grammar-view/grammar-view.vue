@@ -179,7 +179,9 @@
 
       &:focus
         border-color #51a7e8
-        box-shadow inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(81, 167, 232, 0.5)
+        box-shadow:
+          inset 0 1px 2px rgba(0, 0, 0, 0.075),
+          0 0 5px rgba(81, 167, 232, 0.5)
 
     &__actions
       padding 10px 0 0
@@ -228,4 +230,12 @@
         background-color #ddd
         background-image linear-gradient(#eee, #ddd)
         border-color #ccc;
+
+    &__edit-line-comment,
+    &__delete-line-comment
+      display inline-block
+      padding 0 5px
+      opacity 0.5
+      float right
+      cursor pointer
 </style>
