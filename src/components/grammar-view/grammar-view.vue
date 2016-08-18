@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import $ from 'jquery';
   import Parser from 'src/parser/parser';
   import Tree2Html from './tree2html/tree2html';
   import './line-comments';
@@ -17,12 +18,12 @@
       };
     },
     ready() {
-      const resource = this.$resource('grammars{/id}');
-
-      resource.get({id: 1})
-        .then(response => {
+      $.ajax({
+        type: 'get',
+        url: 'grammars/1',
+        success: response => {
           const parser = new Parser();
-          const {grammar, comments, users} = response.json();
+          const {grammar, comments, users} = JSON.parse(response);
           const tree = parser.parse(grammar.content);
           this.template = Tree2Html.convert(
             tree,
@@ -31,10 +32,8 @@
             comments,
             users
           );
-        })
-        .catch(response => {
-          console.error(response);
-        });
+        },
+      });
     },
   };
 </script>

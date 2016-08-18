@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import './resources';
+import './ajax-mock';
 import App from './components/app/app';
 
 /* eslint-disable no-new */

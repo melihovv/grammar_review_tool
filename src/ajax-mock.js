@@ -1,7 +1,4 @@
-import Vue from 'vue';
-import VueResource from 'vue-resource';
-
-Vue.use(VueResource);
+import $ from 'jquery';
 
 const response = {
   grammar: {
@@ -49,6 +46,10 @@ comment_list(R) ::= COMMENT(A) . {
   },
 };
 
-Vue.http.interceptors.unshift((request, next) => {
-  next(request.respondWith(JSON.stringify(response), {status: 200}));
-});
+function ajaxResponse(response) {
+  return function (params) {
+    params.success(response);
+  };
+}
+
+$.ajax = ajaxResponse(JSON.stringify(response));
