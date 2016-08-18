@@ -5,26 +5,10 @@
 </template>
 
 <script>
-  /* eslint-env browser */
-
-  import $ from 'jquery';
   import Parser from 'src/parser/parser';
   import Tree2Html from './tree2html/tree2html';
-
-  $(() => {
-    $('.grammar-view__add-comment-to-row-button').click(() => {
-      alert('add comment to row');
-    });
-    $('.grammar-view__ls-nonterminal').click(() => {
-      alert('add comment to left side nonterminal');
-    });
-    $('.grammar-view__rs-nonterminal').click(() => {
-      alert('add comment to right side nonterminal');
-    });
-    $('.grammar-view__terminal').click(() => {
-      alert('add comment to terminal');
-    });
-  });
+  import './line-comments';
+  import './symbols-comments';
 
   export default {
     data: () => {
@@ -67,7 +51,8 @@
     border 1px solid #d8d8d8
     border-radius 3px
 
-    &__row-number, &__code
+    &__row-number,
+    &__code
       display table-cell
       line-height 20px
       vertical-align top
@@ -81,7 +66,6 @@
       padding-right 10px
       padding-left 10px
       color rgba(0, 0, 0, 0.3)
-      cursor pointer
 
     &__row-number:hover
       color rgba(0, 0, 0, 0.6)
@@ -89,20 +73,26 @@
     &__code
       color #333
 
-    &__ls-nonterminal, &__rs-nonterminal, &__terminal, &__symbol
+    &__ls-nonterminal,
+    &__rs-nonterminal,
+    &__terminal,
+    &__symbol
       color #183691
 
-    &__ls-nonterminal, &__rs-nonterminal, &__terminal
+    &__ls-nonterminal,
+    &__rs-nonterminal,
+    &__terminal
       cursor pointer
 
-    &__punct, &__directive
+    &__punct,
+    &__directive
       color #a71d5d
 
     &__param
       color #0086b3
 
-    &__add-comment-to-row-button
-      padding: 0
+    &__add-comment-to-row-leftside-button
+      padding 0
       width 19px
       height 19px
       line-height 19px
@@ -116,20 +106,37 @@
       transition transform 0.1s ease-in-out
       transform scale(0.8, 0.8)
 
-    &__row:hover &__add-comment-to-row-button
+    &__row:hover &__add-comment-to-row-leftside-button
       opacity 1
 
-    &__add-comment-to-row-button:hover
+    &__add-comment-to-row-leftside-button:hover
       transform scale(1, 1)
 
+    &__add-comment-to-row-button
+      background-color #eee
+      background-image linear-gradient(#fcfcfc, #eee)
+      border 1px solid #d5d5d5
+      padding 6px 12px
+      font-size 14px
+      line-height 20px
+      color #333
+      white-space nowrap
+      vertical-align middle
+
+      &:hover
+        background-color #ddd
+        background-image linear-gradient(#eee, #ddd)
+        border-color #ccc
+
     &__line-comments
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
+      border-top 1px solid #eee
+      border-bottom 1px solid #eee
       padding 10px
       white-space normal
       word-wrap break-word
 
     &__comment-holder
+      box-sizing border-box
       max-width 800px
       margin-bottom 10px
       border 1px solid #bfccd1
@@ -137,7 +144,7 @@
 
     &__comment-header
       background-color #f2f8fa
-      padding: 10px 15px
+      padding 10px 15px
       color #767676
       border-bottom 1px solid #bfccd1
       border-top-left-radius 3px
@@ -151,4 +158,75 @@
       background-color #f7f7f7
       border-bottom 1px solid #d8d8d8
       word-wrap break-word
+
+    &__comment-form
+      max-width 800px
+      border-radius 3px
+      border 1px solid #ddd
+      padding 15px 10px 10px 10px
+      box-sizing border-box
+
+    &__textarea
+      border 1px solid #ddd
+      height 100px
+      min-height 100px
+      max-height 500px
+      padding 10px
+      resize vertical
+      border-radius 3px
+      box-shadow inset 0 1px 2px rgba(0, 0, 0, 0.075)
+      background-color #fafafa
+      color #333
+
+      &:focus
+        border-color #51a7e8
+        box-shadow inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 5px rgba(81, 167, 232, 0.5)
+
+    &__actions
+      padding 10px 0 0
+      box-sizing border-box
+
+      &::before
+        display table
+        content ""
+
+      &::after
+        display table
+        clear both
+        content ""
+
+    &__add-comment-button,
+    &__cancel-button
+      float right
+      margin-left 5px
+
+    &__add-comment-button
+      color #fff
+      text-shadow 0 -1px 0 rgba(0, 0, 0, 0.15)
+      background-color #60b044
+      background-image linear-gradient(#8add6d, #60b044)
+      border-color #5ca941
+      padding 6px 12px
+      font-size 14px
+      line-height 20px
+
+      &:hover
+        color #fff
+        background-color #569e3d
+        background-image linear-gradient(#79d858, #569e3d)
+        border-color #4a993e
+
+    &__cancel-button
+      padding 6px 12px
+      font-size 14px
+      line-height 20px
+      color #333
+      background-color #eee
+      background-image linear-gradient(#fcfcfc, #eee)
+      border 1px solid #d5d5d5
+
+      &:hover
+        background-color #ddd
+        background-image linear-gradient(#eee, #ddd)
+        border-color #ccc;
 </style>

@@ -56,7 +56,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
         `<td class="grammar-view__row-number">${number}</td>` +
         '<td class="grammar-view__code"><a href="#" ' +
         'class="button button_type_link button_theme_simple ' +
-        'grammar-view__add-comment-to-row-button">+</a>' +
+        'grammar-view__add-comment-to-row-leftside-button">+</a>' +
         `${line}</td></tr>`;
 
       if (number in this.comments) {
@@ -72,6 +72,9 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
               '</div></div>';
           }
 
+          this.html += '<div><a href="#" ' +
+            'class="button button_type_link button_theme_simple ' +
+            'grammar-view__add-comment-to-row-button">Comment</a></div>';
           this.html += '</td></tr>';
         }
       }
