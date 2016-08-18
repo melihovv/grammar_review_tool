@@ -49,7 +49,11 @@ crashlytics-build.properties
 
 node_modules/
 docs/
-public/
 test/unit/coverage/
 test/unit/.chrome
 test/e2e/reports/
+
+vendor/
+public/storage/
+public/assets/
+.env
