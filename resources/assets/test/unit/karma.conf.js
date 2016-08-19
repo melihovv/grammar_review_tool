@@ -53,7 +53,7 @@ module.exports = config => {
       noInfo: true,
     },
     coverageReporter: isWebStorm ? {} : {
-      dir: path.resolve(__dirname, '/coverage'),
+      dir: path.join(__dirname, '/coverage'),
       reporters: [
         {type: 'lcov', subdir: '.'},
         {type: 'html', subdir: 'html'},
