@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
- * App\User
+ * App\User.
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $email
  * @property string $password
@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
