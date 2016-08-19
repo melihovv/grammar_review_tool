@@ -40,7 +40,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
     new HtmlWebpackPlugin({
       filename: NODE_ENV === 'testing' ? 'index.html' : config.production.index,
-      template: './index.html',
+      template: './resources/assets/index.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -58,7 +58,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         // Any required modules inside node_modules are extracted to vendor.
         return module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0;
+          module.resource
+            .indexOf(path.join(__dirname, '../../../node_modules')) === 0;
       },
     }),
     // Extract webpack runtime and module manifest to its own file in order to

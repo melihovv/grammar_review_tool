@@ -4,12 +4,12 @@
   "description": "Tool for review formal grammars in Lemon format.",
   "private": true,
   "scripts": {
-    "build": "node build/build.js",
-    "dev": "node build/dev-server.js",
+    "build": "node resources/assets/build/build.js",
+    "dev": "node resources/assets/build/dev-server.js",
     "test": "npm run unit && npm run e2e",
-    "unit": "karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
-    "report-coverage": "cat ./test/unit/coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
+    "unit": "karma start resources/assets/test/unit/karma.conf.js --single-run",
+    "e2e": "node resources/assets/test/e2e/runner.js",
+    "report-coverage": "cat ./resources/assets/test/unit/coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
     "lint": "eslint --ext .js,.vue .",
     "semantic-release": "semantic-release pre && semantic-release post"
   },

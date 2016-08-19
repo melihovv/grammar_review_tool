@@ -9,7 +9,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production';
 
 module.exports = {
   entry: {
-    app: './src/index',
+    app: './resources/assets/src/index',
   },
   output: {
     path: config[NODE_ENV].assetsRoot,
@@ -18,14 +18,14 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.vue', '.styl'],
-    fallback: [path.join(__dirname, '../node_modules')],
+    fallback: [path.join(__dirname, '../../../node_modules')],
     alias: {
       'src': path.resolve(__dirname, '../src'),
       'components': path.resolve(__dirname, '../src/components'),
     },
   },
   resolveLoader: {
-    fallback: [path.join(__dirname, '../node_modules')],
+    fallback: [path.join(__dirname, '../../../node_modules')],
   },
   module: {
     loaders: [

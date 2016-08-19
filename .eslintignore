@@ -1,5 +1,6 @@
-node_modules/
-docs/
-test/unit/coverage/
-src/parser/Lemon
-public/
+/node_modules
+/docs
+/resources/assets/test/unit/coverage
+/resources/assets/src/parser/Lemon
+/public
+/vendor

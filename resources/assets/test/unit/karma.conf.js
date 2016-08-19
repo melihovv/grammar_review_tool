@@ -5,10 +5,10 @@ const merge = require('webpack-merge');
 const shell = require('shelljs');
 
 process.env.NODE_ENV = 'testing';
-const baseConfig = require('../../build/webpack.base.conf');
+const baseConfig = require('../../build/webpack.base.conf.js');
 const utils = require('../../build/utils');
 
-const projectRoot = path.resolve(__dirname, '../../');
+const projectRoot = path.resolve(__dirname, '../../../..');
 const isTravis = process.env.TRAVIS === 'true';
 const isWebStorm = process.env.WEBSTORM === 'true';
 
@@ -23,7 +23,7 @@ delete webpackConfig.entry;
 
 shell.rm('-rf', path.resolve(__dirname, './coverage'));
 
-module.exports = (config) => {
+module.exports = config => {
   const configuration = {
     basePath: projectRoot,
     browsers: ['Chrome_with_debugging'],
@@ -34,35 +34,26 @@ module.exports = (config) => {
       },
       Chrome_with_debugging: {
         base: 'Chrome',
-        chromeDataDir: projectRoot + '/test/unit/.chrome',
+        chromeDataDir: projectRoot + '/resources/assets/test/unit/.chrome',
         flags: [
           '--start-maximized',
         ],
       },
     },
     files: [
-      './test/unit/tests.js',
+      './resources/assets/test/unit/tests.js',
     ],
     preprocessors: {
-      './test/unit/tests.js': ['webpack', 'sourcemap'],
+      './resources/assets/test/unit/tests.js': ['webpack', 'sourcemap'],
     },
     frameworks: ['mocha', 'sinon-chai'],
-    plugins: [
-      'karma-chrome-launcher',
-      'karma-coverage',
-      'karma-mocha',
-      'karma-sinon-chai',
-      'karma-sourcemap-loader',
-      'karma-spec-reporter',
-      'karma-webpack',
-    ],
     reporters: isWebStorm ? [] : ['spec', 'coverage'],
     webpack: webpackConfig,
     webpackMiddleware: {
       noInfo: true,
     },
     coverageReporter: isWebStorm ? {} : {
-      dir: './test/unit/coverage',
+      dir: path.resolve(__dirname, '/coverage'),
       reporters: [
         {type: 'lcov', subdir: '.'},
         {type: 'html', subdir: 'html'},

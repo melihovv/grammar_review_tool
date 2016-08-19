@@ -8,9 +8,9 @@
           "exclude": [
             "**/*.spec.js",
             "**/Lemon*.js",
-            "src/*.js",
-            "src/components/**/*.(js|vue)",
-            "test/unit/*.js"
+            "resources/assets/src/*.js",
+            "resources/assets/src/components/**/*.(js|vue)",
+            "resources/assets/test/unit/*.js"
           ]
         }]
       ]

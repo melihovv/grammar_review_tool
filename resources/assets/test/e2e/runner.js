@@ -6,7 +6,10 @@ const server = require('../../build/dev-server.js');
 let opts = process.argv.slice(2);
 
 if (opts.indexOf('--config') === -1) {
-  opts = opts.concat(['--config', 'test/e2e/nightwatch.conf.js']);
+  opts = opts.concat([
+    '--config',
+    'resources/assets/test/e2e/nightwatch.conf.js',
+  ]);
 }
 
 if (opts.indexOf('--env') === -1) {
@@ -20,12 +23,12 @@ const runner = spawn(
   {stdio: 'inherit'}
 );
 
-runner.on('exit', function (code) {
+runner.on('exit', code => {
   server.close();
   process.exit(code);
 });
 
-runner.on('error', function (err) {
+runner.on('error', err => {
   server.close();
   throw err;
 });
