@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node resources/assets/build/build.js",
     "dev": "node resources/assets/build/dev-server.js",
-    "test": "npm run unit && npm run e2e",
+    "test": "npm run php-test && npm run unit && npm run e2e",
+    "php-test": "phpunit",
     "unit": "karma start resources/assets/test/unit/karma.conf.js --single-run",
     "e2e": "node resources/assets/test/e2e/runner.js",
     "report-coverage": "cat ./resources/assets/test/unit/coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
