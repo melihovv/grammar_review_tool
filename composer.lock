@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e59ae48c6b0198008a75695d0f657a9e",
-    "content-hash": "0a5085b746ad548ba6ce57786f496078",
+    "hash": "b6435746413063f4922aa440fda08202",
+    "content-hash": "991be774a3570f2796c3fa8b526aadc7",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2521,6 +2521,51 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
+        },
+        {
+            "name": "itsgoingd/clockwork",
+            "version": "v1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itsgoingd/clockwork.git",
+                "reference": "76488226d8fdeab29c1782a5a6c154403ad9cdcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/76488226d8fdeab29c1782a5a6c154403ad9cdcf",
+                "reference": "76488226d8fdeab29c1782a5a6c154403ad9cdcf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "psr/log": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clockwork\\": "Clockwork/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "itsgoingd",
+                    "email": "itsgoingd@luzer.sk",
+                    "homepage": "http://twitter.com/itsgoingd"
+                }
+            ],
+            "description": "Server-side component of Clockwork, a Chrome extension for PHP development",
+            "homepage": "http://github.com/itsgoingd/clockwork",
+            "keywords": [
+                "debugging",
+                "laravel",
+                "logging",
+                "profiling"
+            ],
+            "time": "2016-06-18 18:17:25"
         },
         {
             "name": "mockery/mockery",
