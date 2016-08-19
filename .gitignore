@@ -56,4 +56,6 @@ crashlytics-build.properties
 /public/storage
 /public/index.html
 /public/assets
-.env
+/.env
+/.phpstorm.meta.php
+/_ide_helper.php
