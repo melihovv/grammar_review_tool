@@ -1,0 +1,17 @@
+filter:
+    paths:
+        - 'app/*'
+    excluded_paths:
+        - 'app/views/*'
+        - 'app/config/*'
+        - 'app/database/*'
+        - '*/build/*'
+        - 'public/assets*'
+        - 'vendor/*'
+checks:
+    php: true
+    javascript: true
+build:
+    tests:
+        override:
+            - vendor/bin/phpunit
