@@ -42,7 +42,7 @@ return [
     */
 
     'model_locations' => [
-        'app',
+        'app/Entities',
     ],
 
 
