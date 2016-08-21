@@ -32,6 +32,7 @@ abstract class DatabaseTestCase extends TestCase
         Artisan::call('db:seed', ['--class' => $this->seederClass]);
 
         static::$application = $app;
+
         return $app;
     }
 
