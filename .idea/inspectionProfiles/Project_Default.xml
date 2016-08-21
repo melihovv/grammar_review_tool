@@ -26,11 +26,14 @@
     <inspection_tool class="JSLastCommaInArrayLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSLastCommaInObjectLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MessDetectorValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
-      <option name="CODESIZE" value="true" />
-      <option name="CONTROVERSIAL" value="true" />
-      <option name="DESIGN" value="true" />
-      <option name="UNUSEDCODE" value="true" />
-      <option name="NAMING" value="true" />
+      <option name="customRulesets">
+        <list>
+          <RulesetDescriptor>
+            <option name="name" value="My PHPMD rule set" />
+            <option name="path" value="$PROJECT_DIR$/phpmd-rules.xml" />
+          </RulesetDescriptor>
+        </list>
+      </option>
     </inspection_tool>
     <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="CODING_STANDARD" value="PSR2" />
