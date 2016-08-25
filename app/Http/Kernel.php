@@ -2,10 +2,20 @@
 
 namespace App\Http;
 
+use Clockwork\Support\Laravel\ClockworkMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    public function bootstrap()
+    {
+        parent::bootstrap();
+
+        if ($this->app->environment() !== 'production') {
+            $this->prependMiddleware(ClockworkMiddleware::class);
+        }
+    }
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -15,7 +25,6 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Clockwork\Support\Laravel\ClockworkMiddleware::class,
     ];
 
     /**
