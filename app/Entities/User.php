@@ -8,19 +8,20 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * App\Entities\User
+ * App\Entities\User.
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $email
  * @property string $password
- * @property boolean $is_admin
+ * @property bool $is_admin
  * @property string $remember_token
  * @property string $api_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereEmail($value)

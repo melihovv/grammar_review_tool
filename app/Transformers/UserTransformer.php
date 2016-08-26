@@ -2,17 +2,17 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Entities\User;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class UserTransformer
- * @package namespace App\Transformers;
+ * Class UserTransformer.
  */
 class UserTransformer extends TransformerAbstract
 {
     /**
-     * Transform the User entity
+     * Transform the User entity.
+     *
      * @param User $model
      *
      * @return array
