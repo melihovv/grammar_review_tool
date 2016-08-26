@@ -15,7 +15,7 @@ return [
     |
     */
     'pagination' => [
-        'limit' => 15
+        'limit' => 15,
     ],
 
     /*
@@ -32,9 +32,9 @@ return [
     */
     'fractal'    => [
         'params'     => [
-            'include' => 'include'
+            'include' => 'include',
         ],
-        'serializer' => League\Fractal\Serializer\DataArraySerializer::class
+        'serializer' => League\Fractal\Serializer\DataArraySerializer::class,
     ],
 
     /*
@@ -106,7 +106,7 @@ return [
                 'create' => true,
                 'update' => true,
                 'delete' => true,
-            ]
+            ],
         ],
 
         'params'     => [
@@ -119,7 +119,7 @@ return [
             | Ex: http://prettus.local/?search=lorem&skipCache=true
             |
             */
-            'skipCache' => 'skipCache'
+            'skipCache' => 'skipCache',
         ],
 
         /*
@@ -139,8 +139,8 @@ return [
        */
         'allowed'    => [
             'only'   => null,
-            'except' => null
-        ]
+            'except' => null,
+        ],
     ],
 
     /*
@@ -169,7 +169,7 @@ return [
         */
         'acceptedConditions' => [
             '=',
-            'like'
+            'like',
         ],
         /*
         |--------------------------------------------------------------------------
@@ -209,8 +209,8 @@ return [
             'filter'       => 'filter',
             'orderBy'      => 'orderBy',
             'sortedBy'     => 'sortedBy',
-            'with'         => 'with'
-        ]
+            'with'         => 'with',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -231,7 +231,7 @@ return [
             'controllers'  => 'Http/Controllers',
             'provider'     => 'RepositoryServiceProvider',
             'criteria'     => 'Criteria',
-            'stubsOverridePath' => app_path()
-        ]
-    ]
+            'stubsOverridePath' => app_path(),
+        ],
+    ],
 ];

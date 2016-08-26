@@ -4,17 +4,15 @@ namespace App\Repositories;
 
 use App\Entities\User;
 use App\Presenters\UserPresenter;
-use App\Validators\UserValidator;
 use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
- * Class UserRepositoryRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class UserRepositoryRepositoryEloquent.
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     }
 
     /**
-     * Specify Presenter class name
+     * Specify Presenter class name.
      *
      * @return string
      */
