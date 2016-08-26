@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Asvae\ApiTester\ServiceProvider as ApiTesterServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Clockwork\Support\Laravel\ClockworkServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(IdeHelperServiceProvider::class);
             $this->app->register(ClockworkServiceProvider::class);
+            $this->app->register(ApiTesterServiceProvider::class);
         }
     }
 }
