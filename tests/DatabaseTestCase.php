@@ -28,6 +28,8 @@ abstract class DatabaseTestCase extends TestCase
         $app = require __DIR__.'/../bootstrap/app.php';
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        Hash::setRounds(5);
+
         Artisan::call('migrate');
         Artisan::call('db:seed', ['--class' => $this->seederClass]);
 
