@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import './ajax-mock';
-import App from './components/app/app';
+import App from 'components/app/app';
 
 /* eslint-disable no-new */
 new Vue({
-  el: 'body',
+  el: '.app',
   components: {
     App,
   },

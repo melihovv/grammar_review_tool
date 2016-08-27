@@ -1,7 +1,5 @@
 <template>
-  <div class="grammar-view">
-    {{{ template }}}
-  </div>
+  <div class="grammar-view" v-html="template"></div>
 </template>
 
 <script>
@@ -17,7 +15,7 @@
         template: '<div class="loader">Loading...</div>',
       };
     },
-    ready() {
+    mounted() {
       $.ajax({
         type: 'get',
         url: 'grammars/1',

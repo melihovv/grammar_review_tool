@@ -1,6 +1,8 @@
 <template>
-  <grammar-view></grammar-view>
-  <foot></foot>
+  <div>
+    <grammar-view></grammar-view>
+    <foot></foot>
+  </div>
 </template>
 
 <script>
