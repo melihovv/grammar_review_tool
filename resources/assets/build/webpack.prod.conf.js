@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const config = require('./config');
 const utils = require('./utils');
 const baseWebpackConfig = require('./webpack.base.conf');
@@ -70,5 +71,21 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
   ],
 });
+
+if (config.production.gzip) {
+  webpackConfig.plugins.push(
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+        '\\.(' +
+        config.production.gzipExtensions.join('|') +
+        ')$'
+      ),
+      threshold: 10240,
+      minRatio: 0.8,
+    })
+  );
+}
 
 module.exports = webpackConfig;

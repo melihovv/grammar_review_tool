@@ -23,6 +23,21 @@ const productionConfig = {
   assetsPublicPath: '/',
   sourceMap: false,
   staticDir: 'resources/assets/static',
+  gzip: true,
+  gzipExtensions: [
+    'js',
+    'css',
+    'png',
+    'jpeg',
+    'jpg',
+    'gif',
+    'svg',
+    'woff',
+    'woff2',
+    'eot',
+    'ttf',
+    'otf',
+  ],
 };
 
 const developmentConfig = merge(productionConfig, {
