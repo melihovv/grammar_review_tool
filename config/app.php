@@ -180,6 +180,12 @@ return [
 
     ],
 
+    'local_providers' => [
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+        Asvae\ApiTester\ServiceProvider::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
