@@ -22,6 +22,7 @@
 
   <rule ref="rulesets/cleancode.xml">
     <exclude name="StaticAccess"/>
+    <exclude name="ElseExpression"/>
   </rule>
 
   <rule ref="rulesets/naming.xml/ShortVariable"
@@ -39,6 +40,24 @@
                 value="id,i,j,e"/>
     </properties>
   </rule>
+
+  <rule name="LongVariable"
+        since="0.2"
+        message="Avoid excessively long variable names like {0}. Keep variable name length under {1}."
+        class="PHPMD\Rule\Naming\LongVariable"
+        externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable">
+    <description>
+      Detects when a field, formal or local variable is declared with a
+      long name.
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="maximum"
+                description="The variable length reporting threshold"
+                value="30"/>
+    </properties>
+  </rule>
+
 
   <rule name="ShortMethodName"
         since="0.2"
