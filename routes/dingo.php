@@ -11,12 +11,16 @@ $api->version('v1', [
     $api->post('authenticate', 'Auth\AuthController@authenticate');
 
     $api->group(['middleware' => ['api.auth']], function (Router $api) {
+        $api->resource('users', 'UsersController', [
+            'only' => ['index', 'show'],
+        ]);
+
         $api->resource('grammars', 'GrammarsController', [
             'except' => ['create', 'edit'],
         ]);
 
         $api->resource('grammars.comments', 'CommentsController', [
-            'except' => ['index', 'create', 'show', 'edit'],
+            'only' => ['store', 'update', 'destroy'],
         ]);
     });
 });
