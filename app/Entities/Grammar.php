@@ -5,16 +5,17 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Entities\Grammar
+ * App\Entities\Grammar.
  *
- * @property integer $id
- * @property integer $owner
+ * @property int $id
+ * @property int $owner
  * @property string $name
  * @property string $content
- * @property boolean $public_view
+ * @property bool $public_view
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Entities\User $user
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Grammar whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Grammar whereOwner($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Grammar whereName($value)
