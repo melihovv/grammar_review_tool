@@ -31,6 +31,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Comment[] $comments
  */
 class User extends Authenticatable

@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Grammar whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Grammar whereUpdatedAt($value)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Comment[] $comments
  */
 class Grammar extends Model
