@@ -30,7 +30,7 @@ $factory->define(Grammar::class, function (Faker\Generator $faker) {
     return [
         'owner' => rand(1, 10),
         'name' => $faker->sentence(),
-        'content' => <<<HERE
+        'content' => <<<'HERE'
 %name some_grammar
 rule1 ::= A B C.
 rule2 ::= rule1 D. {/* some action */

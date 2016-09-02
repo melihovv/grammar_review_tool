@@ -2,16 +2,16 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Entities\Grammar;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class GrammarTransformer
+ * Class GrammarTransformer.
  */
 class GrammarTransformer extends TransformerAbstract
 {
     /**
-     * Transform the Grammar entity
+     * Transform the Grammar entity.
      *
      * @param Grammar $model
      *
