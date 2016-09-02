@@ -33,6 +33,7 @@ use Illuminate\Notifications\Notifiable;
  * @mixin \Eloquent
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Comment[] $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Right[] $rights
  */
 class User extends Authenticatable
 {
@@ -77,6 +78,14 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'owner');
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rights()
+    {
+        return $this->hasMany(Right::class);
     }
 }

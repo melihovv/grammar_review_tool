@@ -2,6 +2,7 @@
 
 use App\Entities\Comment;
 use App\Entities\Grammar;
+use App\Entities\Right;
 use App\Entities\User;
 
 /*
@@ -48,5 +49,15 @@ $factory->define(Comment::class, function (Faker\Generator $faker) {
         'content' => $faker->paragraph(),
         'row' => rand(1, 3),
         'column' => rand(0, 10),
+    ];
+});
+
+$factory->define(Right::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => rand(1, 10),
+        'grammar_id' => rand(1, 20),
+        'view' => $faker->boolean(),
+        'comment' => $faker->boolean(),
+        'edit' => $faker->boolean(),
     ];
 });
