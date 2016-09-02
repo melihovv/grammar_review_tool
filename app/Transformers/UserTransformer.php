@@ -24,8 +24,6 @@ class UserTransformer extends TransformerAbstract
             'name' => $model->name,
             'email' => $model->email,
             'is_admin' => $model->is_admin,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
         ];
     }
 }

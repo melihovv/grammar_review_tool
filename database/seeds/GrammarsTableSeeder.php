@@ -1,8 +1,9 @@
 <?php
 
+use App\Entities\Grammar;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class GrammarsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
-        $this->call(GrammarsTableSeeder::class);
+        factory(Grammar::class, 20)->create();
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Dingo\Api\Facade\API;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        API::error(function (ModelNotFoundException $e) {
+            throw new NotFoundHttpException(null, $e);
+        });
     }
 
     /**

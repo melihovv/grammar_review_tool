@@ -4,8 +4,6 @@ namespace App\Entities;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * App\Entities\User.
@@ -19,6 +17,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  * @property string $api_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Grammar[] $grammars
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
  *
@@ -33,9 +32,9 @@ use Prettus\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements Transformable
+class User extends Authenticatable
 {
-    use Notifiable, TransformableTrait;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,10 +56,17 @@ class User extends Authenticatable implements Transformable
     protected $hidden = [
         'password',
         'remember_token',
-        'api_token',
     ];
 
     protected $casts = [
         'is_admin' => 'boolean',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function grammars()
+    {
+        return $this->hasMany(Grammar::class, 'owner');
+    }
 }

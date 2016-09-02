@@ -1,5 +1,6 @@
 <?php
 
+use App\Entities\Grammar;
 use App\Entities\User;
 
 /*
@@ -22,6 +23,19 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('secret'),
         'is_admin' => false,
         'remember_token' => str_random(10),
-        'api_token' => str_random(60),
+    ];
+});
+
+$factory->define(Grammar::class, function (Faker\Generator $faker) {
+    return [
+        'owner' => rand(1, 10),
+        'name' => $faker->sentence(),
+        'content' => <<<HERE
+%name some_grammar
+rule1 ::= A B C.
+rule2 ::= rule1 D. {/* some action */
+HERE
+        ,
+        'public_view' => $faker->boolean(),
     ];
 });

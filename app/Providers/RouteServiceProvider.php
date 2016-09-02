@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Repositories\UserRepository;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +24,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        Route::bind('user', function ($id) {
-            return app()->make(UserRepository::class)->find($id);
-        });
     }
 
     /**
@@ -39,10 +34,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-
         $this->mapApiRoutes();
-
-        //
+        $this->mapDingoRoutes();
     }
 
     /**
@@ -78,5 +71,10 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             require base_path('routes/api.php');
         });
+    }
+
+    protected function mapDingoRoutes()
+    {
+        require base_path('routes/dingo.php');
     }
 }

@@ -109,7 +109,7 @@ return [
 
     'route_repositories' => [
         Asvae\ApiTester\Repositories\RouteLaravelRepository::class,
-        //Asvae\ApiTester\Repositories\RouteDingoRepository::class,
+        Asvae\ApiTester\Repositories\RouteDingoRepository::class,
     ],
 
     /*
