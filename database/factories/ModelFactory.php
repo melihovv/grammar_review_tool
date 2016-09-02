@@ -1,5 +1,6 @@
 <?php
 
+use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\User;
 
@@ -37,5 +38,15 @@ rule2 ::= rule1 D. {/* some action */
 HERE
         ,
         'public_view' => $faker->boolean(),
+    ];
+});
+
+$factory->define(Comment::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => rand(1, 10),
+        'grammar_id' => rand(1, 20),
+        'content' => $faker->paragraph(),
+        'row' => rand(1, 3),
+        'column' => rand(0, 10),
     ];
 });

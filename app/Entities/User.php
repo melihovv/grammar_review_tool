@@ -31,6 +31,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Comment[] $comments
  */
 class User extends Authenticatable
 {
@@ -68,5 +69,13 @@ class User extends Authenticatable
     public function grammars()
     {
         return $this->hasMany(Grammar::class, 'owner');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'owner');
     }
 }
