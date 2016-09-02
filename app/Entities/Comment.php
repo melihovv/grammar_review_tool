@@ -5,19 +5,21 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Entities\Comment
+ * App\Entities\Comment.
  *
  * @property-read \App\Entities\User $user
  * @property-read \App\Entities\Grammar $grammar
  * @mixin \Eloquent
- * @property integer $id
- * @property integer $user_id
- * @property integer $grammar_id
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $grammar_id
  * @property string $content
- * @property integer $row
- * @property integer $column
+ * @property int $row
+ * @property int $column
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Comment whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Comment whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Comment whereGrammarId($value)
