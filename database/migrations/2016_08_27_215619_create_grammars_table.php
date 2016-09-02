@@ -19,6 +19,9 @@ class CreateGrammarsTable extends Migration
             $table->text('content');
             $table->boolean('public_view');
             $table->timestamps();
+
+            $table->foreign('owner')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
