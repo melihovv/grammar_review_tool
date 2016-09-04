@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-import tree from 'antlr4/tree/index';
-import FinderListener from './finder-listener';
-import {LemonParser} from '../parser/Lemon/LemonParser';
+import tree from 'antlr4/tree/index'
+import FinderListener from './finder-listener'
+import {LemonParser} from '../parser/Lemon/LemonParser'
 
 /**
  * Class to find symbols in tree.
@@ -13,7 +13,7 @@ class Finder {
    * @param {FileContext} tree
    */
   constructor(tree) {
-    this.tree = tree;
+    this.tree = tree
   }
 
   /**
@@ -24,9 +24,9 @@ class Finder {
   findRulesWhereOnTheLeft(nonterminal) {
     const finder = new FinderListener({
       nonterminalToFindOnTheLeftSide: nonterminal,
-    });
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
-    return finder.nonterminalsOnTheLeftSide;
+    })
+    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
+    return finder.nonterminalsOnTheLeftSide
   }
 
   /**
@@ -35,9 +35,9 @@ class Finder {
    * @returns {Array}
    */
   findRulesWhichContains(symbol) {
-    const finder = new FinderListener({symbolToFind: symbol});
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
-    return finder.rulesWhichContainsSymbol;
+    const finder = new FinderListener({symbolToFind: symbol})
+    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
+    return finder.rulesWhichContainsSymbol
   }
 
   /**
@@ -46,23 +46,23 @@ class Finder {
    * @returns {Array}
    */
   findRulesWithTheSameRightSide(rule) {
-    const rules = this.findRulesWhereOnTheLeft(rule);
+    const rules = this.findRulesWhereOnTheLeft(rule)
     const ruleToCompare = {
       rule: rules[0],
       symbols: [],
-    };
+    }
 
     for (const child of ruleToCompare.rule.parentCtx.rightSide().children) {
       if (child instanceof LemonParser.SymbolContext) {
-        ruleToCompare.symbols.push(child.children[0].getText());
+        ruleToCompare.symbols.push(child.children[0].getText())
       }
     }
 
-    const finder = new FinderListener({ruleToCompare});
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree);
+    const finder = new FinderListener({ruleToCompare})
+    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
 
-    return finder.rulesWithTheSameRightSides;
+    return finder.rulesWithTheSameRightSides
   }
 }
 
-export default Finder;
+export default Finder

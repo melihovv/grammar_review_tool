@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const config = require('./config');
-const utils = require('./utils');
+const path = require('path')
+const webpack = require('webpack')
+const config = require('./config')
+const utils = require('./utils')
 
-const NODE_ENV = process.env.NODE_ENV || 'production';
+const NODE_ENV = process.env.NODE_ENV || 'production'
 
 module.exports = {
   entry: {
@@ -81,4 +81,4 @@ module.exports = {
   vue: {
     loaders: utils.cssLoaders(),
   },
-};
+}

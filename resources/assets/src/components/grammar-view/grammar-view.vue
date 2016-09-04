@@ -3,37 +3,37 @@
 </template>
 
 <script>
-  import $ from 'jquery';
-  import Parser from 'src/parser/parser';
-  import Tree2Html from './tree2html/tree2html';
-  import './line-comments';
-  import './symbols-comments';
+  import $ from 'jquery'
+  import Parser from 'src/parser/parser'
+  import Tree2Html from './tree2html/tree2html'
+  import './line-comments'
+  import './symbols-comments'
 
   export default {
     data: () => {
       return {
         template: '<div class="loader">Loading...</div>',
-      };
+      }
     },
     mounted() {
       $.ajax({
         type: 'get',
         url: 'grammars/1',
         success: response => {
-          const parser = new Parser();
-          const {grammar, comments, users} = JSON.parse(response);
-          const tree = parser.parse(grammar.content);
+          const parser = new Parser()
+          const {grammar, comments, users} = JSON.parse(response)
+          const tree = parser.parse(grammar.content)
           this.template = Tree2Html.convert(
             tree,
             parser.parser._input,
             grammar,
             comments,
             users
-          );
+          )
         },
-      });
+      })
     },
-  };
+  }
 </script>
 
 <style lang="styl" rel="stylesheet/stylus">
@@ -227,7 +227,7 @@
       &:hover
         background-color #ddd
         background-image linear-gradient(#eee, #ddd)
-        border-color #ccc;
+        border-color #ccc
 
     &__edit-line-comment,
     &__delete-line-comment

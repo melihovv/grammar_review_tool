@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import {LemonParserListener} from '../parser/Lemon/LemonParserListener';
-import {LemonParser} from '../parser/Lemon/LemonParser';
+import {LemonParserListener} from '../parser/Lemon/LemonParserListener'
+import {LemonParser} from '../parser/Lemon/LemonParser'
 
 /**
  * @extends LemonParserListener
@@ -19,16 +19,16 @@ class FinderListener extends LemonParserListener {
     symbolToFind,
     ruleToCompare,
   }) {
-    super();
+    super()
 
-    this.nonterminalToFindOnTheLeftSide = nonterminalToFindOnTheLeftSide;
-    this.nonterminalsOnTheLeftSide = [];
+    this.nonterminalToFindOnTheLeftSide = nonterminalToFindOnTheLeftSide
+    this.nonterminalsOnTheLeftSide = []
 
-    this.symbolToFind = symbolToFind;
-    this.rulesWhichContainsSymbol = [];
+    this.symbolToFind = symbolToFind
+    this.rulesWhichContainsSymbol = []
 
-    this.ruleToCompare = ruleToCompare;
-    this.rulesWithTheSameRightSides = [];
+    this.ruleToCompare = ruleToCompare
+    this.rulesWithTheSameRightSides = []
   }
 
   /**
@@ -36,11 +36,11 @@ class FinderListener extends LemonParserListener {
    */
   enterLeftSide(ctx) {
     if (ctx.NONTERMINAL().getText() === this.nonterminalToFindOnTheLeftSide) {
-      this.nonterminalsOnTheLeftSide.push(ctx);
+      this.nonterminalsOnTheLeftSide.push(ctx)
     }
 
     if (ctx.NONTERMINAL().getText() === this.symbolToFind) {
-      this.rulesWhichContainsSymbol.push(ctx);
+      this.rulesWhichContainsSymbol.push(ctx)
     }
   }
 
@@ -53,27 +53,27 @@ class FinderListener extends LemonParserListener {
         if (child.children[0].getText() === this.symbolToFind) {
           this.rulesWhichContainsSymbol.push(
             ctx.parentCtx.children[0]
-          );
+          )
         }
       }
     }
 
     if (this.ruleToCompare !== undefined &&
       ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
-      let symbols = [];
+      let symbols = []
 
       for (const child of ctx.children) {
         if (child instanceof LemonParser.SymbolContext) {
-          symbols.push(child.children[0].getText());
+          symbols.push(child.children[0].getText())
         }
       }
 
       if (JSON.stringify(symbols) ===
         JSON.stringify(this.ruleToCompare.symbols)) {
-        this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide());
+        this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide())
       }
     }
   }
 }
 
-export default FinderListener;
+export default FinderListener

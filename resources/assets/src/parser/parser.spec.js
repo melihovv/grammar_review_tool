@@ -1,11 +1,11 @@
 /* eslint-env mocha */
 
-'use strict';
+'use strict'
 
-import Parser from './parser';
+import Parser from './parser'
 
 describe('parser', () => {
-  const parser = new Parser();
+  const parser = new Parser()
 
   it('should understand directives', () => {
     parser.parse.bind(parser, `
@@ -18,8 +18,8 @@ describe('parser', () => {
       %stack_size 12
       %type start_rule {/*php code*/}
       %declare_class {/*php code*/}
-    `).should.not.throw();
-  });
+    `).should.not.throw()
+  })
 
   it('should properly handle closing braces in php code sections', () => {
     parser.parse.bind(parser, `
@@ -32,8 +32,8 @@ describe('parser', () => {
       %syntax_error {"
 }"}
       %declare_class {{{}}}
-    `).should.not.throw();
-  });
+    `).should.not.throw()
+  })
 
   it('should not properly handle closing braces in nowdoc and heredoc', () => {
     parser.parse.bind(parser, `
@@ -42,41 +42,41 @@ describe('parser', () => {
           }
 HERE;
       }
-    `).should.throw();
+    `).should.throw()
     parser.parse.bind(parser, `
       %destructor {
           <<<'NOW'
           }
 NOW;
         }
-    `).should.throw();
-  });
+    `).should.throw()
+  })
 
   it('should understand grammar rules', () => {
     parser.parse.bind(parser, `
       rule ::= A B.
-    `).should.not.throw();
-  });
+    `).should.not.throw()
+  })
 
   it('should understand grammar rules with params', () => {
     parser.parse.bind(parser, `
       rule(p1) ::= A(p2) B(p3).
-    `).should.not.throw();
-  });
+    `).should.not.throw()
+  })
 
   it('should understand grammar rules with params and precedence', () => {
     parser.parse.bind(parser, `
       rule(p1) ::= A(p2) B(p3). [NOT]
-    `).should.not.throw();
-  });
+    `).should.not.throw()
+  })
 
   it('should understand grammar rules with params, precedence and code section',
     () => {
       parser.parse.bind(parser, `
       rule(p1) ::= A(p2) B(p3). [NOT] {echo 'hi';}
-    `).should.not.throw();
+    `).should.not.throw()
     }
-  );
+  )
 
   it('should understand single and multiline comments', () => {
     parser.parse.bind(parser, `
@@ -85,6 +85,6 @@ NOW;
           // comment
           echo 'hi'/*}*/;
       }
-    `).should.not.throw();
-  });
-});
+    `).should.not.throw()
+  })
+})

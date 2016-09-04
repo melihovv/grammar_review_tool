@@ -14,4 +14,4 @@ export default {
   addCommentToRowButton: '<div><a href="#" ' +
     'class="button button_type_link button_theme_simple ' +
     'grammar-view__add-comment-to-row-button">Comment</a></div>',
-};
+}

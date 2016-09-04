@@ -1,9 +1,9 @@
 /* eslint-env mocha, browser */
 
-'use strict';
+'use strict'
 
 describe('GrammarView', () => {
   it('should render correct contents', () => {
-    'it simply should pass'.should.contains('pass');
-  });
-});
+    'it simply should pass'.should.contains('pass')
+  })
+})

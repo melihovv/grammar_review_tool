@@ -1,30 +1,30 @@
 /* eslint-env mocha */
 
-'use strict';
+'use strict'
 
-import Parser from '../parser/parser';
-import Finder from './finder';
+import Parser from '../parser/parser'
+import Finder from './finder'
 
 describe('finder', () => {
-  const parser = new Parser();
+  const parser = new Parser()
 
   it('should find rules with specific nonterminal on the left side', () => {
     const tree = parser.parse(`
       a ::= b c.
-    `);
-    const finder = new Finder(tree);
-    finder.findRulesWhereOnTheLeft('a').length.should.equal(1);
-  });
+    `)
+    const finder = new Finder(tree)
+    finder.findRulesWhereOnTheLeft('a').length.should.equal(1)
+  })
 
   it('should find rules which contains specific symbol', () => {
     const tree = parser.parse(`
       a(pa) ::= b(pb) c(pc). [NOT] {}
       b ::= d.
       c ::= b.
-    `);
-    const finder = new Finder(tree);
-    finder.findRulesWhichContains('b').length.should.equal(3);
-  });
+    `)
+    const finder = new Finder(tree)
+    finder.findRulesWhichContains('b').length.should.equal(3)
+  })
 
   it('should find rules with the same right side', () => {
     const tree = parser.parse(`
@@ -34,10 +34,10 @@ describe('finder', () => {
       f ::= b c d.
       g ::= b c.
       h ::= .
-    `);
-    const finder = new Finder(tree);
-    finder.findRulesWithTheSameRightSide('a').length.should.equal(2);
-  });
+    `)
+    const finder = new Finder(tree)
+    finder.findRulesWithTheSameRightSide('a').length.should.equal(2)
+  })
 
   it('should find rules with the same right side', () => {
     const tree = parser.parse(`
@@ -47,8 +47,8 @@ describe('finder', () => {
       f ::= b c d.
       g ::= b c.
       h ::= .
-    `);
-    const finder = new Finder(tree);
-    finder.findRulesWithTheSameRightSide('g').length.should.equal(2);
-  });
-});
+    `)
+    const finder = new Finder(tree)
+    finder.findRulesWithTheSameRightSide('g').length.should.equal(2)
+  })
+})

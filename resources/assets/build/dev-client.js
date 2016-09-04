@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-require('eventsource-polyfill');
+require('eventsource-polyfill')
 const hotClient =
-  require('webpack-hot-middleware/client?noInfo=true&reload=true');
+  require('webpack-hot-middleware/client?noInfo=true&reload=true')
 
 hotClient.subscribe(event => {
   if (event.action === 'reload') {
-    window.location.reload();
+    window.location.reload()
   }
-});
+})

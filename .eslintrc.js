@@ -6,7 +6,7 @@ module.exports = {
     'html'
   ],
   rules: {
-    semi: ['error', 'always'],
+    semi: ['error', 'never'],
     quotes: ['error', 'single', {allowTemplateLiterals: true}],
     'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': [
@@ -14,4 +14,4 @@ module.exports = {
       {'anonymous': 'always', 'named': 'never'}
     ],
   },
-};
+}

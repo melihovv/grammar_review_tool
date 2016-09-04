@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-import {TerminalNodeImpl} from 'antlr4/tree/Tree';
-import {LemonParserVisitor} from 'src/parser/Lemon/LemonParserVisitor';
-import {LemonParser} from 'src/parser/Lemon/LemonParser';
-import common from '../common';
+import {TerminalNodeImpl} from 'antlr4/tree/Tree'
+import {LemonParserVisitor} from 'src/parser/Lemon/LemonParserVisitor'
+import {LemonParser} from 'src/parser/Lemon/LemonParser'
+import common from '../common'
 
 /**
  * @extends LemonParserVisitor
@@ -19,15 +19,15 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @constructor
    */
   constructor(tokens, grammar, comments, users) {
-    super();
+    super()
 
-    this.tokens = tokens;
-    this.grammar = grammar;
-    this.comments = comments;
-    this.users = users;
-    this.html = '';
-    this._buffer = '';
-    this._newLineRegex = /\r\n|\n|\r/;
+    this.tokens = tokens
+    this.grammar = grammar
+    this.comments = comments
+    this.users = users
+    this.html = ''
+    this._buffer = ''
+    this._newLineRegex = /\r\n|\n|\r/
   }
 
   /**
@@ -35,33 +35,33 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    */
   visitFile(ctx) {
     this._buffer +=
-      this._textOfHiddenTokensToLeft(ctx.children[0].start.tokenIndex);
+      this._textOfHiddenTokensToLeft(ctx.children[0].start.tokenIndex)
 
     ctx.children.forEach(child => {
       if (child instanceof LemonParser.GrammarRuleContext) {
-        this.visitGrammarRule(child);
+        this.visitGrammarRule(child)
       } else {
-        this.visitDirective(child);
+        this.visitDirective(child)
       }
-    });
+    })
 
-    this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`;
-    this.html += '<table class="grammar-view__table">';
+    this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`
+    this.html += '<table class="grammar-view__table">'
 
-    let number = 1;
-    const lines = this._buffer.split(this._newLineRegex);
+    let number = 1
+    const lines = this._buffer.split(this._newLineRegex)
     for (const line of lines) {
       this.html += '<tr class="grammar-view__row">' +
         `<td class="grammar-view__row-number">${number}</td>` +
         '<td class="grammar-view__code"><a href="#" ' +
         'class="button button_type_link button_theme_simple ' +
         'grammar-view__add-comment-to-row-leftside-button">+</a>' +
-        `${line}</td></tr>`;
+        `${line}</td></tr>`
 
       if (number in this.comments) {
         if (this.comments[number].length) {
           this.html += '<tr><td class="grammar-view__line-comments" ' +
-            'colspan="2">';
+            'colspan="2">'
 
           for (const comment of this.comments[number]) {
             this.html += '<div class="grammar-view__comment-holder">' +
@@ -70,40 +70,40 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
               common.svgDeleteComment + common.svgEditComment +
               '</div>' +
               `<div class="grammar-view__comment-content">${comment.content}` +
-              '</div></div>';
+              '</div></div>'
           }
 
-          this.html += common.addCommentToRowButton + '</td></tr>';
+          this.html += common.addCommentToRowButton + '</td></tr>'
         }
       }
 
-      ++number;
+      ++number
     }
 
-    this.html += '</table>';
+    this.html += '</table>'
   }
 
   /**
    * @param {GrammarRuleContext} ctx
    */
   visitGrammarRule(ctx) {
-    this.visitLeftSide(ctx.leftSide());
+    this.visitLeftSide(ctx.leftSide())
 
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.ASSIGN(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.ASSIGN(), {closeSpan: true})
 
-    this.visitRightSide(ctx.rightSide());
+    this.visitRightSide(ctx.rightSide())
   }
 
   /**
    * @param {LeftSideContext} ctx
    */
   visitLeftSide(ctx) {
-    this._buffer += '<span class="grammar-view__ls-nonterminal">';
-    this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__ls-nonterminal">'
+    this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
 
     if (ctx.children.length > 1) {
-      this.visitParam(ctx.param());
+      this.visitParam(ctx.param())
     }
   }
 
@@ -113,32 +113,32 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
   visitRightSide(ctx) {
     ctx.children.forEach(child => {
       if (child instanceof LemonParser.SymbolContext) {
-        this.visitSymbol(child, {fromRightSide: true});
+        this.visitSymbol(child, {fromRightSide: true})
       } else if (child instanceof LemonParser.ParamContext) {
-        this.visitParam(child);
+        this.visitParam(child)
       } else if (child instanceof TerminalNodeImpl) {
-        this._buffer += '<span class="grammar-view__punct">';
-        this.visitTerminal(child, {closeSpan: true});
+        this._buffer += '<span class="grammar-view__punct">'
+        this.visitTerminal(child, {closeSpan: true})
       } else if (child instanceof LemonParser.PrecedenceContext) {
-        this.visitPrecedence(child);
+        this.visitPrecedence(child)
       } else if (child instanceof LemonParser.CodeBlockContext) {
-        this.visitCodeBlock(child);
+        this.visitCodeBlock(child)
       }
-    });
+    })
   }
 
   /**
    * @param {PrecedenceContext} ctx
    */
   visitPrecedence(ctx) {
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.LBRACKET(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.LBRACKET(), {closeSpan: true})
 
-    this._buffer += '<span class="grammar-view__param">';
-    this.visitTerminal(ctx.TERMINAL(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__param">'
+    this.visitTerminal(ctx.TERMINAL(), {closeSpan: true})
 
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.RBRACKET(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.RBRACKET(), {closeSpan: true})
   }
 
   /**
@@ -153,21 +153,21 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     fromDirective = false,
   } = {}) {
     if (fromParam) {
-      this._buffer += '<span class="grammar-view__param">';
-      this.visitTerminal(ctx.children[0], {closeSpan: true});
+      this._buffer += '<span class="grammar-view__param">'
+      this.visitTerminal(ctx.children[0], {closeSpan: true})
     } else if (fromRightSide) {
-      const text = ctx.children[0].getText();
+      const text = ctx.children[0].getText()
 
       if (text[0] === text[0].toUpperCase()) { // Terminal.
-        this._buffer += '<span class="grammar-view__terminal">';
+        this._buffer += '<span class="grammar-view__terminal">'
       } else { // Nonterminal.
-        this._buffer += '<span class="grammar-view__rs-nonterminal">';
+        this._buffer += '<span class="grammar-view__rs-nonterminal">'
       }
 
-      this.visitTerminal(ctx.children[0], {closeSpan: true});
+      this.visitTerminal(ctx.children[0], {closeSpan: true})
     } else if (fromDirective) {
-      this._buffer += '<span class="grammar-view__symbol">';
-      this.visitTerminal(ctx.children[0], {closeSpan: true});
+      this._buffer += '<span class="grammar-view__symbol">'
+      this.visitTerminal(ctx.children[0], {closeSpan: true})
     }
   }
 
@@ -175,39 +175,39 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {ParamContext} ctx
    */
   visitParam(ctx) {
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.children[0], {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.children[0], {closeSpan: true})
 
-    this.visitSymbol(ctx.symbol(), {fromParam: true});
+    this.visitSymbol(ctx.symbol(), {fromParam: true})
 
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.children[2], {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.children[2], {closeSpan: true})
   }
 
   /**
    * @param {DirectiveContext} ctx
    */
   visitDirective(ctx) {
-    const children = ctx.children;
+    const children = ctx.children
 
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.PERCENT(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PERCENT(), {closeSpan: true})
 
-    this._buffer += '<span class="grammar-view__directive">';
-    this.visitTerminal(children[1], {closeSpan: true});
+    this._buffer += '<span class="grammar-view__directive">'
+    this.visitTerminal(children[1], {closeSpan: true})
 
     for (let i = 2; i < children.length; ++i) {
       if (children[i] instanceof LemonParser.SymbolContext) {
-        this.visitSymbol(children[i], {fromDirective: true});
+        this.visitSymbol(children[i], {fromDirective: true})
       } else if (children[i] instanceof LemonParser.CodeBlockContext) {
-        this.visitCodeBlock(children[i]);
+        this.visitCodeBlock(children[i])
       } else if (children[i] instanceof TerminalNodeImpl) {
         if (children[i].getText() === '.') {
-          this._buffer += '<span class="grammar-view__punct">';
+          this._buffer += '<span class="grammar-view__punct">'
         } else {
-          this._buffer += '<span class="grammar-view__symbol">';
+          this._buffer += '<span class="grammar-view__symbol">'
         }
-        this.visitTerminal(children[i], {closeSpan: true});
+        this.visitTerminal(children[i], {closeSpan: true})
       }
     }
   }
@@ -216,16 +216,16 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {CodeBlockContext} ctx
    */
   visitCodeBlock(ctx) {
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.BEGIN_CODE(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.BEGIN_CODE(), {closeSpan: true})
 
-    const children = ctx.children;
+    const children = ctx.children
     for (let i = 1; i < children.length - 1; ++i) {
-      this.visitTerminal(children[i]);
+      this.visitTerminal(children[i])
     }
 
-    this._buffer += '<span class="grammar-view__punct">';
-    this.visitTerminal(ctx.END_CODE(), {closeSpan: true});
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.END_CODE(), {closeSpan: true})
   }
 
   /**
@@ -233,12 +233,12 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {bool} [closeSpan=false]
    */
   visitTerminal(ctx, {closeSpan = false} = {}) {
-    this._buffer += ctx.symbol.text;
+    this._buffer += ctx.symbol.text
     if (closeSpan) {
-      this._buffer += '</span>';
+      this._buffer += '</span>'
     }
 
-    this._buffer += this._textOfHiddenTokensToRight(ctx.symbol.tokenIndex);
+    this._buffer += this._textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
   }
 
   /**
@@ -247,8 +247,8 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @private
    */
   _textOfHiddenTokensToLeft(index) {
-    return this._tokensText(this.tokens.getHiddenTokensToLeft(index));
-  };
+    return this._tokensText(this.tokens.getHiddenTokensToLeft(index))
+  }
 
   /**
    * @param {number} index
@@ -256,8 +256,8 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @private
    */
   _textOfHiddenTokensToRight(index) {
-    return this._tokensText(this.tokens.getHiddenTokensToRight(index));
-  };
+    return this._tokensText(this.tokens.getHiddenTokensToRight(index))
+  }
 
   /**
    * @param {Array} tokens
@@ -265,13 +265,13 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @private
    */
   _tokensText(tokens) {
-    tokens = tokens || [];
-    let result = '';
+    tokens = tokens || []
+    let result = ''
     for (const token of tokens) {
-      result += token.text;
+      result += token.text
     }
-    return result;
+    return result
   }
 }
 
-export default Tree2HtmlVisitor;
+export default Tree2HtmlVisitor

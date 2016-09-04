@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const config = require('../../../build/config');
-const baseUrl = config.testing.baseUrl;
+const config = require('../../../build/config')
+const baseUrl = config.testing.baseUrl
 
 module.exports = {
   'GrammarView': function (browser) {
@@ -9,6 +9,6 @@ module.exports = {
       .url(baseUrl)
       .waitForElementVisible('.grammar-view', 5000)
       .assert.containsText('.grammar-view', 'comment_list(R)')
-      .end();
+      .end()
   },
-};
+}

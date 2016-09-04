@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $ from 'jquery'
 
 const response = {
   grammar: {
@@ -44,12 +44,12 @@ comment_list(R) ::= COMMENT(A) . {
       name: 'some guy',
     },
   },
-};
+}
 
 function ajaxResponse(response) {
   return function (params) {
-    params.success(response);
-  };
+    params.success(response)
+  }
 }
 
-$.ajax = ajaxResponse(JSON.stringify(response));
+$.ajax = ajaxResponse(JSON.stringify(response))

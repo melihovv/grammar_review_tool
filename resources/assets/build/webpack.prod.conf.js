@@ -1,16 +1,16 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const config = require('./config');
-const utils = require('./utils');
-const baseWebpackConfig = require('./webpack.base.conf');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const config = require('./config')
+const utils = require('./utils')
+const baseWebpackConfig = require('./webpack.base.conf')
 
-const NODE_ENV = process.env.NODE_ENV || 'production';
+const NODE_ENV = process.env.NODE_ENV || 'production'
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -60,7 +60,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         return module.resource &&
           /\.js$/.test(module.resource) &&
           module.resource
-            .indexOf(path.join(__dirname, '../../../node_modules')) === 0;
+            .indexOf(path.join(__dirname, '../../../node_modules')) === 0
       },
     }),
     // Extract webpack runtime and module manifest to its own file in order to
@@ -70,7 +70,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunks: ['vendor'],
     }),
   ],
-});
+})
 
 if (config.production.gzip) {
   webpackConfig.plugins.push(
@@ -85,7 +85,7 @@ if (config.production.gzip) {
       threshold: 10240,
       minRatio: 0.8,
     })
-  );
+  )
 }
 
-module.exports = webpackConfig;
+module.exports = webpackConfig

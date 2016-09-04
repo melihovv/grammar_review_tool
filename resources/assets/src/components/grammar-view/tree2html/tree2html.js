@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-import Tree2HtmlVisitor from './tree2html-visitor';
+import Tree2HtmlVisitor from './tree2html-visitor'
 
 /**
  * Tree to html converter.
@@ -22,10 +22,10 @@ class Tree2Html {
       grammar,
       comments,
       users
-    );
-    tree2HtmlVisitor.visitFile(tree);
-    return tree2HtmlVisitor.html;
+    )
+    tree2HtmlVisitor.visitFile(tree)
+    return tree2HtmlVisitor.html
   }
 }
 
-export default Tree2Html;
+export default Tree2Html

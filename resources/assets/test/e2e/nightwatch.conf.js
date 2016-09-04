@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-require('babel-register');
+require('babel-register')
 
 module.exports = {
   src_folders: ['resources/assets/test/e2e/specs'],
@@ -43,4 +43,4 @@ module.exports = {
       },
     },
   },
-};
+}

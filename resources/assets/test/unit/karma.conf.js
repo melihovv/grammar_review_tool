@@ -1,27 +1,27 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const merge = require('webpack-merge');
-const shell = require('shelljs');
+const path = require('path')
+const merge = require('webpack-merge')
+const shell = require('shelljs')
 
-process.env.NODE_ENV = 'testing';
-const baseConfig = require('../../build/webpack.base.conf.js');
-const utils = require('../../build/utils');
+process.env.NODE_ENV = 'testing'
+const baseConfig = require('../../build/webpack.base.conf.js')
+const utils = require('../../build/utils')
 
-const projectRoot = path.resolve(__dirname, '../../../..');
-const isTravis = process.env.TRAVIS === 'true';
-const isWebStorm = process.env.WEBSTORM === 'true';
+const projectRoot = path.resolve(__dirname, '../../../..')
+const isTravis = process.env.TRAVIS === 'true'
+const isWebStorm = process.env.WEBSTORM === 'true'
 
 const webpackConfig = merge(baseConfig, {
   module: {
     loaders: utils.styleLoaders(),
   },
   devtool: '#inline-source-map',
-});
+})
 
-delete webpackConfig.entry;
+delete webpackConfig.entry
 
-shell.rm('-rf', path.resolve(__dirname, './coverage'));
+shell.rm('-rf', path.resolve(__dirname, './coverage'))
 
 module.exports = config => {
   const configuration = {
@@ -67,11 +67,11 @@ module.exports = config => {
         },
       },
     },
-  };
-
-  if (isTravis) {
-    configuration.browsers = ['Chrome_travis_ci'];
   }
 
-  config.set(configuration);
-};
+  if (isTravis) {
+    configuration.browsers = ['Chrome_travis_ci']
+  }
+
+  config.set(configuration)
+}
