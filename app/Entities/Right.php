@@ -4,30 +4,6 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Entities\Right.
- *
- * @property int $id
- * @property int $user_id
- * @property int $grammar_id
- * @property bool $view
- * @property bool $comment
- * @property bool $edit
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \App\Entities\User $user
- * @property-read \App\Entities\Grammar $grammar
- *
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereGrammarId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereView($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereComment($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereEdit($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Right whereUpdatedAt($value)
- * @mixin \Eloquent
- */
 class Right extends Model
 {
     protected $fillable = [
