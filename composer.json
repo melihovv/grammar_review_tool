@@ -24,7 +24,9 @@
     "barryvdh/laravel-ide-helper": "^2.2",
     "doctrine/dbal": "^2.5",
     "itsgoingd/clockwork": "^1.12",
-    "asvae/laravel-api-tester": "^2.0"
+    "asvae/laravel-api-tester": "^2.0",
+    "phpmd/phpmd": "^2.4",
+    "squizlabs/php_codesniffer": "^2.7"
   },
   "autoload": {
     "classmap": [
