@@ -11,7 +11,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const utils = require('./utils')
 
 Object.keys(baseWebpackConfig.entry).forEach(name => {
-  baseWebpackConfig.entry[name] = ['./resources/assets/build/dev-client']
+  baseWebpackConfig.entry[name] = ['./resources/client/build/dev-client']
     .concat(baseWebpackConfig.entry[name])
 })
 
@@ -26,7 +26,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './resources/assets/index.html',
+      template: './resources/client/index.html',
       inject: true,
     }),
   ],

@@ -22,7 +22,7 @@ const productionConfig = {
   assetsSubDirectory: 'assets',
   assetsPublicPath: '/',
   sourceMap: false,
-  staticDir: 'resources/assets/static',
+  staticDir: 'resources/client/static',
   gzip: true,
   gzipExtensions: [
     'js',

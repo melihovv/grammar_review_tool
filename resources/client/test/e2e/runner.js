@@ -8,7 +8,7 @@ let opts = process.argv.slice(2)
 if (opts.indexOf('--config') === -1) {
   opts = opts.concat([
     '--config',
-    'resources/assets/test/e2e/nightwatch.conf.js',
+    'resources/client/test/e2e/nightwatch.conf.js',
   ])
 }
 

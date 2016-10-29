@@ -9,7 +9,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production'
 
 module.exports = {
   entry: {
-    app: './resources/assets/src/index',
+    app: './resources/client/src/index',
   },
   output: {
     path: config[NODE_ENV].assetsRoot,
