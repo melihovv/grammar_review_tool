@@ -9,7 +9,6 @@
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-scope>grammar_review_tool:</introspection-scope>
       <resolve-scope>grammar_review_tool:</resolve-scope>
     </data-source>
   </component>
