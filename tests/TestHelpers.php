@@ -15,6 +15,7 @@ trait TestHelpers
         if (in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
             return $this->call($method, $args[0]);
         }
+
         throw new BadMethodCallException();
     }
 
@@ -27,6 +28,7 @@ trait TestHelpers
     {
         $mock = Mockery::mock($class);
         $this->app->instance($class, $mock);
+
         return $mock;
     }
 
@@ -47,6 +49,7 @@ trait TestHelpers
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
+
         return $method->invokeArgs($object, $parameters);
     }
 }

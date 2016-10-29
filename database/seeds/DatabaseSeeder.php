@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
         $this->call(RightsTableSeeder::class);
 
         Model::reguard();
-
     }
 }

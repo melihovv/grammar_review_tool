@@ -4,8 +4,8 @@ use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
-use Illuminate\Database\Eloquent\Factory;
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Factory;
 
 /*
 |--------------------------------------------------------------------------
