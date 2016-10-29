@@ -186,6 +186,14 @@ return [
         Asvae\ApiTester\ServiceProvider::class,
     ],
 
+    'local_aliases' => [
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
+    ],
+
+    'local_global_middlewares' => [
+        Clockwork\Support\Laravel\ClockworkMiddleware::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Class Aliases

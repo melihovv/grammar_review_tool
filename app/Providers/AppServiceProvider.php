@@ -30,9 +30,13 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment('local')) {
             $localProviders = config('app.local_providers', []);
-
             foreach ($localProviders as $provider) {
                 $this->app->register($provider);
+            }
+
+            $localAliases = config('app.local_aliases', []);
+            foreach ($localAliases as $alias => $class) {
+                $this->app->alias($class, $alias);
             }
         }
     }

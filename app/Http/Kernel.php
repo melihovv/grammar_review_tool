@@ -65,4 +65,16 @@ class Kernel extends HttpKernel
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
     ];
+
+    public function boot()
+    {
+        parent::bootstrap();
+        if ($this->app->environment() !== 'production') {
+            $middls = config('app.local_middlewares');
+
+            foreach ($middls as $middl) {
+                $this->pushMiddleware($middl);
+            }
+        }
+    }
 }
