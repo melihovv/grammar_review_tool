@@ -4,6 +4,7 @@ use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
+use Illuminate\Database\Eloquent\Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use App\Entities\User;
 |
 */
 
+/**
+ * @var Factory $factory
+ */
 $factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
 
