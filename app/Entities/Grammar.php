@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grammar extends Model
 {
+    use AdditionalMethods;
+
     protected $fillable = [
         'owner',
         'name',

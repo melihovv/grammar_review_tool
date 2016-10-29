@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Right extends Model
 {
+    use AdditionalMethods;
+
     protected $fillable = [
         'user_id',
         'grammar_id',
