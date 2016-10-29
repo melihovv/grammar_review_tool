@@ -33,6 +33,9 @@ class CommentsController extends ApiController
         return $this->response->item($comment, new CommentTransformer());
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function destroy(Grammar $grammar, Comment $comment)
     {
         $comment->delete();
