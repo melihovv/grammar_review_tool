@@ -6,13 +6,18 @@
   "scripts": {
     "build": "node resources/client/build/build.js",
     "dev": "node resources/client/build/dev-server.js",
-    "test": "npm run php-test && npm run unit && npm run e2e",
-    "php-test": "phpunit",
+    "test": "npm run php-test && npm run js-test",
+    "js-test": "npm run unit && npm run e2e && npm run lint",
     "unit": "karma start resources/client/test/unit/karma.conf.js --single-run",
     "e2e": "node resources/client/test/e2e/runner.js",
     "report-coverage": "cat ./resources/client/test/unit/coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
     "lint": "eslint --ext .js,.vue .",
-    "semantic-release": "semantic-release pre && semantic-release post"
+    "semantic-release": "semantic-release pre && semantic-release post",
+    "php-test": "npm run phpcs && npm run phpmd && npm run phpunit",
+    "phpunit": "phpunit",
+    "phpmd": "phpmd app/ text ./phpmd-rules.xml",
+    "phpcs": "phpcs --standard=./phpcs-rules.xml app/",
+    "phpcbf": "phpcbf --standard=./phpcs-rules.xml app/"
   },
   "repository": {
     "type": "git",
@@ -94,7 +99,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run test && npm run lint"
+      "pre-commit": "npm run test"
     }
   },
   "dependencies": {
