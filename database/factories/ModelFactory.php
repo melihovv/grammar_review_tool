@@ -5,6 +5,7 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use Illuminate\Database\Eloquent\Factory;
+use Faker\Generator;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Factory;
 /**
  * @var Factory $factory
  */
-$factory->define(User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [
@@ -32,7 +33,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Grammar::class, function (Faker\Generator $faker) {
+$factory->define(Grammar::class, function (Generator $faker) {
     return [
         'owner' => rand(1, 10),
         'name' => $faker->sentence(),
@@ -46,7 +47,7 @@ HERE
     ];
 });
 
-$factory->define(Comment::class, function (Faker\Generator $faker) {
+$factory->define(Comment::class, function (Generator $faker) {
     return [
         'user_id' => rand(1, 10),
         'grammar_id' => rand(1, 20),
@@ -56,7 +57,7 @@ $factory->define(Comment::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Right::class, function (Faker\Generator $faker) {
+$factory->define(Right::class, function (Generator $faker) {
     return [
         'user_id' => rand(1, 10),
         'grammar_id' => rand(1, 20),
