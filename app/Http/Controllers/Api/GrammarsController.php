@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Entities\Grammar;
 use App\Http\Requests\GrammarRequest;
-use App\Transformers\GrammarTransformer;
+use App\Http\Transformers\GrammarTransformer;
 
 class GrammarsController extends ApiController
 {

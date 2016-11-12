@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Http\Requests\CommentRequest;
-use App\Transformers\CommentTransformer;
+use App\Http\Transformers\CommentTransformer;
 use Dingo\Api\Facade\API;
 
+// TODO write tests for controllers
 class CommentsController extends ApiController
 {
     public function store(Grammar $grammar, CommentRequest $request)

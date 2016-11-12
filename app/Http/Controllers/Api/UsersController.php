@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Entities\User;
-use App\Transformers\UserTransformer;
+use App\Http\Transformers\UserTransformer;
 
 class UsersController extends ApiController
 {

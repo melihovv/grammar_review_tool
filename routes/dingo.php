@@ -6,7 +6,7 @@ $api = app(Dingo\Api\Routing\Router::class);
 
 $api->version('v1', [
     'middleware' => ['api'],
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Http\Controllers\Api',
 ], function (Router $api) {
     $api->post('authenticate', 'Auth\AuthController@authenticate');
 
