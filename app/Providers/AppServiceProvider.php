@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      *
      * @return void
+     * @throws NotFoundHttpException
      */
     public function boot()
     {
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment('local')) {
+        if (!$this->app->environment('production')) {
             $localProviders = config('app.local_providers', []);
             foreach ($localProviders as $provider) {
                 $this->app->register($provider);
