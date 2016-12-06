@@ -66,6 +66,7 @@ class User extends Authenticatable
 
     /**
      * @param Grammar $grammar
+     *
      * @return bool
      */
     public function isOwner(Grammar $grammar)
@@ -75,7 +76,8 @@ class User extends Authenticatable
 
     /**
      * @param string|array $right
-     * @param Grammar $grammar
+     * @param Grammar      $grammar
+     *
      * @return bool
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
