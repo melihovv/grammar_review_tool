@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
+use App\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 
 class AuthRegisterRequest extends Request

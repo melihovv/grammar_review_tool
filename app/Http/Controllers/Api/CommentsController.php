@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Comment;
 use App\Entities\Grammar;
-use App\Http\Requests\CommentRequest;
+use App\Http\Requests\Comment\CommentStoreRequest;
+use App\Http\Requests\Comment\CommentUpdateRequest;
 use App\Http\Transformers\CommentTransformer;
 
 class CommentsController extends ApiController
@@ -12,7 +13,7 @@ class CommentsController extends ApiController
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function store(Grammar $grammar, CommentRequest $request)
+    public function store(Grammar $grammar, CommentStoreRequest $request)
     {
         $comment = Comment::create($request->all());
 
@@ -25,7 +26,7 @@ class CommentsController extends ApiController
     public function update(
         Grammar $grammar,
         Comment $comment,
-        CommentRequest $request
+        CommentUpdateRequest $request
     ) {
         // TODO policies.
         $comment->update($request->all());

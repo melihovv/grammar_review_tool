@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Entities\User;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\AuthLoginRequest;
-use App\Http\Requests\AuthRegisterRequest;
+use App\Http\Requests\Auth\AuthLoginRequest;
+use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Http\Transformers\UserTransformer;
 use PDOException;
 use Tymon\JWTAuth\Exceptions\JWTException;

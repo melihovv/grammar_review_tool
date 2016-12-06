@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Grammar;
 
+use App\Http\Requests\Request;
 use Dingo\Api\Auth\Auth;
 
-class GrammarRequest extends Request
+abstract class GrammarRequest extends Request
 {
     public function rules()
     {

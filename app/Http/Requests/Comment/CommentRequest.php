@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Comment;
 
+use App\Http\Requests\Request;
 use Dingo\Api\Auth\Auth;
 
-class CommentRequest extends Request
+abstract class CommentRequest extends Request
 {
     public function rules()
     {
