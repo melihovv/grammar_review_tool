@@ -2,18 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Dingo\Api\Http\FormRequest;
-use Fadion\Sanitizer\FormRequest\Sanitizable;
-
-class GrammarRequest extends FormRequest
+class GrammarRequest extends Request
 {
-    use Sanitizable;
-
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [

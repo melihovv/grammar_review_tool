@@ -2,18 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Dingo\Api\Http\FormRequest;
-use Fadion\Sanitizer\FormRequest\Sanitizable;
-
-class CommentRequest extends FormRequest
+class CommentRequest extends Request
 {
-    use Sanitizable;
-
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [
