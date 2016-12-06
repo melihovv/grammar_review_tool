@@ -8,9 +8,21 @@ $api->version('v1', [
     'middleware' => ['api'],
     'namespace' => 'App\Http\Controllers\Api',
 ], function (Router $api) {
-    $api->post('authenticate', 'Auth\AuthController@authenticate');
+    $api->post('login', [
+        'uses' => 'Auth\AuthController@login',
+        'as' => 'login',
+    ]);
+    $api->post('register', [
+        'uses' => 'Auth\AuthController@register',
+        'as' => 'register',
+    ]);
 
     $api->group(['middleware' => ['api.auth']], function (Router $api) {
+        $api->get('user', [
+            'uses' => 'Auth\AuthController@user',
+            'as' => 'user',
+        ]);
+
         $api->resource('users', 'UsersController', [
             'only' => ['index', 'show'],
         ]);
