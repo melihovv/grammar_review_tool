@@ -45,6 +45,19 @@ class User extends Authenticatable
         return $this->hasMany(Grammar::class, 'owner');
     }
 
+    public function availableGrammars()
+    {
+        if ($this->is_admin) {
+            return Grammar::getQuery();
+        }
+
+        return Grammar::whereHas('rights', function ($q) {
+            $q->where('view', true)->orWhere('edit', true);
+        })
+            ->orWhere('public_view', true)
+            ->orWhere('owner', $this->id);
+    }
+
     /**
      * @return HasMany
      */
@@ -59,5 +72,30 @@ class User extends Authenticatable
     public function rights()
     {
         return $this->hasMany(Right::class);
+    }
+
+    /**
+     * @param Grammar $grammar
+     * @return bool
+     */
+    public function isOwner(Grammar $grammar)
+    {
+        return $this->id === $grammar->owner;
+    }
+
+    /**
+     * @param string $right
+     * @param Grammar $grammar
+     * @return bool
+     */
+    public function hasRight($right, Grammar $grammar)
+    {
+        // TODO array of rights.
+        $right = $this->rights()
+            ->where('grammar_id', $grammar->id)
+            ->where($right, true)
+            ->first();
+
+        return $right !== null;
     }
 }

@@ -28,7 +28,7 @@ $api->version('v1', [
         ]);
 
         $api->resource('grammars', 'GrammarsController', [
-            'except' => ['create', 'edit'],
+            'except' => ['create', 'edit', 'update'],
         ]);
 
         $api->resource('grammars.comments', 'CommentsController', [

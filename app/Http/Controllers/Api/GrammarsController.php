@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Grammar;
 use App\Http\Requests\Grammar\GrammarStoreRequest;
-use App\Http\Requests\Grammar\GrammarUpdateRequest;
 use App\Http\Transformers\GrammarTransformer;
 
 class GrammarsController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('can:delete,grammar', ['only' => ['destroy']]);
+        $this->middleware('can:view,grammar', ['only' => ['show']]);
+    }
+
     public function index()
     {
-        $grammars = Grammar::paginate(10);
+        $grammars = $this->auth->user()->availableGrammars()->paginate(10);
 
         return $this->response->paginator($grammars, new GrammarTransformer());
     }
@@ -28,17 +33,8 @@ class GrammarsController extends ApiController
         return $this->response->item($grammar, new GrammarTransformer());
     }
 
-    public function update(Grammar $grammar, GrammarUpdateRequest $request)
-    {
-        // TODO policies.
-        $grammar->update($request->all());
-
-        return $this->response->item($grammar, new GrammarTransformer());
-    }
-
     public function destroy(Grammar $grammar)
     {
-        // TODO policies.
         $grammar->delete();
 
         return $this->response->noContent();
