@@ -3,20 +3,9 @@
 namespace App\Http\Transformers;
 
 use App\Entities\Grammar;
-use League\Fractal\TransformerAbstract;
 
-/**
- * Class GrammarTransformer.
- */
-class GrammarTransformer extends TransformerAbstract
+class GrammarTransformer extends Transformer
 {
-    /**
-     * Transform the Grammar entity.
-     *
-     * @param Grammar $model
-     *
-     * @return array
-     */
     public function transform(Grammar $model)
     {
         return [
@@ -25,6 +14,17 @@ class GrammarTransformer extends TransformerAbstract
             'name' => $model->name,
             'content' => $model->content,
             'public_view' => $model->public_view,
+        ];
+    }
+
+    public static function attrs()
+    {
+        return [
+            'id',
+            'owner',
+            'name',
+            'content',
+            'public_view',
         ];
     }
 }

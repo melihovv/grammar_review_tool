@@ -3,20 +3,9 @@
 namespace App\Http\Transformers;
 
 use App\Entities\Comment;
-use League\Fractal\TransformerAbstract;
 
-/**
- * Class CommentTransformer.
- */
-class CommentTransformer extends TransformerAbstract
+class CommentTransformer extends Transformer
 {
-    /**
-     * Transform the Comment entity.
-     *
-     * @param Comment $model
-     *
-     * @return array
-     */
     public function transform(Comment $model)
     {
         return [
@@ -26,6 +15,18 @@ class CommentTransformer extends TransformerAbstract
             'content' => $model->content,
             'row' => $model->row,
             'column' => $model->column,
+        ];
+    }
+
+    public static function attrs()
+    {
+        return [
+            'id',
+            'user_id',
+            'grammar_id',
+            'content',
+            'row',
+            'column',
         ];
     }
 }

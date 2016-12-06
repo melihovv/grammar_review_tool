@@ -1,6 +1,7 @@
 <?php
 
 use App\Entities\User;
+use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -19,14 +20,8 @@ class AuthControllerTest extends TestCase
             'password' => 'secret',
         ], $this->headers());
 
-        // TODO specify user structure in transformer.
         $this->seeJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'email',
-                'is_admin',
-            ],
+            'data' => UserTransformer::attrs(),
             'meta' => [
                 'token',
             ],
@@ -50,12 +45,7 @@ class AuthControllerTest extends TestCase
         ], $this->headers());
 
         $this->seeJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'email',
-                'is_admin',
-            ],
+            'data' => UserTransformer::attrs(),
             'meta' => [
                 'token',
             ],
@@ -71,12 +61,7 @@ class AuthControllerTest extends TestCase
         $this->get($route, $this->headers('v1', $user));
 
         $this->seeJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'email',
-                'is_admin',
-            ],
+            'data' => UserTransformer::attrs(),
         ]);
     }
 }
