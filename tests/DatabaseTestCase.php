@@ -10,11 +10,6 @@ abstract class DatabaseTestCase extends TestCase
     protected static $application = null;
 
     /**
-     * @var string
-     */
-    protected $seederClass = DatabaseSeeder::class;
-
-    /**
      * Creates the application.
      *
      * @return \Illuminate\Foundation\Application
@@ -31,7 +26,6 @@ abstract class DatabaseTestCase extends TestCase
         Hash::setRounds(5);
 
         Artisan::call('migrate');
-        Artisan::call('db:seed', ['--class' => $this->seederClass]);
 
         static::$application = $app;
 
