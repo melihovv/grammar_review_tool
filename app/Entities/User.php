@@ -11,11 +11,6 @@ class User extends Authenticatable
     use Notifiable;
     use AdditionalMethods;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'email',
@@ -23,11 +18,6 @@ class User extends Authenticatable
         'is_admin',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -52,7 +42,7 @@ class User extends Authenticatable
         }
 
         return Grammar::whereHas('rights', function ($q) {
-            $q->where('view', true)->orWhere('edit', true);
+            $q->where('view', true)->orWhere('comment', true);
         })
             ->orWhere('public_view', true)
             ->orWhere('owner', $this->id);
@@ -84,18 +74,40 @@ class User extends Authenticatable
     }
 
     /**
-     * @param string $right
+     * @param string|array $right
      * @param Grammar $grammar
      * @return bool
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function hasRight($right, Grammar $grammar)
+    public function hasRight($right, Grammar $grammar, $requireAll = false)
     {
-        // TODO array of rights.
-        $right = $this->rights()
-            ->where('grammar_id', $grammar->id)
-            ->where($right, true)
-            ->first();
+        if (empty($right)) {
+            return false;
+        }
 
-        return $right !== null;
+        $model = $this->rights()->where('grammar_id', $grammar->id);
+
+        if (is_array($right)) {
+            $model = $model->first();
+
+            if ($model === null) {
+                return false;
+            }
+
+            foreach ($right as $r) {
+                $hasRight = $model->$r !== null && $model->$r !== false;
+
+                if ($hasRight && !$requireAll) {
+                    return true;
+                } elseif (!$hasRight && $requireAll) {
+                    return false;
+                }
+            }
+
+            return $requireAll;
+        }
+
+        return $model->where($right, true)->first() !== null;
     }
 }
