@@ -10,6 +10,13 @@ use App\Http\Transformers\CommentTransformer;
 
 class CommentsController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('can:comment,grammar');
+        $this->middleware('can:update,comment', ['only' => ['update']]);
+        $this->middleware('can:delete,comment', ['only' => ['destroy']]);
+    }
+
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -28,7 +35,6 @@ class CommentsController extends ApiController
         Comment $comment,
         CommentUpdateRequest $request
     ) {
-        // TODO policies.
         $comment->update($request->all());
 
         return $this->response->item($comment, new CommentTransformer());
@@ -39,7 +45,6 @@ class CommentsController extends ApiController
      */
     public function destroy(Grammar $grammar, Comment $comment)
     {
-        // TODO policies.
         $comment->delete();
 
         return $this->response->noContent();

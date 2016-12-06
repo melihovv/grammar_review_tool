@@ -11,18 +11,18 @@ class UserTest extends DatabaseTestCase
     use DatabaseMigrations;
 
     /**
-     * @dataProvider isOwnerProvider
+     * @dataProvider isGrammarOwnerProvider
      */
-    public function testIsOwner($cb, $isOwner)
+    public function testIsGrammarOwner($cb, $isOwner)
     {
         $user = factory(User::class)->create();
         $grammar = factory(Grammar::class)->create();
         $cb($user, $grammar);
 
-        $this->assertEquals($isOwner, $user->isOwner($grammar));
+        $this->assertEquals($isOwner, $user->isGrammarOwner($grammar));
     }
 
-    public function isOwnerProvider()
+    public function isGrammarOwnerProvider()
     {
         return [
             'user is owner of grammar' => [
@@ -33,6 +33,35 @@ class UserTest extends DatabaseTestCase
             ],
             'user is not owner of grammar' => [
                 function ($user, $grammar) {
+                },
+                false,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider isCommentOwnerProvider
+     */
+    public function testIsCommentOwner($cb, $isOwner)
+    {
+        $user = factory(User::class)->create();
+        $comment = factory(Comment::class)->create();
+        $cb($user, $comment);
+
+        $this->assertEquals($isOwner, $user->isCommentOwner($comment));
+    }
+
+    public function isCommentOwnerProvider()
+    {
+        return [
+            'user is owner of comment' => [
+                function ($user, $comment) {
+                    $comment->update(['user_id' => $user->id]);
+                },
+                true,
+            ],
+            'user is not owner of comment' => [
+                function ($user, $comment) {
                 },
                 false,
             ],

@@ -69,9 +69,19 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isOwner(Grammar $grammar)
+    public function isGrammarOwner(Grammar $grammar)
     {
-        return $this->id === $grammar->owner;
+        return $this->id !== null && $this->id === $grammar->owner;
+    }
+
+    /**
+     * @param Comment $comment
+     *
+     * @return bool
+     */
+    public function isCommentOwner(Comment $comment)
+    {
+        return $this->id !== null && $this->id === $comment->user_id;
     }
 
     /**
