@@ -7,7 +7,7 @@ use App\Http\Transformers\GrammarTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class GrammarsControllerTest extends DatabaseTestCase
+class GrammarsControllerTest extends TestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;

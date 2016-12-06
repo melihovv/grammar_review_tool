@@ -7,7 +7,7 @@ use App\Http\Transformers\CommentTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CommentsControllerTest extends DatabaseTestCase
+class CommentsControllerTest extends TestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;

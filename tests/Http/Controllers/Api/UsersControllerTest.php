@@ -5,7 +5,7 @@ use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class UsersControllerTest extends DatabaseTestCase
+class UsersControllerTest extends TestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;
