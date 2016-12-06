@@ -43,6 +43,7 @@ class GrammarsControllerTest extends TestCase
             'name' => 'grammar1',
             'content' => 'hi',
             'public_view' => false,
+            'allow_to_comment' => false,
         ], $this->headers('v1', $user));
 
         $this->seeJsonStructure([
@@ -77,6 +78,9 @@ class GrammarsControllerTest extends TestCase
     public function showSuccessProvider()
     {
         return [
+            'user is admin' => [function ($user, $grammar) {
+                $user->update(['is_admin' => true]);
+            }],
             'user is grammar owner' => [function ($user, $grammar) {
                 $grammar->update(['owner' => $user->id]);
             }],
@@ -101,6 +105,7 @@ class GrammarsControllerTest extends TestCase
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
             'view' => false,
+            'comment' => false,
         ]);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -111,10 +116,14 @@ class GrammarsControllerTest extends TestCase
         $this->assertResponseStatus(403);
     }
 
-    public function testDestroy()
+    /**
+     * @dataProvider destroyProvider
+     */
+    public function testDestroy($cb)
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['owner' => $user->id]);
+        $grammar = factory(Grammar::class)->create();
+        $cb($user, $grammar);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.destroy', $grammar->id);
@@ -125,6 +134,18 @@ class GrammarsControllerTest extends TestCase
         $this->notSeeInDatabase('grammars', [
             'id' => $grammar->id,
         ]);
+    }
+
+    public function destroyProvider()
+    {
+        return [
+            'user is admin' => [function ($user, $grammar) {
+                $user->update(['is_admin' => true]);
+            }],
+            'user is grammar owner' => [function ($user, $grammar) {
+                $grammar->update(['owner' => $user->id]);
+            }],
+        ];
     }
 
     public function testDestroyUnauthorizedNotOwner()
