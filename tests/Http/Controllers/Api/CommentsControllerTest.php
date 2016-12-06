@@ -58,7 +58,7 @@ class CommentsControllerTest extends TestCase
                         'owner' => $user->id,
                         'allow_to_comment' => false,
                     ]);
-                }
+                },
             ],
             'user has right to comment grammar' => [function ($user, $grammar) {
                 $grammar->update(['allow_to_comment' => true]);
@@ -99,7 +99,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
-                }
+                },
             ],
             'user has not right to comment grammar' => [
                 function ($user, $grammar) {
@@ -110,7 +110,7 @@ class CommentsControllerTest extends TestCase
                         'view' => true,
                         'comment' => false,
                     ]);
-                }
+                },
             ],
         ];
     }
@@ -164,7 +164,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
-                }
+                },
             ],
         ];
     }
@@ -193,7 +193,7 @@ class CommentsControllerTest extends TestCase
             'user has not right to comment' => [
                 function ($user, $grammar, $comment) {
                     $grammar->update(['allow_to_comment' => true]);
-                }
+                },
             ],
             'user has right to comment, but he is not comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -203,7 +203,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
-                }
+                },
             ],
             'user has not right to comment, but he is comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -214,7 +214,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => false,
                     ]);
-                }
+                },
             ],
         ];
     }
@@ -281,7 +281,7 @@ class CommentsControllerTest extends TestCase
             'user is admin' => [
                 function ($user, $grammar, $comment) {
                     $user->update(['is_admin' => true]);
-                }
+                },
             ],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -292,7 +292,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
-                }
+                },
             ],
         ];
     }
@@ -321,7 +321,7 @@ class CommentsControllerTest extends TestCase
             'user has not right to comment' => [
                 function ($user, $grammar, $comment) {
                     $grammar->update(['allow_to_comment' => true]);
-                }
+                },
             ],
             'user has right to comment, but he is not comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -331,7 +331,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
-                }
+                },
             ],
             'user has not right to comment, but he is comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -342,7 +342,7 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => false,
                     ]);
-                }
+                },
             ],
         ];
     }
