@@ -29,7 +29,7 @@ class GrammarPolicy
     {
         return $grammar->public_view
             || $user->isOwner($grammar)
-            || $user->hasRight('view', $grammar);
+            || $user->hasRight(['view', 'comment'], $grammar);
     }
 
     public function comment(User $user, Grammar $grammar)
