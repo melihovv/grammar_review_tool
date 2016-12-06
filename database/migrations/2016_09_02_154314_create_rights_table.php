@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRightsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('rights', function (Blueprint $table) {
@@ -19,7 +14,6 @@ class CreateRightsTable extends Migration
             $table->unsignedInteger('grammar_id');
             $table->boolean('view');
             $table->boolean('comment');
-            $table->boolean('edit');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
@@ -32,11 +26,6 @@ class CreateRightsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('rights');
