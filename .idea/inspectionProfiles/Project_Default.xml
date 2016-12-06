@@ -25,7 +25,17 @@
     </inspection_tool>
     <inspection_tool class="JSLastCommaInArrayLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSLastCommaInObjectLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="MessDetectorValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+    <inspection_tool class="MessDetectorValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="false">
+      <scope name="without tests" level="WEAK WARNING" enabled="true">
+        <option name="customRulesets">
+          <list>
+            <RulesetDescriptor>
+              <option name="name" value="My PHPMD rule set" />
+              <option name="path" value="$PROJECT_DIR$/phpmd-rules.xml" />
+            </RulesetDescriptor>
+          </list>
+        </option>
+      </scope>
       <option name="customRulesets">
         <list>
           <RulesetDescriptor>
