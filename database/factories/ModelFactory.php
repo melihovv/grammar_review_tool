@@ -7,17 +7,6 @@ use App\Entities\User;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
-
 /**
  * @var Factory $factory
  */
@@ -35,7 +24,9 @@ $factory->define(User::class, function (Generator $faker) {
 
 $factory->define(Grammar::class, function (Generator $faker) {
     return [
-        'owner' => rand(1, 10),
+        'owner' => function () {
+            return factory(User::class)->create()->id;
+        },
         'name' => $faker->sentence(),
         'content' => <<<'HERE'
 %name some_grammar
@@ -49,18 +40,26 @@ HERE
 
 $factory->define(Comment::class, function (Generator $faker) {
     return [
-        'user_id' => rand(1, 10),
-        'grammar_id' => rand(1, 20),
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'grammar_id' => function () {
+            return factory(Grammar::class)->create()->id;
+        },
         'content' => $faker->paragraph(),
-        'row' => rand(1, 3),
-        'column' => rand(0, 10),
+        'row' => random_int(1, 3),
+        'column' => random_int(0, 10),
     ];
 });
 
 $factory->define(Right::class, function (Generator $faker) {
     return [
-        'user_id' => rand(1, 10),
-        'grammar_id' => rand(1, 20),
+        'user_id' => function () {
+            return factory(User::class)->create()->id;
+        },
+        'grammar_id' => function () {
+            return factory(Grammar::class)->create()->id;
+        },
         'view' => $faker->boolean(),
         'comment' => $faker->boolean(),
         'edit' => $faker->boolean(),
