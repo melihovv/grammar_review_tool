@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,7 +38,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function grammars()
     {
@@ -45,7 +46,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function comments()
     {
@@ -53,7 +54,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function rights()
     {
