@@ -44,7 +44,8 @@
     "classmap": [
       "tests/TestCase.php",
       "tests/DatabaseTestCase.php",
-      "tests/TestHelpers.php"
+      "tests/TestHelpers.php",
+      "tests/ApiHelpers.php"
     ]
   },
   "scripts": {
