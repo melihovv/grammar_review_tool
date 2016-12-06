@@ -12,7 +12,7 @@ class CommentTest extends DatabaseTestCase
 
     public function testUserRelationship()
     {
-        $user = factory(User::class)->create(['name' => 'name1']);
+        $user = factory(User::class)->create();
         $comment = factory(Comment::class)->create(['user_id' => $user->id]);
 
         $this->assertEquals($user->toArray(), $comment->user->toArray());
