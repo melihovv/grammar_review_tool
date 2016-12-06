@@ -15,11 +15,13 @@ class Grammar extends Model
         'name',
         'content',
         'public_view',
+        'allow_to_comment',
     ];
 
     protected $casts = [
         'owner' => 'integer',
         'public_view' => 'boolean',
+        'allow_to_comment' => 'boolean',
     ];
 
     /**

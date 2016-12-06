@@ -35,6 +35,7 @@ class GrammarPolicy
     public function comment(User $user, Grammar $grammar)
     {
         return $user->isOwner($grammar)
-            || $user->hasRight('comment', $grammar);
+            || ($grammar->allow_to_comment
+                && $user->hasRight('comment', $grammar));
     }
 }

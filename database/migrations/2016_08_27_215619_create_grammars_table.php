@@ -13,6 +13,7 @@ class CreateGrammarsTable extends Migration
             $table->string('name');
             $table->text('content');
             $table->boolean('public_view');
+            $table->boolean('allow_to_comment')->default(true);
             $table->timestamps();
 
             $table->foreign('owner')->references('id')->on('users')

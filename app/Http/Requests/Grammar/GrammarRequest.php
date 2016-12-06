@@ -13,6 +13,7 @@ abstract class GrammarRequest extends Request
             'name' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'public_view' => 'required|boolean',
+            'allow_to_comment' => 'required|boolean',
         ];
     }
 

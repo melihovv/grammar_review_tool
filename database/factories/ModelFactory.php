@@ -35,6 +35,7 @@ rule2 ::= rule1 D. {/* some action */
 HERE
         ,
         'public_view' => $faker->boolean(),
+        'allow_to_comment' => $faker->boolean(),
     ];
 });
 
