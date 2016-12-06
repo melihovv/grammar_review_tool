@@ -12,7 +12,7 @@ class RightTest extends DatabaseTestCase
     public function testGrammarRelationship()
     {
         $grammar = factory(Grammar::class)->create();
-        $right = factory(Right::class)->create(['grammar_id' => $grammar->id,]);
+        $right = factory(Right::class)->create(['grammar_id' => $grammar->id]);
 
         $this->assertEquals($grammar->toArray(), $right->grammar->toArray());
     }
