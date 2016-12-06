@@ -12,8 +12,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
-     * @return void
      * @throws NotFoundHttpException
+     *
+     * @return void
      */
     public function boot()
     {

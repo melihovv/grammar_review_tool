@@ -6,8 +6,10 @@ trait ApiHelpers
 {
     /**
      * Return request headers needed to interact with the API.
+     *
      * @param string $version
-     * @param User $user
+     * @param User   $user
+     *
      * @return array Array of headers.
      */
     protected function headers($version = 'v1', User $user = null)
