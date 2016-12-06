@@ -29,6 +29,7 @@ class GrammarsController extends ApiController
 
     public function update(Grammar $grammar, GrammarRequest $request)
     {
+        // TODO policies.
         $grammar->update($request->all());
 
         return $this->response->item($grammar, new GrammarTransformer());
@@ -36,6 +37,7 @@ class GrammarsController extends ApiController
 
     public function destroy(Grammar $grammar)
     {
+        // TODO policies.
         $grammar->delete();
 
         return $this->response->noContent();

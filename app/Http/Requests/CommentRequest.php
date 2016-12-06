@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Dingo\Api\Auth\Auth;
+
 class CommentRequest extends Request
 {
     public function rules()
@@ -11,5 +13,13 @@ class CommentRequest extends Request
             'row' => 'required|integer|min:1',
             'column' => 'required|integer|min:0',
         ];
+    }
+
+    public function all()
+    {
+        return array_merge(parent::all(), [
+            'user_id' => app(Auth::class)->user()->id,
+            'grammar_id' => $this->route('grammar')->id,
+        ]);
     }
 }
