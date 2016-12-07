@@ -15,7 +15,7 @@ class GrammarPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->is_admin) {
+        if ($user->is_admin && $ability !== 'manageRights') {
             return true;
         }
     }
@@ -37,5 +37,10 @@ class GrammarPolicy
         return $user->isGrammarOwner($grammar)
             || ($grammar->allow_to_comment
                 && $user->hasRight('comment', $grammar));
+    }
+
+    public function manageRights(User $user, Grammar $grammar)
+    {
+        return $user->isGrammarOwner($grammar);
     }
 }

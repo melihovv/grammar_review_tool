@@ -2,7 +2,7 @@
 
 use Dingo\Api\Routing\Router;
 
-$api = app(Dingo\Api\Routing\Router::class);
+$api = app(Router::class);
 
 $api->version('v1', [
     'middleware' => ['api'],
@@ -32,6 +32,10 @@ $api->version('v1', [
         ]);
 
         $api->resource('grammars.comments', 'CommentsController', [
+            'only' => ['store', 'update', 'destroy'],
+        ]);
+
+        $api->resource('grammars.rights', 'RightsController', [
             'only' => ['store', 'update', 'destroy'],
         ]);
     });
