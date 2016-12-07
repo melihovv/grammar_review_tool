@@ -23,7 +23,7 @@ const productionConfig = {
   assetsPublicPath: '/',
   sourceMap: false,
   staticDir: 'resources/assets/static',
-  gzip: true,
+  gzip: process.env.ENABLE_GZIP,
   gzipExtensions: [
     'js',
     'css',
