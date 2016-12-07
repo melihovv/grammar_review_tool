@@ -19,7 +19,4 @@ before_install:
 before_script:
     - npm prune
 script:
-    - npm run unit
     - npm run lint
-after_success:
-    - npm run report-coverage

@@ -1,20 +1,5 @@
 {
   "presets": ["es2015", "stage-2"],
   "plugins": ["transform-runtime"],
-  "env": {
-    "testing": {
-      "plugins": [
-        ["istanbul", {
-          "exclude": [
-            "**/*.spec.js",
-            "**/Lemon*.js",
-            "resources/assets/src/*.js",
-            "resources/assets/src/components/**/*.(js|vue)",
-            "resources/assets/test/unit/*.js"
-          ]
-        }]
-      ]
-    }
-  },
   "comments": false
 }
