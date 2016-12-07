@@ -20,7 +20,7 @@ module.exports = {
     extensions: ['', '.js', '.vue', '.styl'],
     fallback: [path.join(__dirname, '../../../node_modules')],
     alias: {
-      src: path.resolve(__dirname, '../js'),
+      js: path.resolve(__dirname, '../js'),
       components: path.resolve(__dirname, '../js/components'),
       vue: 'vue/dist/vue.js',
     },
