@@ -1,9 +1,9 @@
 /.idea
 /node_modules
 /docs
-/resources/client/test/unit/coverage
-/resources/client/test/unit/.chrome
-/resources/client/test/e2e/reports
+/resources/assets/test/unit/coverage
+/resources/assets/test/unit/.chrome
+/resources/assets/test/e2e/reports
 /vendor
 /public/storage
 /public/index.html

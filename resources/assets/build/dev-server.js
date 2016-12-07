@@ -61,7 +61,7 @@ const staticPath = path.posix.join(
   config.development.assetsPublicPath,
   config.development.assetsSubDirectory
 )
-app.use(staticPath, express.static('./resources/client/static'))
+app.use(staticPath, express.static('./resources/assets/static'))
 
 module.exports = app.listen(port, function (err) {
   if (err) {

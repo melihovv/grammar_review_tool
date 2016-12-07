@@ -34,17 +34,17 @@ module.exports = config => {
       },
       Chrome_with_debugging: {
         base: 'Chrome',
-        chromeDataDir: projectRoot + '/resources/client/test/unit/.chrome',
+        chromeDataDir: projectRoot + '/resources/assets/test/unit/.chrome',
         flags: [
           '--start-maximized',
         ],
       },
     },
     files: [
-      './resources/client/test/unit/tests.js',
+      './resources/assets/test/unit/tests.js',
     ],
     preprocessors: {
-      './resources/client/test/unit/tests.js': ['webpack', 'sourcemap'],
+      './resources/assets/test/unit/tests.js': ['webpack', 'sourcemap'],
     },
     frameworks: ['mocha', 'sinon-chai'],
     reporters: isWebStorm ? [] : ['spec', 'coverage'],

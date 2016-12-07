@@ -41,7 +41,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
     new HtmlWebpackPlugin({
       filename: NODE_ENV === 'testing' ? 'index.html' : config.production.index,
-      template: './resources/client/index.html',
+      template: './resources/assets/index.html',
       inject: true,
       minify: {
         removeComments: true,
