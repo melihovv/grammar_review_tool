@@ -16,7 +16,9 @@ class UsersControllerTest extends TestCase
 
         $route = app(UrlGenerator::class)->version('v1')->route('users.index');
 
-        $this->get($route, $this->headers('v1', $users[0]));
+        $this
+            ->actingAsApiUser($users[0])
+            ->get($route, $this->headers('v1', $users[0]));
 
         $this->seeJsonStructure([
             'data' => [
@@ -32,7 +34,9 @@ class UsersControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('users.show', [$user->id]);
 
-        $this->get($route, $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => UserTransformer::attrs(),

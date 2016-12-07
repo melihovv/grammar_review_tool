@@ -23,4 +23,16 @@ trait ApiHelpers
 
         return $headers;
     }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    protected function actingAsApiUser(User $user)
+    {
+        $this->actingAs($user);
+        $this->app['api.auth']->setUser($user);
+
+        return $this;
+    }
 }

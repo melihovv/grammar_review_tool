@@ -20,7 +20,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.index');
 
-        $this->get($route, $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => [
@@ -39,7 +41,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.store');
 
-        $this->post($route, [
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
             'name' => 'grammar1',
             'content' => 'hi',
             'public_view' => false,
@@ -68,7 +72,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.show', [$grammar->id]);
 
-        $this->get($route, $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => GrammarTransformer::attrs(),
@@ -111,7 +117,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.show', [$grammar->id]);
 
-        $this->get($route, $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
     }
@@ -128,7 +136,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.destroy', $grammar->id);
 
-        $this->delete($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->notSeeInDatabase('grammars', [
@@ -156,7 +166,9 @@ class GrammarsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.destroy', $grammar->id);
 
-        $this->delete($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
     }

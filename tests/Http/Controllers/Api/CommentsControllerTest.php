@@ -25,11 +25,13 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.store', [$grammar->id]);
 
-        $this->post($route, [
-            'content' => 'content1',
-            'row' => 1,
-            'column' => 0,
-        ], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
+                'content' => 'content1',
+                'row' => 1,
+                'column' => 0,
+            ], $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => CommentTransformer::attrs(),
@@ -83,7 +85,9 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.store', [$grammar->id]);
 
-        $this->post($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
     }
@@ -128,11 +132,13 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.update', [$grammar->id, $comment->id]);
 
-        $this->put($route, [
-            'content' => 'content2',
-            'row' => 1,
-            'column' => 0,
-        ], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->put($route, [
+                'content' => 'content2',
+                'row' => 1,
+                'column' => 0,
+            ], $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => CommentTransformer::attrs(),
@@ -182,7 +188,9 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.update', [$grammar->id, $comment->id]);
 
-        $this->put($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->put($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
     }
@@ -234,13 +242,15 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.update', [$grammar->id, $comment->id]);
 
-        $this->put($route, [
-            'content' => 'content2',
-            'row' => 1,
-            'column' => 0,
-            'grammar_id' => 10,
-            'user_id' => 20,
-        ], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->put($route, [
+                'content' => 'content2',
+                'row' => 1,
+                'column' => 0,
+                'grammar_id' => 10,
+                'user_id' => 20,
+            ], $this->headers('v1', $user));
 
         $this->seeJsonStructure([
             'data' => CommentTransformer::attrs(),
@@ -267,7 +277,9 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.destroy', [$grammar->id, $comment->id]);
 
-        $this->delete($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->notSeeInDatabase('comments', [
@@ -310,7 +322,9 @@ class CommentsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.destroy', [$grammar->id, $comment->id]);
 
-        $this->delete($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
     }

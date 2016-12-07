@@ -20,11 +20,13 @@ class RightsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.store', [$grammar->id]);
 
-        $this->post($route, [
-            'comment' => true,
-            'view' => false,
-            'user_id' => $user2->id,
-        ], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
+                'comment' => true,
+                'view' => false,
+                'user_id' => $user2->id,
+            ], $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->seeInDatabase('rights', [
@@ -52,11 +54,13 @@ class RightsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.update', [$grammar->id, $right->id]);
 
-        $this->put($route, [
-            'user_id' => $user2->id,
-            'view' => false,
-            'comment' => false,
-        ], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->put($route, [
+                'user_id' => $user2->id,
+                'view' => false,
+                'comment' => false,
+            ], $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->seeInDatabase('rights', [
@@ -76,7 +80,9 @@ class RightsControllerTest extends TestCase
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.destroy', [$grammar->id, $right->id]);
 
-        $this->delete($route, [], $this->headers('v1', $user));
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->notSeeInDatabase('rights', [
@@ -107,7 +113,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.store', [$grammar->id]);
-                    $testCase->post($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->post($route, [], $this->headers('v1', $user));
                 },
             ],
             'store: user is not grammar owner' => [
@@ -116,7 +124,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.store', [$grammar->id]);
-                    $testCase->post($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->post($route, [], $this->headers('v1', $user));
                 },
             ],
             'update: user is admin' => [
@@ -125,7 +135,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.update', [$grammar, $right]);
-                    $testCase->put($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->put($route, [], $this->headers('v1', $user));
                 },
             ],
             'update: user is not grammar owner' => [
@@ -134,7 +146,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.update', [$grammar, $right]);
-                    $testCase->put($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->put($route, [], $this->headers('v1', $user));
                 },
             ],
             'destroy: user is admin' => [
@@ -143,7 +157,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.destroy', [$grammar, $right]);
-                    $testCase->delete($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->delete($route, [], $this->headers('v1', $user));
                 },
             ],
             'destroy: user is not grammar owner' => [
@@ -152,7 +168,9 @@ class RightsControllerTest extends TestCase
 
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.destroy', [$grammar, $right]);
-                    $testCase->delete($route, [], $this->headers('v1', $user));
+                    $testCase
+                        ->actingAsApiUser($user)
+                        ->delete($route, [], $this->headers('v1', $user));
                 },
             ],
         ];
