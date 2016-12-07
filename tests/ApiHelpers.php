@@ -26,6 +26,7 @@ trait ApiHelpers
 
     /**
      * @param User $user
+     *
      * @return $this
      */
     protected function actingAsApiUser(User $user)
