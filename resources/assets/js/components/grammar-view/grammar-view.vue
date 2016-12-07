@@ -4,7 +4,7 @@
 
 <script>
   import $ from 'jquery'
-  import Parser from 'src/parser/parser'
+  import Parser from 'js/parser/parser'
   import Tree2Html from './tree2html/tree2html'
   import './line-comments'
   import './symbols-comments'

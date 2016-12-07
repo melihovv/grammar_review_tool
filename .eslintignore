@@ -1,6 +1,5 @@
 /node_modules
 /docs
-/resources/assets/test/unit/coverage
-/resources/assets/src/parser/Lemon
+/resources/assets/js/parser/Lemon
 /public
 /vendor

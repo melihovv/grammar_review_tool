@@ -9,7 +9,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production'
 
 module.exports = {
   entry: {
-    app: './resources/assets/src/index',
+    app: './resources/assets/js/index',
   },
   output: {
     path: config[NODE_ENV].assetsRoot,
@@ -20,8 +20,8 @@ module.exports = {
     extensions: ['', '.js', '.vue', '.styl'],
     fallback: [path.join(__dirname, '../../../node_modules')],
     alias: {
-      src: path.resolve(__dirname, '../src'),
-      components: path.resolve(__dirname, '../src/components'),
+      src: path.resolve(__dirname, '../js'),
+      components: path.resolve(__dirname, '../js/components'),
       vue: 'vue/dist/vue.js',
     },
   },
