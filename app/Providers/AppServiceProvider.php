@@ -13,13 +13,6 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        API::error(function (ModelNotFoundException $e) {
-            throw new NotFoundHttpException(null, $e);
-        });
-
-        API::error(function (AuthorizationException $e) {
-            throw new AccessDeniedHttpException($e->getMessage(), $e);
-        });
     }
 
     public function register()

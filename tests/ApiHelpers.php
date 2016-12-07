@@ -21,12 +21,6 @@ trait ApiHelpers
             'Accept' => "application/$standardsTree.$subtype.$version+json",
         ];
 
-        if (!is_null($user)) {
-            $token = JWTAuth::fromUser($user);
-            JWTAuth::setToken($token);
-            $headers['Authorization'] = 'Bearer ' . $token;
-        }
-
         return $headers;
     }
 }
