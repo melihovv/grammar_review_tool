@@ -59,6 +59,13 @@ module.exports = config => {
         {type: 'html', subdir: 'html'},
         {type: 'text-summary'},
       ],
+      check: {
+        each: {
+          statements: 100,
+          functions: 100,
+          lines: 100,
+        },
+      },
     },
   }
 
