@@ -6,10 +6,13 @@
   "scripts": {
     "build": "node resources/assets/build/build.js",
     "dev": "node resources/assets/build/dev-server.js",
-    "semantic-release": "semantic-release pre && semantic-release post",
     "test": "npm run php-test && npm run js-test",
-    "js-test": "npm run lint",
+    "js-test": "npm run unit && npm run e2e && npm run lint",
+    "unit": "karma start resources/assets/test/unit/karma.conf.js --single-run",
+    "e2e": "node resources/assets/test/e2e/runner.js",
+    "report-coverage": "cat ./resources/assets/test/unit/coverage/lcov.info | node_modules/codecov.io/bin/codecov.io.js",
     "lint": "eslint --ext .js,.vue .",
+    "semantic-release": "semantic-release pre && semantic-release post",
     "php-test": "npm run phpcs && npm run phpmd && npm run phpunit",
     "phpunit": "phpunit",
     "phpmd": "phpmd app/ text ./phpmd-rules.xml",
@@ -102,7 +105,6 @@
   "dependencies": {
     "antlr4": "^4.5.3",
     "babel-runtime": "^6.11.6",
-    "bootstrap": "^3.3.7",
     "jquery": "^3.1.0",
     "vue": "^2.0.0"
   }
