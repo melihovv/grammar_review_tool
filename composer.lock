@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "938be9b924a2b6bdc8a7a363684e4fab",
-    "content-hash": "44931c9971e2e53f2a361a715a6699a1",
+    "hash": "101d6b10e2a1a97020e9c2dd9e82d7d5",
+    "content-hash": "be23dc162ad6ef4b7f713c37924e4a90",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -3098,6 +3098,38 @@
             "time": "2016-06-18 18:17:25"
         },
         {
+            "name": "mathiasgrimm/laravel-env-validator",
+            "version": "dev-configurable-validation",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davidstoker/laravel-env-validator.git",
+                "reference": "1aaf1820e77a6cc2954e9ebe97745ccc5a13b585"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davidstoker/laravel-env-validator/zipball/1aaf1820e77a6cc2954e9ebe97745ccc5a13b585",
+                "reference": "1aaf1820e77a6cc2954e9ebe97745ccc5a13b585",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MathiasGrimm\\LaravelEnvValidator\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Mathias Grimm",
+                    "email": "mathiasgrimm@gmail.com"
+                }
+            ],
+            "description": "Laravel Validator for the .env file",
+            "support": {
+                "source": "https://github.com/davidstoker/laravel-env-validator/tree/configurable-validation"
+            },
+            "time": "2016-04-16 23:28:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "0.9.5",
             "source": {
@@ -4723,7 +4755,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dingo/api": 20
+        "dingo/api": 20,
+        "mathiasgrimm/laravel-env-validator": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -184,6 +184,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Clockwork\Support\Laravel\ClockworkServiceProvider::class,
         Asvae\ApiTester\ServiceProvider::class,
+        MathiasGrimm\LaravelEnvValidator\ServiceProvider::class,
     ],
 
     'local_aliases' => [
