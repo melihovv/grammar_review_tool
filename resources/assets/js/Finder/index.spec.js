@@ -2,8 +2,8 @@
 
 'use strict'
 
-import Parser from '../parser/parser'
-import Finder from './finder'
+import Parser from '../Parser'
+import Finder from './index'
 
 describe('finder', () => {
   const parser = new Parser()

@@ -2,7 +2,7 @@
 
 'use strict'
 
-import Parser from './parser'
+import Parser from './index'
 
 describe('parser', () => {
   const parser = new Parser()

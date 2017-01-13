@@ -1,7 +1,7 @@
 'use strict'
 
-import {LemonParserListener} from '../parser/Lemon/LemonParserListener'
-import {LemonParser} from '../parser/Lemon/LemonParser'
+import {LemonParserListener} from '../Parser/Lemon/LemonParserListener'
+import {LemonParser} from '../Parser/Lemon/LemonParser'
 
 /**
  * @extends LemonParserListener

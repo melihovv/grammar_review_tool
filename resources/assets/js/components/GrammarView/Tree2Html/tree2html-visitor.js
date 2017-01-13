@@ -1,8 +1,8 @@
 'use strict'
 
 import {TerminalNodeImpl} from 'antlr4/tree/Tree'
-import {LemonParserVisitor} from 'js/parser/Lemon/LemonParserVisitor'
-import {LemonParser} from 'js/parser/Lemon/LemonParser'
+import {LemonParserVisitor} from 'js/Parser/Lemon/LemonParserVisitor'
+import {LemonParser} from 'js/Parser/Lemon/LemonParser'
 import common from '../common'
 
 /**

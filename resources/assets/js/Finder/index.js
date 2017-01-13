@@ -2,7 +2,7 @@
 
 import tree from 'antlr4/tree/index'
 import FinderListener from './finder-listener'
-import {LemonParser} from '../parser/Lemon/LemonParser'
+import {LemonParser} from '../Parser/Lemon/LemonParser'
 
 /**
  * Class to find symbols in tree.
