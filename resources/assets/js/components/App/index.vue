@@ -19,6 +19,10 @@
 
 <style lang="styl" rel="stylesheet/stylus">
   @import "~bootstrap/dist/css/bootstrap.css"
+
+  *
+    box-sizing border-box
+
   @import "../Page"
   @import "../Loader"
   @import "../Button"
