@@ -163,6 +163,7 @@
 
     &__textarea
       border 1px solid #ddd
+      width 100%
       height 100px
       min-height 100px
       max-height 500px
