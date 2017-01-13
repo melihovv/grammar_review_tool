@@ -18,7 +18,8 @@
 </script>
 
 <style lang="styl" rel="stylesheet/stylus">
+  @import "~bootstrap/dist/css/bootstrap.css"
   @import "../Page"
   @import "../Loader"
-  @import "~bootstrap/dist/css/bootstrap.css"
+  @import "../Button"
 </style>
