@@ -73,6 +73,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': config[NODE_ENV].env,
     }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     new webpack.NoErrorsPlugin(),
   ],
   node: {

@@ -20,4 +20,5 @@
 <style lang="styl" rel="stylesheet/stylus">
   @import "../Page"
   @import "../Loader"
+  @import "~bootstrap/dist/css/bootstrap.css"
 </style>
