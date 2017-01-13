@@ -8,14 +8,14 @@ class CommentTransformer extends Transformer
 {
     public function transform(Comment $model)
     {
-        return [
-            'id' => $model->id,
-            'user_id' => $model->user_id,
-            'grammar_id' => $model->grammar_id,
-            'content' => $model->content,
-            'row' => $model->row,
-            'column' => $model->column,
-        ];
+        return array_combine(static::attrs(), [
+            $model->id,
+            $model->user_id,
+            $model->grammar_id,
+            $model->content,
+            $model->row,
+            $model->column,
+        ]);
     }
 
     public static function attrs()

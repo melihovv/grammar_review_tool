@@ -8,12 +8,12 @@ class UserTransformer extends Transformer
 {
     public function transform(User $model)
     {
-        return [
-            'id' => $model->id,
-            'name' => $model->name,
-            'email' => $model->email,
-            'is_admin' => $model->is_admin,
-        ];
+        return array_combine(static::attrs(), [
+            $model->id,
+            $model->name,
+            $model->email,
+            $model->is_admin,
+        ]);
     }
 
     public static function attrs()

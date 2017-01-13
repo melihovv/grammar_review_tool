@@ -8,13 +8,13 @@ class GrammarTransformer extends Transformer
 {
     public function transform(Grammar $model)
     {
-        return [
-            'id' => $model->id,
-            'owner' => $model->owner,
-            'name' => $model->name,
-            'content' => $model->content,
-            'public_view' => $model->public_view,
-        ];
+        return array_combine(static::attrs(), [
+            $model->id,
+            $model->owner,
+            $model->name,
+            $model->content,
+            $model->public_view,
+        ]);
     }
 
     public static function attrs()
