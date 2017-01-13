@@ -133,7 +133,6 @@
       word-wrap break-word
 
     &__comment-holder
-      box-sizing border-box
       max-width 800px
       margin-bottom 10px
       border 1px solid #bfccd1
@@ -161,7 +160,6 @@
       border-radius 3px
       border 1px solid #ddd
       padding 15px 10px 10px 10px
-      box-sizing border-box
 
     &__textarea
       border 1px solid #ddd
@@ -183,7 +181,6 @@
 
     &__actions
       padding 10px 0 0
-      box-sizing border-box
 
       &::before
         display table
