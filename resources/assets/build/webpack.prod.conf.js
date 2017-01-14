@@ -10,8 +10,6 @@ const config = require('./config')
 const utils = require('./utils')
 const baseWebpackConfig = require('./webpack.base.conf')
 
-const NODE_ENV = process.env.NODE_ENV || 'production'
-
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
@@ -44,9 +42,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       name: 'vendor',
       minChunks: (module, count) => {
         // Any required modules inside node_modules are extracted to vendor.
-        return module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource
+        return module.resource
+          && /\.js$/.test(module.resource)
+          && module
+            .resource
             .indexOf(path.join(__dirname, '../../../node_modules')) === 0
       },
     }),
@@ -63,15 +62,13 @@ const webpackConfig = merge(baseWebpackConfig, {
 })
 
 if (config.production.gzip) {
+  const extensions = config.production.gzipExtensions.join('|')
+
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.production.gzipExtensions.join('|') +
-        ')$'
-      ),
+      test: new RegExp('\\.(' + extensions + ')$'),
       threshold: 10240,
       minRatio: 0.8,
     })

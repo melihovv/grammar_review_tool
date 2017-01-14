@@ -58,8 +58,8 @@ class FinderListener extends LemonParserListener {
       }
     }
 
-    if (this.ruleToCompare !== undefined &&
-      ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
+    if (this.ruleToCompare !== undefined
+      && ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
       let symbols = []
 
       for (const child of ctx.children) {
@@ -68,8 +68,8 @@ class FinderListener extends LemonParserListener {
         }
       }
 
-      if (JSON.stringify(symbols) ===
-        JSON.stringify(this.ruleToCompare.symbols)) {
+      if (JSON.stringify(symbols)
+        === JSON.stringify(this.ruleToCompare.symbols)) {
         this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide())
       }
     }
