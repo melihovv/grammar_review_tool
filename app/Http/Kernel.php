@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
     public function boot()
     {
         parent::bootstrap();
+
         if ($this->app->environment() !== 'production') {
             $middls = config('app.local_middlewares');
 
