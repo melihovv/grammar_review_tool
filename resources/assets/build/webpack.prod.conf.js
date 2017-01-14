@@ -4,7 +4,6 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const config = require('./config')
@@ -40,19 +39,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
-    new HtmlWebpackPlugin({
-      filename: NODE_ENV === 'testing' ? 'index.html' : config.production.index,
-      template: './resources/assets/index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-      },
-      // Necessary to consistently work with multiple chunks via
-      // CommonsChunkPlugin.
-      chunksSortMode: 'dependency',
-    }),
     // Split vendor js into its own file.
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
