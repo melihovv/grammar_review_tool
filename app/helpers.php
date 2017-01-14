@@ -22,6 +22,7 @@ if (!function_exists('hmr_asset')) {
      * Returns url to asset on hot module replacement server.
      *
      * @param string $path Path to asset.
+     *
      * @return string
      */
     function hmr_asset($path)
