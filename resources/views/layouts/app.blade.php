@@ -26,10 +26,14 @@
 </head>
 
 <body>
-<div id="app">
-    @include('layouts.partials.navbar')
+<div class="container-fluid">
+    <div id="app">
+        @include('layouts.partials.navbar')
 
-    @yield('content')
+        @yield('content')
+
+        @include('layouts.partials.footer')
+    </div>
 </div>
 
 @section('scripts')

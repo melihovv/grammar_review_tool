@@ -1,18 +1,15 @@
 <template>
   <div>
     <GrammarView></GrammarView>
-    <Foot></Foot>
   </div>
 </template>
 
 <script>
   import GrammarView from 'Components/GrammarView'
-  import Foot from 'Components/Foot'
 
   export default {
     components: {
       GrammarView,
-      Foot,
     },
   }
 </script>
@@ -26,7 +23,7 @@
   svg
     box-sizing content-box
 
-  @import "../Page"
   @import "../Loader"
   @import "../Button"
+  @import "../Footer"
 </style>
