@@ -10,24 +10,19 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
+    @section('styles')
+        @if (App::environment('production'))
+            <link rel="stylesheet" href="{{ elixir('app.css', 'assets') }}">
+        @endif
+    @show
 
-    <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    <script>
-        window.Laravel = @php echo json_encode([
+    @section('top-scripts')
+        <script>
+            window.Laravel = @php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); @endphp
-    </script>
+        </script>
+    @show
 </head>
 
 <body>
@@ -36,6 +31,16 @@
 
     @yield('content')
 </div>
+
+@section('scripts')
+    @if (App::environment('production'))
+        <script src="{{ elixir('manifest.js', 'assets') }}"></script>
+        <script src="{{ elixir('vendor.js', 'assets') }}"></script>
+        <script src="{{ elixir('app.js', 'assets') }}"></script>
+    @else
+        <script src="{{ hmr_asset('app.js') }}"></script>
+    @endif
+@show
 </body>
 
 </html>

@@ -18,8 +18,8 @@ const testEnv = merge(devEnv, {
 const productionConfig = {
   env: prodEnv,
   index: path.resolve(__dirname, '../../../public/index.html'),
-  assetsRoot: path.resolve(__dirname, '../../../public'),
-  assetsSubDirectory: 'assets',
+  assetsRoot: path.resolve(__dirname, '../../../public/assets'),
+  assetsSubDirectory: '',
   assetsPublicPath: '/',
   sourceMap: false,
   staticDir: 'resources/assets/static',
@@ -43,6 +43,7 @@ const productionConfig = {
 const developmentConfig = merge(productionConfig, {
   env: devEnv,
   port: 8080,
+  assetsPublicPath: `http://localhost:8080/`,
   proxyTable: {},
   cssSourceMap: true,
 })
@@ -50,6 +51,7 @@ const developmentConfig = merge(productionConfig, {
 const testingConfig = merge(developmentConfig, {
   env: testEnv,
   port: 8081,
+  assetsPublicPath: `http://localhost:8081/`,
   baseUrl: 'http://localhost:8081',
 })
 

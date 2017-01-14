@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const config = require('./config')
 const utils = require('./utils')
 const baseWebpackConfig = require('./webpack.base.conf')
@@ -68,6 +69,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor'],
+    }),
+    new ManifestPlugin({
+      fileName: 'rev-manifest.json',
     }),
   ],
 })
