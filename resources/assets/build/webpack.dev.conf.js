@@ -23,7 +23,6 @@ module.exports = merge(baseWebpackConfig, {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './resources/assets/index.html',
