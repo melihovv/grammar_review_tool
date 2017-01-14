@@ -9,7 +9,7 @@
             "**/*.spec.js",
             "**/Lemon*.js",
             "resources/assets/js/*.js",
-            "resources/assets/js/components/**/*.(js|vue)",
+            "resources/assets/js/Components/**/*.(js|vue)",
             "resources/assets/test/unit/*.js"
           ]
         }]

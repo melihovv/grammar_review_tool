@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import GrammarView from 'components/GrammarView'
-  import Foot from 'components/Foot'
+  import GrammarView from 'Components/GrammarView'
+  import Foot from 'Components/Foot'
 
   export default {
     components: {
