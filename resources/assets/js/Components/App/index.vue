@@ -1,16 +1,11 @@
 <template>
   <div>
-    <GrammarView></GrammarView>
+    <grammar-view></grammar-view>
   </div>
 </template>
 
 <script>
-  import GrammarView from 'Components/GrammarView'
-
   export default {
-    components: {
-      GrammarView,
-    },
   }
 </script>
 
