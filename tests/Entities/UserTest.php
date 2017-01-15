@@ -231,7 +231,7 @@ class UserTest extends DatabaseTestCase
                 },
                 ['view', 'comment'],
                 false,
-                false
+                false,
             ],
         ];
     }
