@@ -18,6 +18,14 @@
   svg
     box-sizing content-box
 
+  html
+    height 100%
+
+  body
+    position relative
+    padding-bottom 60px
+    min-height 100%
+
   @import "../Loader"
   @import "../Button"
   @import "../Footer"
