@@ -23,6 +23,9 @@ class CreateRightsTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['user_id', 'grammar_id']);
+
+            $table->index('view');
+            $table->index('comment');
         });
     }
 

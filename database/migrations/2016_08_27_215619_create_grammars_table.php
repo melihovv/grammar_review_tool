@@ -18,6 +18,8 @@ class CreateGrammarsTable extends Migration
 
             $table->foreign('owner')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->index('public_view');
         });
     }
 
