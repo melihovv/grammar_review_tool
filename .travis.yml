@@ -30,6 +30,7 @@ before_script:
     - npm prune
 
 script:
+    - php artisan key:generate
     - composer run phpunit
     - composer run phpcs
     - composer run phpmd
