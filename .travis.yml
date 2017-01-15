@@ -30,6 +30,7 @@ before_script:
     - npm prune
 
 script:
+    - cp .env.example .env
     - php artisan key:generate
     - composer run phpunit
     - composer run phpcs
