@@ -226,6 +226,13 @@ class UserTest extends DatabaseTestCase
                 true,
                 true,
             ],
+            'several rights, but user does not have any' => [
+                function ($user, $grammar) {
+                },
+                ['view', 'comment'],
+                false,
+                false
+            ],
         ];
     }
 
