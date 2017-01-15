@@ -22,6 +22,16 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
+$factory->defineAs(
+    User::class,
+    'admin',
+    function (Generator $faker) use ($factory) {
+        $user = $factory->raw(User::class);
+
+        return array_merge($user, ['is_admin' => true]);
+    }
+);
+
 $factory->define(Grammar::class, function (Generator $faker) {
     return [
         'owner' => function () {

@@ -229,7 +229,7 @@ class CommentsControllerTest extends TestCase
 
     public function testUpdateByAdminDoesNotChangeCommentOwnerAndGrammar()
     {
-        $user = factory(User::class)->create(['is_admin' => true]);
+        $user = factory(User::class, 'admin')->create();
         $grammar = factory(Grammar::class)->create();
         $comment = factory(Comment::class)->create([
             'user_id' => $user->id,
