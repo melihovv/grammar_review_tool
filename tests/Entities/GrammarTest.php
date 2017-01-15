@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Entities;
+
 use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\DatabaseTestCase;
 
 class GrammarTest extends DatabaseTestCase
 {

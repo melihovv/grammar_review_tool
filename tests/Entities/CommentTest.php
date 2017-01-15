@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests\Entities;
+
 use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\DatabaseTestCase;
 
 class CommentTest extends DatabaseTestCase
 {

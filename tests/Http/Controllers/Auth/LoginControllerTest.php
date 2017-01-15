@@ -1,8 +1,12 @@
 <?php
 
+namespace Tests\Http\Controllers\Auth;
+
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Lang;
+use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {

@@ -1,5 +1,12 @@
 <?php
 
+namespace Tests;
+
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
+use Mockery;
+
 abstract class DatabaseTestCase extends TestCase
 {
     /**
@@ -21,7 +28,7 @@ abstract class DatabaseTestCase extends TestCase
         }
 
         $app = require __DIR__ . '/../bootstrap/app.php';
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make(Kernel::class)->bootstrap();
 
         Hash::setRounds(5);
 

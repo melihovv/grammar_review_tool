@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\Entities\User;
 
 trait ApiHelpers

@@ -1,11 +1,15 @@
 <?php
 
+namespace Tests\Http\Controllers\Api;
+
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use App\Http\Transformers\GrammarTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\ApiHelpers;
+use Tests\TestCase;
 
 class GrammarsControllerTest extends TestCase
 {

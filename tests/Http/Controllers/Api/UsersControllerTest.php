@@ -1,9 +1,13 @@
 <?php
 
+namespace Tests\Http\Controllers\Api;
+
 use App\Entities\User;
 use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\ApiHelpers;
+use Tests\TestCase;
 
 class UsersControllerTest extends TestCase
 {

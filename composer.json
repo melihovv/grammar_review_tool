@@ -47,12 +47,9 @@
     ]
   },
   "autoload-dev": {
-    "classmap": [
-      "tests/TestCase.php",
-      "tests/DatabaseTestCase.php",
-      "tests/TestHelpers.php",
-      "tests/ApiHelpers.php"
-    ]
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "scripts": {
     "post-root-package-install": [
