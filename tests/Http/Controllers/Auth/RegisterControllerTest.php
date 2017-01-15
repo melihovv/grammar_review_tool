@@ -31,4 +31,20 @@ class RegisterControllerTest extends TestCase
             ->visit('/register')
             ->seePageIs('/home');
     }
+
+    public function testRegisterDuplicateName()
+    {
+        $user = factory(User::class)->create();
+
+        $this
+            ->visit('/register')
+            ->see('Register')
+            ->type($user->name, 'name')
+            ->type('amelihovv@ya.ru', 'email')
+            ->type('password', 'password')
+            ->type('password', 'password_confirmation')
+            ->press('Register')
+            ->seePageIs('/register')
+            ->see(Lang::get('validation.unique', ['attribute' => 'name']));
+    }
 }
