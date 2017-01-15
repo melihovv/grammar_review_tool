@@ -1,11 +1,13 @@
 <?php
 
 use App\Entities\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class HomeControllerTest extends DatabaseTestCase
+class HomeControllerTest extends TestCase
 {
     use DatabaseTransactions;
+    use DatabaseMigrations;
 
     public function testIndex()
     {

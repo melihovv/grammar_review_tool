@@ -3,9 +3,11 @@
 use App\Entities\User;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class DingoServiceProviderTest extends DatabaseTestCase
+class DingoServiceProviderTest extends TestCase
 {
+    use DatabaseTransactions;
     use DatabaseMigrations;
     use ApiHelpers;
 
