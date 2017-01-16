@@ -13,9 +13,11 @@ class ApiTokenAuthProvider implements Provider
 {
     /**
      * @param Request $request
-     * @param Route $route
-     * @return mixed
+     * @param Route   $route
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+     *
+     * @return mixed
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function authenticate(Request $request, Route $route)
