@@ -35,7 +35,7 @@ $factory->defineAs(
 
 $factory->define(Grammar::class, function (Generator $faker) {
     return [
-        'owner' => function () {
+        'user_id' => function () {
             return factory(User::class)->create()->id;
         },
         'name' => $faker->sentence(),

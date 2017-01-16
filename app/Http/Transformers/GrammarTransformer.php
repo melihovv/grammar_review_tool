@@ -15,7 +15,7 @@ class GrammarTransformer extends Transformer
     {
         return array_combine(static::attrs(), [
             $model->id,
-            $model->owner,
+            $model->user_id,
             $model->name,
             $model->content,
             $model->public_view,
@@ -26,7 +26,7 @@ class GrammarTransformer extends Transformer
     {
         return [
             'id',
-            'owner',
+            'user_id',
             'name',
             'content',
             'public_view',

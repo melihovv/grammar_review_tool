@@ -27,7 +27,7 @@ abstract class GrammarRequest extends Request
     public function all()
     {
         return array_merge(parent::all(), [
-            'owner' => app(Auth::class)->user()->id,
+            'user_id' => app(Auth::class)->user()->id,
         ]);
     }
 }

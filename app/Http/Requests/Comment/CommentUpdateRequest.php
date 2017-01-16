@@ -15,7 +15,7 @@ class CommentUpdateRequest extends CommentRequest
         $grammar = $this->route('grammar');
 
         return array_merge(parent::all(), [
-            'user_id' => $grammar->user->id,
+            'user_id' => $grammar->owner->id,
             'grammar_id' => $grammar->id,
         ]);
     }

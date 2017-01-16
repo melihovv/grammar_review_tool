@@ -8,7 +8,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <a href="{{ route('grammars.show', $grammar->id) }}">{{ $grammar->name }}</a>
-                            by {{ $grammar->user->name }}
+                            by {{ $grammar->owner->name }}
                         </div>
                     </div>
                 </div>

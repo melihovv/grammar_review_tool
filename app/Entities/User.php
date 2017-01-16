@@ -34,7 +34,7 @@ class User extends Authenticatable
      */
     public function grammars()
     {
-        return $this->hasMany(Grammar::class, 'owner');
+        return $this->hasMany(Grammar::class);
     }
 
     public function availableGrammars()
@@ -47,7 +47,7 @@ class User extends Authenticatable
             $q->where('view', true)->orWhere('comment', true);
         })
             ->orWhere('public_view', true)
-            ->orWhere('owner', $this->id);
+            ->orWhere('user_id', $this->id);
     }
 
     /**
@@ -73,7 +73,7 @@ class User extends Authenticatable
      */
     public function isGrammarOwner(Grammar $grammar)
     {
-        return $this->id !== null && $this->id === $grammar->owner;
+        return $this->id !== null && $this->id === $grammar->user_id;
     }
 
     /**

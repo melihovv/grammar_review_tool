@@ -9,14 +9,14 @@ class CreateGrammarsTable extends Migration
     {
         Schema::create('grammars', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('owner');
+            $table->unsignedInteger('user_id');
             $table->string('name');
             $table->text('content');
             $table->boolean('public_view');
             $table->boolean('allow_to_comment')->default(true);
             $table->timestamps();
 
-            $table->foreign('owner')->references('id')->on('users')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->index('public_view');

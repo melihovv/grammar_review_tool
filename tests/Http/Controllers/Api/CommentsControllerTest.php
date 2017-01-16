@@ -56,12 +56,12 @@ class CommentsControllerTest extends TestCase
                 $user->update(['is_admin' => true]);
             }],
             'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['owner' => $user->id]);
+                $grammar->update(['user_id' => $user->id]);
             }],
             'user is grammar owner and grammar is not allowed to comment' => [
                 function ($user, $grammar) {
                     $grammar->update([
-                        'owner' => $user->id,
+                        'user_id' => $user->id,
                         'allow_to_comment' => false,
                     ]);
                 },
@@ -161,7 +161,7 @@ class CommentsControllerTest extends TestCase
         return [
             'user is admin' => [function ($user, $grammar, $comment) {
                 $user->update(['is_admin' => true]);
-                $grammar->update(['owner' => $user->id]);
+                $grammar->update(['user_id' => $user->id]);
             }],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment) {
@@ -260,7 +260,7 @@ class CommentsControllerTest extends TestCase
             'data' => CommentTransformer::attrs(),
         ]);
         $this->seeInDatabase('comments', [
-            'user_id' => $grammar->user->id,
+            'user_id' => $grammar->owner->id,
             'grammar_id' => $grammar->id,
             'content' => 'content2',
             'row' => 1,

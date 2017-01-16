@@ -113,7 +113,7 @@ class GrammarsControllerTest extends TestCase
                 $user->update(['is_admin' => true]);
             }],
             'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['owner' => $user->id]);
+                $grammar->update(['user_id' => $user->id]);
             }],
             'grammar is public' => [function ($user, $grammar) {
                 $grammar->update(['public_view' => true]);
@@ -178,7 +178,7 @@ class GrammarsControllerTest extends TestCase
                 $user->update(['is_admin' => true]);
             }],
             'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['owner' => $user->id]);
+                $grammar->update(['user_id' => $user->id]);
             }],
         ];
     }

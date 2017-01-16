@@ -11,7 +11,7 @@ class Grammar extends Model
     use AdditionalMethods;
 
     protected $fillable = [
-        'owner',
+        'user_id',
         'name',
         'content',
         'public_view',
@@ -19,7 +19,7 @@ class Grammar extends Model
     ];
 
     protected $casts = [
-        'owner' => 'integer',
+        'user_id' => 'integer',
         'public_view' => 'boolean',
         'allow_to_comment' => 'boolean',
     ];
@@ -27,9 +27,9 @@ class Grammar extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo(User::class, 'owner');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

@@ -19,7 +19,7 @@ class RightsControllerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['owner' => $user->id]);
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.store', [$grammar->id]);
@@ -45,9 +45,7 @@ class RightsControllerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create([
-            'owner' => $user->id,
-        ]);
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
         $right = factory(Right::class)->create([
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
@@ -78,7 +76,7 @@ class RightsControllerTest extends TestCase
     public function testDestroy()
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['owner' => $user->id]);
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
         $right = factory(Right::class)->create();
 
         $route = app(UrlGenerator::class)->version('v1')

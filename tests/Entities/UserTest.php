@@ -30,7 +30,7 @@ class UserTest extends DatabaseTestCase
         return [
             'user is owner of grammar' => [
                 function ($user, $grammar) {
-                    $grammar->update(['owner' => $user->id]);
+                    $grammar->update(['user_id' => $user->id]);
                 },
                 true,
             ],
@@ -242,7 +242,7 @@ class UserTest extends DatabaseTestCase
     public function testGrammarsRelationship()
     {
         $user = factory(User::class)->create();
-        factory(Grammar::class, 5)->create(['owner' => $user->id]);
+        factory(Grammar::class, 5)->create(['user_id' => $user->id]);
         factory(Grammar::class, 10)->create();
 
         $this->assertEquals(5, $user->grammars->count());
@@ -285,7 +285,7 @@ class UserTest extends DatabaseTestCase
                 factory(Grammar::class, 10)->create();
             }, 10],
             'user is owner' => [function ($user) {
-                factory(Grammar::class, 5)->create(['owner' => $user->id]);
+                factory(Grammar::class, 5)->create(['user_id' => $user->id]);
                 factory(Grammar::class, 10)->create(['public_view' => false]);
             }, 5],
             'grammars are public' => [function ($user) {
@@ -330,7 +330,7 @@ class UserTest extends DatabaseTestCase
                 }
 
                 factory(Grammar::class, 7)->create([
-                    'owner' => $user->id,
+                    'user_id' => $user->id,
                     'public_view' => false,
                 ]);
 

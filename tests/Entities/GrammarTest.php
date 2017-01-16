@@ -16,9 +16,9 @@ class GrammarTest extends DatabaseTestCase
     public function testUserRelationship()
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['owner' => $user->id]);
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
 
-        $this->assertEquals($user->toArray(), $grammar->user->toArray());
+        $this->assertEquals($user->toArray(), $grammar->owner->toArray());
     }
 
     public function testCommentsRelationship()
