@@ -186,6 +186,7 @@ return [
         Asvae\ApiTester\ServiceProvider::class,
         MathiasGrimm\LaravelEnvValidator\ServiceProvider::class,
         PrettyRoutes\ServiceProvider::class,
+        Melihovv\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     'local_aliases' => [
