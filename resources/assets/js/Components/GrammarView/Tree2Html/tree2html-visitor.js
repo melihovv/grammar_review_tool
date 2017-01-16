@@ -51,28 +51,27 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     let number = 1
     const lines = this._buffer.split(this._newLineRegex)
     for (const line of lines) {
-      this.html += '<tr class="grammar-view__row">'
-        + `<td class="grammar-view__row-number">${number}</td>`
-        + '<td class="grammar-view__code"><a href="#" '
-        + 'class="button button_type_link button_theme_simple '
-        + 'grammar-view__add-comment-to-row-leftside-button">+</a>'
-        + `${line}</td></tr>`
+      this.html += `
+<tr class="grammar-view__row">
+  <td class="grammar-view__row-number">${number}</td>
+  <td class="grammar-view__code"><!--
+    --><a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
+       href="#">+</a>${line}<!--
+  --></td>
+</tr>
+`
 
       if (this._isAnyCommentOnLine(number)) {
-        this.html += '<tr><td class="grammar-view__line-comments" '
-          + 'colspan="2">'
+        this.html += '<tr><td class="grammar-view__line-comments" colspan="2">'
 
         for (const comment of this._allCommentsOnLine(number)) {
-          this.html += '<div class="grammar-view__comment-holder">'
-            + '<div class="grammar-view__comment-header">'
-            + `${comment.user.name}`
-            + common.svgDeleteComment + common.svgEditComment
-            + '</div>'
-            + `<div class="grammar-view__comment-content">${comment.content}`
-            + '</div></div>'
+          this.html += common.commentTemplate(
+            comment.user.name,
+            comment.content
+          )
         }
 
-        this.html += common.addCommentToRowButton + '</td></tr>'
+        this.html += `${common.addCommentToRowButton}</td></tr>`
       }
 
       ++number

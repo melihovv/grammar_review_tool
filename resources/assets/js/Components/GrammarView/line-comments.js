@@ -1,22 +1,20 @@
 /* eslint-env browser */
-
 import $ from 'jquery'
 import common from './common'
 
 const commentForm = (buttonText = 'Add', content = '') => {
-  return '<div class="grammar-view__comment-form">'
-    + '<textarea class="textarea textarea_theme_simple '
-    + 'textarea_width_available grammar-view__textarea" '
-    + `placeholder="Leave a comment">${content}</textarea>`
-    + '<div class="grammar-view__actions">'
-    + '<a href="#" class="button button_type_link button_theme_simple '
-    + 'grammar-view__add-comment-button">'
-    + `${buttonText}</a>`
-    + '<a href="#" class="button button_type_link button_theme_simple '
-    + 'grammar-view__cancel-button">'
-    + 'Cancel</a>'
-    + '</div>'
-    + '</div>'
+  return `
+<div class="grammar-view__comment-form"> 
+  <textarea class="textarea textarea_theme_simple textarea_width_available grammar-view__textarea"
+            placeholder="Leave a comment">${content}</textarea>
+  <div class="grammar-view__actions">
+    <a class="button button_type_link button_theme_simple grammar-view__add-comment-button"
+       href="#">${buttonText}</a>
+    <a class="button button_type_link button_theme_simple grammar-view__cancel-button"
+       href="#">Cancel</a>
+  </div>
+</div>
+`
 }
 
 const cancelButtonClicked = ($parent, {$prev, remove = false}) => {
@@ -33,11 +31,7 @@ const cancelButtonClicked = ($parent, {$prev, remove = false}) => {
 }
 
 const commentTemplate = comment => {
-  return '<div class="grammar-view__comment-holder">'
-    + '<div class="grammar-view__comment-header">current user'
-    + common.svgDeleteComment + common.svgEditComment + '</div>'
-    + `<div class="grammar-view__comment-content">${comment}`
-    + '</div></div>'
+  return common.commentTemplate(Laravel.user.name, comment)
 }
 
 const commentButtonClicked = ($parent, $prev) => {
@@ -78,8 +72,14 @@ $(() => {
 
       let $commentsTr = $tr.next('tr:not([class])')
       if (!$commentsTr.length) {
-        $tr.after('<tr><td class="grammar-view__line-comments" colspan="2">'
-          + common.addCommentToRowButton + '</td></tr>')
+        $tr.after(`
+<tr>
+  <td class="grammar-view__line-comments" colspan="2">
+    ${common.addCommentToRowButton}
+  </td>
+</tr>
+`
+        )
         $commentsTr = $tr.next('tr:not([class])')
       }
 
