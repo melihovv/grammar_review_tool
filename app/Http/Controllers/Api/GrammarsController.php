@@ -28,6 +28,11 @@ class GrammarsController extends ApiController
         return $this->response->item($grammar, new GrammarTransformer());
     }
 
+    /**
+     * @param Grammar $grammar
+     * @return \Dingo\Api\Http\Response
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     */
     public function show(Grammar $grammar)
     {
         return $this->response->item(

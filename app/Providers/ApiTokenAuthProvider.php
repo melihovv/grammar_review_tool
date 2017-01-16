@@ -11,6 +11,13 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class ApiTokenAuthProvider implements Provider
 {
+    /**
+     * @param Request $request
+     * @param Route $route
+     * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function authenticate(Request $request, Route $route)
     {
         try {
