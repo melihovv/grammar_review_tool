@@ -99,7 +99,7 @@ class GrammarsControllerTest extends TestCase
                                     ],
                                 ]
                             ),
-                        ]
+                        ],
                     ],
                 ]
             ),
