@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "101d6b10e2a1a97020e9c2dd9e82d7d5",
-    "content-hash": "be23dc162ad6ef4b7f713c37924e4a90",
+    "hash": "f1d8f69dde4207ec5f434ecdc5674f1e",
+    "content-hash": "788da9aa1a206639e2a3d3b5a8ab59ff",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -3006,6 +3006,42 @@
                 "fixtures"
             ],
             "time": "2016-04-29 12:21:54"
+        },
+        {
+            "name": "garygreen/pretty-routes",
+            "version": "0.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/garygreen/pretty-routes.git",
+                "reference": "5aae10945278c4b919024ad2262da1868a202154"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/garygreen/pretty-routes/zipball/5aae10945278c4b919024ad2262da1868a202154",
+                "reference": "5aae10945278c4b919024ad2262da1868a202154",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.1.*|5.2.*|5.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PrettyRoutes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gary Green",
+                    "email": "holegary@gmail.com"
+                }
+            ],
+            "description": "Pretty routes for Laravel 5.",
+            "time": "2016-11-08 19:27:02"
         },
         {
             "name": "hamcrest/hamcrest-php",
