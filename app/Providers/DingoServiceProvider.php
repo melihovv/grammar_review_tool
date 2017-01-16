@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use Dingo\Api\Auth\Auth;
-use Dingo\Api\Auth\Provider\Basic;
 use Dingo\Api\Facade\API;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,10 +19,6 @@ class DingoServiceProvider extends ServiceProvider
 
         API::error(function (AuthorizationException $e) {
             throw new AccessDeniedHttpException($e->getMessage(), $e);
-        });
-
-        app(Auth::class)->extend('basic', function ($app) {
-            return new Basic($app['auth'], 'email');
         });
     }
 

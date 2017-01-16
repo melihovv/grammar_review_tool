@@ -23,6 +23,10 @@ trait ApiHelpers
             'Accept' => "application/$standardsTree.$subtype.$version+json",
         ];
 
+        if (!$user !== null) {
+            $headers['Authorization'] = "Bearer $user->api_token";
+        }
+
         return $headers;
     }
 

@@ -19,6 +19,7 @@ $factory->define(User::class, function (Generator $faker) {
         'password' => $password ?: $password = bcrypt('secret'),
         'is_admin' => false,
         'remember_token' => str_random(10),
+        'api_token' => str_random(60),
     ];
 });
 

@@ -168,6 +168,7 @@ return [
     */
 
     'auth' => [
+        'api_token' => \App\Providers\ApiTokenAuthProvider::class,
     ],
 
     /*

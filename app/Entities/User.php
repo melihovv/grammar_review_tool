@@ -16,11 +16,13 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'api_token',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
     ];
 
     protected $casts = [

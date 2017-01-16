@@ -19,8 +19,9 @@
     @section('top-scripts')
         <script>
             window.Laravel = @php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); @endphp
+              'csrfToken' => csrf_token(),
+              'apiToken' => Auth::user() ? Auth::user()->api_token : '',
+            ]); @endphp
         </script>
     @show
 </head>
