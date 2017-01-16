@@ -18,4 +18,8 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'HomeController@index',
         'as' => 'home.index',
     ]);
+
+    Route::resource('grammars', 'GrammarsController', [
+        'only' => ['index', 'show'],
+    ]);
 });

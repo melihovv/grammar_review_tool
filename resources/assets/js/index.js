@@ -1,7 +1,7 @@
 'use strict'
 
 import Vue from 'vue'
-import './ajax-mock'
+import './ajax-setup'
 import 'bootstrap/dist/js/bootstrap'
 import App from 'Components/App'
 import GrammarView from 'Components/GrammarView'

@@ -11,17 +11,17 @@ class Tree2Html {
    * @param {FileContext} tree
    * @param {CommonTokenStream} tokens
    * @param {Object} grammar
+   * @param {Object} owner
    * @param {Object} comments
-   * @param {Object} users
    * @returns {string}
    * @static
    */
-  static convert(tree, tokens, grammar, comments, users) {
+  static convert(tree, tokens, grammar, owner, comments) {
     const tree2HtmlVisitor = new Tree2HtmlVisitor(
       tokens,
       grammar,
-      comments,
-      users
+      owner,
+      comments
     )
     tree2HtmlVisitor.visitFile(tree)
     return tree2HtmlVisitor.html

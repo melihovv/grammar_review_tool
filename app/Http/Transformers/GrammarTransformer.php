@@ -6,6 +6,11 @@ use App\Entities\Grammar;
 
 class GrammarTransformer extends Transformer
 {
+    protected $availableIncludes = [
+        'owner',
+        'comments',
+    ];
+
     public function transform(Grammar $model)
     {
         return array_combine(static::attrs(), [
@@ -26,5 +31,15 @@ class GrammarTransformer extends Transformer
             'content',
             'public_view',
         ];
+    }
+
+    public function includeOwner(Grammar $model)
+    {
+        return $this->item($model->owner, new UserTransformer());
+    }
+
+    public function includeComments(Grammar $model)
+    {
+        return $this->collection($model->comments, new CommentTransformer());
     }
 }

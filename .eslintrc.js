@@ -14,4 +14,7 @@ module.exports = {
       {'anonymous': 'always', 'named': 'never'}
     ],
   },
+  "globals": {
+    "Laravel": false
+  }
 }

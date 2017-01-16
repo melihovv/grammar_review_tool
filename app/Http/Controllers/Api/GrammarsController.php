@@ -30,7 +30,14 @@ class GrammarsController extends ApiController
 
     public function show(Grammar $grammar)
     {
-        return $this->response->item($grammar, new GrammarTransformer());
+        return $this->response->item(
+            $grammar,
+            new GrammarTransformer(),
+            [],
+            function ($resource, $fractal) {
+                $fractal->parseIncludes(['owner', 'comments']);
+            }
+        );
     }
 
     public function destroy(Grammar $grammar)

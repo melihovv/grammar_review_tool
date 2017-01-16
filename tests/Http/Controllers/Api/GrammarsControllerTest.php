@@ -2,10 +2,13 @@
 
 namespace Tests\Http\Controllers\Api;
 
+use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
+use App\Http\Transformers\CommentTransformer;
 use App\Http\Transformers\GrammarTransformer;
+use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\ApiHelpers;
@@ -71,6 +74,7 @@ class GrammarsControllerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $grammar = factory(Grammar::class)->create();
+        factory(Comment::class, 10)->create(['grammar_id' => $grammar->id]);
         $cb($user, $grammar);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -81,7 +85,24 @@ class GrammarsControllerTest extends TestCase
             ->get($route, $this->headers('v1', $user));
 
         $this->seeJsonStructure([
-            'data' => GrammarTransformer::attrs(),
+            'data' => array_merge(
+                GrammarTransformer::attrs(),
+                [
+                    'owner' => ['data' => UserTransformer::attrs()],
+                    'comments' => [
+                        'data' => [
+                            '*' => array_merge(
+                                CommentTransformer::attrs(),
+                                [
+                                    'user' => [
+                                        'data' => UserTransformer::attrs(),
+                                    ],
+                                ]
+                            ),
+                        ]
+                    ],
+                ]
+            ),
         ]);
     }
 

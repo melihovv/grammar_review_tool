@@ -65,37 +65,41 @@ const commentButtonClicked = ($parent, $prev) => {
 }
 
 $(() => {
-  $('.grammar-view__add-comment-to-row-leftside-button').click(e => {
-    const $this = $(e.target)
-    const $td = $this.parent()
-    // TODO const rowNumber = $td.prev().text();
-    const $tr = $td.parent()
+  const $grammarView = $('.grammar-view')
 
-    let $commentsTr = $tr.next('tr:not([class])')
-    if (!$commentsTr.length) {
-      $tr.after('<tr><td class="grammar-view__line-comments" colspan="2">'
-        + common.addCommentToRowButton + '</td></tr>')
-      $commentsTr = $tr.next('tr:not([class])')
-    }
+  $grammarView.on(
+    'click',
+    '.grammar-view__add-comment-to-row-leftside-button',
+    e => {
+      const $this = $(e.target)
+      const $td = $this.parent()
+      // TODO const rowNumber = $td.prev().text();
+      const $tr = $td.parent()
 
-    const $textarea = $commentsTr.find('textarea')
-    if ($textarea.length) {
-      $textarea.focus()
+      let $commentsTr = $tr.next('tr:not([class])')
+      if (!$commentsTr.length) {
+        $tr.after('<tr><td class="grammar-view__line-comments" colspan="2">'
+          + common.addCommentToRowButton + '</td></tr>')
+        $commentsTr = $tr.next('tr:not([class])')
+      }
+
+      const $textarea = $commentsTr.find('textarea')
+      if ($textarea.length) {
+        $textarea.focus()
+        return false
+      }
+
+      const $prev = $commentsTr
+        .find('.grammar-view__add-comment-to-row-button')
+        .replaceWith(commentForm())
+      $commentsTr.find('textarea').focus()
+
+      cancelButtonClicked($commentsTr, {$prev, remove: true})
+      commentButtonClicked($commentsTr, $prev)
+
       return false
     }
-
-    const $prev = $commentsTr
-      .find('.grammar-view__add-comment-to-row-button')
-      .replaceWith(commentForm())
-    $commentsTr.find('textarea').focus()
-
-    cancelButtonClicked($commentsTr, {$prev, remove: true})
-    commentButtonClicked($commentsTr, $prev)
-
-    return false
-  })
-
-  const $grammarView = $('.grammar-view')
+  )
 
   $grammarView.on('click', '.grammar-view__add-comment-to-row-button', e => {
     const $this = $(e.target)

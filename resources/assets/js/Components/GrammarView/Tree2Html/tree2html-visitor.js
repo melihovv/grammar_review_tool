@@ -13,18 +13,18 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * Create Tree2HtmlVisitor.
    * @param {CommonTokenStream} tokens
    * @param {Object} grammar
+   * @param {Object} owner
    * @param {Object} comments
-   * @param {Object} users
    * @returns {Tree2HtmlVisitor}
    * @constructor
    */
-  constructor(tokens, grammar, comments, users) {
+  constructor(tokens, grammar, owner, comments) {
     super()
 
     this.tokens = tokens
     this.grammar = grammar
+    this.owner = owner
     this.comments = comments
-    this.users = users
     this.html = ''
     this._buffer = ''
     this._newLineRegex = /\r\n|\n|\r/
@@ -58,23 +58,21 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
         + 'grammar-view__add-comment-to-row-leftside-button">+</a>'
         + `${line}</td></tr>`
 
-      if (number in this.comments) {
-        if (this.comments[number].length) {
-          this.html += '<tr><td class="grammar-view__line-comments" '
-            + 'colspan="2">'
+      if (this._isAnyCommentOnLine(number)) {
+        this.html += '<tr><td class="grammar-view__line-comments" '
+          + 'colspan="2">'
 
-          for (const comment of this.comments[number]) {
-            this.html += '<div class="grammar-view__comment-holder">'
-              + '<div class="grammar-view__comment-header">'
-              + `${this.users[comment.user].name}`
-              + common.svgDeleteComment + common.svgEditComment
-              + '</div>'
-              + `<div class="grammar-view__comment-content">${comment.content}`
-              + '</div></div>'
-          }
-
-          this.html += common.addCommentToRowButton + '</td></tr>'
+        for (const comment of this._allCommentsOnLine(number)) {
+          this.html += '<div class="grammar-view__comment-holder">'
+            + '<div class="grammar-view__comment-header">'
+            + `${comment.user.name}`
+            + common.svgDeleteComment + common.svgEditComment
+            + '</div>'
+            + `<div class="grammar-view__comment-content">${comment.content}`
+            + '</div></div>'
         }
+
+        this.html += common.addCommentToRowButton + '</td></tr>'
       }
 
       ++number
@@ -271,6 +269,24 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
       result += token.text
     }
     return result
+  }
+
+  /**
+   * Checks if there are any comments on passed line.
+   * @param lineNumber
+   * @returns {boolean}
+   */
+  _isAnyCommentOnLine(lineNumber) {
+    return this.comments.some((comment) => comment.row === lineNumber)
+  }
+
+  /**
+   * Returns all comments on passed line.
+   * @param lineNumber
+   * @returns {Array}
+   */
+  _allCommentsOnLine(lineNumber) {
+    return this.comments.filter((comment) => comment.row === lineNumber)
   }
 }
 

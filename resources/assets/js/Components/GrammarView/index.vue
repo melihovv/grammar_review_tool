@@ -10,28 +10,51 @@
   import './symbols-comments'
 
   export default {
+    props: {
+      grammarId: {
+        required: true,
+      },
+    },
     data: () => {
       return {
         template: '<div class="loader">Loading...</div>',
       }
     },
     mounted() {
-      $.ajax({
-        type: 'get',
-        url: 'grammars/1',
+      $.get({
+        url: `/api/grammars/${this.grammarId}`,
         success: response => {
-          const parser = new Parser()
-          const {grammar, comments, users} = JSON.parse(response)
-          const tree = parser.parse(grammar.content)
-          this.template = Tree2Html.convert(
-            tree,
-            parser.parser._input,
-            grammar,
-            comments,
-            users
-          )
+          const {grammar, owner, comments} = this.handleResponse(response)
+          this.show(grammar, owner, comments)
         },
       })
+    },
+    methods: {
+      show(grammar, owner, comments) {
+        const parser = new Parser()
+        const tree = parser.parse(grammar.content)
+        this.template = Tree2Html.convert(
+          tree,
+          parser.parser._input,
+          grammar,
+          owner,
+          comments
+        )
+      },
+      handleResponse(response) {
+        const grammar = response.data
+
+        const owner = grammar.owner.data
+        delete grammar.owner
+
+        const comments = grammar.comments.data
+        delete grammar.comments
+        for (const comment of comments) {
+          comment.user = comment.user.data
+        }
+
+        return {grammar, owner, comments}
+      },
     },
   }
 </script>
@@ -43,7 +66,6 @@
     font-size 12px
 
   .grammar-view
-    width 1024px
     overflow-x auto
     border 1px solid #d8d8d8
     border-radius 3px

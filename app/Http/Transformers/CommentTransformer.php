@@ -6,6 +6,10 @@ use App\Entities\Comment;
 
 class CommentTransformer extends Transformer
 {
+    protected $defaultIncludes = [
+        'user',
+    ];
+
     public function transform(Comment $model)
     {
         return array_combine(static::attrs(), [
@@ -28,5 +32,10 @@ class CommentTransformer extends Transformer
             'row',
             'column',
         ];
+    }
+
+    public function includeUser(Comment $model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }
