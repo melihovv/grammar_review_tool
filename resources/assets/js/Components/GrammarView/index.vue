@@ -60,15 +60,15 @@
 </script>
 
 <style lang="styl" rel="stylesheet/stylus">
-  .grammar-view__table
-    white-space pre
-    border-spacing 0
-    font-size 12px
-
   .grammar-view
     overflow-x auto
     border 1px solid #d8d8d8
     border-radius 3px
+
+    &__table
+      white-space pre
+      border-spacing 0
+      font-size 12px
 
     &__row-number,
     &__code
