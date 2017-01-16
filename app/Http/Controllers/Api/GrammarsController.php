@@ -30,6 +30,7 @@ class GrammarsController extends ApiController
 
     /**
      * @param Grammar $grammar
+     *
      * @return \Dingo\Api\Http\Response
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
