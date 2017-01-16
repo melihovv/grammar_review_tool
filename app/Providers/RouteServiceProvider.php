@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as SP;
 use Illuminate\Support\Facades\Route;
 
-class RouteServiceProvider extends ServiceProvider
+class RouteServiceProvider extends SP
 {
     /**
      * This namespace is applied to your controller routes.
