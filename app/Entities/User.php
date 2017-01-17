@@ -37,10 +37,15 @@ class User extends Authenticatable
         return $this->hasMany(Grammar::class);
     }
 
+    /**
+     * Get grammars, which are available to current user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
     public function availableGrammars()
     {
         if ($this->is_admin) {
-            return Grammar::getQuery();
+            return Grammar::query();
         }
 
         return Grammar::whereHas('rights', function ($q) {

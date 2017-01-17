@@ -274,7 +274,12 @@ class UserTest extends DatabaseTestCase
         $user = factory(User::class)->create();
         $cb($user);
 
-        $this->assertEquals($amount, $user->availableGrammars()->count());
+        $availableGrammars = $user->availableGrammars();
+        $this->assertEquals($amount, $availableGrammars->count());
+        $this->assertInstanceOf(
+            \Illuminate\Database\Eloquent\Builder::class,
+            $availableGrammars
+        );
     }
 
     public function availableGrammarsProvider()
