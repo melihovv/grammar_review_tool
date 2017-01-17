@@ -6,6 +6,7 @@ const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const config = require('./config')
 const utils = require('./utils')
 const baseWebpackConfig = require('./webpack.base.conf')
@@ -60,6 +61,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
   ],
 })
+
+if (process.env.ANALYSE_WEBPACK) {
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+  }))
+}
 
 if (config.production.gzip) {
   const extensions = config.production.gzipExtensions.join('|')
