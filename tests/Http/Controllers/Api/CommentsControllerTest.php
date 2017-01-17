@@ -7,6 +7,7 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use App\Http\Transformers\CommentTransformer;
+use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\ApiHelpers;
@@ -37,9 +38,7 @@ class CommentsControllerTest extends TestCase
                 'column' => 0,
             ], $this->headers('v1', $user));
 
-        $this->seeJsonStructure([
-            'data' => CommentTransformer::attrs(),
-        ]);
+        $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
@@ -144,9 +143,7 @@ class CommentsControllerTest extends TestCase
                 'column' => 0,
             ], $this->headers('v1', $user));
 
-        $this->seeJsonStructure([
-            'data' => CommentTransformer::attrs(),
-        ]);
+        $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
@@ -256,9 +253,7 @@ class CommentsControllerTest extends TestCase
                 'user_id' => 20,
             ], $this->headers('v1', $user));
 
-        $this->seeJsonStructure([
-            'data' => CommentTransformer::attrs(),
-        ]);
+        $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $grammar->owner->id,
             'grammar_id' => $grammar->id,
@@ -362,6 +357,21 @@ class CommentsControllerTest extends TestCase
                     ]);
                 },
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function responseStructure()
+    {
+        return [
+            'data' => array_merge(
+                CommentTransformer::attrs(),
+                [
+                    'user' => ['data' => UserTransformer::attrs()],
+                ]
+            ),
         ];
     }
 }
