@@ -18,5 +18,9 @@
                 <div class="col-md-12">There are no grammars</div>
             </div>
         @endforelse
+
+            <div class="row">
+                <div class="col-md-12">{{ $grammars->links() }}</div>
+            </div>
     </div>
 @endsection
