@@ -130,6 +130,7 @@
 
     &__add-comment-to-row-leftside-button:hover
       transform scale(1, 1)
+      color white
 
     &__add-comment-to-row-button
       background-color #eee
