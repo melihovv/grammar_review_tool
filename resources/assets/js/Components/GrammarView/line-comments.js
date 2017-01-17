@@ -34,25 +34,39 @@ const commentTemplate = comment => {
   return common.commentTemplate(Laravel.user.name, comment)
 }
 
-const commentButtonClicked = ($parent, $prev) => {
+const commentButtonClicked = ($parent, $prev, rowNumber) => {
   $parent.find('.grammar-view__add-comment-button').click(e => {
-    // TODO Send comment to server and if it is ok...
     const $this = $(e.target)
     const comment = $this.parent().prev().val()
 
-    if (comment === '') {
+    if (comment.trim() === '') {
+      // TODO validation.
       alert('Comment is empty')
       return false
     }
 
-    const comments = $parent.find('.grammar-view__comment-holder')
-    if (comments.length) {
-      comments.last().after(commentTemplate(comment))
-    } else {
-      $parent.find('td').prepend(commentTemplate(comment))
-    }
+    const grammarId = $('.grammar-view').attr('grammar-id')
 
-    $this.closest('.grammar-view__comment-form').replaceWith($prev)
+    $.post({
+      url: `/api/grammars/${grammarId}/comments`,
+      data: {
+        content: comment,
+        row: rowNumber,
+        column: 0,
+      },
+      success: response => {
+        const comments = $parent.find('.grammar-view__comment-holder')
+        const template = commentTemplate(response.data.content)
+
+        if (comments.length) {
+          comments.last().after(template)
+        } else {
+          $parent.find('td').prepend(template)
+        }
+
+        $this.closest('.grammar-view__comment-form').replaceWith($prev)
+      },
+    })
 
     return false
   })
@@ -67,7 +81,7 @@ $(() => {
     e => {
       const $this = $(e.target)
       const $td = $this.parent()
-      // TODO const rowNumber = $td.prev().text();
+      const rowNumber = $td.prev().text();
       const $tr = $td.parent()
 
       let $commentsTr = $tr.next('tr:not([class])')
@@ -95,7 +109,7 @@ $(() => {
       $commentsTr.find('textarea').focus()
 
       cancelButtonClicked($commentsTr, {$prev, remove: true})
-      commentButtonClicked($commentsTr, $prev)
+      commentButtonClicked($commentsTr, $prev, rowNumber)
 
       return false
     }
@@ -104,13 +118,13 @@ $(() => {
   $grammarView.on('click', '.grammar-view__add-comment-to-row-button', e => {
     const $this = $(e.target)
     const $tr = $this.closest('tr')
-    // TODO const rowNumber = $tr.prev().children(':first').text();
+    const rowNumber = $tr.prev().children(':first').text();
     const $prev = $this.replaceWith(commentForm())
 
     $tr.find('textarea').focus()
 
     cancelButtonClicked($tr, {$prev})
-    commentButtonClicked($tr, $prev)
+    commentButtonClicked($tr, $prev, rowNumber)
 
     return false
   })
@@ -146,6 +160,7 @@ $(() => {
 
     $tr.find('.grammar-view__add-comment-button').click(e => {
       // TODO update comment on server and if all is ok...
+      // TODO validation.
       const $this = $(e.target)
       const comment = $this.parent().prev().val()
 

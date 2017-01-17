@@ -1,5 +1,5 @@
 <template>
-  <div class="grammar-view" v-html="template"></div>
+  <div class="grammar-view" v-html="template" :grammar-id="grammarId"></div>
 </template>
 
 <script>
