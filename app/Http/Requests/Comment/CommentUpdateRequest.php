@@ -18,7 +18,8 @@ class CommentUpdateRequest extends CommentRequest
             }],
         ];
 
-        if (!app(Auth::class)->user()->is_admin) {
+        $user = app(Auth::class)->user();
+        if (!$user->is_admin || $user->isCommentOwner($comment)) {
             return array_merge(parent::sanitizers(), $sanitizers, [
                 'user_id' => [function () {
                     return app(Auth::class)->user()->id;

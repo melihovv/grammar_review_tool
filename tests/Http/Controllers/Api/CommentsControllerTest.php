@@ -351,7 +351,43 @@ class CommentsControllerTest extends TestCase
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
-            'user_id' => $grammar->owner->id,
+            'user_id' => $user->id,
+            'grammar_id' => $grammar->id,
+            'content' => 'content2',
+            'row' => 1,
+            'column' => 0,
+        ]);
+    }
+
+    public function testUpdateAdminCanChangeAnyOtherComment()
+    {
+        $admin = factory(User::class, 'admin')->create();
+        $user = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        $comment = factory(Comment::class)->create([
+            'user_id' => $user->id,
+            'grammar_id' => $grammar->id,
+            'content' => 'content1',
+            'row' => 1,
+            'column' => 0,
+        ]);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.comments.update', [$grammar->id, $comment->id]);
+
+        $this
+            ->actingAsApiUser($admin)
+            ->put($route, [
+                'content' => 'content2',
+                'row' => 1,
+                'column' => 0,
+                'grammar_id' => 10,
+                'user_id' => 20,
+            ], $this->headers('v1', $admin));
+
+        $this->seeJsonStructure($this->responseStructure());
+        $this->seeInDatabase('comments', [
+            'user_id' => $user->id,
             'grammar_id' => $grammar->id,
             'content' => 'content2',
             'row' => 1,
