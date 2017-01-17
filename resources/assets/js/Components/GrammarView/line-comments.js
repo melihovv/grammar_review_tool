@@ -31,7 +31,11 @@ const cancelButtonClicked = ($parent, {$prev, remove = false}) => {
 }
 
 const commentTemplate = comment => {
-  return common.commentTemplate(Laravel.user.name, comment)
+  return common.commentTemplate(
+    comment.user.data.name,
+    comment.content,
+    comment.id
+  )
 }
 
 const commentButtonClicked = ($parent, $prev, rowNumber) => {
@@ -56,7 +60,7 @@ const commentButtonClicked = ($parent, $prev, rowNumber) => {
       },
       success: response => {
         const comments = $parent.find('.grammar-view__comment-holder')
-        const template = commentTemplate(response.data.content)
+        const template = commentTemplate(response.data)
 
         if (comments.length) {
           comments.last().after(template)
@@ -130,16 +134,25 @@ $(() => {
   })
 
   $grammarView.on('click', '.grammar-view__delete-line-comment', e => {
-    // TODO delete comment on server and if it is ok...
     const $target = $(e.target)
-    const $tr = $target.closest('tr:not([class])')
-    const length = $tr.find('.grammar-view__comment-holder').length
+    const curCommentHolder = $target.closest('.grammar-view__comment-holder')
 
-    if (length > 1) {
-      $target.closest('.grammar-view__comment-holder').remove()
-    } else {
-      $tr.remove()
-    }
+    const grammarId = $('.grammar-view').attr('grammar-id')
+    const commentId = curCommentHolder.attr('comment-id')
+
+    $.ajax({
+      url: `/api/grammars/${grammarId}/comments/${commentId}`,
+      type: 'DELETE',
+      success: response => {
+        const $tr = $target.closest('tr:not([class])')
+
+        if ($tr.find('.grammar-view__comment-holder').length > 1) {
+          curCommentHolder.remove()
+        } else {
+          $tr.remove()
+        }
+      },
+    })
 
     return false
   })
@@ -159,18 +172,30 @@ $(() => {
     })
 
     $tr.find('.grammar-view__add-comment-button').click(e => {
-      // TODO update comment on server and if all is ok...
       // TODO validation.
       const $this = $(e.target)
       const comment = $this.parent().prev().val()
 
-      if (comment === '') {
+      if (comment.trim() === '') {
         alert('Comment is empty')
         return false
       }
 
-      $tr.find('.grammar-view__comment-form')
-        .replaceWith(commentTemplate(comment))
+      const grammarId = $('.grammar-view').attr('grammar-id')
+      const commentId = $commentHolder.attr('comment-id')
+
+      $.ajax({
+        url: `/api/grammars/${grammarId}/comments/${commentId}`,
+        type: 'PUT',
+        data: {
+          content: comment,
+        },
+        success: response => {
+          $tr
+            .find('.grammar-view__comment-form')
+            .replaceWith(commentTemplate(response.data))
+        },
+      })
 
       return false
     })

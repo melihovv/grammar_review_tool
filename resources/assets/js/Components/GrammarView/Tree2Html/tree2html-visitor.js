@@ -67,7 +67,8 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
         for (const comment of this._allCommentsOnLine(number)) {
           this.html += common.commentTemplate(
             comment.user.name,
-            comment.content
+            comment.content,
+            comment.id
           )
         }
 

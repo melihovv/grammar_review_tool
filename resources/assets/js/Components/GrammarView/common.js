@@ -21,9 +21,10 @@ export default {
   </a>
 </div>
 `,
-  commentTemplate: function (userName, commentContent) {
+  commentTemplate: function (userName, commentContent, commentId = -1) {
     return `
-<div class="grammar-view__comment-holder">
+<div class="grammar-view__comment-holder"
+     ${commentId !== -1 ? 'comment-id="' + commentId + '"' : ''}>
   <div class="grammar-view__comment-header">
     ${userName} ${this.svgDeleteComment} ${this.svgEditComment}
   </div>
