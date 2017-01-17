@@ -43,7 +43,8 @@ class GrammarsControllerTest extends TestCase
 
     /**
      * @dataProvider storeProvider
-     * @param array $payload
+     *
+     * @param array    $payload
      * @param callable $assertCb
      */
     public function testStore(array $payload, callable $assertCb)

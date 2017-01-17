@@ -206,6 +206,7 @@ class CommentsControllerTest extends TestCase
 
     /**
      * @dataProvider updateSanitizersProvider
+     *
      * @param callable $setupCb
      */
     public function testUpdateSanitizers(callable $setupCb)

@@ -22,6 +22,7 @@ abstract class Request extends FormRequest
 
     /**
      * Returns additional input to be inserted to request input data.
+     *
      * @return array
      */
     public function additionalInput()
@@ -31,6 +32,7 @@ abstract class Request extends FormRequest
 
     /**
      * Returns the sanitiziers to be applied to the data.
+     *
      * @return array
      */
     public function sanitizers()
