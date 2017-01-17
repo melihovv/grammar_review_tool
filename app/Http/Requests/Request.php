@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Dingo\Api\Http\FormRequest;
-use Fadion\Sanitizer\FormRequest\Sanitizable;
 
 abstract class Request extends FormRequest
 {
@@ -12,5 +11,30 @@ abstract class Request extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function rules()
+    {
+        $this->sanitize();
+
+        return [];
+    }
+
+    /**
+     * Returns additional input to be inserted to request input data.
+     * @return array
+     */
+    public function additionalInput()
+    {
+        return [];
+    }
+
+    /**
+     * Returns the sanitiziers to be applied to the data.
+     * @return array
+     */
+    public function sanitizers()
+    {
+        return [];
     }
 }

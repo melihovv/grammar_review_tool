@@ -6,17 +6,28 @@ use Dingo\Api\Auth\Auth;
 
 class CommentUpdateRequest extends CommentRequest
 {
-    public function all()
+    public function sanitizers()
     {
         if (!app(Auth::class)->user()->is_admin) {
-            return parent::all();
+            return array_merge(parent::sanitizers(), [
+                'user_id' => [function () {
+                    return app(Auth::class)->user()->id;
+                }],
+                'grammar_id' => [function () {
+                    return $this->route('grammar')->id;
+                }],
+            ]);
         }
 
         $grammar = $this->route('grammar');
 
-        return array_merge(parent::all(), [
-            'user_id' => $grammar->owner->id,
-            'grammar_id' => $grammar->id,
+        return array_merge(parent::sanitizers(), [
+            'user_id' => [function () use ($grammar) {
+                return $grammar->owner->id;
+            }],
+            'grammar_id' => [function () use ($grammar) {
+                return $grammar->id;
+            }],
         ]);
     }
 }

@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Dingo\Api\Provider\LaravelServiceProvider::class,
+        Fadion\Sanitizer\SanitizerServiceProvider::class,
 
         /*
          * Application Service Providers...

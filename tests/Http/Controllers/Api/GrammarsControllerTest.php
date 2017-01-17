@@ -41,7 +41,12 @@ class GrammarsControllerTest extends TestCase
         ]);
     }
 
-    public function testStore()
+    /**
+     * @dataProvider storeProvider
+     * @param array $payload
+     * @param callable $assertCb
+     */
+    public function testStore(array $payload, callable $assertCb)
     {
         $user = factory(User::class)->create();
 
@@ -50,21 +55,56 @@ class GrammarsControllerTest extends TestCase
 
         $this
             ->actingAsApiUser($user)
-            ->post($route, [
-            'name' => 'grammar1',
-            'content' => 'hi',
-            'public_view' => false,
-            'allow_to_comment' => false,
-        ], $this->headers('v1', $user));
+            ->post($route, $payload, $this->headers('v1', $user));
 
-        $this->seeJsonStructure([
-            'data' => GrammarTransformer::attrs(),
-        ]);
-        $this->seeInDatabase('grammars', [
-            'name' => 'grammar1',
-            'content' => 'hi',
-            'public_view' => false,
-        ]);
+        $assertCb($this, $user);
+    }
+
+    public function storeProvider()
+    {
+        return [
+            'success' => [
+                [
+                    'name' => 'grammar1',
+                    'content' => 'hi',
+                    'public_view' => false,
+                    'allow_to_comment' => false,
+                ],
+                function ($testcase, $user) {
+                    $testcase->seeJsonStructure([
+                        'data' => GrammarTransformer::attrs(),
+                    ]);
+                    $testcase->seeInDatabase('grammars', [
+                        'user_id' => $user->id,
+                        'name' => 'grammar1',
+                        'content' => 'hi',
+                        'public_view' => false,
+                        'allow_to_comment' => false,
+                    ]);
+                },
+            ],
+            'check sanitizers to work' => [
+                [
+                    'name' => ' grammar1  ',
+                    'content' => "hi \r",
+                    'public_view' => false,
+                    'allow_to_comment' => false,
+                    'user_id' => 100,
+                ],
+                function ($testcase, $user) {
+                    $testcase->seeJsonStructure([
+                        'data' => GrammarTransformer::attrs(),
+                    ]);
+                    $testcase->seeInDatabase('grammars', [
+                        'user_id' => $user->id,
+                        'name' => 'grammar1',
+                        'content' => 'hi',
+                        'public_view' => false,
+                        'allow_to_comment' => false,
+                    ]);
+                },
+            ],
+        ];
     }
 
     /**

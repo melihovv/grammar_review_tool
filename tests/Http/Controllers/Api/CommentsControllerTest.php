@@ -76,6 +76,34 @@ class CommentsControllerTest extends TestCase
         ];
     }
 
+    public function testStoreSanitizers()
+    {
+        $user = factory(User::class, 'admin')->create();
+        $grammar = factory(Grammar::class)->create();
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.comments.store', [$grammar->id]);
+
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
+                'content' => 'content1  ',
+                'row' => 1,
+                'column' => 0,
+                'user_id' => 100500,
+                'grammar_id' => 100500,
+            ], $this->headers('v1', $user));
+
+        $this->seeJsonStructure($this->responseStructure());
+        $this->seeInDatabase('comments', [
+            'user_id' => $user->id,
+            'grammar_id' => $grammar->id,
+            'content' => 'content1',
+            'row' => 1,
+            'column' => 0,
+        ]);
+    }
+
     /**
      * @dataProvider storeUnauthorizedProvider
      */
@@ -171,6 +199,75 @@ class CommentsControllerTest extends TestCase
                         'grammar_id' => $grammar->id,
                         'comment' => true,
                     ]);
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider updateSanitizersProvider
+     * @param callable $setupCb
+     */
+    public function testUpdateSanitizers(callable $setupCb)
+    {
+        $user = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create();
+        $comment = factory(Comment::class)->create();
+        $payload = $setupCb($user, $grammar, $comment);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.comments.update', [$grammar->id, $comment->id]);
+
+        $this
+            ->actingAsApiUser($user)
+            ->put($route, $payload, $this->headers('v1', $user));
+
+        $this->seeJsonStructure($this->responseStructure());
+        $this->seeInDatabase('comments', [
+            'user_id' => $user->id,
+            'grammar_id' => $grammar->id,
+            'content' => 'content2',
+            'row' => 1,
+            'column' => 0,
+        ]);
+    }
+
+    public function updateSanitizersProvider()
+    {
+        return [
+            'user is admin' => [
+                function ($user, $grammar, $comment) {
+                    $user->update(['is_admin' => true]);
+                    $grammar->update(['user_id' => $user->id]);
+
+                    return [
+                        'content' => 'content2  ',
+                        'row' => 1,
+                        'column' => 0,
+                        'user_id' => 100500,
+                        'grammar_id' => 100500,
+                    ];
+                },
+            ],
+            'user has right to comment and he is comment owner' => [
+                function ($user, $grammar, $comment) {
+                    $grammar->update([
+                        'allow_to_comment' => true,
+                    ]);
+                    $comment->update(['user_id' => $user->id]);
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'comment' => true,
+                    ]);
+
+                    return [
+                        'content' => 'content2  ',
+                        'row' => 1,
+                        'column' => 0,
+                        'user_id' => 100500,
+                        'grammar_id' => 100500,
+                    ];
                 },
             ],
         ];

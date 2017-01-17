@@ -9,7 +9,7 @@ abstract class RightRequest extends Request
 {
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             'user_id' => [
                 'required',
                 'numeric',
@@ -18,13 +18,22 @@ abstract class RightRequest extends Request
             ],
             'view' => 'required|boolean',
             'comment' => 'required|boolean',
-        ];
+        ]);
     }
 
-    public function all()
+    public function additionalInput()
     {
-        return array_merge(parent::all(), [
-            'grammar_id' => $this->route('grammar')->id,
+        return array_merge(parent::additionalInput(), [
+            'grammar_id' => 0,
+        ]);
+    }
+
+    public function sanitizers()
+    {
+        return array_merge(parent::sanitizers(), [
+            'grammar_id' => [function () {
+                return $this->route('grammar')->id;
+            }],
         ]);
     }
 }

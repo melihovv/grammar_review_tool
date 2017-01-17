@@ -15,7 +15,10 @@ class RightsControllerTest extends TestCase
     use DatabaseMigrations;
     use ApiHelpers;
 
-    public function testStore()
+    /**
+     * @dataProvider storeProvider
+     */
+    public function testStore(callable $payloadCb)
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
@@ -26,11 +29,7 @@ class RightsControllerTest extends TestCase
 
         $this
             ->actingAsApiUser($user)
-            ->post($route, [
-                'comment' => true,
-                'view' => false,
-                'user_id' => $user2->id,
-            ], $this->headers('v1', $user));
+            ->post($route, $payloadCb($user2), $this->headers('v1', $user));
 
         $this->assertResponseStatus(204);
         $this->seeInDatabase('rights', [
@@ -39,6 +38,31 @@ class RightsControllerTest extends TestCase
             'comment' => true,
             'view' => false,
         ]);
+    }
+
+    public function storeProvider()
+    {
+        return [
+            'success' => [
+                function ($user) {
+                    return [
+                        'comment' => true,
+                        'view' => false,
+                        'user_id' => $user->id,
+                    ];
+                },
+            ],
+            'check sanitizers' => [
+                function ($user) {
+                    return [
+                        'comment' => true,
+                        'view' => false,
+                        'user_id' => $user->id,
+                        'grammar_id' => 100500,
+                    ];
+                },
+            ],
+        ];
     }
 
     public function testUpdate()

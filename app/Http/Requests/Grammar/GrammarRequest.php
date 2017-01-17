@@ -9,25 +9,29 @@ abstract class GrammarRequest extends Request
 {
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             'name' => 'required|string|max:255',
             'content' => 'required|string|max:65535',
             'public_view' => 'required|boolean',
             'allow_to_comment' => 'required|boolean',
-        ];
+        ]);
+    }
+
+    public function additionalInput()
+    {
+        return array_merge(parent::additionalInput(), [
+            'user_id' => 0,
+        ]);
     }
 
     public function sanitizers()
     {
-        return [
+        return array_merge(parent::sanitizers(), [
+            'user_id' => [function () {
+                return app(Auth::class)->user()->id;
+            }],
             'name' => 'trim',
-        ];
-    }
-
-    public function all()
-    {
-        return array_merge(parent::all(), [
-            'user_id' => app(Auth::class)->user()->id,
+            'content' => 'trim',
         ]);
     }
 }
