@@ -8,8 +8,18 @@ class CommentUpdateRequest extends CommentRequest
 {
     public function sanitizers()
     {
+        $comment = $this->route('comment');
+        $sanitizers = [
+            'row' => [function () use ($comment) {
+                return $comment->row;
+            }],
+            'column' => [function () use ($comment) {
+                return $comment->column;
+            }],
+        ];
+
         if (!app(Auth::class)->user()->is_admin) {
-            return array_merge(parent::sanitizers(), [
+            return array_merge(parent::sanitizers(), $sanitizers, [
                 'user_id' => [function () {
                     return app(Auth::class)->user()->id;
                 }],
@@ -21,7 +31,7 @@ class CommentUpdateRequest extends CommentRequest
 
         $grammar = $this->route('grammar');
 
-        return array_merge(parent::sanitizers(), [
+        return array_merge(parent::sanitizers(), $sanitizers, [
             'user_id' => [function () use ($grammar) {
                 return $grammar->owner->id;
             }],

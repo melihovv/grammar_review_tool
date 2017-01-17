@@ -17,4 +17,12 @@ class CommentStoreRequest extends CommentRequest
             }],
         ]);
     }
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            'row' => 'required|integer|min:1',
+            'column' => 'required|integer|min:0',
+        ]);
+    }
 }

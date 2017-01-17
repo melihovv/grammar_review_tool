@@ -167,8 +167,6 @@ class CommentsControllerTest extends TestCase
             ->actingAsApiUser($user)
             ->put($route, [
                 'content' => 'content2',
-                'row' => 1,
-                'column' => 0,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure($this->responseStructure());
@@ -176,8 +174,8 @@ class CommentsControllerTest extends TestCase
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
             'content' => 'content2',
-            'row' => 1,
-            'column' => 0,
+            'row' => $comment->row,
+            'column' => $comment->column,
         ]);
     }
 
@@ -228,8 +226,8 @@ class CommentsControllerTest extends TestCase
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
             'content' => 'content2',
-            'row' => 1,
-            'column' => 0,
+            'row' => $comment->row,
+            'column' => $comment->column,
         ]);
     }
 
@@ -243,8 +241,8 @@ class CommentsControllerTest extends TestCase
 
                     return [
                         'content' => 'content2  ',
-                        'row' => 1,
-                        'column' => 0,
+                        'row' => 100500,
+                        'column' => 100500,
                         'user_id' => 100500,
                         'grammar_id' => 100500,
                     ];
@@ -264,8 +262,8 @@ class CommentsControllerTest extends TestCase
 
                     return [
                         'content' => 'content2  ',
-                        'row' => 1,
-                        'column' => 0,
+                        'row' => 100500,
+                        'column' => 100500,
                         'user_id' => 100500,
                         'grammar_id' => 100500,
                     ];

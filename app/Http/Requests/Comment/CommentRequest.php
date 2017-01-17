@@ -10,8 +10,6 @@ abstract class CommentRequest extends Request
     {
         return array_merge(parent::rules(), [
             'content' => 'required|string|max:65535',
-            'row' => 'required|integer|min:1',
-            'column' => 'required|integer|min:0',
         ]);
     }
 
@@ -20,6 +18,8 @@ abstract class CommentRequest extends Request
         return array_merge(parent::additionalInput(), [
             'user_id' => 0,
             'grammar_id' => 0,
+            'row' => 0,
+            'column' => 0,
         ]);
     }
 
