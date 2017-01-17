@@ -81,7 +81,7 @@ $(() => {
     e => {
       const $this = $(e.target)
       const $td = $this.parent()
-      const rowNumber = $td.prev().text();
+      const rowNumber = $td.prev().text()
       const $tr = $td.parent()
 
       let $commentsTr = $tr.next('tr:not([class])')
@@ -118,7 +118,7 @@ $(() => {
   $grammarView.on('click', '.grammar-view__add-comment-to-row-button', e => {
     const $this = $(e.target)
     const $tr = $this.closest('tr')
-    const rowNumber = $tr.prev().children(':first').text();
+    const rowNumber = $tr.prev().children(':first').text()
     const $prev = $this.replaceWith(commentForm())
 
     $tr.find('textarea').focus()
