@@ -41,7 +41,7 @@ class GrammarsController extends ApiController
             new GrammarTransformer(),
             [],
             function ($resource, $fractal) {
-                $fractal->parseIncludes(['owner', 'comments']);
+                $fractal->parseIncludes(['owner', 'comments', 'rights']);
             }
         );
     }

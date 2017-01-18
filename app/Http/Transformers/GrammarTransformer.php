@@ -9,6 +9,7 @@ class GrammarTransformer extends Transformer
     protected $availableIncludes = [
         'owner',
         'comments',
+        'rights',
     ];
 
     public function transform(Grammar $model)
@@ -43,5 +44,10 @@ class GrammarTransformer extends Transformer
     public function includeComments(Grammar $model)
     {
         return $this->collection($model->comments, new CommentTransformer());
+    }
+
+    public function includeRights(Grammar $model)
+    {
+        return $this->collection($model->rights, new RightTransformer());
     }
 }

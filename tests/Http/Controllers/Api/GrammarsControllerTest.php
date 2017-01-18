@@ -8,6 +8,7 @@ use App\Entities\Right;
 use App\Entities\User;
 use App\Http\Transformers\CommentTransformer;
 use App\Http\Transformers\GrammarTransformer;
+use App\Http\Transformers\RightTransformer;
 use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -116,6 +117,7 @@ class GrammarsControllerTest extends TestCase
         $user = factory(User::class)->create();
         $grammar = factory(Grammar::class)->create();
         factory(Comment::class, 10)->create(['grammar_id' => $grammar->id]);
+        factory(Right::class, 10)->create(['grammar_id' => $grammar->id]);
         $cb($user, $grammar);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -130,6 +132,7 @@ class GrammarsControllerTest extends TestCase
                 GrammarTransformer::attrs(),
                 [
                     'owner' => ['data' => UserTransformer::attrs()],
+                    'rights' => ['data' => ['*' => RightTransformer::attrs()]],
                     'comments' => [
                         'data' => [
                             '*' => array_merge(
