@@ -24,13 +24,12 @@
       $.get({
         url: `/api/grammars/${this.grammarId}`,
         success: response => {
-          const {grammar, owner, comments} = this.handleResponse(response)
-          this.show(grammar, owner, comments)
+          this.show(this.handleResponse(response))
         },
       })
     },
     methods: {
-      show(grammar, owner, comments) {
+      show({grammar, owner, comments, rights}) {
         const parser = new Parser()
         const tree = parser.parse(grammar.content)
         this.template = Tree2Html.convert(
@@ -38,7 +37,8 @@
           parser.parser._input,
           grammar,
           owner,
-          comments
+          comments,
+          rights
         )
       },
       handleResponse(response) {
@@ -53,7 +53,10 @@
           comment.user = comment.user.data
         }
 
-        return {grammar, owner, comments}
+        const rights = grammar.rights.data
+        delete grammar.rights
+
+        return {grammar, owner, comments, rights}
       },
     },
   }

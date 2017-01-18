@@ -14,17 +14,19 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {CommonTokenStream} tokens
    * @param {Object} grammar
    * @param {Object} owner
-   * @param {Object} comments
+   * @param {Array} comments
+   * @param {AccessManager} accessManager
    * @returns {Tree2HtmlVisitor}
    * @constructor
    */
-  constructor(tokens, grammar, owner, comments) {
+  constructor(tokens, grammar, owner, comments, accessManager) {
     super()
 
     this.tokens = tokens
     this.grammar = grammar
     this.owner = owner
     this.comments = comments
+    this.accessManager = accessManager
     this.html = ''
     this._buffer = ''
     this._newLineRegex = /\r\n|\n|\r/
@@ -50,29 +52,41 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
     let number = 1
     const lines = this._buffer.split(this._newLineRegex)
+    const canUserComment = this.accessManager.canUserComment(Laravel.user)
+
     for (const line of lines) {
       this.html += `
 <tr class="grammar-view__row">
   <td class="grammar-view__row-number">${number}</td>
-  <td class="grammar-view__code"><!--
-    --><a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
-       href="#">+</a>${line}<!--
-  --></td>
-</tr>
-`
+  <td class="grammar-view__code">`
+
+      if (canUserComment) {
+        this.html += `<a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
+                         href="#">+</a>`
+      }
+
+      this.html += `${line}</td></tr>`
 
       if (this._isAnyCommentOnLine(number)) {
         this.html += '<tr><td class="grammar-view__line-comments" colspan="2">'
 
         for (const comment of this._allCommentsOnLine(number)) {
+          const updateOrDelete = this.accessManager
+            .canUserUpdateOrDeleteComment(Laravel.user, comment)
+
           this.html += common.commentTemplate(
             comment.user.name,
             comment.content,
-            comment.id
+            comment.id,
+            updateOrDelete
           )
         }
 
-        this.html += `${common.addCommentToRowButton}</td></tr>`
+        if (canUserComment) {
+          this.html += `${common.addCommentToRowButton}`
+        }
+
+        this.html += `</td></tr>`
       }
 
       ++number
