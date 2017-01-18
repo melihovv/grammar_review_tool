@@ -5,6 +5,7 @@ namespace Tests\Http\Controllers\Api;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
+use App\Http\Transformers\RightTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\ApiHelpers;
@@ -31,7 +32,7 @@ class RightsControllerTest extends TestCase
             ->actingAsApiUser($user)
             ->post($route, $payloadCb($user2), $this->headers('v1', $user));
 
-        $this->assertResponseStatus(204);
+        $this->seeJsonStructure(['data' => RightTransformer::attrs()]);
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
@@ -88,7 +89,7 @@ class RightsControllerTest extends TestCase
                 'comment' => false,
             ], $this->headers('v1', $user));
 
-        $this->assertResponseStatus(204);
+        $this->seeJsonStructure(['data' => RightTransformer::attrs()]);
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,

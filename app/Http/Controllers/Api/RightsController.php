@@ -6,6 +6,7 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Http\Requests\Right\RightStoreRequest;
 use App\Http\Requests\Right\RightUpdateRequest;
+use App\Http\Transformers\RightTransformer;
 
 class RightsController extends ApiController
 {
@@ -19,9 +20,9 @@ class RightsController extends ApiController
      */
     public function store(Grammar $grammar, RightStoreRequest $request)
     {
-        Right::create($request->all());
+        $right = Right::create($request->all());
 
-        return $this->response->noContent();
+        return $this->response->item($right, new RightTransformer());
     }
 
     /**
@@ -34,7 +35,7 @@ class RightsController extends ApiController
     ) {
         $right->update($request->all());
 
-        return $this->response->noContent();
+        return $this->response->item($right, new RightTransformer());
     }
 
     /**
