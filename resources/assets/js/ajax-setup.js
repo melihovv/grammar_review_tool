@@ -9,3 +9,10 @@ if (window.Laravel) {
 }
 
 $.ajaxSetup({headers})
+
+$(document).ajaxError((event, jqxhr) => {
+  Messenger().post({
+    message: jqxhr.responseJSON.message,
+    type: 'error',
+  })
+})

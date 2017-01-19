@@ -11,6 +11,8 @@
 
 <style lang="styl" rel="stylesheet/stylus">
   @import "~bootstrap/dist/css/bootstrap.css"
+  @import "~messenger/build/css/messenger.css"
+  @import "~messenger/build/css/messenger-theme-block.css"
 
   *
     box-sizing border-box

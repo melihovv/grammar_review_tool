@@ -44,8 +44,10 @@ const commentButtonClicked = ($parent, $prev, rowNumber) => {
     const comment = $this.parent().prev().val()
 
     if (comment.trim() === '') {
-      // TODO validation.
-      alert('Comment is empty')
+      Messenger().post({
+        message: 'Comment is empty',
+        type: 'error',
+      })
       return false
     }
 
@@ -172,12 +174,14 @@ $(() => {
     })
 
     $tr.find('.grammar-view__add-comment-button').click(e => {
-      // TODO validation.
       const $this = $(e.target)
       const comment = $this.parent().prev().val()
 
       if (comment.trim() === '') {
-        alert('Comment is empty')
+        Messenger().post({
+          message: 'Comment is empty',
+          type: 'error',
+        })
         return false
       }
 
