@@ -67,9 +67,17 @@ describe('AccessManager', () => {
         user: {is_admin: true},
         expected: true,
       },
+      'user is grammar owner': {
+        accessManager: new AccessManager({user_id: 1}, []),
+        user: {id: 1},
+        expected: true,
+      },
       'grammar is not allowed to comment': {
-        accessManager: new AccessManager({allow_to_comment: false}, []),
-        user: {},
+        accessManager: new AccessManager({
+          user_id: 1,
+          allow_to_comment: false,
+        }, []),
+        user: {id: 2},
         expected: false,
       },
       'grammar is  allowed to comment, but user has not right to comment': {

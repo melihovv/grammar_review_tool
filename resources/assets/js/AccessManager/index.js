@@ -39,12 +39,23 @@ class AccessManager {
   }
 
   /**
+   * Returns true if user is grammar owner.
+   * @param {Object} user
+   * @return {boolean}
+   */
+  isUserGrammarOwner(user) {
+    return this.grammar.user_id === user.id
+  }
+
+  /**
    * Returns true if user can comment.
    * @param {Object} user
    * @return {boolean}
    */
   canUserComment(user) {
+    console.log(this.isUserGrammarOwner(user))
     return user.is_admin
+      || this.isUserGrammarOwner(user)
       || (this.grammar.allow_to_comment && this.hasUserRightTo('comment', user))
   }
 
