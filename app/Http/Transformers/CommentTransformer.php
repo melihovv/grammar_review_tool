@@ -16,7 +16,7 @@ class CommentTransformer extends Transformer
             $model->id,
             $model->user_id,
             $model->grammar_id,
-            $model->content,
+            e($model->content),
             $model->row,
             $model->column,
         ]);

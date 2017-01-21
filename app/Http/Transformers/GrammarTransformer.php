@@ -17,8 +17,8 @@ class GrammarTransformer extends Transformer
         return array_combine(static::attrs(), [
             $model->id,
             $model->user_id,
-            $model->name,
-            $model->content,
+            e($model->name),
+            e($model->content),
             $model->public_view,
             $model->allow_to_comment,
         ]);

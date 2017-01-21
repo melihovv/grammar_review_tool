@@ -10,8 +10,8 @@ class UserTransformer extends Transformer
     {
         return array_combine(static::attrs(), [
             $model->id,
-            $model->name,
-            $model->email,
+            e($model->name),
+            e($model->email),
             $model->is_admin,
         ]);
     }
