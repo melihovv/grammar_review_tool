@@ -13,7 +13,8 @@
     "league/fractal": "^0.13.0",
     "fadion/sanitizer": "^1.0",
     "dingo/api": "1.0.x@dev",
-    "serafim/properties": "^1.0"
+    "serafim/properties": "^1.0",
+    "cerbero/command-validator": "^1.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
