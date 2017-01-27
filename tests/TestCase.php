@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 abstract class TestCase extends IlluminateTestCase
 {
+    use TestHelpers;
+
     /**
      * The base URL to use while testing the application.
      *
