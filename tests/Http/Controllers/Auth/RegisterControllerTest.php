@@ -4,13 +4,11 @@ namespace Tests\Http\Controllers\Auth;
 
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Lang;
 use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
 {
-    use DatabaseTransactions;
     use DatabaseMigrations;
 
     public function testRegisterSuccess()

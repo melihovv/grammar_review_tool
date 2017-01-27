@@ -5,13 +5,11 @@ namespace Tests\Providers;
 use App\Entities\User;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\ApiHelpers;
 use Tests\TestCase;
 
 class DingoServiceProviderTest extends TestCase
 {
-    use DatabaseTransactions;
     use DatabaseMigrations;
     use ApiHelpers;
 

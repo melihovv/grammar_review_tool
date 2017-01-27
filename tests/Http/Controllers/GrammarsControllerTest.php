@@ -5,14 +5,12 @@ namespace Tests\Http\Controllers;
 use App\Entities\Grammar;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class GrammarsControllerTest extends TestCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     public function testIndex()
     {
