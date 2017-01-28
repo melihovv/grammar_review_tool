@@ -14,7 +14,8 @@
     "fadion/sanitizer": "^1.0",
     "dingo/api": "1.0.x@dev",
     "serafim/properties": "^1.0",
-    "cerbero/command-validator": "^1.0"
+    "cerbero/command-validator": "^1.0",
+    "kris/laravel-form-builder": "^1.10"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
