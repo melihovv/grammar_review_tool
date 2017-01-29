@@ -38,6 +38,7 @@ class RegisterController extends Controller
                 Rule::unique('users'),
             ],
             'password' => 'required|min:6|confirmed',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
     }
 

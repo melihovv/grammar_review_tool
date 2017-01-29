@@ -2,6 +2,7 @@
 
 namespace App\Http\Forms\Auth;
 
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Http\Forms\Form;
 
 class RegisterForm extends Form
@@ -29,6 +30,13 @@ class RegisterForm extends Form
             ->add('password_confirmation', 'password', [
                 'label' => 'Confirm Password',
                 'template' => 'laravel-form-builder::horizontal-text',
+            ])
+            ->add('g-recaptcha-response', 'hidden')
+            ->add('captcha', 'static', [
+                'tag' => 'div',
+                'label' => false,
+                'value' => NoCaptcha::display(),
+                'template' => 'laravel-form-builder::horizontal-static',
             ])
             ->add('submit', 'submit', [
                 'label' => 'Register',
