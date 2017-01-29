@@ -12,7 +12,7 @@
 
     @section('styles')
         @if (App::environment('production'))
-            <link rel="stylesheet" href="{{ elixir('app.css', 'assets') }}">
+            <link rel="stylesheet" href="{{ path_to_asset('app.css') }}">
         @endif
     @show
 
@@ -40,11 +40,11 @@
 
 @section('scripts')
     @if (App::environment('production'))
-        <script src="{{ elixir('manifest.js', 'assets') }}"></script>
-        <script src="{{ elixir('vendor.js', 'assets') }}"></script>
-        <script src="{{ elixir('app.js', 'assets') }}"></script>
+        <script src="{{ path_to_asset('manifest.js') }}"></script>
+        <script src="{{ path_to_asset('vendor.js') }}"></script>
+        <script src="{{ path_to_asset('app.js') }}"></script>
     @else
-        <script src="{{ hmr_asset('app.js') }}"></script>
+        <script src="{{ path_to_hmr_asset('app.js') }}"></script>
     @endif
 @show
 </body>
