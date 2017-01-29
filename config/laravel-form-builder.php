@@ -8,7 +8,11 @@ return [
         'field_class'         => 'form-control',
         'help_block_class'    => 'help-block',
         'error_class'         => 'text-danger',
-        'required_class'      => 'required'
+        'required_class'      => 'required',
+        'horizontal_wrapper_class' => 'col-md-6',
+        'horizontal_label_class' => 'control-label col-md-4',
+        'horizontal_checkbox_wrapper_class' => 'col-md-6 col-md-offset-4',
+        'horizontal_button_wrapper_class' => 'col-md-8 col-md-offset-4',
 
         // Override a class from a field.
         //'text'                => [
