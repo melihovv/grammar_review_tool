@@ -3,7 +3,7 @@
 <?php endif; ?>
 
 <?php $buttonWrapperClass = config(
-    'laravel-form-builder.defaults.horizontal_checkbox_wrapper_class'
+    'laravel-form-builder.defaults.horizontal_button_wrapper_class'
 ) ?>
 <div class="<?= $buttonWrapperClass ?>">
     <?= Form::button($options['label'], $options['attr']) ?>
