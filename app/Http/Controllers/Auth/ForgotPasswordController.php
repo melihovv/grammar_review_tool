@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Forms\Auth\ForgotPasswordForm;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -22,11 +23,19 @@ class ForgotPasswordController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function showLinkRequestForm()
+    {
+        $form = $this->form(ForgotPasswordForm::class, [
+            'method' => 'POST',
+            'url' => url('/password/email'),
+        ]);
+
+        return view('auth.passwords.email', compact('form'));
     }
 }
