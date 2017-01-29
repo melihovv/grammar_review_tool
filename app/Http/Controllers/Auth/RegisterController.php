@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Entities\User;
 use App\Http\Controllers\Controller;
+use App\Http\Forms\Auth\RegisterForm;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
 use Validator;
@@ -45,5 +46,15 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'api_token' => str_random(60),
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $form = $this->form(RegisterForm::class, [
+            'method' => 'POST',
+            'url' => url('/register'),
+        ]);
+
+        return view('auth.register', compact('form'));
     }
 }
