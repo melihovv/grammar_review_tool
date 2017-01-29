@@ -8,7 +8,9 @@ class UserService
 {
     /**
      * Create user.
+     *
      * @param array $data
+     *
      * @return User
      */
     public function create(array $data)
