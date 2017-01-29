@@ -1,6 +1,8 @@
 <?php
 
 Auth::routes();
+Route::get('register/confirm/{token}', 'Auth\RegisterController@confirm')
+    ->name('register.confirm');
 
 Route::group(['middleware' => ['auth']], function () {
     if (App::environment('local')) {

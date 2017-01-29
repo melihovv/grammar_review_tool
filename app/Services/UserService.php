@@ -15,6 +15,7 @@ class UserService
     {
         return User::create(array_merge([
             'api_token' => str_random(60),
+            'email_token' => str_random(10),
         ], $data, [
             'password' => bcrypt($data['password']),
         ]));

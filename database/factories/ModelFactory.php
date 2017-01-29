@@ -20,8 +20,23 @@ $factory->define(User::class, function (Generator $faker) {
         'is_admin' => false,
         'remember_token' => str_random(10),
         'api_token' => str_random(60),
+        'confirmed' => true,
+        'email_token' => null,
     ];
 });
+
+$factory->defineAs(
+    User::class,
+    'unconfirmed',
+    function (Generator $faker) use ($factory) {
+        $user = $factory->raw(User::class);
+
+        return array_merge($user, [
+            'confirmed' => false,
+            'email_token' => str_random(10),
+        ]);
+    }
+);
 
 $factory->defineAs(
     User::class,

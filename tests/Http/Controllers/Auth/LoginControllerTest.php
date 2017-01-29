@@ -52,7 +52,21 @@ class LoginControllerTest extends TestCase
             ->seePageIs('/home');
     }
 
-    public function testLoginOnlyGuestHasAccess()
+    public function testLoginUnconfirmed()
+    {
+        $user = factory(User::class, 'unconfirmed')->create();
+
+        $this
+            ->visit('/')
+            ->see('Login')
+            ->type($user->email, 'email')
+            ->type('secret', 'password')
+            ->check('remember')
+            ->press('Login')
+            ->see(Lang::get('auth.email_not_confirmed'));
+    }
+
+    public function testOnlyGuestHasAccess()
     {
         $user = factory(User::class)->create();
 

@@ -3,6 +3,7 @@
 namespace Tests\Http\Controllers\Auth;
 
 use App\Entities\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Lang;
 use Tests\TestCase;
@@ -13,6 +14,8 @@ class RegisterControllerTest extends TestCase
 
     public function testRegisterSuccess()
     {
+        $this->expectsEvents(Registered::class);
+
         $this
             ->visit('/register')
             ->see('Register')
@@ -21,10 +24,10 @@ class RegisterControllerTest extends TestCase
             ->type('password', 'password')
             ->type('password', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/home');
+            ->seePageIs('/register');
     }
 
-    public function testLoginOnlyGuestHasAccess()
+    public function testOnlyGuestHasAccess()
     {
         $user = factory(User::class)->create();
 
@@ -48,5 +51,18 @@ class RegisterControllerTest extends TestCase
             ->press('Register')
             ->seePageIs('/register')
             ->see(Lang::get('validation.unique', ['attribute' => 'name']));
+    }
+
+    public function testConfirm()
+    {
+        $user = factory(User::class, 'unconfirmed')->create();
+
+        $this->get(route('register.confirm', $user->email_token));
+
+        $this->assertRedirectedTo('/login');
+
+        $user = User::first();
+        $this->assertTrue($user->confirmed);
+        $this->assertNull($user->email_token);
     }
 }

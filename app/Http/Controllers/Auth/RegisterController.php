@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Forms\Auth\RegisterForm;
 use App\Services\UserService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -51,5 +54,22 @@ class RegisterController extends Controller
         ]);
 
         return view('auth.register', compact('form'));
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect()->back();
+    }
+
+    public function confirm($token)
+    {
+        User::where('email_token', $token)->firstOrFail()->confirmed();
+
+        return redirect('login')
+            ->with('success', 'Email was successfully confirmed');
     }
 }

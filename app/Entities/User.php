@@ -17,16 +17,20 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'api_token',
+        'confirmed',
+        'email_token',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
         'api_token',
+        'email_token',
     ];
 
     protected $casts = [
         'is_admin' => 'boolean',
+        'confirmed' => 'boolean',
     ];
 
     /**
@@ -40,7 +44,7 @@ class User extends Authenticatable
     /**
      * Get grammars, which are available to current user.
      *
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function availableGrammars()
     {
@@ -128,5 +132,16 @@ class User extends Authenticatable
         }
 
         return $model->where($right, true)->first() !== null;
+    }
+
+    /**
+     * Confirm user email.
+     */
+    public function confirmed()
+    {
+        $this->confirmed = true;
+        $this->email_token = null;
+
+        $this->save();
     }
 }

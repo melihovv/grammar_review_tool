@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Forms\Auth\LoginForm;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class LoginController extends Controller
 {
@@ -34,5 +36,31 @@ class LoginController extends Controller
         ]);
 
         return view('auth.login', compact('form'));
+    }
+
+    protected function credentials(Request $request)
+    {
+        return array_merge(
+            $request->only($this->username(), 'password'),
+            ['confirmed' => true]
+        );
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $user = User::where('email', $request->get('email'))->first();
+
+        $response = redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'));
+
+        if ($user === null || $user->confirmed) {
+            return $response
+                ->withErrors([
+                    $this->username() => Lang::get('auth.failed'),
+                ]);
+        } else {
+            return $response
+                ->with('warning', Lang::get('auth.email_not_confirmed'));
+        }
     }
 }

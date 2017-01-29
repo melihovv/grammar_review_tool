@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Listeners\UserRegisteredListener;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as SP;
 
 class EventServiceProvider extends SP
@@ -12,8 +14,8 @@ class EventServiceProvider extends SP
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        Registered::class => [
+            UserRegisteredListener::class,
         ],
     ];
 

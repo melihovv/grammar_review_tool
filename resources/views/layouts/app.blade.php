@@ -31,6 +31,7 @@
 <div class="container-fluid">
     <div id="app">
         @include('layouts.partials.navbar')
+        @include('layouts.partials.messages')
 
         @yield('content')
 
