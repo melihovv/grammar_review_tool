@@ -8,3 +8,5 @@
 [![styleci](https://styleci.io/repos/61077062/shield)](https://styleci.io/repos/61077062)
 
 Tool for review formal grammars in Lemon format.
+
+More info in [wiki](https://github.com/melihovv/grammar_review_tool/wiki).
