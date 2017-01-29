@@ -63,7 +63,11 @@ class RegisterController extends Controller
 
         event(new Registered($this->create($request->all())));
 
-        return redirect()->back();
+        return redirect()->back()
+            ->with(
+                'info',
+                'Thanks for signing up. We have sent you confirmation email'
+            );
     }
 
     public function confirm($token)
