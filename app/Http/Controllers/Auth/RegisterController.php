@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Forms\Auth\RegisterForm;
+use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
 use Validator;
@@ -40,12 +40,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'api_token' => str_random(60),
-        ]);
+        return (new UserService())->create($data);
     }
 
     public function showRegistrationForm()

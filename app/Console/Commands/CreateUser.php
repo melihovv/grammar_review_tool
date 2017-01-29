@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Entities\User;
+use App\Services\UserService;
 use Illuminate\Validation\Rule;
 
 class CreateUser extends Command
@@ -13,7 +13,7 @@ class CreateUser extends Command
 
     protected $description = 'Create user';
 
-    public function handle()
+    public function handle(UserService $service)
     {
         $password = $this->option('password');
         if (!$password) {
@@ -29,12 +29,11 @@ class CreateUser extends Command
             return;
         }
 
-        User::create([
+        $service->create([
             'name' => $this->argument('name'),
             'email' => $this->argument('email'),
-            'password' => bcrypt($password),
+            'password' => $password,
             'is_admin' => $this->option('admin'),
-            'api_token' => str_random(60),
         ]);
     }
 
