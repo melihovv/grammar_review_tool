@@ -34,6 +34,8 @@ class CreateUser extends Command
             'email' => $this->argument('email'),
             'password' => $password,
             'is_admin' => $this->option('admin'),
+            'confirmed' => 1,
+            'email_token' => null,
         ]);
     }
 

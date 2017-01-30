@@ -26,6 +26,8 @@ class CreateUserTest extends TestCase
             'name' => 'melihovv',
             'email' => 'amelihovv@ya.ru',
             'is_admin' => true,
+            'confirmed' => 1,
+            'email_token' => null,
         ]);
 
         $this->assertTrue(Hash::check('secret', User::first()->password));
@@ -48,6 +50,8 @@ class CreateUserTest extends TestCase
             'name' => 'melihovv',
             'email' => 'amelihovv@ya.ru',
             'is_admin' => true,
+            'confirmed' => 1,
+            'email_token' => null,
         ]);
 
         $this->assertTrue(Hash::check('secret', User::first()->password));
