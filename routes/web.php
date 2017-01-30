@@ -22,6 +22,6 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     Route::resource('grammars', 'GrammarsController', [
-        'only' => ['index', 'show'],
+        'only' => ['index', 'show', 'create', 'store'],
     ]);
 });

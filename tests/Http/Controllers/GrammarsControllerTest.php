@@ -40,4 +40,24 @@ class GrammarsControllerTest extends TestCase
         $this->assertResponseOk();
         $this->assertViewHas('grammar');
     }
+
+    public function testCreate()
+    {
+        $this
+            ->actingAs(factory(User::class)->create())
+            ->visit(route('grammars.create'))
+            ->type('title1', 'name')
+            ->type('content', 'content')
+            ->check('public_view')
+            ->check('allow_to_comment')
+            ->press('Create')
+            ->seePageIs(route('grammars.index'));
+
+        $this->seeInDatabase('grammars', [
+            'name' => 'title1',
+            'content' => 'content',
+            'public_view' => 1,
+            'allow_to_comment' => 1,
+        ]);
+    }
 }

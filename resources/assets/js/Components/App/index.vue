@@ -31,4 +31,5 @@
   @import "../Loader"
   @import "../Button"
   @import "../Footer"
+  @import "../CreateNewButton"
 </style>
