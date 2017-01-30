@@ -20,6 +20,7 @@ class GrammarsController extends Controller
         $grammars = Auth::user()
             ->availableGrammars()
             ->with('owner')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('grammars.index', compact('grammars'));
