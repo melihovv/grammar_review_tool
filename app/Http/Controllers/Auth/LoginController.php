@@ -26,6 +26,8 @@ class LoginController extends Controller
             $this->username() => 'required|email',
             'password' => 'required',
             'g-recaptcha-response' => 'required|captcha',
+        ], [
+            'g-recaptcha-response.*' => Lang::get('auth.captcha_failed'),
         ]);
     }
 

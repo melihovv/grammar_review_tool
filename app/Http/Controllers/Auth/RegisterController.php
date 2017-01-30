@@ -9,6 +9,7 @@ use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -39,6 +40,8 @@ class RegisterController extends Controller
             ],
             'password' => 'required|min:6|confirmed',
             'g-recaptcha-response' => 'required|captcha',
+        ], [
+            'g-recaptcha-response.*' => Lang::get('auth.captcha_failed'),
         ]);
     }
 
