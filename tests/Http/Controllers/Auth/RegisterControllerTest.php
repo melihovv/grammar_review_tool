@@ -28,6 +28,28 @@ class RegisterControllerTest extends TestCase
             ->seePageIs('/register');
     }
 
+    public function testRegisterUserAttemptsToRegisterAsAdmin()
+    {
+        $this->expectsEvents(Registered::class);
+        $this->mockCaptcha();
+
+        $this->post('/register', [
+            'name' => 'melihovv',
+            'email' => 'am@ya.ru',
+            'password' => 'secret',
+            'password_confirmation' => 'secret',
+            'g-recaptcha-response' => 'captcha',
+            'is_admin' => true,
+        ], [
+            'HTTP_REFERER' => url('/register'),
+        ]);
+
+        $this->assertRedirectedTo('/register');
+
+        $user = User::first();
+        $this->assertFalse($user->is_admin);
+    }
+
     public function testOnlyGuestHasAccess()
     {
         $user = factory(User::class)->create();

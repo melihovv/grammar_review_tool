@@ -61,7 +61,11 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($this->create($request->all())));
+        event(new Registered($this->create($request->only([
+            'name',
+            'email',
+            'password',
+        ]))));
 
         return redirect()->back()
             ->with(
