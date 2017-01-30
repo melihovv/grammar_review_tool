@@ -56,7 +56,7 @@ fragment Percent: '%';
 fragment DSlash: '//';
 fragment Ws: Hws|Vws;
 fragment Hws: [ \t];
-fragment Vws: [\r\n\f\v];
+fragment Vws: [\r\n\f\u000B]; // \u000B is \v
 fragment BlockComment: '/*' .*? '*/';
 fragment LineComment: DSlash ~[\r\n]*;
 fragment SQuote: '\'';
