@@ -32,7 +32,8 @@
     "squizlabs/php_codesniffer": "^2.7",
     "mathiasgrimm/laravel-env-validator": "dev-configurable-validation",
     "garygreen/pretty-routes": "^0.0.5",
-    "melihovv/laravel-log-viewer": "^1.1"
+    "melihovv/laravel-log-viewer": "^1.1",
+    "barryvdh/laravel-debugbar": "^2.3"
   },
   "repositories": [
     {

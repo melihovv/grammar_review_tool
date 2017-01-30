@@ -190,10 +190,12 @@ return [
         MathiasGrimm\LaravelEnvValidator\ServiceProvider::class,
         PrettyRoutes\ServiceProvider::class,
         Melihovv\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     'local_aliases' => [
         'Clockwork' => Clockwork\Support\Laravel\Facade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
     'local_global_middlewares' => [
