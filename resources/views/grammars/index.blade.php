@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ route('grammars.create') }}"
+                   class="btn btn-primary pull-right">Create</a>
+            </div>
+        </div>
+
         @forelse ($grammars as $grammar)
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
@@ -19,8 +26,8 @@
             </div>
         @endforelse
 
-            <div class="row">
-                <div class="col-md-12">{{ $grammars->links() }}</div>
-            </div>
+        <div class="row">
+            <div class="col-md-12">{{ $grammars->links() }}</div>
+        </div>
     </div>
 @endsection
