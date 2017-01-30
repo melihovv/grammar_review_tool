@@ -13,6 +13,8 @@ class LoginControllerTest extends TestCase
 
     public function testLoginNotValidEmail()
     {
+        $this->mockCaptcha();
+
         $this
             ->visit('/')
             ->see('Login')
@@ -26,6 +28,8 @@ class LoginControllerTest extends TestCase
 
     public function testLoginNotExistingCredentials()
     {
+        $this->mockCaptcha();
+
         $this
             ->visit('/')
             ->see('Login')
@@ -39,6 +43,7 @@ class LoginControllerTest extends TestCase
 
     public function testLoginSuccess()
     {
+        $this->mockCaptcha();
         $user = factory(User::class)->create();
 
         $this
@@ -54,6 +59,7 @@ class LoginControllerTest extends TestCase
 
     public function testLoginUnconfirmed()
     {
+        $this->mockCaptcha();
         $user = factory(User::class, 'unconfirmed')->create();
 
         $this

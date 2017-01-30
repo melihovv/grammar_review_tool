@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use BadMethodCallException;
 use Mockery;
 use Mockery\MockInterface;
@@ -55,5 +56,20 @@ trait TestHelpers
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
+    }
+
+    /**
+     * Mock captcha calls.
+     */
+    protected function mockCaptcha()
+    {
+        NoCaptcha::shouldReceive('verifyResponse')
+            ->once()
+            ->andReturn(true);
+        NoCaptcha::shouldReceive('display')
+            ->zeroOrMoreTimes()
+            ->andReturn(
+                '<input type="hidden" name="g-recaptcha-response" value="1" />'
+            );
     }
 }

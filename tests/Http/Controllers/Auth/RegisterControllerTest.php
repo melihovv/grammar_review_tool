@@ -2,7 +2,6 @@
 
 namespace Tests\Http\Controllers\Auth;
 
-use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Entities\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -66,17 +65,5 @@ class RegisterControllerTest extends TestCase
         $user = User::first();
         $this->assertTrue($user->confirmed);
         $this->assertNull($user->email_token);
-    }
-
-    protected function mockCaptcha()
-    {
-        NoCaptcha::shouldReceive('verifyResponse')
-            ->once()
-            ->andReturn(true);
-        NoCaptcha::shouldReceive('display')
-            ->zeroOrMoreTimes()
-            ->andReturn(
-                '<input type="hidden" name="g-recaptcha-response" value="1" />'
-            );
     }
 }

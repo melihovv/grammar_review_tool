@@ -2,6 +2,7 @@
 
 namespace App\Http\Forms\Auth;
 
+use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Http\Forms\Form;
 
 class LoginForm extends Form
@@ -25,6 +26,13 @@ class LoginForm extends Form
             ->add('remember', 'checkbox', [
                 'label' => 'Remember me',
                 'template' => 'laravel-form-builder::horizontal-checkbox',
+            ])
+            ->add('g-recaptcha-response', 'hidden')
+            ->add('captcha', 'static', [
+                'tag' => 'div',
+                'label' => false,
+                'value' => NoCaptcha::display(),
+                'template' => 'laravel-form-builder::horizontal-static',
             ])
             ->add('submit', 'submit', [
                 'label' => 'Login',
