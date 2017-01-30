@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "529555cc00622bea429b9f1b3ce9132b",
-    "content-hash": "a2ad80868cbe59ea2c6ea3937d9cf927",
+    "hash": "699e85538f7bdbffe73021d252b40ea7",
+    "content-hash": "e8ecde3a30bd861d76cd8b9e3c0832d4",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -1201,16 +1201,16 @@
         },
         {
             "name": "league/fractal",
-            "version": "0.13.0",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "3caeefbad51bce7a06947321938128512f42346c"
+                "reference": "0546bd5c2aba414ba50c6ac676f507d42c6150a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/3caeefbad51bce7a06947321938128512f42346c",
-                "reference": "3caeefbad51bce7a06947321938128512f42346c",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/0546bd5c2aba414ba50c6ac676f507d42c6150a5",
+                "reference": "0546bd5c2aba414ba50c6ac676f507d42c6150a5",
                 "shasum": ""
             },
             "require": {
@@ -1260,7 +1260,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2015-10-07 14:48:58"
+            "time": "2016-12-28 01:30:30"
         },
         {
             "name": "monolog/monolog",
