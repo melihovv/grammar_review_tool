@@ -37,12 +37,64 @@ if (!function_exists('path_to_asset')) {
     /**
      * Returns absolute url to asset.
      *
-     * @param string $asset Asset name.
+     * @param string $asset Asset file name.
      *
      * @return string
      */
     function path_to_asset($asset)
     {
         return asset(elixir($asset, 'assets'));
+    }
+}
+
+if (!function_exists('asset_tag')) {
+    /**
+     * Generates <$tag> tag.
+     *
+     * @param string $asset Asset file name.
+     * @param string $tag Tag name.
+     * @param bool $productionOnly Generate only in production.
+     *
+     * @return string
+     */
+    function asset_tag($asset, $tag, $productionOnly)
+    {
+        if (app()->environment('production')) {
+            return call_user_func("Html::$tag", path_to_asset($asset));
+        }
+
+        if (!$productionOnly) {
+            return call_user_func("Html::$tag", path_to_hmr_asset($asset));
+        }
+    }
+}
+
+if (!function_exists('script')) {
+    /**
+     * Generate <script> tag.
+     *
+     * @param string $asset Asset file name.
+     * @param bool $productionOnly Generate only in production.
+     *
+     * @return string|null
+     */
+    function script($asset, $productionOnly = true)
+    {
+        return asset_tag($asset, 'script', $productionOnly);
+    }
+}
+
+if (!function_exists('style')) {
+    /**
+     * Generate <style> tag.
+     *
+     * @param string $asset Asset file name.
+     * @param bool $productionOnly Generate only in production.
+     *
+     * @return string|null
+     */
+    function style($asset, $productionOnly = true)
+    {
+        return asset_tag($asset, 'style', $productionOnly);
     }
 }

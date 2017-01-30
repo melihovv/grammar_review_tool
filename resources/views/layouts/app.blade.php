@@ -11,9 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     @section('styles')
-        @if (App::environment('production'))
-            <link rel="stylesheet" href="{{ path_to_asset('app.css') }}">
-        @endif
+        {!! style('app.css') !!}
     @show
 
     @section('top-scripts')
@@ -40,13 +38,9 @@
 </div>
 
 @section('scripts')
-    @if (App::environment('production'))
-        <script src="{{ path_to_asset('manifest.js') }}"></script>
-        <script src="{{ path_to_asset('vendor.js') }}"></script>
-        <script src="{{ path_to_asset('app.js') }}"></script>
-    @else
-        <script src="{{ path_to_hmr_asset('app.js') }}"></script>
-    @endif
+    {!! script('manifest.js') !!}
+    {!! script('vendor.js') !!}
+    {!! script('app.js', false) !!}
 @show
 </body>
 
