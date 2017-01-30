@@ -11,7 +11,7 @@ class CreateGrammarsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('name');
-            $table->text('content');
+            $table->mediumText('content');
             $table->boolean('public_view');
             $table->boolean('allow_to_comment')->default(true);
             $table->timestamps();
