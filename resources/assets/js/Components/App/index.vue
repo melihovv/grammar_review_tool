@@ -32,4 +32,5 @@
   @import "../Button"
   @import "../Footer"
   @import "../CreateNewButton"
+  @import "../AceEditor"
 </style>

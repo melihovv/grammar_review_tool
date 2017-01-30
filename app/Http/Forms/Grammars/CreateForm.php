@@ -12,8 +12,12 @@ class CreateForm extends Form
             ->add('name', 'text', [
                 'label' => 'Title',
             ])
-            ->add('content', 'textarea', [
+            ->add('content', 'hidden', [
                 'label' => 'Grammar',
+            ])
+            ->add('ace-editor', 'static', [
+                'label' => false,
+                'tag' => 'div',
             ])
             ->add('public_view', 'checkbox', [
                 'label' => 'Visible to everyone',

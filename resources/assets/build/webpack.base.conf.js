@@ -10,6 +10,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production'
 module.exports = {
   entry: {
     app: './resources/assets/js/index',
+    editor: './resources/assets/js/editor',
   },
   output: {
     path: config[NODE_ENV].assetsRoot,
@@ -66,6 +67,14 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
         },
+      },
+      {
+        test: require.resolve('jquery'),
+        loader: 'expose?jQuery!expose?$',
+      },
+      {
+        test: require.resolve('brace'),
+        loader: 'expose?ace',
       },
     ],
   },

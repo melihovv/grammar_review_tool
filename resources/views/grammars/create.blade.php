@@ -5,3 +5,12 @@
         {!! form($form) !!}
     </div>
 @endsection
+
+@section('scripts')
+    @parent
+
+    @include('partials.ace-editor', [
+        'editorId' => 'ace-editor',
+        'inputName' => 'content',
+    ])
+@endsection
