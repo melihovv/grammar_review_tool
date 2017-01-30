@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Grammar;
 
 use App\Http\Requests\Request;
-use Dingo\Api\Auth\Auth;
 
 abstract class GrammarRequest extends Request
 {
@@ -28,7 +27,7 @@ abstract class GrammarRequest extends Request
     {
         return array_merge(parent::sanitizers(), [
             'user_id' => [function () {
-                return app(Auth::class)->user()->id;
+                return auth()->user()->id;
             }],
             'name' => 'trim',
             'content' => 'trim',

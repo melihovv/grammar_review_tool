@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Comment;
 
-use Dingo\Api\Auth\Auth;
-
 class CommentUpdateRequest extends CommentRequest
 {
     public function sanitizers()
@@ -18,11 +16,11 @@ class CommentUpdateRequest extends CommentRequest
             }],
         ];
 
-        $user = app(Auth::class)->user();
+        $user = auth()->user();
         if (!$user->is_admin || $user->isCommentOwner($comment)) {
             return array_merge(parent::sanitizers(), $sanitizers, [
-                'user_id' => [function () {
-                    return app(Auth::class)->user()->id;
+                'user_id' => [function () use ($user) {
+                    return $user->id;
                 }],
                 'grammar_id' => [function () {
                     return $this->route('grammar')->id;
