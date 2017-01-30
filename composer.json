@@ -15,7 +15,8 @@
     "serafim/properties": "^1.0",
     "cerbero/command-validator": "^1.0",
     "kris/laravel-form-builder": "^1.10",
-    "anhskohbo/no-captcha": "^2.2"
+    "anhskohbo/no-captcha": "^2.2",
+    "laravelcollective/html": "5.*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

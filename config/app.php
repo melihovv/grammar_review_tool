@@ -170,6 +170,7 @@ return [
         Fadion\Sanitizer\SanitizerServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -251,6 +252,8 @@ return [
         'DingoRoute' => Dingo\Api\Facade\Route::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
