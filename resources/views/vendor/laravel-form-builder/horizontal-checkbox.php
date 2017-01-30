@@ -11,6 +11,7 @@
     <?php if ($showField): ?>
         <div class="checkbox">
             <label>
+                <?= Form::hidden($name, 0) ?>
                 <?= Form::checkbox($name, $options['value'], $options['checked'], $options['attr']) ?>
                 <?= $options['label'] ?>
             </label>
