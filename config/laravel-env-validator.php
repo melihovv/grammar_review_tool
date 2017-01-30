@@ -22,6 +22,9 @@ return [
         'MAIL_FROM_ADDRESS' => 'required|email',
         'MAIL_FROM_NAME' => 'required',
 
+        'NOCAPTCHA_SECRET' => 'required',
+        'NOCAPTCHA_SITEKEY' => 'required',
+
         'BROADCAST_DRIVER' => 'in:pusher,redis,log,null',
         'CACHE_DRIVER' => 'in:apc,array,database,file,memcached,redis',
         'SESSION_DRIVER' => 'in:file,cookie,database,apc,memcached,redis,array',
