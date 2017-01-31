@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use Clockwork\Support\Laravel\ClockworkMiddleware;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
