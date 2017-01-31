@@ -3,9 +3,11 @@
 namespace Tests\Http\Controllers\Auth;
 
 use App\Entities\User;
+use App\Mail\EmailConfirmation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
@@ -14,8 +16,9 @@ class RegisterControllerTest extends TestCase
 
     public function testRegisterSuccess()
     {
-        $this->expectsEvents(Registered::class);
         $this->mockCaptcha();
+
+        Mail::fake();
 
         $this
             ->visit('/register')
@@ -26,6 +29,8 @@ class RegisterControllerTest extends TestCase
             ->type('password', 'password_confirmation')
             ->press('Register')
             ->seePageIs('/register');
+
+        Mail::assertSentTo([User::first()], EmailConfirmation::class);
     }
 
     public function testRegisterUserAttemptsToRegisterAsAdmin()
