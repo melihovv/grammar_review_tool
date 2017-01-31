@@ -50,6 +50,8 @@ HERE;
 NOW;
         }
     `).should.throw()
+
+    parser.getErrors().should.have.length.above(0)
   })
 
   it('should understand grammar rules', () => {
