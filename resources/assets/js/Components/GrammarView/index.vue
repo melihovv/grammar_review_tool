@@ -1,5 +1,15 @@
 <template>
-  <div class="grammar-view" v-html="template" :grammar-id="grammarId"></div>
+  <div>
+    <div class="grammar-view" v-html="template" :grammar-id="grammarId" v-if="!parseFailed"></div>
+    <div v-if="parseFailed" class="grammar-view_parse_failed">
+      <h2>Grammar contains syntax errors</h2>
+      <ul>
+        <li v-for="error in parseErrors">
+          {{ error }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -18,6 +28,8 @@
     data: () => {
       return {
         template: '<div class="loader">Loading...</div>',
+        parseFailed: false,
+        parseErrors: [],
       }
     },
     mounted() {
@@ -31,15 +43,20 @@
     methods: {
       show({grammar, owner, comments, rights}) {
         const parser = new Parser()
-        const tree = parser.parse(grammar.content)
-        this.template = Tree2Html.convert(
-          tree,
-          parser.parser._input,
-          grammar,
-          owner,
-          comments,
-          rights
-        )
+        try {
+          const tree = parser.parse(grammar.content)
+          this.template = Tree2Html.convert(
+            tree,
+            parser.parser._input,
+            grammar,
+            owner,
+            comments,
+            rights
+          )
+        } catch (e) {
+          this.parseFailed = true
+          this.parseErrors = parser.getErrors()
+        }
       },
       handleResponse(response) {
         const grammar = response.data
@@ -67,6 +84,10 @@
     overflow-x auto
     border 1px solid #d8d8d8
     border-radius 3px
+
+    &_parse_failed
+      padding 10px
+      color red
 
     &__table
       white-space pre
