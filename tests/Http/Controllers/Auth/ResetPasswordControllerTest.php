@@ -3,10 +3,8 @@
 namespace Tests\Http\Controllers\Auth;
 
 use App\Entities\User;
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ResetPasswordControllerTest extends TestCase
