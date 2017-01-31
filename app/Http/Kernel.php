@@ -8,15 +8,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    public function bootstrap()
-    {
-        parent::bootstrap();
-
-        if ($this->app->environment() !== 'production') {
-            $this->prependMiddleware(ClockworkMiddleware::class);
-        }
-    }
-
     /**
      * The application's global HTTP middleware stack.
      *
