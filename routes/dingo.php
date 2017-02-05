@@ -5,7 +5,7 @@ use Dingo\Api\Routing\Router;
 $api = app(Router::class);
 
 $api->version('v1', [
-    'middleware' => ['auth:api', 'api'],
+    'middleware' => ['auth:api', 'api', 'email.confirm'],
     'namespace' => 'App\Http\Controllers\Api',
 ], function (Router $api) {
     $api->group(['middleware' => ['api.auth']], function (Router $api) {
