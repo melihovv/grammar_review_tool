@@ -47,4 +47,11 @@ class GrammarsController extends Controller
 
         return redirect()->route('grammars.index');
     }
+
+    public function destroy(Grammar $grammar)
+    {
+        $grammar->delete();
+
+        return redirect()->route('grammars.index');
+    }
 }

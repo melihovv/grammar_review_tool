@@ -22,6 +22,6 @@ Route::group(['middleware' => ['auth', 'email.confirm']], function () {
     ]);
 
     Route::resource('grammars', 'GrammarsController', [
-        'only' => ['index', 'show', 'create', 'store'],
+        'only' => ['index', 'show', 'create', 'store', 'destroy'],
     ]);
 });

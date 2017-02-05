@@ -60,4 +60,17 @@ class GrammarsControllerTest extends TestCase
             'allow_to_comment' => 1,
         ]);
     }
+
+    public function testDestroy()
+    {
+        $user = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+
+        $this
+            ->actingAs($user)
+            ->delete(route('grammars.destroy', $grammar));
+
+        $this->assertRedirectedToRoute('grammars.index');
+        $this->assertNull(Grammar::first());
+    }
 }
