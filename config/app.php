@@ -187,9 +187,9 @@ return [
     'local_providers' => [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Asvae\ApiTester\ServiceProvider::class,
-        MathiasGrimm\LaravelEnvValidator\ServiceProvider::class,
         PrettyRoutes\ServiceProvider::class,
         Melihovv\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Melihovv\LaravelEnvValidator\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
