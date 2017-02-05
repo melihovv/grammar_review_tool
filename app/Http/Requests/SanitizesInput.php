@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Fadion\Sanitizer\Facades\Sanitizer;
 
-trait Sanitizable
+trait SanitizesInput
 {
     public function sanitize()
     {

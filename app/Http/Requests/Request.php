@@ -6,7 +6,7 @@ use Dingo\Api\Http\FormRequest;
 
 abstract class Request extends FormRequest
 {
-    use Sanitizable;
+    use SanitizesInput;
 
     public function authorize()
     {
