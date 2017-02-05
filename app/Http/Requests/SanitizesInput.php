@@ -8,7 +8,7 @@ trait SanitizesInput
 {
     public function sanitize()
     {
-        $inputs = array_merge($this->additionalInput(), $this->all());
+        $inputs = array_merge($this->extraData(), $this->all());
 
         $inputs = Sanitizer::run($inputs, $this->sanitizers());
 

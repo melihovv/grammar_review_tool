@@ -25,7 +25,7 @@ abstract class Request extends FormRequest
      *
      * @return array
      */
-    public function additionalInput()
+    public function extraData()
     {
         return [];
     }

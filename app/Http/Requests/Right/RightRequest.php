@@ -21,9 +21,9 @@ abstract class RightRequest extends Request
         ]);
     }
 
-    public function additionalInput()
+    public function extraData()
     {
-        return array_merge(parent::additionalInput(), [
+        return array_merge(parent::extraData(), [
             'grammar_id' => 0,
         ]);
     }

@@ -16,9 +16,9 @@ abstract class GrammarRequest extends Request
         ]);
     }
 
-    public function additionalInput()
+    public function extraData()
     {
-        return array_merge(parent::additionalInput(), [
+        return array_merge(parent::extraData(), [
             'user_id' => 0,
         ]);
     }
