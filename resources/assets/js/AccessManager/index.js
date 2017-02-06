@@ -24,7 +24,10 @@ class AccessManager {
       || (
         this.grammar.allow_to_comment
         && AccessManager.isUserCommentOwner(comment, user)
-        && this.hasUserRightTo('comment', user)
+        && (
+          this.isUserGrammarOwner(user)
+          || this.hasUserRightTo('comment', user)
+        )
       )
   }
 

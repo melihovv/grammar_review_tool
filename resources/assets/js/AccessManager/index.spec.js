@@ -46,6 +46,22 @@ describe('AccessManager', () => {
         comment: {user_id: 1},
         expected: true,
       },
+      'grammar is allowed to comment, user is comment and grammar owner and he has not right to comment': {
+        accessManager: new AccessManager({
+          id: 1,
+          allow_to_comment: true,
+          user_id: 1,
+        }, [
+          {
+            grammar_id: 1,
+            user_id: 1,
+            comment: false,
+          },
+        ]),
+        user: {id: 1},
+        comment: {user_id: 1},
+        expected: true,
+      },
     }
 
     for (const name in cases) {
