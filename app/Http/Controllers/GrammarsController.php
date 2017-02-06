@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Entities\Grammar;
 use App\Http\Forms\Grammars\CreateForm;
+use App\Http\Forms\Grammars\EditForm;
 use App\Http\Requests\Grammar\GrammarStoreRequest;
+use App\Http\Requests\Grammar\GrammarUpdateRequest;
+use App\Services\GrammarService;
 use Illuminate\Support\Facades\Auth;
 
 class GrammarsController extends Controller
@@ -28,7 +31,13 @@ class GrammarsController extends Controller
 
     public function show(Grammar $grammar)
     {
-        return view('grammars.show', compact('grammar'));
+        $form = $this->form(EditForm::class, [
+            'method' => 'PUT',
+            'url' => route('grammars.update', $grammar),
+            'model' => $grammar,
+        ]);
+
+        return view('grammars.show', compact('grammar', 'form'));
     }
 
     public function create()
@@ -53,5 +62,15 @@ class GrammarsController extends Controller
         $grammar->delete();
 
         return redirect()->route('grammars.index');
+    }
+
+    public function update(
+        GrammarUpdateRequest $request,
+        Grammar $grammar,
+        GrammarService $service
+    ) {
+        $service->update($grammar, $request);
+
+        return redirect()->route('grammars.show', $grammar);
     }
 }

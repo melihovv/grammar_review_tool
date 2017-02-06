@@ -43,4 +43,9 @@ class GrammarPolicy
     {
         return $user->isGrammarOwner($grammar);
     }
+
+    public function update(User $user, Grammar $grammar)
+    {
+        return $user->isGrammarOwner($grammar);
+    }
 }

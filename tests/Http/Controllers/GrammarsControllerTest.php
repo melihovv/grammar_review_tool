@@ -73,4 +73,61 @@ class GrammarsControllerTest extends TestCase
         $this->assertRedirectedToRoute('grammars.index');
         $this->assertNull(Grammar::first());
     }
+
+    public function testUpdateByOwner()
+    {
+        $user = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create([
+            'user_id' => $user->id,
+            'allow_to_comment' => false,
+            'public_view' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $grammar), [
+                'content' => 'new content',
+                'name' => 'new name',
+                'allow_to_comment' => true,
+                'public_view' => false,
+            ]);
+
+        $this->assertRedirectedToRoute('grammars.show', $grammar);
+
+        $this->seeInDatabase('grammars', [
+            'id' => $grammar->id,
+            'content' => $grammar->content,
+            'name' => $grammar->name,
+            'allow_to_comment' => true,
+            'public_view' => false,
+        ]);
+    }
+
+    public function testUpdateByAdmin()
+    {
+        $user = factory(User::class, 'admin')->create();
+        $grammar = factory(Grammar::class)->create([
+            'allow_to_comment' => false,
+            'public_view' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $grammar), [
+                'content' => 'new content',
+                'name' => 'new name',
+                'allow_to_comment' => true,
+                'public_view' => false,
+            ]);
+
+        $this->assertRedirectedToRoute('grammars.show', $grammar);
+
+        $this->seeInDatabase('grammars', [
+            'id' => $grammar->id,
+            'content' => $grammar->content,
+            'name' => $grammar->name,
+            'allow_to_comment' => true,
+            'public_view' => true,
+        ]);
+    }
 }

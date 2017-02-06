@@ -21,7 +21,5 @@ Route::group(['middleware' => ['auth', 'email.confirm']], function () {
         'as' => 'home.index',
     ]);
 
-    Route::resource('grammars', 'GrammarsController', [
-        'only' => ['index', 'show', 'create', 'store', 'destroy'],
-    ]);
+    Route::resource('grammars', 'GrammarsController');
 });
