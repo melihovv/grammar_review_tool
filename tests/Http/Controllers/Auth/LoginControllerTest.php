@@ -54,7 +54,7 @@ class LoginControllerTest extends TestCase
             ->check('remember')
             ->press('Login')
             ->dontSee(Lang::get('auth.failed'))
-            ->seePageIs('/home');
+            ->seePageIs('/grammars');
     }
 
     public function testLoginUnconfirmed()
@@ -79,6 +79,6 @@ class LoginControllerTest extends TestCase
         $this
             ->actingAs($user)
             ->visit('/login')
-            ->seePageIs('/home');
+            ->seePageIs('/grammars');
     }
 }

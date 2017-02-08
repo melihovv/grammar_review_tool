@@ -62,7 +62,7 @@ class RegisterControllerTest extends TestCase
         $this
             ->actingAs($user)
             ->visit('/register')
-            ->seePageIs('/home');
+            ->seePageIs('/grammars');
     }
 
     public function testRegisterDuplicateName()

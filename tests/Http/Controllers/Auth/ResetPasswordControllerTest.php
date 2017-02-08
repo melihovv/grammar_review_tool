@@ -28,6 +28,6 @@ class ResetPasswordControllerTest extends TestCase
             ->type('secret', 'password')
             ->type('secret', 'password_confirmation')
             ->press('Reset Password')
-            ->seePageIs('/home');
+            ->seePageIs('/grammars');
     }
 }

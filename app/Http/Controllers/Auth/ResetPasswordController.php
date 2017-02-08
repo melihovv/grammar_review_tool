@@ -28,6 +28,8 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        $this->redirectTo = route('grammars.index');
     }
 
     public function showResetForm(Request $request, $token = null)
