@@ -16,6 +16,6 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email_not_confirmed' => 'Email was not confirmed yet',
-    'captcha_failed' => 'Captcha verification has failed',
+    'captcha_failed' => 'Please, enter captcha',
 
 ];

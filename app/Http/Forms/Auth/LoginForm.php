@@ -27,12 +27,14 @@ class LoginForm extends Form
                 'label' => 'Remember me',
                 'template' => 'laravel-form-builder::horizontal-checkbox',
             ])
-            ->add('g-recaptcha-response', 'hidden')
+            ->add('g-recaptcha-response', 'hidden', [
+                'showError' => false,
+            ])
             ->add('captcha', 'static', [
                 'tag' => 'div',
                 'label' => false,
                 'value' => NoCaptcha::display(),
-                'template' => 'laravel-form-builder::horizontal-static',
+                'template' => 'laravel-form-builder::horizontal-captcha',
             ])
             ->add('submit', 'submit', [
                 'label' => 'Login',
