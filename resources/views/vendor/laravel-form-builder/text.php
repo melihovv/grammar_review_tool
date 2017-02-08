@@ -14,9 +14,8 @@
     <?php include 'help_block.php' ?>
 <?php endif; ?>
 
-<?php if (isset($options['showError']) && $options['showError']): ?>
-    <?php include 'errors.php' ?>
-<?php endif; ?>
+<?php $showError = isset($options['showError']) ? $options['showError'] : $showError ?>
+<?php include 'errors.php' ?>
 
 <?php if ($showLabel && $showField): ?>
     <?php if ($options['wrapper'] !== false): ?>
