@@ -52,9 +52,9 @@ class GrammarsController extends Controller
 
     public function store(GrammarStoreRequest $request)
     {
-        Grammar::create($request->all());
+        $grammar = Grammar::create($request->all());
 
-        return redirect()->route('grammars.index');
+        return redirect()->route('grammars.show', $grammar->id);
     }
 
     public function destroy(Grammar $grammar)

@@ -51,7 +51,7 @@ class GrammarsControllerTest extends TestCase
             ->check('public_view')
             ->check('allow_to_comment')
             ->press('Create')
-            ->seePageIs(route('grammars.index'));
+            ->seePageIs(route('grammars.show', 1));
 
         $this->seeInDatabase('grammars', [
             'name' => 'title1',
