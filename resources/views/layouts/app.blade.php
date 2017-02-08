@@ -20,6 +20,7 @@
               'csrfToken' => csrf_token(),
               'apiToken' => Auth::user() ? Auth::user()->api_token : '',
               'user' => Auth::user(),
+              'absPath' => app('url')->to('/'),
             ]); @endphp
         </script>
     @show

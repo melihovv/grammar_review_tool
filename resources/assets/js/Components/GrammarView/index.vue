@@ -34,7 +34,7 @@
     },
     mounted() {
       $.get({
-        url: `/api/grammars/${this.grammarId}`,
+        url: `${Laravel.absPath}/api/grammars/${this.grammarId}`,
         success: response => {
           this.show(this.handleResponse(response))
         },
