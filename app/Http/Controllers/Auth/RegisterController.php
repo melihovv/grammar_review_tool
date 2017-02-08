@@ -17,11 +17,11 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = '/home';
-
     public function __construct()
     {
         $this->middleware('guest');
+
+        $this->redirectTo = route('grammars.index');
     }
 
     protected function validator(array $data)

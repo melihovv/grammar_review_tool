@@ -13,13 +13,8 @@ Route::group(['middleware' => ['auth', 'email.confirm']], function () {
     }
 
     Route::get('/', function () {
-        return redirect()->route('home.index');
+        return redirect()->route('grammars.index');
     });
-
-    Route::get('/home', [
-        'uses' => 'HomeController@index',
-        'as' => 'home.index',
-    ]);
 
     Route::resource('grammars', 'GrammarsController');
 });
