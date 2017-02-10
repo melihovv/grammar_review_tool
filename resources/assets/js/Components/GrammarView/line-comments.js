@@ -54,7 +54,7 @@ const commentButtonClicked = ($parent, $prev, rowNumber) => {
     const grammarId = $('.grammar-view').attr('grammar-id')
 
     $.post({
-      url: `/api/grammars/${grammarId}/comments`,
+      url: `${Laravel.absPath}/api/grammars/${grammarId}/comments`,
       data: {
         content: comment,
         row: rowNumber,
@@ -143,7 +143,7 @@ $(() => {
     const commentId = curCommentHolder.attr('comment-id')
 
     $.ajax({
-      url: `/api/grammars/${grammarId}/comments/${commentId}`,
+      url: `${Laravel.absPath}/api/grammars/${grammarId}/comments/${commentId}`,
       type: 'DELETE',
       success: response => {
         const $tr = $target.closest('tr:not([class])')
@@ -189,7 +189,7 @@ $(() => {
       const commentId = $commentHolder.attr('comment-id')
 
       $.ajax({
-        url: `/api/grammars/${grammarId}/comments/${commentId}`,
+        url: `${Laravel.absPath}/api/grammars/${grammarId}/comments/${commentId}`,
         type: 'PUT',
         data: {
           content: comment,
