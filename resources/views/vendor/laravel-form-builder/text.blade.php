@@ -22,13 +22,12 @@
     {!! Form::input($type, $name, $options['value'], $options['attr']) !!}
 
     @include('laravel-form-builder::help_block')
+    @include('laravel-form-builder::errors')
 
     @if (isset($rightWrapperClass))
         </div>
     @endif
 @endif
-
-@include('laravel-form-builder::errors')
 
 @if ($showLabel && $showField)
     @if ($options['wrapper'] !== false)
