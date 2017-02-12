@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Forms\Auth\RegisterForm;
-use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 use Validator;
+use Facades\App\Services\UserService;
 
 class RegisterController extends Controller
 {
@@ -47,7 +47,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return (new UserService())->create($data);
+        return UserService::create($data);
     }
 
     public function showRegistrationForm()
