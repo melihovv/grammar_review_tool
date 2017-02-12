@@ -8,6 +8,7 @@
           {{ error }}
         </li>
       </ul>
+      <pre v-html="grammar"></pre>
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@
         template: '<div class="loader">Loading...</div>',
         parseFailed: false,
         parseErrors: [],
+        grammar: '',
       }
     },
     mounted() {
@@ -54,6 +56,7 @@
             rights
           )
         } catch (e) {
+          this.grammar = grammar.content
           this.parseFailed = true
           this.parseErrors = parser.getErrors()
         }
