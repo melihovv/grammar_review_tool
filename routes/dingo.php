@@ -9,6 +9,9 @@ $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
 ], function (Router $api) {
     $api->group(['middleware' => ['api.auth']], function (Router $api) {
+        $api->get('/users/{grammar}/find', 'UsersController@find')
+            ->name('users.find');
+
         $api->resource('users', 'UsersController', [
             'only' => ['index', 'show'],
         ]);
