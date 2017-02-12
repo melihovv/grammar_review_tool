@@ -28,6 +28,7 @@ class UserService
     /**
      * @param Grammar $grammar
      * @param $query
+     *
      * @return Collection
      */
     public function findUsersWhichDontHaveRightsOnGrammar(
