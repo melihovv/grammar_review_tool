@@ -34,7 +34,6 @@ class RouteServiceProvider extends SP
     public function map()
     {
         $this->mapWebRoutes();
-        $this->mapApiRoutes();
         $this->mapDingoRoutes();
     }
 
@@ -49,32 +48,9 @@ class RouteServiceProvider extends SP
      */
     protected function mapWebRoutes()
     {
-        Route::group([
-            'middleware' => 'web',
-            'namespace' => $this->namespace,
-        ], function ($router) {
-            require base_path('routes/web.php');
-        });
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
-    protected function mapApiRoutes()
-    {
-        Route::group([
-            'middleware' => ['api', 'auth:api'],
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
-        ], function ($router) {
-            require base_path('routes/api.php');
-        });
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/web.php'));
     }
 
     protected function mapDingoRoutes()

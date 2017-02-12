@@ -14,7 +14,7 @@ abstract class DatabaseTestCase extends TestCase
      *
      * @var \Illuminate\Foundation\Application
      */
-    protected static $application = null;
+    protected static $application;
 
     /**
      * Creates the application.

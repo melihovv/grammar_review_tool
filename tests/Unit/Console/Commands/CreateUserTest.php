@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Console\Commands;
+namespace Tests\Unit\Console\Commands;
 
 use App\Console\Commands\CreateUser;
 use App\Entities\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
 
-class CreateUserTest extends TestCase
+class CreateUserTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 

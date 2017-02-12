@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Auth;
+namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Entities\User;
 use App\Mail\EmailConfirmation;
@@ -8,9 +8,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
 
-class RegisterControllerTest extends TestCase
+class RegisterControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 
@@ -30,7 +30,9 @@ class RegisterControllerTest extends TestCase
             ->press('Register')
             ->seePageIs('/register');
 
-        Mail::assertSentTo([User::first()], EmailConfirmation::class);
+        Mail::assertSent(EmailConfirmation::class, function ($mail) {
+            return $mail->hasTo(User::first()->email);
+        });
     }
 
     public function testRegisterUserAttemptsToRegisterAsAdmin()

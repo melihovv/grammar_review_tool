@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Http\Controllers\Auth;
+namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Lang;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
 
-class LoginControllerTest extends TestCase
+class LoginControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 

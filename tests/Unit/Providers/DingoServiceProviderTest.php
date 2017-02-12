@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Providers;
+namespace Tests\Unit\Providers;
 
 use App\Entities\User;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\ApiHelpers;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
+use Tests\Traits\ApiHelpers;
 
-class DingoServiceProviderTest extends TestCase
+class DingoServiceProviderTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Grammar;
+use Illuminate\Database\Eloquent\Collection;
 
 class RightService
 {
@@ -12,7 +13,7 @@ class RightService
      * @param $view
      * @param $comment
      *
-     * @return array
+     * @return Collection
      */
     public function create(Grammar $grammar, array $usersIds, $view, $comment)
     {

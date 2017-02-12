@@ -1,25 +1,20 @@
 <?php
 
-namespace Tests\Http\Controllers\Auth;
+namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\DB;
-use Tests\TestCase;
+use Illuminate\Support\Facades\Password;
+use Tests\BrowserKitTestCase;
 
-class ResetPasswordControllerTest extends TestCase
+class ResetPasswordControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 
     public function testSuccess()
     {
         $user = factory(User::class)->create();
-        $token = str_random(10);
-
-        DB::table('password_resets')->insert([
-            'email' => $user->email,
-            'token' => $token,
-        ]);
+        $token = Password::getRepository()->create($user);
 
         $this
             ->visit("/password/reset/$token")

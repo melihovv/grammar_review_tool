@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Api;
+namespace Tests\Unit\Http\Controllers\Api;
 
 use App\Entities\Comment;
 use App\Entities\Grammar;
@@ -10,10 +10,10 @@ use App\Http\Transformers\CommentTransformer;
 use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\ApiHelpers;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
+use Tests\Traits\ApiHelpers;
 
-class CommentsControllerTest extends TestCase
+class CommentsControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;

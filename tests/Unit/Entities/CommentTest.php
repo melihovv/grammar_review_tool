@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entities;
+namespace Tests\Unit\Entities;
 
 use App\Entities\Comment;
 use App\Entities\Grammar;

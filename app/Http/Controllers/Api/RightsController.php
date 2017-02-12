@@ -39,10 +39,7 @@ class RightsController extends ApiController
             $request->get('comment')
         );
 
-        return $this->response->collection(
-            collect($rights),
-            new RightTransformer()
-        );
+        return $this->response->collection($rights, new RightTransformer());
     }
 
     /**

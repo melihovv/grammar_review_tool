@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Http\Controllers\Api;
+namespace Tests\Unit\Http\Controllers\Api;
 
 use App\Entities\Grammar;
 use App\Entities\Right;
@@ -9,10 +9,10 @@ use App\Http\Transformers\RightTransformer;
 use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\ApiHelpers;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
+use Tests\Traits\ApiHelpers;
 
-class RightsControllerTest extends TestCase
+class RightsControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entities;
+namespace Tests\Unit\Entities;
 
 use App\Entities\Grammar;
 use App\Entities\Right;

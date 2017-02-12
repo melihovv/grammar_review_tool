@@ -176,8 +176,8 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DingoServiceProvider::class,
@@ -191,13 +191,12 @@ return [
         Melihovv\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Melihovv\LaravelEnvValidator\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class
     ],
 
     'local_aliases' => [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
-
-    'local_global_middlewares' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -216,6 +215,8 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
+        'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,

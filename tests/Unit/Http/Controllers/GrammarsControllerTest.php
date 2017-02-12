@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Http\Controllers;
+namespace Tests\Unit\Http\Controllers;
 
 use App\Entities\Grammar;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
 
-class GrammarsControllerTest extends TestCase
+class GrammarsControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 

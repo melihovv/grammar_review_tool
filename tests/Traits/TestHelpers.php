@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Traits;
 
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use BadMethodCallException;

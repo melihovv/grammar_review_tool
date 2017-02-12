@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Http\Controllers\Auth;
+namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Entities\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
+use Tests\BrowserKitTestCase;
 
-class ForgotPasswordControllerTest extends TestCase
+class ForgotPasswordControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
 
