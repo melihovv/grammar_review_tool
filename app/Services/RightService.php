@@ -8,9 +8,10 @@ class RightService
 {
     /**
      * @param Grammar $grammar
-     * @param array $usersIds
+     * @param array   $usersIds
      * @param $view
      * @param $comment
+     *
      * @return array
      */
     public function create(Grammar $grammar, array $usersIds, $view, $comment)
