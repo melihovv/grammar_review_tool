@@ -15,6 +15,14 @@ class RightsController extends ApiController
         $this->middleware('can:manageRights,grammar');
     }
 
+    public function index(Grammar $grammar)
+    {
+        return $this->response->collection(
+            $grammar->rights,
+            new RightTransformer()
+        );
+    }
+
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

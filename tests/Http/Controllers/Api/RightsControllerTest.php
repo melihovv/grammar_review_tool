@@ -6,6 +6,7 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use App\Http\Transformers\RightTransformer;
+use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\ApiHelpers;
@@ -15,6 +16,33 @@ class RightsControllerTest extends TestCase
 {
     use DatabaseMigrations;
     use ApiHelpers;
+
+    public function testIndex()
+    {
+        $user = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        factory(Right::class, 10)->create([
+            'grammar_id' => $grammar->id,
+        ]);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.rights.index', $grammar->id);
+
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => array_merge(
+                    RightTransformer::attrs(),
+                    [
+                        'user' => ['data' => UserTransformer::attrs()],
+                    ]
+                ),
+            ],
+        ]);
+    }
 
     /**
      * @dataProvider storeProvider

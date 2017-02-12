@@ -22,7 +22,7 @@ $api->version('v1', [
         ]);
 
         $api->resource('grammars.rights', 'RightsController', [
-            'only' => ['store', 'update', 'destroy'],
+            'only' => ['index', 'store', 'update', 'destroy'],
         ]);
     });
 });

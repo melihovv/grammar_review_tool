@@ -6,6 +6,10 @@ use App\Entities\Right;
 
 class RightTransformer extends Transformer
 {
+    protected $defaultIncludes = [
+        'user',
+    ];
+
     public function transform(Right $model)
     {
         return array_combine(static::attrs(), [
@@ -26,5 +30,10 @@ class RightTransformer extends Transformer
             'view',
             'comment',
         ];
+    }
+
+    public function includeUser(Right $model)
+    {
+        return $this->item($model->user, new UserTransformer());
     }
 }

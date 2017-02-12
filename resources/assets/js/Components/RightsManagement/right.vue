@@ -1,0 +1,77 @@
+<template>
+  <tr class="right">
+    <td>{{ right.user.name }}</td>
+    <td>
+      <vue-multiselect v-model="rightLevel" :options="options"
+                       :searchable="false" :allow-empty="false"
+                       :show-labels="false" :show-pointer="false"
+                       :placeholder="''" @input="onChange"/>
+    </td>
+    <td><span class="right__delete" @click="remove">&times;</span></td>
+  </tr>
+</template>
+
+<script>
+  export default {
+    props: {
+      right: {
+        required: true,
+        type: Object,
+      },
+      grammarId: {
+        required: true,
+      },
+    },
+    data: () => {
+      return {
+        options: ['view', 'comment'],
+      }
+    },
+    computed: {
+      rightLevel: function () {
+        if (this.right.comment) {
+          return 'comment'
+        } else if (this.right.view) {
+          return 'view'
+        } else {
+          return null
+        }
+      },
+    },
+    methods: {
+      onChange(rightLevel) {
+        const data = {
+          view: rightLevel === 'view' ? 1 : 0,
+          comment: rightLevel === 'comment' ? 1 : 0,
+          user_id: this.right.user.id,
+        }
+
+        $.ajax({
+          type: 'PUT',
+          data,
+          url: `${Laravel.absPath}/api/grammars/${this.grammarId}/rights/${this.right.id}`,
+        })
+      },
+      remove() {
+        $.ajax({
+          type: 'DELETE',
+          url: `${Laravel.absPath}/api/grammars/${this.grammarId}/rights/${this.right.id}`,
+          success: response => {
+            this.$emit('remove')
+          },
+        })
+      },
+    },
+  }
+</script>
+
+<style lang="styl" rel="stylesheet/stylus" scoped>
+  .multiselect
+    width 100px
+    display inline-block
+
+  .right__delete
+    cursor pointer
+    font-size 20px
+    line-height 100%
+</style>
