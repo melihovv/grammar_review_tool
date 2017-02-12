@@ -7,6 +7,7 @@ use App\Entities\Right;
 use App\Http\Requests\Right\RightStoreRequest;
 use App\Http\Requests\Right\RightUpdateRequest;
 use App\Http\Transformers\RightTransformer;
+use App\Services\RightService;
 
 class RightsController extends ApiController
 {
@@ -26,11 +27,22 @@ class RightsController extends ApiController
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function store(Grammar $grammar, RightStoreRequest $request)
-    {
-        $right = Right::create($request->all());
+    public function store(
+        Grammar $grammar,
+        RightStoreRequest $request,
+        RightService $service
+    ) {
+        $rights = $service->create(
+            $grammar,
+            $request->get('users'),
+            $request->get('view'),
+            $request->get('comment')
+        );
 
-        return $this->response->item($right, new RightTransformer());
+        return $this->response->collection(
+            collect($rights),
+            new RightTransformer()
+        );
     }
 
     /**

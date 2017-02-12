@@ -44,10 +44,7 @@ class RightsControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @dataProvider storeProvider
-     */
-    public function testStore(callable $payloadCb)
+    public function testStoreOneRight()
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
@@ -58,9 +55,17 @@ class RightsControllerTest extends TestCase
 
         $this
             ->actingAsApiUser($user)
-            ->post($route, $payloadCb($user2), $this->headers('v1', $user));
+            ->post($route, [
+                'comment' => true,
+                'view' => false,
+                'users' => [$user2->id],
+            ], $this->headers('v1', $user));
 
-        $this->seeJsonStructure(['data' => RightTransformer::attrs()]);
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => RightTransformer::attrs(),
+            ],
+        ]);
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
@@ -69,29 +74,42 @@ class RightsControllerTest extends TestCase
         ]);
     }
 
-    public function storeProvider()
+    public function testStoreSeveralRights()
     {
-        return [
-            'success' => [
-                function ($user) {
-                    return [
-                        'comment' => true,
-                        'view' => false,
-                        'user_id' => $user->id,
-                    ];
-                },
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $user3 = factory(User::class)->create();
+        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.rights.store', [$grammar->id]);
+
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
+                'comment' => true,
+                'view' => false,
+                'users' => [$user2->id, $user3->id],
+            ], $this->headers('v1', $user));
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => RightTransformer::attrs(),
             ],
-            'check sanitizers' => [
-                function ($user) {
-                    return [
-                        'comment' => true,
-                        'view' => false,
-                        'user_id' => $user->id,
-                        'grammar_id' => 100500,
-                    ];
-                },
-            ],
-        ];
+        ]);
+
+        $this->seeInDatabase('rights', [
+            'user_id' => $user2->id,
+            'grammar_id' => $grammar->id,
+            'comment' => true,
+            'view' => false,
+        ]);
+        $this->seeInDatabase('rights', [
+            'user_id' => $user3->id,
+            'grammar_id' => $grammar->id,
+            'comment' => true,
+            'view' => false,
+        ]);
     }
 
     public function testUpdate()
