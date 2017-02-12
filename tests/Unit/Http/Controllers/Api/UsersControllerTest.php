@@ -8,8 +8,8 @@ use App\Entities\User;
 use App\Http\Transformers\UserTransformer;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\Traits\ApiHelpers;
 use Tests\BrowserKitTestCase;
+use Tests\Traits\ApiHelpers;
 
 class UsersControllerTest extends BrowserKitTestCase
 {
