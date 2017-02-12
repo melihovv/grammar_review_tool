@@ -36,10 +36,16 @@ class UserService
         $query
     ) {
         $excludeIds = $grammar->rights()->pluck('user_id')->toArray();
-        $excludeIds[] = $grammar->user_id;
 
-        return User::where('name', 'LIKE', "%$query%")
-            ->orWhere('email', 'LIKE', "%$query%")
+        if (!in_array($grammar->user_id, $excludeIds, true)) {
+            $excludeIds[] = $grammar->user_id;
+        }
+
+        return User::where(function ($q) use ($query) {
+            $q
+                ->where('name', 'LIKE', "%$query%")
+                ->orWhere('email', 'LIKE', "%$query%");
+        })
             ->whereNotIn('id', $excludeIds)
             ->get();
     }

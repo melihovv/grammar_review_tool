@@ -16,6 +16,7 @@ module.exports = {
   },
   "globals": {
     "Laravel": false,
-    "Messenger": false
+    "Messenger": false,
+    "$": false
   }
 }

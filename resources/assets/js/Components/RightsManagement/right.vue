@@ -2,7 +2,7 @@
   <tr class="right">
     <td>{{ right.user.name }}</td>
     <td>
-      <vue-multiselect v-model="rightLevel" :options="options"
+      <vue-multiselect v-model="rightLevel" :options="rightLevels"
                        :searchable="false" :allow-empty="false"
                        :show-labels="false" :show-pointer="false"
                        :placeholder="''" @input="onChange"/>
@@ -24,7 +24,7 @@
     },
     data: () => {
       return {
-        options: ['view', 'comment'],
+        rightLevels: ['view', 'comment'],
       }
     },
     computed: {
@@ -67,7 +67,7 @@
 
 <style lang="styl" rel="stylesheet/stylus" scoped>
   .multiselect
-    width 100px
+    width 110px
     display inline-block
 
   .right__delete
