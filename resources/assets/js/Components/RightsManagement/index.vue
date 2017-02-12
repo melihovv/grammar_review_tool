@@ -58,7 +58,7 @@
       },
       addRights(rights) {
         this.rights = this.rights.concat(rights)
-      }
+      },
     },
   }
 </script>

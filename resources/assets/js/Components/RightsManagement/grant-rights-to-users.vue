@@ -42,7 +42,7 @@
           return
         }
 
-        const users = [];
+        const users = []
         this.selectedUsers.map(user => {
           users.push(user.id)
         })
