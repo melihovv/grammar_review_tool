@@ -23,7 +23,8 @@ class EmailConfirmation extends Mailable
 
     public function build()
     {
-        return $this->view('emails.auth.email-confirmation')
+        return $this
+            ->markdown('emails.auth.email-confirmation')
             ->with('user', $this->user);
     }
 }
