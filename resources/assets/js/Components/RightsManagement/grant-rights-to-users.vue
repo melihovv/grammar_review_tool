@@ -34,6 +34,7 @@
         users: [],
         selectedUsers: [],
         isLoading: false,
+        xhrs: [],
       }
     },
     methods: {
@@ -57,6 +58,7 @@
         })
           .done(response => {
             this.selectedUsers = []
+            this.users = []
 
             const rights = response.data
             for (const right of rights) {
@@ -69,7 +71,9 @@
       searchUsers: debounce(function (query) {
         this.isLoading = true
 
-        $.get({
+        this.xhrs.forEach(xhr => xhr.abort())
+
+        const xhr = $.get({
           url: `${Laravel.absPath}/api/users/${this.grammarId}/find`,
           data: {query},
         })
@@ -79,6 +83,8 @@
           .always(() => {
             this.isLoading = false
           })
+
+        this.xhrs.push(xhr)
       }, 500),
     },
   }
