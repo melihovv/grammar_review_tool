@@ -3,18 +3,32 @@
 import $ from 'jquery'
 
 $(() => {
-  $('.grammar-view__ls-nonterminal').click(() => {
-    alert('add comment to left side nonterminal')
+  const $grammarView = $('.grammar-view')
+
+  $grammarView.on('click', '.grammar-view__ls-nonterminal', e => {
+    const $this = $(e.target)
+    const row = $this.parent().prev().text()
+    const column = $this.attr('data-column')
+
+    alert(`add comment to left side nonterminal, row,column: ${row},${column}`)
     return false
   })
 
-  $('.grammar-view__rs-nonterminal').click(() => {
-    alert('add comment to right side nonterminal')
+  $grammarView.on('click', '.grammar-view__rs-nonterminal', e => {
+    const $this = $(e.target)
+    const row = $this.parent().prev().text()
+    const column = $this.attr('data-column')
+
+    alert(`add comment to right side nonterminal, row,column: ${row},${column}`)
     return false
   })
 
-  $('.grammar-view__terminal').click(() => {
-    alert('add comment to terminal')
+  $grammarView.on('click', '.grammar-view__terminal', e => {
+    const $this = $(e.target)
+    const row = $this.parent().prev().text()
+    const column = $this.attr('data-column')
+
+    alert(`add comment to terminal, row,column: ${row},${column}`)
     return false
   })
 })

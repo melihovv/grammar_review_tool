@@ -111,7 +111,8 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {LeftSideContext} ctx
    */
   visitLeftSide(ctx) {
-    this._buffer += '<span class="grammar-view__ls-nonterminal">'
+    const column = ctx.children[0].getSymbol().column
+    this._buffer += `<span class="grammar-view__ls-nonterminal" data-column="${column}">`
     this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
 
     if (ctx.children.length > 1) {
@@ -164,22 +165,26 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     fromRightSide = false,
     fromDirective = false,
   } = {}) {
+    const child = ctx.children[0]
+    const column = child.getSymbol().column
+    const columnAttr = `data-column="${column}"`
+
     if (fromParam) {
       this._buffer += '<span class="grammar-view__param">'
-      this.visitTerminal(ctx.children[0], {closeSpan: true})
+      this.visitTerminal(child, {closeSpan: true})
     } else if (fromRightSide) {
-      const text = ctx.children[0].getText()
+      const text = child.getText()
 
       if (text[0] === text[0].toUpperCase()) { // Terminal.
-        this._buffer += '<span class="grammar-view__terminal">'
+        this._buffer += `<span class="grammar-view__terminal" ${columnAttr}>`
       } else { // Nonterminal.
-        this._buffer += '<span class="grammar-view__rs-nonterminal">'
+        this._buffer += `<span class="grammar-view__rs-nonterminal" ${columnAttr}>`
       }
 
-      this.visitTerminal(ctx.children[0], {closeSpan: true})
+      this.visitTerminal(child, {closeSpan: true})
     } else if (fromDirective) {
       this._buffer += '<span class="grammar-view__symbol">'
-      this.visitTerminal(ctx.children[0], {closeSpan: true})
+      this.visitTerminal(child, {closeSpan: true})
     }
   }
 
