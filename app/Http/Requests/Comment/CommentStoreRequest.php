@@ -20,7 +20,7 @@ class CommentStoreRequest extends CommentRequest
     {
         return array_merge(parent::rules(), [
             'row' => 'required|integer|min:1',
-            'column' => 'required|integer|min:0',
+            'column' => 'required|integer|min:-1',
         ]);
     }
 }

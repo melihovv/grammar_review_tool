@@ -58,7 +58,7 @@ const commentButtonClicked = ($parent, $prev, rowNumber) => {
       data: {
         content: comment,
         row: rowNumber,
-        column: 0,
+        column: -1,
       },
       success: response => {
         const comments = $parent.find('.grammar-view__comment-holder')

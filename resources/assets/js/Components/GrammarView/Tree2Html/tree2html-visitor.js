@@ -292,20 +292,26 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
   /**
    * Checks if there are any comments on passed line.
-   * @param lineNumber
+   * @param row
+   * @param column
    * @returns {boolean}
    */
-  _isAnyCommentOnLine(lineNumber) {
-    return this.comments.some((comment) => comment.row === lineNumber)
+  _isAnyCommentOnLine(row, column = -1) {
+    return this.comments.some(comment => {
+      return comment.row === row && comment.column === column
+    })
   }
 
   /**
    * Returns all comments on passed line.
-   * @param lineNumber
+   * @param row
+   * @param column
    * @returns {Array}
    */
-  _allCommentsOnLine(lineNumber) {
-    return this.comments.filter((comment) => comment.row === lineNumber)
+  _allCommentsOnLine(row, column = -1) {
+    return this.comments.filter(comment => {
+      return comment.row === row && comment.column === column
+    })
   }
 }
 
