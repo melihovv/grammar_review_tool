@@ -72,6 +72,7 @@
         this.isLoading = true
 
         this.xhrs.forEach(xhr => xhr.abort())
+        this.xhrs = []
 
         const xhr = $.get({
           url: `${Laravel.absPath}/api/users/${this.grammarId}/find`,
