@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Entities\Grammar;
 use App\Http\Requests\Request;
-use Illuminate\Support\Facades\Auth;
 
 class GrammarService
 {
