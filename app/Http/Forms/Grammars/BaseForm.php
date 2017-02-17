@@ -3,7 +3,6 @@
 namespace App\Http\Forms\Grammars;
 
 use App\Http\Forms\Form;
-use Illuminate\Support\Facades\Auth;
 
 abstract class BaseForm extends Form
 {
