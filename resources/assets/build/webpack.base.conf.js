@@ -73,6 +73,10 @@ module.exports = {
         loader: 'expose?jQuery!expose?$',
       },
       {
+        test: require.resolve(__dirname + '/../js/Parser'),
+        loader: 'expose?Parser!babel',
+      },
+      {
         test: require.resolve('brace'),
         loader: 'expose?ace',
       },
