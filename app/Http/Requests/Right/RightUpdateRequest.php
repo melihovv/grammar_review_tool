@@ -18,6 +18,7 @@ class RightUpdateRequest extends Request
             ],
             'view' => 'required|boolean',
             'comment' => 'required|boolean',
+            'edit' => 'required|boolean',
         ]);
     }
 

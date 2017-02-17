@@ -56,8 +56,9 @@ class RightsControllerTest extends BrowserKitTestCase
         $this
             ->actingAsApiUser($user)
             ->post($route, [
-                'comment' => true,
                 'view' => false,
+                'comment' => true,
+                'edit' => false,
                 'users' => [$user2->id],
             ], $this->headers('v1', $user));
 
@@ -69,8 +70,9 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'comment' => true,
             'view' => false,
+            'comment' => true,
+            'edit' => false,
         ]);
     }
 
@@ -87,8 +89,9 @@ class RightsControllerTest extends BrowserKitTestCase
         $this
             ->actingAsApiUser($user)
             ->post($route, [
-                'comment' => true,
                 'view' => false,
+                'comment' => true,
+                'edit' => false,
                 'users' => [$user2->id, $user3->id],
             ], $this->headers('v1', $user));
 
@@ -101,14 +104,16 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'comment' => true,
             'view' => false,
+            'comment' => true,
+            'edit' => false,
         ]);
         $this->seeInDatabase('rights', [
             'user_id' => $user3->id,
             'grammar_id' => $grammar->id,
-            'comment' => true,
             'view' => false,
+            'comment' => true,
+            'edit' => false,
         ]);
     }
 
@@ -122,6 +127,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'grammar_id' => $grammar->id,
             'view' => false,
             'comment' => true,
+            'edit' => true,
         ]);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -133,6 +139,7 @@ class RightsControllerTest extends BrowserKitTestCase
                 'user_id' => $user2->id,
                 'view' => false,
                 'comment' => false,
+                'edit' => false,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure(['data' => RightTransformer::attrs()]);
@@ -141,6 +148,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'grammar_id' => $grammar->id,
             'view' => false,
             'comment' => false,
+            'edit' => false,
         ]);
     }
 

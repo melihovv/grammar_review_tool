@@ -26,7 +26,7 @@ class AccessManager {
         && AccessManager.isUserCommentOwner(comment, user)
         && (
           this.isUserGrammarOwner(user)
-          || this.hasUserRightTo('comment', user)
+          || this.hasUserRightTo(['comment', 'edit'], user)
         )
       )
   }
@@ -58,20 +58,34 @@ class AccessManager {
   canUserComment(user) {
     return user.is_admin
       || this.isUserGrammarOwner(user)
-      || (this.grammar.allow_to_comment && this.hasUserRightTo('comment', user))
+      || (
+        this.grammar.allow_to_comment
+        && this.hasUserRightTo(['comment', 'edit'], user)
+      )
   }
 
   /**
    * Returns true if user has right to ability.
-   * @param {String} ability
+   * @param {String|Array} ability
    * @param {Object} user
+   * @param {boolean} all
    * @return {boolean}
    */
-  hasUserRightTo(ability, user) {
+  hasUserRightTo(ability, user, all = false) {
     return this.rights.some(right => {
+      let hasAbility = false
+
+      if (Array.isArray(ability)) {
+        hasAbility = all
+          ? ability.every(a => right[a])
+          : ability.some(a => right[a])
+      } else {
+        hasAbility = right[ability]
+      }
+
       return right.grammar_id === this.grammar.id
         && right.user_id === user.id
-        && right[ability]
+        && hasAbility
     })
   }
 }

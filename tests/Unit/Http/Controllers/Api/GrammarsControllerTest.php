@@ -181,6 +181,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
             'grammar_id' => $grammar->id,
             'view' => false,
             'comment' => false,
+            'edit' => false,
         ]);
 
         $route = app(UrlGenerator::class)->version('v1')

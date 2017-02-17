@@ -9,28 +9,28 @@ class RightService
 {
     /**
      * @param Grammar $grammar
-     * @param array   $usersIds
-     * @param $view
-     * @param $comment
-     *
+     * @param array $usersIds
+     * @param array $rights
      * @return Collection
+     *
      */
-    public function create(Grammar $grammar, array $usersIds, $view, $comment)
+    public function create(Grammar $grammar, array $usersIds, array $rights)
     {
         $now = date('Y-m-d I:h:s');
-        $rights = [];
+        $rightsToCreate = [];
 
         foreach ($usersIds as $usersId) {
-            $rights[] = [
+            $rightsToCreate[] = [
                 'user_id' => $usersId,
                 'grammar_id' => $grammar->id,
-                'view' => $view,
-                'comment' => $comment,
+                'view' => $rights['view'],
+                'comment' => $rights['comment'],
+                'edit' => $rights['edit'],
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
         }
 
-        return $grammar->rights()->createMany($rights);
+        return $grammar->rights()->createMany($rightsToCreate);
     }
 }

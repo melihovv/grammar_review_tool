@@ -29,14 +29,14 @@ class GrammarPolicy
     {
         return $grammar->public_view
             || $user->isGrammarOwner($grammar)
-            || $user->hasRight(['view', 'comment'], $grammar);
+            || $user->hasRight(['view', 'comment', 'edit'], $grammar);
     }
 
     public function comment(User $user, Grammar $grammar)
     {
         return $user->isGrammarOwner($grammar)
             || ($grammar->allow_to_comment
-                && $user->hasRight('comment', $grammar));
+                && $user->hasRight(['comment', 'edit'], $grammar));
     }
 
     public function manageRights(User $user, Grammar $grammar)
@@ -46,6 +46,7 @@ class GrammarPolicy
 
     public function update(User $user, Grammar $grammar)
     {
-        return $user->isGrammarOwner($grammar);
+        return $user->isGrammarOwner($grammar)
+            || $user->hasRight('edit', $grammar);
     }
 }

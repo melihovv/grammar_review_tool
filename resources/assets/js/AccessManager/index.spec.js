@@ -40,6 +40,7 @@ describe('AccessManager', () => {
             grammar_id: 1,
             user_id: 1,
             comment: true,
+            edit: false,
           },
         ]),
         user: {id: 1},
@@ -118,6 +119,17 @@ describe('AccessManager', () => {
         user: {id: 1},
         expected: true,
       },
+      'grammar is  allowed to comment and user has right to edit grammar': {
+        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+          {
+            grammar_id: 1,
+            user_id: 1,
+            edit: true,
+          },
+        ]),
+        user: {id: 1},
+        expected: true,
+      },
     }
 
     for (const name in cases) {
@@ -175,6 +187,33 @@ describe('AccessManager', () => {
         ability: 'comment',
         expected: true,
       },
+      'there are rights for user and he has one of requested rights': {
+        accessManager: new AccessManager({id: 1}, [
+          {
+            grammar_id: 1,
+            user_id: 1,
+            comment: false,
+            edit: true,
+          },
+        ]),
+        user: {id: 1},
+        ability: ['comment', 'edit'],
+        expected: true,
+      },
+      'there are rights for user and he has all of requested rights': {
+        accessManager: new AccessManager({id: 1}, [
+          {
+            grammar_id: 1,
+            user_id: 1,
+            comment: true,
+            edit: true,
+          },
+        ]),
+        user: {id: 1},
+        ability: ['comment', 'edit'],
+        all: true,
+        expected: true,
+      },
     }
 
     for (const name in cases) {
@@ -182,7 +221,11 @@ describe('AccessManager', () => {
         const c = cases[name]
         c
           .accessManager
-          .hasUserRightTo(c.ability, c.user)
+          .hasUserRightTo(
+            c.ability,
+            c.user,
+            c.all !== undefined ? c.all : false
+          )
           .should
           .equal(c.expected)
       })

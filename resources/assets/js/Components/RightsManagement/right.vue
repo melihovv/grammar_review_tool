@@ -24,7 +24,7 @@
     },
     data: () => {
       return {
-        rightLevels: ['view', 'comment'],
+        rightLevels: ['view', 'comment', 'edit'],
       }
     },
     computed: {
@@ -33,6 +33,8 @@
           return 'comment'
         } else if (this.right.view) {
           return 'view'
+        } else if (this.right.edit) {
+          return 'edit'
         } else {
           return null
         }
@@ -43,6 +45,7 @@
         const data = {
           view: rightLevel === 'view' ? 1 : 0,
           comment: rightLevel === 'comment' ? 1 : 0,
+          edit: rightLevel === 'edit' ? 1 : 0,
           user_id: this.right.user.id,
         }
 

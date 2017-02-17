@@ -53,7 +53,10 @@ class User extends Authenticatable
         }
 
         return Grammar::whereHas('rights', function ($q) {
-            $q->where('view', true)->orWhere('comment', true);
+            $q
+                ->where('view', true)
+                ->orWhere('comment', true)
+                ->orWhere('edit', true);
         })
             ->orWhere('public_view', true)
             ->orWhere('user_id', $this->id);
@@ -97,7 +100,7 @@ class User extends Authenticatable
 
     /**
      * @param string|array $right
-     * @param Grammar      $grammar
+     * @param Grammar $grammar
      *
      * @return bool
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)

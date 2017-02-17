@@ -18,6 +18,7 @@ class RightTransformer extends Transformer
             $model->grammar_id,
             $model->view,
             $model->comment,
+            $model->edit,
         ]);
     }
 
@@ -29,6 +30,7 @@ class RightTransformer extends Transformer
             'grammar_id',
             'view',
             'comment',
+            'edit',
         ];
     }
 

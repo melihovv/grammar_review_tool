@@ -14,6 +14,7 @@ class Right extends Model
         'grammar_id',
         'view',
         'comment',
+        'edit',
     ];
 
     protected $casts = [
@@ -21,6 +22,7 @@ class Right extends Model
         'grammar_id' => 'integer',
         'view' => 'boolean',
         'comment' => 'boolean',
+        'edit' => 'boolean',
     ];
 
     /**
