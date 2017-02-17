@@ -3,6 +3,7 @@
 namespace Tests\Unit\Http\Controllers;
 
 use App\Entities\Grammar;
+use App\Entities\Right;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -74,14 +75,12 @@ class GrammarsControllerTest extends BrowserKitTestCase
         $this->assertNull(Grammar::first());
     }
 
-    public function testUpdateByOwner()
+    /**
+     * @dataProvider updateProvider
+     */
+    public function testUpdate(callable $payloadCb, callable $assertCb)
     {
-        $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create([
-            'user_id' => $user->id,
-            'allow_to_comment' => false,
-            'public_view' => true,
-        ]);
+        list($user, $grammar) = $payloadCb();
 
         $this
             ->actingAs($user)
@@ -90,44 +89,86 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 'name' => 'new name',
                 'allow_to_comment' => true,
                 'public_view' => false,
+                'user_id' => 100500,
             ]);
 
         $this->assertRedirectedToRoute('grammars.show', $grammar);
 
-        $this->seeInDatabase('grammars', [
-            'id' => $grammar->id,
-            'content' => $grammar->content,
-            'name' => $grammar->name,
-            'allow_to_comment' => true,
-            'public_view' => false,
-        ]);
+        $assertCb($this, $user, $grammar);
     }
 
-    public function testUpdateByAdmin()
+    public function updateProvider()
     {
-        $user = factory(User::class, 'admin')->create();
-        $grammar = factory(Grammar::class)->create([
-            'allow_to_comment' => false,
-            'public_view' => true,
-        ]);
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'user_id' => $user->id,
+                        'allow_to_comment' => false,
+                        'public_view' => true,
+                    ]);
 
-        $this
-            ->actingAs($user)
-            ->put(route('grammars.update', $grammar), [
-                'content' => 'new content',
-                'name' => 'new name',
-                'allow_to_comment' => true,
-                'public_view' => false,
-            ]);
+                    return [$user, $grammar];
+                },
+                function ($testcase, $user, $grammar) {
+                    $testcase->seeInDatabase('grammars', [
+                        'id' => $grammar->id,
+                        'user_id' => $user->id,
+                        'content' => 'new content',
+                        'name' => 'new name',
+                        'allow_to_comment' => true,
+                        'public_view' => false,
+                    ]);
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'allow_to_comment' => false,
+                        'public_view' => true,
+                    ]);
 
-        $this->assertRedirectedToRoute('grammars.show', $grammar);
+                    return [$user, $grammar];
+                },
+                function ($testcase, $user, $grammar) {
+                    $testcase->seeInDatabase('grammars', [
+                        'id' => $grammar->id,
+                        'user_id' => $grammar->user_id,
+                        'content' => 'new content',
+                        'name' => 'new name',
+                        'allow_to_comment' => true,
+                        'public_view' => false,
+                    ]);
+                },
+            ],
+            'user has right to edit grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'allow_to_comment' => false,
+                        'public_view' => true,
+                    ]);
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'edit' => true,
+                    ]);
 
-        $this->seeInDatabase('grammars', [
-            'id' => $grammar->id,
-            'content' => $grammar->content,
-            'name' => $grammar->name,
-            'allow_to_comment' => true,
-            'public_view' => true,
-        ]);
+                    return [$user, $grammar];
+                },
+                function ($testcase, $user, $grammar) {
+                    $testcase->seeInDatabase('grammars', [
+                        'id' => $grammar->id,
+                        'user_id' => $grammar->user_id,
+                        'content' => 'new content',
+                        'name' => 'new name',
+                        'allow_to_comment' => true,
+                        'public_view' => false,
+                    ]);
+                },
+            ],
+        ];
     }
 }

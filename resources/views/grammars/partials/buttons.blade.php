@@ -8,9 +8,8 @@
             @endcan
 
             @can('update', $grammar)
-                <a href="#" class="btn btn-primary" data-toggle="modal"
-                   data-target="#edit-grammar-modal">Edit</a>
-                @include('grammars.partials.edit-modal')
+                <a href="{{ route('grammars.edit', $grammar->id) }}"
+                   class="btn btn-primary">Edit</a>
             @endcan
 
             @can('delete', $grammar)

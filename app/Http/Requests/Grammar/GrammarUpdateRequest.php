@@ -2,36 +2,16 @@
 
 namespace App\Http\Requests\Grammar;
 
-use App\Http\Requests\Request;
-use Illuminate\Support\Facades\Auth;
-
-class GrammarUpdateRequest extends Request
+class GrammarUpdateRequest extends BaseRequest
 {
-    public function rules()
+    public function sanitizers()
     {
-        return array_merge(parent::rules(), [
-            'public_view' => 'required|boolean',
+        $grammar = $this->route('grammar');
+
+        return array_merge(parent::sanitizers(), [
+            'user_id' => [function () use ($grammar) {
+                return $grammar->user_id;
+            }],
         ]);
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
-    public function getValidatorInstance()
-    {
-        $validator = parent::getValidatorInstance();
-
-        $validator->sometimes(
-            'allow_to_comment',
-            [
-                'required',
-                'boolean',
-            ],
-            function ($input) {
-                return Auth::user()->isGrammarOwner($this->route('grammar'));
-            }
-        );
-
-        return $validator;
     }
 }

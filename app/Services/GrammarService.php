@@ -13,12 +13,6 @@ class GrammarService
      */
     public function update(Grammar $grammar, Request $request)
     {
-        $params = ['allow_to_comment'];
-
-        if (Auth::user()->isGrammarOwner($grammar)) {
-            $params = ['public_view', 'allow_to_comment'];
-        }
-
-        $grammar->update($request->only($params));
+        $grammar->update($request->all());
     }
 }

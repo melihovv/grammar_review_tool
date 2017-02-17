@@ -16,6 +16,7 @@ class GrammarsController extends Controller
     {
         $this->middleware('can:delete,grammar', ['only' => ['destroy']]);
         $this->middleware('can:view,grammar', ['only' => ['show']]);
+        $this->middleware('can:update,grammar', ['only' => ['edit', 'update']]);
     }
 
     public function index()
@@ -31,13 +32,7 @@ class GrammarsController extends Controller
 
     public function show(Grammar $grammar)
     {
-        $form = $this->form(EditForm::class, [
-            'method' => 'PUT',
-            'url' => route('grammars.update', $grammar),
-            'model' => $grammar,
-        ]);
-
-        return view('grammars.show', compact('grammar', 'form'));
+        return view('grammars.show', compact('grammar'));
     }
 
     public function create()
@@ -62,6 +57,17 @@ class GrammarsController extends Controller
         $grammar->delete();
 
         return redirect()->route('grammars.index');
+    }
+
+    public function edit(Grammar $grammar)
+    {
+        $form = $this->form(EditForm::class, [
+            'method' => 'PUT',
+            'url' => route('grammars.update', $grammar),
+            'model' => $grammar,
+        ]);
+
+        return view('grammars.edit', compact('grammar', 'form'));
     }
 
     public function update(
