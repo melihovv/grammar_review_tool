@@ -16,7 +16,8 @@
     "cerbero/command-validator": "^1.0",
     "kris/laravel-form-builder": "^1.11",
     "anhskohbo/no-captcha": "^2.2",
-    "laravelcollective/html": "5.*"
+    "laravelcollective/html": "5.*",
+    "yadakhov/insert-on-duplicate-key": "dev-master"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -40,6 +41,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/melihovv/Sanitizer"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/melihovv/insert-on-duplicate-key"
     }
   ],
   "autoload": {

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Http\Controllers;
 
+use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
@@ -166,6 +167,297 @@ class GrammarsControllerTest extends BrowserKitTestCase
                         'name' => 'new name',
                         'allow_to_comment' => true,
                         'public_view' => false,
+                    ]);
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider updateWithCommentsProvider
+     */
+    public function testUpdateWithComments(
+        callable $setupCb,
+        callable $assertCb
+    ) {
+        $user = factory(User::class, 'admin')->create();
+        list($grammar, $content) = $setupCb();
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $grammar), [
+                'content' => $content,
+                'name' => 'new name',
+                'allow_to_comment' => true,
+                'public_view' => false,
+            ]);
+
+        $this->seeInDatabase('grammars', [
+            'id' => $grammar->id,
+            'content' => $content,
+        ]);
+
+        $assertCb($this);
+    }
+
+    public function updateWithCommentsProvider()
+    {
+        return [
+            'some rows with comments were deleted' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+line3
+line4
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line2
+line4
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 1,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 3,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 4,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->assertCount(1, Comment::all()->toArray());
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 3,
+                        'row' => 2,
+                    ]);
+                },
+            ],
+            'row was added after last row' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line2
+line3
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 2,
+                    ]);
+                },
+            ],
+            'row was added before row with comments' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line1.5
+line2
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 3,
+                    ]);
+                },
+            ],
+            'rows was added before row with comments' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line1.5.1
+line1.5.2
+line2
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 4,
+                    ]);
+                },
+            ],
+            'several rows was added before rows with comments' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+line3
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line1.5
+line2
+line2.5.1
+line2.5.2
+line3
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 3,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 3,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 2,
+                        'row' => 6,
+                    ]);
+                },
+            ],
+            'several rows was added before rows with comments, some rows were deleted' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+line3
+line4
+line5
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line1.5.1
+line1.5.2
+line2
+line3.1
+line3.2
+line4
+line5
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 3,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 4,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 4,
+                    ]);
+                    $testcase->notSeeInDatabase('comments', [
+                        'id' => 2,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 3,
+                        'row' => 7,
+                    ]);
+                },
+            ],
+            'row with comment was changed' => [
+                function () {
+                    $grammar = factory(Grammar::class)->create([
+                        'content' => <<<'NOW'
+line1
+line2
+line3
+NOW
+                        ,
+                    ]);
+                    $content = <<<'NOW'
+line1
+line22
+line3
+NOW;
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 1,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 2,
+                    ]);
+                    factory(Comment::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'row' => 3,
+                    ]);
+
+                    return [$grammar, $content];
+                },
+                function ($testcase) {
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'row' => 1,
+                    ]);
+                    $testcase->notSeeInDatabase('comments', [
+                        'id' => 2,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 3,
+                        'row' => 3,
                     ]);
                 },
             ],

@@ -98,3 +98,38 @@ if (!function_exists('style')) {
         return asset_tag($asset, 'style', $productionOnly);
     }
 }
+
+if (!function_exists('lcs')) {
+    /**
+     * Compute longest common subsequence table.
+     *
+     * @param array $linesA
+     * @param array $linesB
+     *
+     * @return array
+     */
+    function lcs(array $linesA, array $linesB)
+    {
+        $m = count($linesA);
+        $n = count($linesB);
+        $l = [];
+
+        for ($i = -1; $i < $m; ++$i) {
+            for ($j = -1; $j < $n; ++$j) {
+                $l[$i][$j] = 0;
+            }
+        }
+
+        for ($i = 0; $i < $m; ++$i) {
+            for ($j = 0; $j < $n; ++$j) {
+                if ($linesA[$i] === $linesB[$j]) {
+                    $l[$i][$j] = $l[$i - 1][$j - 1] + 1;
+                } else {
+                    $l[$i][$j] = max($l[$i][$j - 1], $l[$i - 1][$j]);
+                }
+            }
+        }
+
+        return $l;
+    }
+}

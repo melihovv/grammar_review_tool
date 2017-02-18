@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7179cf8d4173fa9c5564cd17285cc636",
+    "content-hash": "f2aa1b3d96ebb92c448eba4494f1ee92",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -2592,6 +2592,53 @@
                 "validate"
             ],
             "time": "2016-11-23T20:04:58+00:00"
+        },
+        {
+            "name": "yadakhov/insert-on-duplicate-key",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/melihovv/insert-on-duplicate-key.git",
+                "reference": "34672250f7ccbcf000979e2f74a6b03a71ff010a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/melihovv/insert-on-duplicate-key/zipball/34672250f7ccbcf000979e2f74a6b03a71ff010a",
+                "reference": "34672250f7ccbcf000979e2f74a6b03a71ff010a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "illuminate/database": "^5.1",
+                "phpunit/dbunit": "^2.0",
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yadakhov\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yada Khov",
+                    "email": "yada.khov@gmail.com",
+                    "homepage": "https://github.com/yadakhov"
+                }
+            ],
+            "description": "A trait for MySQL INSERT ON DUPLICATE KEY UPDATE.",
+            "homepage": "https://github.com/yadakhov/insert-on-duplicate-key",
+            "keywords": [
+                "database",
+                "eloquent",
+                "mysql"
+            ],
+            "support": {
+                "source": "https://github.com/melihovv/insert-on-duplicate-key/tree/master"
+            },
+            "time": "2017-02-19T18:18:19+00:00"
         }
     ],
     "packages-dev": [
@@ -5381,7 +5428,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "fadion/sanitizer": 20,
-        "dingo/api": 20
+        "dingo/api": 20,
+        "yadakhov/insert-on-duplicate-key": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
