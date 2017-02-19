@@ -113,8 +113,8 @@ class GrammarService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int $i
-     * @param int $j
+     * @param int   $i
+     * @param int   $j
      */
     protected function backtrack($lcs, $linesA, $linesB, $i, $j)
     {
