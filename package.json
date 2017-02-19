@@ -1,6 +1,6 @@
 {
   "name": "grammar_review_tool",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.0",
   "description": "Tool for review formal grammars in Lemon format.",
   "private": true,
   "scripts": {
