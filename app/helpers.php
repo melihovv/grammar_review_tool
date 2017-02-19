@@ -110,26 +110,29 @@ if (!function_exists('lcs')) {
      */
     function lcs(array $linesA, array $linesB)
     {
-        $m = count($linesA);
-        $n = count($linesB);
-        $l = [];
+        $amountOfLinesA = count($linesA);
+        $amountOfLinesB = count($linesB);
+        $table = [];
 
-        for ($i = -1; $i < $m; ++$i) {
-            for ($j = -1; $j < $n; ++$j) {
-                $l[$i][$j] = 0;
+        for ($i = -1; $i < $amountOfLinesA; ++$i) {
+            for ($j = -1; $j < $amountOfLinesB; ++$j) {
+                $table[$i][$j] = 0;
             }
         }
 
-        for ($i = 0; $i < $m; ++$i) {
-            for ($j = 0; $j < $n; ++$j) {
+        for ($i = 0; $i < $amountOfLinesA; ++$i) {
+            for ($j = 0; $j < $amountOfLinesB; ++$j) {
                 if ($linesA[$i] === $linesB[$j]) {
-                    $l[$i][$j] = $l[$i - 1][$j - 1] + 1;
+                    $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
                 } else {
-                    $l[$i][$j] = max($l[$i][$j - 1], $l[$i - 1][$j]);
+                    $table[$i][$j] = max(
+                        $table[$i][$j - 1],
+                        $table[$i - 1][$j]
+                    );
                 }
             }
         }
 
-        return $l;
+        return $table;
     }
 }

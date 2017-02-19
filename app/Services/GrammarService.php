@@ -115,16 +115,23 @@ class GrammarService
      * @param array $linesB
      * @param int   $i
      * @param int   $j
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function backtrack($lcs, $linesA, $linesB, $i, $j)
     {
+        $lineWasAdded = false;
+        if (isset($lcs[$i][$j - 1], $lcs[$i - 1][$j])) {
+            $lineWasAdded = $lcs[$i][$j - 1] >= $lcs[$i - 1][$j];
+        }
+
         if ($i >= 0 && $j >= 0 && $linesA[$i] === $linesB[$j]) {
             $this->backtrack($lcs, $linesA, $linesB, $i - 1, $j - 1);
-        } elseif ($j >= 0 && ($i === -1 || $lcs[$i][$j - 1] >= $lcs[$i - 1][$j])) {
+        } elseif ($j >= 0 && ($i === -1 || $lineWasAdded)) {
             // Line was added.
             $this->addedRows[] = $j + 1;
             $this->backtrack($lcs, $linesA, $linesB, $i, $j - 1);
-        } elseif ($i >= 0 && ($j === -1 || $lcs[$i][$j - 1] < $lcs[$i - 1][$j])) {
+        } elseif ($i >= 0 && ($j === -1 || !$lineWasAdded)) {
             // Line was removed.
             $this->deletedRows[] = $i + 1;
             $this->backtrack($lcs, $linesA, $linesB, $i - 1, $j);
