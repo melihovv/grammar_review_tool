@@ -32,7 +32,9 @@ class GrammarsController extends Controller
 
     public function show(Grammar $grammar)
     {
-        return view('grammars.show', compact('grammar'));
+        $lastVersion = !$grammar->isLeaf() ? $grammar->leaves()->first() : null;
+
+        return view('grammars.show', compact('grammar', 'lastVersion'));
     }
 
     public function create()
