@@ -10,7 +10,7 @@
             :class="{'list-group-item': true, active: grammar.id === activeGrammarId}"
             @click="onGrammarClickedInSidebar(grammar.id)">
           {{ grammar.created_at }}<br>
-          {{ grammar.owner.name }}
+          {{ grammar.updater.name }}
           <a :href="urlPrefix + '/grammars/' + grammar.id" class="link"
              onclick="event.stopPropagation()">Show</a>
         </li>
@@ -46,7 +46,7 @@
           const grammars = response.data
 
           for (const grammar of grammars) {
-            grammar.owner = grammar.owner.data
+            grammar.updater = grammar.updater.data
           }
 
           this.grammars = grammars

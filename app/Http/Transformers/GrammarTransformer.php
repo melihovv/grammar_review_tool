@@ -8,6 +8,7 @@ class GrammarTransformer extends Transformer
 {
     protected $availableIncludes = [
         'owner',
+        'updater',
         'comments',
         'rights',
     ];
@@ -42,6 +43,14 @@ class GrammarTransformer extends Transformer
     public function includeOwner(Grammar $model)
     {
         return $this->item($model->owner, new UserTransformer());
+    }
+
+    public function includeUpdater(Grammar $model)
+    {
+        return $this->item(
+            $model->updater_id !== null ? $model->updater : $model->owner,
+            new UserTransformer()
+        );
     }
 
     public function includeComments(Grammar $model)

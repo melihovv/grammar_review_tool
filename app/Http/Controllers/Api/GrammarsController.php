@@ -66,8 +66,7 @@ class GrammarsController extends ApiController
             new GrammarTransformer(),
             [],
             function ($resource, $fractal) {
-                // TODO updater instead of owner.
-                $fractal->parseIncludes(['owner']);
+                $fractal->parseIncludes(['updater']);
             }
         );
     }

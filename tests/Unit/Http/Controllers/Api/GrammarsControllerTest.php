@@ -285,7 +285,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 '*' => array_merge(
                     GrammarTransformer::attrs(),
                     [
-                        'owner' => ['data' => UserTransformer::attrs()],
+                        'updater' => ['data' => UserTransformer::attrs()],
                     ]
                 ),
             ],

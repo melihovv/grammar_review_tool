@@ -197,6 +197,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
                         'name' => 'new name',
                         'allow_to_comment' => true,
                         'public_view' => false,
+                        'updater_id' => $user->id,
                     ]);
                 },
             ],
@@ -218,6 +219,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
                         'name' => 'new name',
                         'allow_to_comment' => true,
                         'public_view' => false,
+                        'updater_id' => $user->id,
                     ]);
                 },
             ],
@@ -244,6 +246,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
                         'name' => 'new name',
                         'allow_to_comment' => true,
                         'public_view' => false,
+                        'updater_id' => $user->id,
                     ]);
                 },
             ],

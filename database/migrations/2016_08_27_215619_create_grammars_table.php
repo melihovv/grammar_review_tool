@@ -10,6 +10,7 @@ class CreateGrammarsTable extends Migration
         Schema::create('grammars', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('updater_id')->nullable();
             $table->string('name');
             $table->mediumText('content');
             $table->boolean('public_view')->index();
@@ -23,6 +24,8 @@ class CreateGrammarsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('updater_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -13,6 +13,7 @@ class Grammar extends Node
     protected $columns = [
         'id',
         'user_id',
+        'updater_id',
         'name',
         'content',
         'public_view',
@@ -27,6 +28,7 @@ class Grammar extends Node
 
     protected $fillable = [
         'user_id',
+        'updater_id',
         'name',
         'content',
         'public_view',
@@ -35,6 +37,7 @@ class Grammar extends Node
 
     protected $casts = [
         'user_id' => 'integer',
+        'updater_id' => 'integer',
         'public_view' => 'boolean',
         'allow_to_comment' => 'boolean',
         'parent_id' => 'integer',
@@ -66,6 +69,14 @@ class Grammar extends Node
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updater_id');
     }
 
     /**

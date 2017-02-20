@@ -6,6 +6,7 @@ use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 
@@ -36,11 +37,12 @@ class GrammarService
     public function update(Grammar $grammar, Request $request)
     {
         try {
-            // TODO track user who updated grammar.
             DB::beginTransaction();
 
             $this->updateComments($grammar, $request);
-            $grammar->update($request->all());
+            $grammar->update(array_merge($request->all(), [
+                'updater_id' => Auth::user()->id,
+            ]));
 
             DB::commit();
         } catch (PDOException $e) {
