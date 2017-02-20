@@ -60,7 +60,7 @@ class Grammar extends Node
 
     public function scopeExclude($query, $columns = [])
     {
-        return $query->select(array_diff($this->columns, (array)$columns));
+        return $query->select(array_diff($this->columns, (array) $columns));
     }
 
     /**

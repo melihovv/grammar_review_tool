@@ -76,7 +76,7 @@ class GrammarsController extends ApiController
         $diff = $service->diff($grammar);
 
         return $this->response->item(
-            (object)[
+            (object) [
                 'lines' => $diff,
             ],
             new DiffTransformer()

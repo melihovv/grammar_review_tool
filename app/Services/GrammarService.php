@@ -14,18 +14,21 @@ class GrammarService
 {
     /**
      * Rows to delete while comments update.
+     *
      * @var array
      */
     protected $deletedRows = [];
 
     /**
      * Rows which was added in updated grammar.
+     *
      * @var array
      */
     protected $addedRows = [];
 
     /**
      * Diff between two grammars.
+     *
      * @var array
      */
     protected $diff = [];
@@ -33,6 +36,7 @@ class GrammarService
     /**
      * @param Grammar $grammar
      * @param Request $request
+     *
      * @return Grammar
      */
     public function update(Grammar $grammar, Request $request)
@@ -50,6 +54,7 @@ class GrammarService
             return $newGrammar;
         } catch (PDOException $e) {
             DB::rollback();
+
             return $grammar;
         }
     }
@@ -83,6 +88,7 @@ class GrammarService
         $comments = $comments->map(function ($comment) use ($newGrammar) {
             $comment->grammar_id = $newGrammar->id;
             $comment->id = null;
+
             return $comment;
         });
         Comment::insert($comments->toArray());
@@ -131,8 +137,8 @@ class GrammarService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int $i
-     * @param int $j
+     * @param int   $i
+     * @param int   $j
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
@@ -182,8 +188,8 @@ class GrammarService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int $i
-     * @param int $j
+     * @param int   $i
+     * @param int   $j
      *
      * @return array
      */
