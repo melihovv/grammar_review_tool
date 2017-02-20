@@ -79,9 +79,9 @@ class GrammarsController extends Controller
         Grammar $grammar,
         GrammarService $service
     ) {
-        $service->update($grammar, $request);
+        $newGrammar = $service->update($grammar, $request);
 
-        return redirect()->route('grammars.show', $grammar);
+        return redirect()->route('grammars.show', $newGrammar);
     }
 
     public function history(Grammar $grammar)

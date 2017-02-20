@@ -170,8 +170,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 'user_id' => 100500,
             ]);
 
-        $this->assertRedirectedToRoute('grammars.show', $grammar);
-
         $assertCb($this, $user, $grammar);
     }
 
@@ -190,8 +188,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     return [$user, $grammar];
                 },
                 function ($testcase, $user, $grammar) {
+                    $testcase->assertRedirectedToRoute('grammars.show', 2);
                     $testcase->seeInDatabase('grammars', [
-                        'id' => $grammar->id,
+                        'id' => 2,
                         'user_id' => $user->id,
                         'content' => 'new content',
                         'name' => 'new name',
@@ -212,8 +211,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     return [$user, $grammar];
                 },
                 function ($testcase, $user, $grammar) {
+                    $testcase->assertRedirectedToRoute('grammars.show', 2);
                     $testcase->seeInDatabase('grammars', [
-                        'id' => $grammar->id,
+                        'id' => 2,
                         'user_id' => $grammar->user_id,
                         'content' => 'new content',
                         'name' => 'new name',
@@ -239,8 +239,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     return [$user, $grammar];
                 },
                 function ($testcase, $user, $grammar) {
+                    $testcase->assertRedirectedToRoute('grammars.show', 2);
                     $testcase->seeInDatabase('grammars', [
-                        'id' => $grammar->id,
+                        'id' => 2,
                         'user_id' => $grammar->user_id,
                         'content' => 'new content',
                         'name' => 'new name',
@@ -306,11 +307,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 'public_view' => false,
             ]);
 
-        $this->seeInDatabase('grammars', [
-            'id' => $grammar->id,
-            'content' => $content,
-        ]);
-
         $assertCb($this);
     }
 
@@ -348,9 +344,25 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
-                    $testcase->assertCount(1, Comment::all()->toArray());
+                    $testcase->assertCount(4, Comment::all()->toArray());
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 1,
+                        'grammar_id' => 1,
+                        'row' => 1,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 2,
+                        'grammar_id' => 1,
+                        'row' => 3,
+                    ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
+                        'grammar_id' => 1,
+                        'row' => 4,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 4,
+                        'grammar_id' => 2,
                         'row' => 2,
                     ]);
                 },
@@ -377,8 +389,15 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
+                        'grammar_id' => 1,
+                        'row' => 2,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 2,
+                        'grammar_id' => 2,
                         'row' => 2,
                     ]);
                 },
@@ -405,8 +424,15 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
+                        'grammar_id' => 1,
+                        'row' => 2,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 2,
+                        'grammar_id' => 2,
                         'row' => 3,
                     ]);
                 },
@@ -434,8 +460,15 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
+                        'grammar_id' => 1,
+                        'row' => 2,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 2,
+                        'grammar_id' => 2,
                         'row' => 4,
                     ]);
                 },
@@ -470,12 +503,25 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(4, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'row' => 3,
+                        'grammar_id' => 1,
+                        'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
+                        'grammar_id' => 1,
+                        'row' => 3,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 3,
+                        'grammar_id' => 2,
+                        'row' => 3,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 4,
+                        'grammar_id' => 2,
                         'row' => 6,
                     ]);
                 },
@@ -518,15 +564,30 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(5, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'row' => 4,
+                        'grammar_id' => 1,
+                        'row' => 2,
                     ]);
-                    $testcase->notSeeInDatabase('comments', [
+                    $testcase->seeInDatabase('comments', [
                         'id' => 2,
+                        'grammar_id' => 1,
+                        'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
+                        'grammar_id' => 1,
+                        'row' => 4,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 4,
+                        'grammar_id' => 2,
+                        'row' => 4,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 5,
+                        'grammar_id' => 2,
                         'row' => 7,
                     ]);
                 },
@@ -562,15 +623,30 @@ NOW;
                     return [$grammar, $content];
                 },
                 function ($testcase) {
+                    $testcase->assertCount(5, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
+                        'grammar_id' => 1,
                         'row' => 1,
                     ]);
-                    $testcase->notSeeInDatabase('comments', [
+                    $testcase->seeInDatabase('comments', [
                         'id' => 2,
+                        'grammar_id' => 1,
+                        'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
+                        'grammar_id' => 1,
+                        'row' => 3,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 4,
+                        'grammar_id' => 2,
+                        'row' => 1,
+                    ]);
+                    $testcase->seeInDatabase('comments', [
+                        'id' => 5,
+                        'grammar_id' => 2,
                         'row' => 3,
                     ]);
                 },

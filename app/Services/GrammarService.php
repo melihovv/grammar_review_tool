@@ -33,31 +33,35 @@ class GrammarService
     /**
      * @param Grammar $grammar
      * @param Request $request
+     * @return Grammar
      */
     public function update(Grammar $grammar, Request $request)
     {
         try {
             DB::beginTransaction();
 
-            $this->updateComments($grammar, $request);
-            $grammar->update(array_merge($request->all(), [
+            $newGrammar = Grammar::create(array_merge($request->all(), [
                 'updater_id' => Auth::user()->id,
             ]));
+            $this->updateComments($grammar, $newGrammar);
 
             DB::commit();
+
+            return $newGrammar;
         } catch (PDOException $e) {
             DB::rollback();
+            return $grammar;
         }
     }
 
     /**
-     * @param Grammar $grammar
-     * @param Request $request
+     * @param $oldGrammar
+     * @param $newGrammar
      */
-    protected function updateComments(Grammar $grammar, Request $request)
+    protected function updateComments($oldGrammar, $newGrammar)
     {
-        $linesA = explode("\n", $grammar->content);
-        $linesB = explode("\n", $request->get('content'));
+        $linesA = explode("\n", $oldGrammar->content);
+        $linesB = explode("\n", $newGrammar->content);
 
         $this->addedRows = [];
         $this->deletedRows = [];
@@ -75,14 +79,13 @@ class GrammarService
         $this->addedRows = array_values(array_unique($this->addedRows));
         sort($this->addedRows);
 
-        if (count($this->deletedRows) > 0) {
-            Comment::where('grammar_id', $grammar->id)
-                ->whereIn('row', $this->deletedRows)
-                ->delete();
-        }
-
-        $comments = $this->computeNewRows($grammar);
-        Comment::replace($comments->toArray());
+        $comments = $this->computeNewRows($oldGrammar);
+        $comments = $comments->map(function ($comment) use ($newGrammar) {
+            $comment->grammar_id = $newGrammar->id;
+            $comment->id = null;
+            return $comment;
+        });
+        Comment::insert($comments->toArray());
     }
 
     /**
@@ -95,6 +98,7 @@ class GrammarService
     protected function computeNewRows(Grammar $grammar)
     {
         $comments = Comment::where('grammar_id', $grammar->id)
+            ->whereNotIn('row', $this->deletedRows)
             ->get();
 
         $deletedRows = $this->deletedRows;

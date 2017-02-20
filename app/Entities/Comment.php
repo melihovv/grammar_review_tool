@@ -9,7 +9,6 @@ use Yadakhov\InsertOnDuplicateKey;
 class Comment extends Model
 {
     use AdditionalMethods;
-    use InsertOnDuplicateKey;
 
     protected $fillable = [
         'user_id',
