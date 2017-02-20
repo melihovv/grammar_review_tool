@@ -88,7 +88,36 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->get(route('grammars.show', $grammar->id));
 
         $this->assertResponseOk();
-        $this->assertViewHas('grammar');
+        $this->assertViewHas('grammar', 'lastVersion');
+    }
+
+    public function testShowOutdatedVersion()
+    {
+        $user = factory(User::class)->create();
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $this
+            ->actingAs($user)
+            ->get(route('grammars.show', $parent->id));
+
+        $this->assertResponseOk();
+        $this->assertViewHas(['grammar', 'lastVersion']);
+
+        $this->see('You are looking not the');
+        $this->see('latest');
+        $this->see('version of grammar');
     }
 
     public function testCreate()
