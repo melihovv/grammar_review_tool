@@ -192,6 +192,8 @@ class GrammarService
      * @param int   $j
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function backtrackDiff($lcs, $linesA, $linesB, $i, $j)
     {
