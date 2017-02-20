@@ -49,15 +49,16 @@ class User extends Authenticatable
     public function availableGrammars()
     {
         if ($this->is_admin) {
-            return Grammar::query();
+            return Grammar::allLeaves();
         }
 
-        return Grammar::whereHas('rights', function ($q) {
-            $q
-                ->where('view', true)
-                ->orWhere('comment', true)
-                ->orWhere('edit', true);
-        })
+        return Grammar::allLeaves()
+            ->whereHas('rights', function ($q) {
+                $q
+                    ->where('view', true)
+                    ->orWhere('comment', true)
+                    ->orWhere('edit', true);
+            })
             ->orWhere('public_view', true)
             ->orWhere('user_id', $this->id);
     }
@@ -100,7 +101,7 @@ class User extends Authenticatable
 
     /**
      * @param string|array $right
-     * @param Grammar      $grammar
+     * @param Grammar $grammar
      *
      * @return bool
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
