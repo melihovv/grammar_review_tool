@@ -55,6 +55,13 @@ class GrammarsController extends ApiController
         return $this->response->noContent();
     }
 
+    /**
+     * @param Grammar $grammar
+     *
+     * @return \Dingo\Api\Http\Response
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     */
     public function allVersions(Grammar $grammar)
     {
         $root = $grammar->getRoot();
