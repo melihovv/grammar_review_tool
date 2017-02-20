@@ -78,7 +78,8 @@ HERE
         'depth' => null,
         'updater_id' => $faker->boolean() ? function () {
             return factory(User::class)->create()->id;
-        } : null,
+        }
+    : null,
     ];
 });
 

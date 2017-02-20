@@ -9,11 +9,13 @@ trait AdditionalMethods
         return static::orderBy('id', 'desc')->first();
     }
 
-    public function getCreatedAtAgoAttribute() {
+    public function getCreatedAtAgoAttribute()
+    {
         return $this->created_at->diffForHumans();
     }
 
-    public function getUpdatedAtAgoAttribute() {
+    public function getUpdatedAtAgoAttribute()
+    {
         return $this->updated_at->diffForHumans();
     }
 }

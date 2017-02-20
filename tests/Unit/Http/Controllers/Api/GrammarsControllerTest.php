@@ -45,7 +45,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
     /**
      * @dataProvider storeProvider
      *
-     * @param array $payload
+     * @param array    $payload
      * @param callable $assertCb
      */
     public function testStore(array $payload, callable $assertCb)
