@@ -250,6 +250,40 @@ class GrammarsControllerTest extends BrowserKitTestCase
         ];
     }
 
+    public function testUpdateOutdatedGrammar()
+    {
+        $user = factory(User::class, 'admin')->create();
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content1',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content2',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $parent), [
+                'content' => 'new content',
+                'name' => 'new name',
+                'allow_to_comment' => true,
+                'public_view' => false,
+                'user_id' => 100500,
+            ]);
+
+        $this->assertResponseStatus(403);
+        $this->seeInDatabase('grammars', [
+            'id' => $parent->id,
+            'content' => 'content1',
+        ]);
+    }
+
     /**
      * @dataProvider updateWithCommentsProvider
      */

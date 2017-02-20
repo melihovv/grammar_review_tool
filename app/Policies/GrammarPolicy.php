@@ -15,7 +15,9 @@ class GrammarPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->is_admin && $ability !== 'manageRights') {
+        if ($user->is_admin
+            && !in_array($ability, ['manageRights', 'update'])
+        ) {
             return true;
         }
     }
@@ -46,7 +48,12 @@ class GrammarPolicy
 
     public function update(User $user, Grammar $grammar)
     {
-        return $user->isGrammarOwner($grammar)
+        if (!$grammar->isLeaf()) {
+            return false;
+        }
+
+        return $user->is_admin
+            || $user->isGrammarOwner($grammar)
             || $user->hasRight('edit', $grammar);
     }
 }
