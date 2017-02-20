@@ -12,14 +12,18 @@ class CreateGrammarsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->mediumText('content');
-            $table->boolean('public_view');
+            $table->boolean('public_view')->index();
             $table->boolean('allow_to_comment')->default(true);
+
+            $table->integer('parent_id')->nullable()->index();
+            $table->integer('lft')->nullable()->index();
+            $table->integer('rgt')->nullable()->index();
+            $table->integer('depth')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->index('public_view');
         });
     }
 

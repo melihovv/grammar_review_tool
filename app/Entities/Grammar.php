@@ -2,11 +2,11 @@
 
 namespace App\Entities;
 
-use Illuminate\Database\Eloquent\Model;
+use Baum\Node;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Grammar extends Model
+class Grammar extends Node
 {
     use AdditionalMethods;
 
@@ -22,7 +22,25 @@ class Grammar extends Model
         'user_id' => 'integer',
         'public_view' => 'boolean',
         'allow_to_comment' => 'boolean',
+        'parent_id' => 'integer',
+        'lft' => 'integer',
+        'rgt' => 'integer',
+        'depth' => 'integer',
     ];
+
+     protected $guarded = [
+         'id',
+         'parent_id',
+         'lft',
+         'rgt',
+         'depth',
+     ];
+
+     protected $scoped = [
+         'user_id',
+     ];
+
+     protected $orderColumn = 'created_at';
 
     /**
      * @return BelongsTo

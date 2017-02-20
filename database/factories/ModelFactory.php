@@ -72,6 +72,10 @@ HERE
         ,
         'public_view' => $faker->boolean(),
         'allow_to_comment' => $faker->boolean(),
+        'parent_id' => null,
+        'lft' => null,
+        'rgt' => null,
+        'depth' => null,
     ];
 });
 
