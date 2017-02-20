@@ -27,7 +27,7 @@ class BaseRequest extends Request
     {
         return array_merge(parent::sanitizers(), [
             'name' => 'trim',
-            'content' => 'trim',
+            'content' => 'trim|remove_cr',
         ]);
     }
 }

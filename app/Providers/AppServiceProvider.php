@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use Fadion\Sanitizer\Sanitizer;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        Sanitizer::register('remove_cr', function ($value) {
+            return str_replace("\r", '', $value);
+        });
     }
 
     public function register()
