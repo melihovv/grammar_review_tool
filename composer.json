@@ -17,7 +17,8 @@
     "kris/laravel-form-builder": "^1.11",
     "anhskohbo/no-captcha": "^2.2",
     "laravelcollective/html": "5.*",
-    "yadakhov/insert-on-duplicate-key": "dev-master"
+    "yadakhov/insert-on-duplicate-key": "dev-master",
+    "gazsp/baum": "^1.1"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
