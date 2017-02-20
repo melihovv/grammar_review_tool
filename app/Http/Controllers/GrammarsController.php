@@ -25,7 +25,7 @@ class GrammarsController extends Controller
             ->availableGrammars()
             ->with('owner')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(10, ['id', 'name', 'user_id']);
 
         return view('grammars.index', compact('grammars'));
     }
