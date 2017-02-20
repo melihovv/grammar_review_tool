@@ -30,6 +30,54 @@ class GrammarsControllerTest extends BrowserKitTestCase
         $this->assertInstanceOf(LengthAwarePaginator::class, $grammars);
     }
 
+    /**
+     * @dataProvider indexWithVersionsProvider
+     */
+    public function testIndexWithVersions(callable $setupCb)
+    {
+        $user = $setupCb();
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'name',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $this
+            ->actingAs($user)
+            ->get(route('grammars.index'));
+
+        $this->assertResponseOk();
+        $this->assertViewHas('grammars');
+
+        $grammars = $this->response->original->getData()['grammars'];
+        $this->assertInstanceOf(LengthAwarePaginator::class, $grammars);
+        $this->assertEquals(1, $grammars->total());
+    }
+
+    public function indexWithVersionsProvider()
+    {
+        return [
+            'regular user' => [
+                function () {
+                    return factory(User::class)->create();
+                },
+            ],
+            'admin' => [
+                function () {
+                    return factory(User::class, 'admin')->create();
+                },
+            ],
+        ];
+    }
+
     public function testShow()
     {
         $user = factory(User::class)->create();

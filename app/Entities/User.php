@@ -53,14 +53,16 @@ class User extends Authenticatable
         }
 
         return Grammar::allLeaves()
-            ->whereHas('rights', function ($q) {
-                $q
-                    ->where('view', true)
-                    ->orWhere('comment', true)
-                    ->orWhere('edit', true);
-            })
-            ->orWhere('public_view', true)
-            ->orWhere('user_id', $this->id);
+            ->where(function ($q) {
+                $q->whereHas('rights', function ($q) {
+                    $q
+                        ->where('view', true)
+                        ->orWhere('comment', true)
+                        ->orWhere('edit', true);
+                })
+                    ->orWhere('public_view', true)
+                    ->orWhere('user_id', $this->id);
+            });
     }
 
     /**

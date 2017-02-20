@@ -40,8 +40,6 @@ class Grammar extends Node
          'user_id',
      ];
 
-     protected $orderColumn = 'created_at';
-
     /**
      * @return BelongsTo
      */
