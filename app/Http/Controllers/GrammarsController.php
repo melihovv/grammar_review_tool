@@ -32,7 +32,9 @@ class GrammarsController extends Controller
 
     public function show(Grammar $grammar)
     {
-        $lastVersion = !$grammar->isLeaf() ? $grammar->leaves()->first() : null;
+        $lastVersion = !$grammar->isLeaf()
+            ? $grammar->leaves()->select(['id'])->first()
+            : null;
 
         return view('grammars.show', compact('grammar', 'lastVersion'));
     }
@@ -80,5 +82,13 @@ class GrammarsController extends Controller
         $service->update($grammar, $request);
 
         return redirect()->route('grammars.show', $grammar);
+    }
+
+    public function history(Grammar $grammar)
+    {
+        $latestVersion = $grammar->leaves()->select(['id'])->first()
+            ?: $grammar;
+
+        return view('grammars.history', compact('grammar', 'latestVersion'));
     }
 }

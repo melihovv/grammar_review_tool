@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Grammar;
 use App\Http\Requests\Grammar\GrammarStoreRequest;
+use App\Http\Transformers\DiffTransformer;
 use App\Http\Transformers\GrammarTransformer;
+use App\Services\GrammarService;
 
 class GrammarsController extends ApiController
 {
@@ -51,5 +53,34 @@ class GrammarsController extends ApiController
         $grammar->delete();
 
         return $this->response->noContent();
+    }
+
+    public function allVersions(Grammar $grammar)
+    {
+        $root = $grammar->getRoot();
+        $allVersions = $root->descendantsAndSelf()->exclude('content')->get();
+        $allVersions = $allVersions->reverse();
+
+        return $this->response->collection(
+            $allVersions,
+            new GrammarTransformer(),
+            [],
+            function ($resource, $fractal) {
+                // TODO updater instead of owner.
+                $fractal->parseIncludes(['owner']);
+            }
+        );
+    }
+
+    public function diff(Grammar $grammar, GrammarService $service)
+    {
+        $diff = $service->diff($grammar);
+
+        return $this->response->item(
+            (object)[
+                'lines' => $diff,
+            ],
+            new DiffTransformer()
+        );
     }
 }

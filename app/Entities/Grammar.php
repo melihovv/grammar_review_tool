@@ -10,6 +10,21 @@ class Grammar extends Node
 {
     use AdditionalMethods;
 
+    protected $columns = [
+        'id',
+        'user_id',
+        'name',
+        'content',
+        'public_view',
+        'allow_to_comment',
+        'parent_id',
+        'lft',
+        'rgt',
+        'depth',
+        'created_at',
+        'updated_at',
+    ];
+
     protected $fillable = [
         'user_id',
         'name',
@@ -28,17 +43,22 @@ class Grammar extends Node
         'depth' => 'integer',
     ];
 
-     protected $guarded = [
-         'id',
-         'parent_id',
-         'lft',
-         'rgt',
-         'depth',
-     ];
+    protected $guarded = [
+        'id',
+        'parent_id',
+        'lft',
+        'rgt',
+        'depth',
+    ];
 
-     protected $scoped = [
-         'user_id',
-     ];
+    protected $scoped = [
+        'user_id',
+    ];
+
+    public function scopeExclude($query, $columns = [])
+    {
+        return $query->select(array_diff($this->columns, (array)$columns));
+    }
 
     /**
      * @return BelongsTo

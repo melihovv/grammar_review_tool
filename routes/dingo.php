@@ -16,6 +16,16 @@ $api->version('v1', [
             'only' => ['index', 'show'],
         ]);
 
+        $api->get(
+            '/grammars/{grammar}/diff',
+            'GrammarsController@diff'
+        )->name('grammars.diff');
+
+        $api->get(
+            '/grammars/{grammar}/all-versions',
+            'GrammarsController@allVersions'
+        )->name('grammars.all-versions');
+
         $api->resource('grammars', 'GrammarsController', [
             'except' => ['create', 'edit', 'update'],
         ]);

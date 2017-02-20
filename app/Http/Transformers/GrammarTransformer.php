@@ -21,6 +21,8 @@ class GrammarTransformer extends Transformer
             e($model->content),
             $model->public_view,
             $model->allow_to_comment,
+            $model->created_at->format('I:h') . ' '
+            . $model->created_at->toFormattedDateString(),
         ]);
     }
 
@@ -33,6 +35,7 @@ class GrammarTransformer extends Transformer
             'content',
             'public_view',
             'allow_to_comment',
+            'created_at',
         ];
     }
 

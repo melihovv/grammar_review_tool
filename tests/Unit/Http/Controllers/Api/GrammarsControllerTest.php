@@ -45,7 +45,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
     /**
      * @dataProvider storeProvider
      *
-     * @param array    $payload
+     * @param array $payload
      * @param callable $assertCb
      */
     public function testStore(array $payload, callable $assertCb)
@@ -153,22 +153,30 @@ class GrammarsControllerTest extends BrowserKitTestCase
     public function showSuccessProvider()
     {
         return [
-            'user is admin' => [function ($user, $grammar) {
-                $user->update(['is_admin' => true]);
-            }],
-            'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['user_id' => $user->id]);
-            }],
-            'grammar is public' => [function ($user, $grammar) {
-                $grammar->update(['public_view' => true]);
-            }],
-            'user has right to view grammar' => [function ($user, $grammar) {
-                factory(Right::class)->create([
-                    'user_id' => $user->id,
-                    'grammar_id' => $grammar->id,
-                    'view' => true,
-                ]);
-            }],
+            'user is admin' => [
+                function ($user, $grammar) {
+                    $user->update(['is_admin' => true]);
+                },
+            ],
+            'user is grammar owner' => [
+                function ($user, $grammar) {
+                    $grammar->update(['user_id' => $user->id]);
+                },
+            ],
+            'grammar is public' => [
+                function ($user, $grammar) {
+                    $grammar->update(['public_view' => true]);
+                },
+            ],
+            'user has right to view grammar' => [
+                function ($user, $grammar) {
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view' => true,
+                    ]);
+                },
+            ],
         ];
     }
 
@@ -219,12 +227,16 @@ class GrammarsControllerTest extends BrowserKitTestCase
     public function destroyProvider()
     {
         return [
-            'user is admin' => [function ($user, $grammar) {
-                $user->update(['is_admin' => true]);
-            }],
-            'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['user_id' => $user->id]);
-            }],
+            'user is admin' => [
+                function ($user, $grammar) {
+                    $user->update(['is_admin' => true]);
+                },
+            ],
+            'user is grammar owner' => [
+                function ($user, $grammar) {
+                    $grammar->update(['user_id' => $user->id]);
+                },
+            ],
         ];
     }
 
@@ -241,5 +253,80 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->delete($route, [], $this->headers('v1', $user));
 
         $this->assertResponseStatus(403);
+    }
+
+    public function testAllVersions()
+    {
+        $user = factory(User::class)->create();
+
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'parent',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'child',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.all-versions', $child);
+
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
+
+        $this->seeJsonStructure([
+            'data' => [
+                '*' => array_merge(
+                    GrammarTransformer::attrs(),
+                    [
+                        'owner' => ['data' => UserTransformer::attrs()],
+                    ]
+                ),
+            ],
+        ]);
+        $this->seeJson([
+            'name' => 'parent',
+        ]);
+        $this->seeJson([
+            'name' => 'child',
+        ]);
+    }
+
+    public function testDiff()
+    {
+        $user = factory(User::class)->create();
+
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'parent',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'child',
+            'content' => 'content2',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.diff', $child);
+
+        $this
+            ->actingAsApiUser($user)
+            ->get($route, $this->headers('v1', $user));
+
+        $this->seeJsonStructure([
+            'data' => [
+                'lines',
+            ],
+        ]);
     }
 }

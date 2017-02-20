@@ -1,6 +1,9 @@
 <div class="row bm10">
     <div class="col-md-12">
         <div class="pull-right">
+            <a href="{{ route('grammars.history', $grammar->id) }}"
+               class="btn btn-primary">History</a>
+
             @can('manageRights', $grammar)
                 <a href="#" class="btn btn-primary" data-toggle="modal"
                    data-target="#manage-grammar-rights-modal">Access</a>

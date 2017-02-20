@@ -16,5 +16,7 @@ Route::group(['middleware' => ['auth', 'email.confirm']], function () {
         return redirect()->route('grammars.index');
     });
 
+    Route::get('grammars/{grammar}/history', 'GrammarsController@history')
+        ->name('grammars.history');
     Route::resource('grammars', 'GrammarsController');
 });
