@@ -16,7 +16,12 @@ class GrammarPolicy
     public function before(User $user, $ability)
     {
         if ($user->is_admin
-            && !in_array($ability, ['manageRights', 'update'])
+            && !in_array($ability, [
+                'manageRights',
+                'update',
+                'delete',
+                'manageRights',
+            ], true)
         ) {
             return true;
         }
@@ -24,6 +29,10 @@ class GrammarPolicy
 
     public function delete(User $user, Grammar $grammar)
     {
+        if (!$grammar->isLeaf()) {
+            return false;
+        }
+
         return $user->isGrammarOwner($grammar);
     }
 
@@ -43,6 +52,10 @@ class GrammarPolicy
 
     public function manageRights(User $user, Grammar $grammar)
     {
+        if (!$grammar->isLeaf()) {
+            return false;
+        }
+
         return $user->isGrammarOwner($grammar);
     }
 
