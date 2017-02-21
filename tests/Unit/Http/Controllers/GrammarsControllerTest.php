@@ -654,16 +654,86 @@ NOW;
         ];
     }
 
-    public function testHistory()
+    /**
+     * @dataProvider historyProvider
+     */
+    public function testHistory(callable $setupCb, callable $assertCb)
     {
-        $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create();
+        list($user, $grammar) = $setupCb();
 
         $this
             ->actingAs($user)
             ->get(route('grammars.history', $grammar));
 
-        $this->assertResponseOk();
-        $this->assertViewHas(['grammar', 'latestVersion']);
+        $assertCb($this);
+    }
+
+    public function historyProvider()
+    {
+        return [
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'public_view' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                function ($testcase) {
+                    $testcase->assertResponseOk();
+                    $testcase->assertViewHas(['grammar', 'latestVersion']);
+                },
+            ],
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'user_id' => $user->id,
+                        'public_view' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                function ($testcase) {
+                    $testcase->assertResponseOk();
+                    $testcase->assertViewHas(['grammar', 'latestVersion']);
+                },
+            ],
+            'user has right to view grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'public_view' => false,
+                    ]);
+                    factory(Right::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'user_id' => $user->id,
+                        'view' => true,
+                        'edit' => false,
+                        'comment' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                function ($testcase) {
+                    $testcase->assertResponseOk();
+                    $testcase->assertViewHas(['grammar', 'latestVersion']);
+                },
+            ],
+            'user has not right to view grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'public_view' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                function ($testcase) {
+                    $testcase->assertResponseStatus(403);
+                },
+            ],
+        ];
     }
 }

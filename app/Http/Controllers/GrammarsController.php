@@ -15,7 +15,7 @@ class GrammarsController extends Controller
     public function __construct()
     {
         $this->middleware('can:delete,grammar', ['only' => ['destroy']]);
-        $this->middleware('can:view,grammar', ['only' => ['show']]);
+        $this->middleware('can:view,grammar', ['only' => ['show', 'history']]);
         $this->middleware('can:update,grammar', ['only' => ['edit', 'update']]);
     }
 
