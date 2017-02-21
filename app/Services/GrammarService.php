@@ -47,6 +47,7 @@ class GrammarService
             $newGrammar = Grammar::create(array_merge($request->all(), [
                 'updater_id' => Auth::user()->id,
             ]));
+            $newGrammar->makeChildOf($grammar);
             $this->updateComments($grammar, $newGrammar);
 
             DB::commit();
