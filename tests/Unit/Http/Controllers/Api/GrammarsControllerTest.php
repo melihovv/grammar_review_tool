@@ -240,6 +240,33 @@ class GrammarsControllerTest extends BrowserKitTestCase
         ];
     }
 
+    public function testDestroyOutdated()
+    {
+        $user = factory(User::class)->create();
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'parent',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'child',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.destroy', $parent->id);
+
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
+
+        $this->assertResponseStatus(403);
+    }
+
     public function testDestroyUnauthorizedNotOwner()
     {
         $user = factory(User::class)->create();

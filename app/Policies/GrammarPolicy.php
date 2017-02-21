@@ -20,7 +20,6 @@ class GrammarPolicy
                 'manageRights',
                 'update',
                 'delete',
-                'manageRights',
             ], true)
         ) {
             return true;
@@ -33,7 +32,8 @@ class GrammarPolicy
             return false;
         }
 
-        return $user->isGrammarOwner($grammar);
+        return $user->is_admin
+            || $user->isGrammarOwner($grammar);
     }
 
     public function view(User $user, Grammar $grammar)
@@ -56,7 +56,8 @@ class GrammarPolicy
             return false;
         }
 
-        return $user->isGrammarOwner($grammar);
+        return $user->is_admin
+            || $user->isGrammarOwner($grammar);
     }
 
     public function update(User $user, Grammar $grammar)

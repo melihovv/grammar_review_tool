@@ -17,10 +17,12 @@ class RightsControllerTest extends BrowserKitTestCase
     use DatabaseMigrations;
     use ApiHelpers;
 
-    public function testIndex()
+    /**
+     * @dataProvider indexProvider
+     */
+    public function testIndex(callable $setupCb)
     {
-        $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        list($user, $grammar) = $setupCb();
         factory(Right::class, 10)->create([
             'grammar_id' => $grammar->id,
         ]);
@@ -44,11 +46,36 @@ class RightsControllerTest extends BrowserKitTestCase
         ]);
     }
 
-    public function testStoreOneRight()
+    public function indexProvider()
     {
-        $user = factory(User::class)->create();
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)
+                        ->create(['user_id' => $user->id]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+
+                    return [$user, $grammar];
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider storeOneRightProvider
+     */
+    public function testStoreOneRight(callable $setupCb)
+    {
+        list($user, $grammar) = $setupCb();
         $user2 = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.store', [$grammar->id]);
@@ -76,12 +103,37 @@ class RightsControllerTest extends BrowserKitTestCase
         ]);
     }
 
-    public function testStoreSeveralRights()
+    public function storeOneRightProvider()
     {
-        $user = factory(User::class)->create();
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)
+                        ->create(['user_id' => $user->id]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+
+                    return [$user, $grammar];
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider storeSeveralRightsProvider
+     */
+    public function testStoreSeveralRights(callable $setupCb)
+    {
+        list($user, $grammar) = $setupCb();
         $user2 = factory(User::class)->create();
         $user3 = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.rights.store', [$grammar->id]);
@@ -117,11 +169,36 @@ class RightsControllerTest extends BrowserKitTestCase
         ]);
     }
 
-    public function testUpdate()
+    public function storeSeveralRightsProvider()
     {
-        $user = factory(User::class)->create();
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)
+                        ->create(['user_id' => $user->id]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+
+                    return [$user, $grammar];
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider updateProvider
+     */
+    public function testUpdate(callable $setupCb)
+    {
+        list($user, $grammar) = $setupCb();
         $user2 = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
         $right = factory(Right::class)->create([
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
@@ -152,10 +229,35 @@ class RightsControllerTest extends BrowserKitTestCase
         ]);
     }
 
-    public function testDestroy()
+    public function updateProvider()
     {
-        $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)
+                        ->create(['user_id' => $user->id]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+
+                    return [$user, $grammar];
+                },
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider destroyProvider
+     */
+    public function testDestroy(callable $setupCb)
+    {
+        list($user, $grammar) = $setupCb();
         $right = factory(Right::class)->create();
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -169,6 +271,59 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->notSeeInDatabase('rights', [
             'id' => $right->id,
         ]);
+    }
+
+    public function destroyProvider()
+    {
+        return [
+            'user is grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)
+                        ->create(['user_id' => $user->id]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user is admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+
+                    return [$user, $grammar];
+                },
+            ],
+        ];
+    }
+
+    public function testDestroyOutdated()
+    {
+        $user = factory(User::class)->create();
+        $parent = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'parent',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child = Grammar::create([
+            'user_id' => $user->id,
+            'name' => 'child',
+            'content' => 'content',
+            'public_view' => true,
+        ]);
+        $child->makeChildOf($parent);
+        $right = factory(Right::class)->create([
+            'grammar_id' => $parent->id,
+        ]);
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.rights.destroy', [$parent->id, $right->id]);
+
+        $this
+            ->actingAsApiUser($user)
+            ->delete($route, [], $this->headers('v1', $user));
+
+        $this->assertResponseStatus(403);
     }
 
     /**
@@ -188,43 +343,17 @@ class RightsControllerTest extends BrowserKitTestCase
     public function unauthorizedProvider()
     {
         return [
-            'store: user is admin' => [
-                function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
-                    $route = app(UrlGenerator::class)->version('v1')
-                        ->route('grammars.rights.store', [$grammar->id]);
-                    $testCase
-                        ->actingAsApiUser($user)
-                        ->post($route, [], $this->headers('v1', $user));
-                },
-            ],
             'store: user is not grammar owner' => [
                 function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.store', [$grammar->id]);
                     $testCase
                         ->actingAsApiUser($user)
                         ->post($route, [], $this->headers('v1', $user));
-                },
-            ],
-            'update: user is admin' => [
-                function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
-                    $route = app(UrlGenerator::class)->version('v1')
-                        ->route('grammars.rights.update', [$grammar, $right]);
-                    $testCase
-                        ->actingAsApiUser($user)
-                        ->put($route, [], $this->headers('v1', $user));
                 },
             ],
             'update: user is not grammar owner' => [
                 function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.update', [$grammar, $right]);
                     $testCase
@@ -232,21 +361,8 @@ class RightsControllerTest extends BrowserKitTestCase
                         ->put($route, [], $this->headers('v1', $user));
                 },
             ],
-            'destroy: user is admin' => [
-                function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
-                    $route = app(UrlGenerator::class)->version('v1')
-                        ->route('grammars.rights.destroy', [$grammar, $right]);
-                    $testCase
-                        ->actingAsApiUser($user)
-                        ->delete($route, [], $this->headers('v1', $user));
-                },
-            ],
             'destroy: user is not grammar owner' => [
                 function ($testCase, $user, $grammar, $right) {
-                    $user->update(['is_admin' => true]);
-
                     $route = app(UrlGenerator::class)->version('v1')
                         ->route('grammars.rights.destroy', [$grammar, $right]);
                     $testCase
