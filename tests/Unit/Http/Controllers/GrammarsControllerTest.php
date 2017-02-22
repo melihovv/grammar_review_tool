@@ -736,4 +736,66 @@ NOW;
             ],
         ];
     }
+
+    /**
+     * @dataProvider itInheritRightsFromLatestVersionOfGrammarProvider
+     */
+    public function testItInheritRightsFromLatestVersionOfGrammar(
+        $canParentView,
+        $canChildView,
+        $statusCode
+    ) {
+        $user = factory(User::class)->create();
+        $owner = factory(User::class)->create();
+        $parent = Grammar::create([
+            'name' => 'name',
+            'user_id' => $owner->id,
+            'content' => 'content1',
+            'public_view' => false,
+        ]);
+        $child = Grammar::create([
+            'name' => 'name',
+            'user_id' => $owner->id,
+            'content' => 'content2',
+            'public_view' => false,
+        ]);
+        $child->makeChildOf($parent);
+
+        factory(Right::class)->create([
+            'grammar_id' => $parent->id,
+            'user_id' => $user->id,
+            'view' => $canParentView,
+            'comment' => false,
+            'edit' => false,
+        ]);
+        factory(Right::class)->create([
+            'grammar_id' => $child->id,
+            'user_id' => $user->id,
+            'view' => $canChildView,
+            'comment' => false,
+            'edit' => false,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('grammars.show', $parent));
+
+        $this->assertResponseStatus($statusCode);
+    }
+
+    public function itInheritRightsFromLatestVersionOfGrammarProvider()
+    {
+        return [
+            [
+                false,
+                true,
+                200,
+            ],
+            [
+                false,
+                false,
+                403,
+            ],
+        ];
+    }
 }

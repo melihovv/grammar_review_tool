@@ -38,6 +38,10 @@ class GrammarPolicy
 
     public function view(User $user, Grammar $grammar)
     {
+        if (!$grammar->isLeaf()) {
+            return $user->can('view', $grammar->leaves()->first());
+        }
+
         return $grammar->public_view
             || $user->isGrammarOwner($grammar)
             || $user->hasRight(['view', 'comment', 'edit'], $grammar);
@@ -45,6 +49,10 @@ class GrammarPolicy
 
     public function comment(User $user, Grammar $grammar)
     {
+        if (!$grammar->isLeaf()) {
+            return $user->can('comment', $grammar->leaves()->first());
+        }
+
         return $user->isGrammarOwner($grammar)
             || ($grammar->allow_to_comment
                 && $user->hasRight(['comment', 'edit'], $grammar));
