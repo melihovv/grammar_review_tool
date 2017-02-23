@@ -16,10 +16,11 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {Object} owner
    * @param {Array} comments
    * @param {AccessManager} accessManager
+   * @param user
    * @returns {Tree2HtmlVisitor}
    * @constructor
    */
-  constructor(tokens, grammar, owner, comments, accessManager) {
+  constructor(tokens, grammar, owner, comments, accessManager, user) {
     super()
 
     this.tokens = tokens
@@ -27,6 +28,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this.owner = owner
     this.comments = comments
     this.accessManager = accessManager
+    this.user = user
     this.html = ''
     this._buffer = ''
     this._newLineRegex = /\r\n|\n|\r/
@@ -52,7 +54,6 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
     let number = 1
     const lines = this._buffer.split(this._newLineRegex)
-    const canUserComment = this.accessManager.canUserComment(Laravel.user)
 
     for (const line of lines) {
       this.html += `
@@ -60,34 +61,14 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
   <td class="grammar-view__row-number">${number}</td>
   <td class="grammar-view__code">`
 
-      if (canUserComment) {
+      if (this.accessManager.canUserComment(this.user)) {
         this.html += `<a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
                          href="#">+</a>`
       }
 
       this.html += `${line}</td></tr>`
 
-      if (this._isAnyCommentOnLine(number)) {
-        this.html += '<tr><td class="grammar-view__line-comments" colspan="2">'
-
-        for (const comment of this._allCommentsOnLine(number)) {
-          const updateOrDelete = this.accessManager
-            .canUserUpdateOrDeleteComment(Laravel.user, comment)
-
-          this.html += common.commentTemplate(
-            comment.user.name,
-            comment.content,
-            comment.id,
-            updateOrDelete
-          )
-        }
-
-        if (canUserComment) {
-          this.html += `${common.addCommentToRowButton}`
-        }
-
-        this.html += `</td></tr>`
-      }
+      this._outputRowComments(number)
 
       ++number
     }
@@ -111,9 +92,17 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    * @param {LeftSideContext} ctx
    */
   visitLeftSide(ctx) {
-    const column = ctx.children[0].getSymbol().column
-    this._buffer += `<span class="grammar-view__ls-nonterminal" data-column="${column}">`
+    const symbol = ctx.children[0].getSymbol()
+    const column = `data-column="${symbol.column}">`
+
+    this._buffer += '<div class="grammar-view__symbol-wrapper">'
+    this._buffer += `<span class="grammar-view__ls-nonterminal" ${column}`
+
     this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
+
+    this._outputSymbolComments(symbol.line, symbol.column)
+
+    this._buffer += '</div>'
 
     if (ctx.children.length > 1) {
       this.visitParam(ctx.param())
@@ -166,8 +155,8 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     fromDirective = false,
   } = {}) {
     const child = ctx.children[0]
-    const column = child.getSymbol().column
-    const columnAttr = `data-column="${column}"`
+    const symbol = child.getSymbol()
+    const column = `data-column="${symbol.column}"`
 
     if (fromParam) {
       this._buffer += '<span class="grammar-view__param">'
@@ -175,13 +164,19 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     } else if (fromRightSide) {
       const text = child.getText()
 
+      this._buffer += '<div class="grammar-view__symbol-wrapper">'
+
       if (text[0] === text[0].toUpperCase()) { // Terminal.
-        this._buffer += `<span class="grammar-view__terminal" ${columnAttr}>`
+        this._buffer += `<span class="grammar-view__terminal" ${column}>`
       } else { // Nonterminal.
-        this._buffer += `<span class="grammar-view__rs-nonterminal" ${columnAttr}>`
+        this._buffer += `<span class="grammar-view__rs-nonterminal" ${column}>`
       }
 
       this.visitTerminal(child, {closeSpan: true})
+
+      this._outputSymbolComments(symbol.line, symbol.column)
+
+      this._buffer += '</div>'
     } else if (fromDirective) {
       this._buffer += '<span class="grammar-view__symbol">'
       this.visitTerminal(child, {closeSpan: true})
@@ -291,27 +286,121 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
   }
 
   /**
-   * Checks if there are any comments on passed line.
-   * @param row
-   * @param column
+   * Checks if there are any comments on passed line and column.
+   * @param {int} row
+   * @param {int} column
    * @returns {boolean}
+   * @private
    */
-  _isAnyCommentOnLine(row, column = -1) {
+  _isAnySymbolCommentsOnLine(row, column) {
     return this.comments.some(comment => {
       return comment.row === row && comment.column === column
     })
   }
 
   /**
-   * Returns all comments on passed line.
-   * @param row
-   * @param column
+   * Returns all symbol comments on passed line and column.
+   * @param {int} row
+   * @param {int} column
    * @returns {Array}
+   * @private
    */
-  _allCommentsOnLine(row, column = -1) {
+  _allSymbolCommentsOn(row, column) {
     return this.comments.filter(comment => {
       return comment.row === row && comment.column === column
     })
+  }
+
+  /**
+   * Checks if there are any row comments on passed line.
+   * @param {int} row
+   * @returns {boolean}
+   * @private
+   */
+  _isAnyRowCommentsOnLine(row) {
+    return this.comments.some(comment => {
+      return comment.row === row && comment.column === -1
+    })
+  }
+
+  /**
+   * Returns all row comments on passed line.
+   * @param {int} row
+   * @returns {Array}
+   * @private
+   */
+  _allRowCommentsOn(row) {
+    return this.comments.filter(comment => {
+      return comment.row === row && comment.column === -1
+    })
+  }
+
+  /**
+   * Outputs all symbol comments.
+   * @param {int} row
+   * @param {int} column
+   * @private
+   */
+  _outputSymbolComments(row, column) {
+    if (this._isAnySymbolCommentsOnLine(row, column)) {
+      const comments = this._allSymbolCommentsOn(row, column)
+
+      this._buffer += `<span class="grammar-view__amount-of-comments">${comments.length}</span>`
+      this._buffer += '<div class="grammar-view__symbol-comments">'
+
+      this._buffer += this._commentsTemplate(comments)
+
+      this._buffer += '</div>'
+    }
+  }
+
+  /**
+   * Outputs all symbol comments.
+   * @param {int} row
+   * @private
+   */
+  _outputRowComments(row) {
+    if (this._isAnyRowCommentsOnLine(row)) {
+      this.html += '<tr><td class="grammar-view__line-comments" colspan="2">'
+
+      const comments = this._allRowCommentsOn(row)
+      this.html += this._commentsTemplate(comments)
+
+      this.html += `</td></tr>`
+    }
+  }
+
+  /**
+   * Comments template.
+   * @param {Array} comments
+   * @private
+   */
+  _commentsTemplate(comments) {
+    let buffer = ''
+
+    for (const comment of comments) {
+      buffer += this._commentTemplate(comment)
+    }
+
+    if (this.accessManager.canUserComment(this.user)) {
+      buffer += `${common.addCommentToRowButton}`
+    }
+
+    return buffer
+  }
+
+  /**
+   * Comment template.
+   * @param {Object} comment
+   * @private
+   */
+  _commentTemplate(comment) {
+    return common.commentTemplate(
+      comment.user.name,
+      comment.content,
+      comment.id,
+      this.accessManager.canUserUpdateOrDeleteComment(this.user, comment)
+    )
   }
 }
 

@@ -25,7 +25,8 @@ class Tree2Html {
       grammar,
       owner,
       comments,
-      accessManager
+      accessManager,
+      Laravel.user
     )
     tree2HtmlVisitor.visitFile(tree)
     return tree2HtmlVisitor.html

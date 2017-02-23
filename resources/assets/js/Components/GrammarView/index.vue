@@ -17,8 +17,7 @@
   import $ from 'jquery'
   import Parser from 'js/Parser'
   import Tree2Html from './Tree2Html'
-  import './line-comments'
-  import './symbols-comments'
+  import './comments'
 
   export default {
     props: {
@@ -182,6 +181,27 @@
       white-space normal
       word-wrap break-word
 
+    &__symbol-wrapper
+      display inline-block
+      position relative
+
+    &__symbol-comments
+      display none
+      max-height 150px
+      width 200px
+      max-width 200px
+      overflow-y auto
+      overflow-x hidden
+      position absolute
+      top 17px
+      overflow-wrap: break-word
+      word-wrap break-word
+      word-break break-all
+      white-space normal
+      border-radius 3px
+      border 1px solid #eee
+      background-color white
+
     &__comment-holder
       max-width 800px
       margin-bottom 10px
@@ -210,6 +230,22 @@
       border-radius 3px
       border 1px solid #ddd
       padding 15px 10px 10px 10px
+
+    &__amount-of-comments
+      display inline-block
+      min-width 10px
+      padding 2px 4px
+      font-size 10px
+      font-weight bold
+      line-height 1
+      color #fff
+      text-align center
+      white-space nowrap
+      vertical-align middle
+      background-color #777
+      border-radius 10px
+      position relative
+      top -10px
 
     &__textarea
       border 1px solid #ddd
@@ -277,8 +313,8 @@
         background-image linear-gradient(#eee, #ddd)
         border-color #ccc
 
-    &__edit-line-comment,
-    &__delete-line-comment
+    &__edit-comment,
+    &__delete-comment
       display inline-block
       padding 0 5px
       opacity 0.5
