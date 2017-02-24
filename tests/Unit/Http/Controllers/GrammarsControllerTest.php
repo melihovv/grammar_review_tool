@@ -115,9 +115,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
         $this->assertResponseOk();
         $this->assertViewHas(['grammar', 'lastVersion']);
 
-        $this->see('You are looking not the');
-        $this->see('latest');
-        $this->see('version of grammar');
+        $this->see('You are looking at early version of grammar. Click');
+        $this->see('here');
+        $this->see('to view the latest version.');
     }
 
     public function testCreate()
