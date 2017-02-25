@@ -65,11 +65,12 @@
           success: response => {
             this.loading = false
 
-            this.diffTemplate = ''
+            this.diffTemplate = '<pre>'
             for (const line of response.data.lines) {
               this.diffTemplate
                 += `<div class="line-${line.type}">${line.line}<br></div>`
             }
+            this.diffTemplate += '</pre>'
           },
         })
       },
