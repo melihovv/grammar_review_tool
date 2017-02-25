@@ -58,7 +58,8 @@ class User extends Authenticatable
                     $q
                         ->where('view', true)
                         ->orWhere('comment', true)
-                        ->orWhere('edit', true);
+                        ->orWhere('edit', true)
+                        ->orWhere('admin', true);
                 })
                     ->orWhere('public_view', true)
                     ->orWhere('user_id', $this->id);

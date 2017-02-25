@@ -15,6 +15,7 @@ class Right extends Model
         'view',
         'comment',
         'edit',
+        'admin',
     ];
 
     protected $casts = [
@@ -23,6 +24,7 @@ class Right extends Model
         'view' => 'boolean',
         'comment' => 'boolean',
         'edit' => 'boolean',
+        'admin' => 'boolean',
     ];
 
     /**

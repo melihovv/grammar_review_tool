@@ -19,6 +19,7 @@ class RightTransformer extends Transformer
             $model->view,
             $model->comment,
             $model->edit,
+            $model->admin,
         ]);
     }
 
@@ -31,6 +32,7 @@ class RightTransformer extends Transformer
             'view',
             'comment',
             'edit',
+            'admin',
         ];
     }
 

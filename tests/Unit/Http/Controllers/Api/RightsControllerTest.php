@@ -86,6 +86,7 @@ class RightsControllerTest extends BrowserKitTestCase
                 'view' => false,
                 'comment' => true,
                 'edit' => false,
+                'admin' => false,
                 'users' => [$user2->id],
             ], $this->headers('v1', $user));
 
@@ -100,6 +101,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => true,
             'edit' => false,
+            'admin' => false,
         ]);
     }
 
@@ -144,6 +146,7 @@ class RightsControllerTest extends BrowserKitTestCase
                 'view' => false,
                 'comment' => true,
                 'edit' => false,
+                'admin' => false,
                 'users' => [$user2->id, $user3->id],
             ], $this->headers('v1', $user));
 
@@ -159,6 +162,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => true,
             'edit' => false,
+            'admin' => false,
         ]);
         $this->seeInDatabase('rights', [
             'user_id' => $user3->id,
@@ -166,6 +170,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => true,
             'edit' => false,
+            'admin' => false,
         ]);
     }
 
@@ -189,6 +194,22 @@ class RightsControllerTest extends BrowserKitTestCase
                     return [$user, $grammar];
                 },
             ],
+            'user has right to admin grammar' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    $grammar = factory(Grammar::class)->create();
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view' => false,
+                        'comment' => false,
+                        'edit' => false,
+                        'admin' => true,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+            ],
         ];
     }
 
@@ -205,6 +226,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => true,
             'edit' => true,
+            'admin' => true,
         ]);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -217,6 +239,7 @@ class RightsControllerTest extends BrowserKitTestCase
                 'view' => false,
                 'comment' => false,
                 'edit' => false,
+                'admin' => false,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure(['data' => RightTransformer::attrs()]);
@@ -226,6 +249,7 @@ class RightsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => false,
             'edit' => false,
+            'admin' => false,
         ]);
     }
 

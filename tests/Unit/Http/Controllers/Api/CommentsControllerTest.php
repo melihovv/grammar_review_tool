@@ -70,7 +70,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                 factory(Right::class)->create([
                     'user_id' => $user->id,
                     'grammar_id' => $grammar->id,
+                    'view' => false,
                     'comment' => true,
+                    'edit' => true,
+                    'admin' => false,
                 ]);
             }],
             'user has right to edit grammar' => [function ($user, $grammar) {
@@ -78,8 +81,21 @@ class CommentsControllerTest extends BrowserKitTestCase
                 factory(Right::class)->create([
                     'user_id' => $user->id,
                     'grammar_id' => $grammar->id,
+                    'view' => false,
                     'comment' => false,
                     'edit' => true,
+                    'admin' => false,
+                ]);
+            }],
+            'user has right to admin grammar' => [function ($user, $grammar) {
+                $grammar->update(['allow_to_comment' => true]);
+                factory(Right::class)->create([
+                    'user_id' => $user->id,
+                    'grammar_id' => $grammar->id,
+                    'view' => false,
+                    'comment' => false,
+                    'edit' => false,
+                    'admin' => true,
                 ]);
             }],
         ];
@@ -141,7 +157,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => true,
+                        'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -151,8 +170,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => false,
-                        'edit' => false,
+                        'edit' => true,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -165,6 +186,7 @@ class CommentsControllerTest extends BrowserKitTestCase
                         'view' => true,
                         'comment' => false,
                         'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -327,8 +349,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => true,
                         'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -339,8 +363,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => false,
                         'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -456,7 +482,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => true,
+                        'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -497,7 +526,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => true,
+                        'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],
@@ -508,8 +540,10 @@ class CommentsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
+                        'view' => false,
                         'comment' => false,
                         'edit' => false,
+                        'admin' => false,
                     ]);
                 },
             ],

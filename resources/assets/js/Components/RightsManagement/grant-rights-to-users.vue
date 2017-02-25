@@ -29,7 +29,7 @@
     },
     data: () => {
       return {
-        rightLevels: ['view', 'comment', 'edit'],
+        rightLevels: ['view', 'comment', 'edit', 'admin'],
         rightLevel: 'view',
         users: [],
         selectedUsers: [],
@@ -55,6 +55,7 @@
             view: this.rightLevel === 'view' ? 1 : 0,
             comment: this.rightLevel === 'comment' ? 1 : 0,
             edit: this.rightLevel === 'edit' ? 1 : 0,
+            admin: this.rightLevel === 'admin' ? 1 : 0,
           },
         })
           .done(response => {

@@ -15,6 +15,7 @@ class CreateRightsTable extends Migration
             $table->boolean('view');
             $table->boolean('comment');
             $table->boolean('edit');
+            $table->boolean('admin');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
@@ -28,6 +29,7 @@ class CreateRightsTable extends Migration
             $table->index('view');
             $table->index('comment');
             $table->index('edit');
+            $table->index('admin');
         });
     }
 

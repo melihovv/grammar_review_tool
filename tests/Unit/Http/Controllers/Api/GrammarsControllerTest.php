@@ -190,6 +190,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
             'view' => false,
             'comment' => false,
             'edit' => false,
+            'admin' => false,
         ]);
 
         $route = app(UrlGenerator::class)->version('v1')

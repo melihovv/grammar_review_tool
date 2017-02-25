@@ -108,5 +108,6 @@ $factory->define(Right::class, function (Generator $faker) {
         'view' => $faker->boolean(),
         'comment' => $faker->boolean(),
         'edit' => $faker->boolean(),
+        'admin' => $faker->boolean(),
     ];
 });

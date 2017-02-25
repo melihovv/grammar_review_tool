@@ -251,6 +251,35 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     ]);
                 },
             ],
+            'user has right to admin grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    $grammar = factory(Grammar::class)->create([
+                        'allow_to_comment' => false,
+                        'public_view' => true,
+                    ]);
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'edit' => false,
+                        'admin' => true,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                function ($testcase, $user, $grammar) {
+                    $testcase->assertRedirectedToRoute('grammars.show', 2);
+                    $testcase->seeInDatabase('grammars', [
+                        'id' => 2,
+                        'user_id' => $grammar->user_id,
+                        'content' => 'new content',
+                        'name' => 'new name',
+                        'allow_to_comment' => true,
+                        'public_view' => false,
+                        'updater_id' => $user->id,
+                    ]);
+                },
+            ],
         ];
     }
 

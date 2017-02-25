@@ -26,6 +26,7 @@ class RightService
                 'view' => $rights['view'],
                 'comment' => $rights['comment'],
                 'edit' => $rights['edit'],
+                'admin' => $rights['admin'],
                 'created_at' => $now,
                 'updated_at' => $now,
             ];

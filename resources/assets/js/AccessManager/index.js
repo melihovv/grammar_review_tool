@@ -26,7 +26,7 @@ class AccessManager {
         && AccessManager.isUserCommentOwner(comment, user)
         && (
           this.isUserGrammarOwner(user)
-          || this.hasUserRightTo(['comment', 'edit'], user)
+          || this.hasUserRightTo(['comment', 'edit', 'admin'], user)
         )
       )
   }
@@ -60,7 +60,7 @@ class AccessManager {
       || this.isUserGrammarOwner(user)
       || (
         this.grammar.allow_to_comment
-        && this.hasUserRightTo(['comment', 'edit'], user)
+        && this.hasUserRightTo(['comment', 'edit', 'admin'], user)
       )
   }
 

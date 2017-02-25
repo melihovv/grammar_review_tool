@@ -35,7 +35,7 @@ class RightsController extends ApiController
         $rights = $service->create(
             $grammar,
             $request->get('users'),
-            $request->only(['view', 'comment', 'edit'])
+            $request->only(['view', 'comment', 'edit', 'admin'])
         );
 
         return $this->response->collection($rights, new RightTransformer());
