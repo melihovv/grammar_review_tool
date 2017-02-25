@@ -1,22 +1,5 @@
 <?php
 
-if (!function_exists('get_current_action')) {
-    /**
-     * Returns method name of the current route.
-     *
-     * @return string
-     */
-    function get_current_action()
-    {
-        list(, $action) = explode(
-            '@',
-            Route::getCurrentRoute()->getActionName()
-        );
-
-        return $action;
-    }
-}
-
 if (!function_exists('path_to_hmr_asset')) {
     /**
      * Returns absolute url to asset on hot module replacement server.
