@@ -32,6 +32,12 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this.html = ''
     this._buffer = ''
     this._newLineRegex = /\r\n|\n|\r/
+
+    this._searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon"></span>'
+    this._leftIcon = '<span class="glyphicon grammar-view__l-icon">L</span>'
+    this._rightIcon = '<span class="glyphicon grammar-view__r-icon">R</span>'
+    this._terminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}</div>`
+    this._nonTerminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}${this._leftIcon}${this._rightIcon}</div>`
   }
 
   /**
@@ -93,12 +99,14 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
    */
   visitLeftSide(ctx) {
     const symbol = ctx.children[0].getSymbol()
-    const column = `data-column="${symbol.column}">`
+    let attrs = `class="grammar-view__ls-nonterminal grammar-view__symbol"`
+    attrs += `data-column="${symbol.column}"`
 
     this._buffer += '<div class="grammar-view__symbol-wrapper">'
-    this._buffer += `<span class="grammar-view__ls-nonterminal" ${column}`
+    this._buffer += `<span ${attrs}>`
 
     this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
+    this._buffer += this._nonTerminalIcons
 
     this._outputSymbolComments(symbol.line, symbol.column)
 
@@ -167,18 +175,22 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
       this._buffer += '<div class="grammar-view__symbol-wrapper">'
 
       if (text[0] === text[0].toUpperCase()) { // Terminal.
-        this._buffer += `<span class="grammar-view__terminal" ${column}>`
+        const className = 'class="grammar-view__terminal grammar-view__symbol"'
+        this._buffer += `<span ${className} ${column}>`
+        this.visitTerminal(child, {closeSpan: true})
+        this._buffer += this._terminalIcons
       } else { // Nonterminal.
-        this._buffer += `<span class="grammar-view__rs-nonterminal" ${column}>`
+        const className = 'class="grammar-view__rs-nonterminal grammar-view__symbol"'
+        this._buffer += `<span ${className} ${column}>`
+        this.visitTerminal(child, {closeSpan: true})
+        this._buffer += this._nonTerminalIcons
       }
-
-      this.visitTerminal(child, {closeSpan: true})
 
       this._outputSymbolComments(symbol.line, symbol.column)
 
       this._buffer += '</div>'
     } else if (fromDirective) {
-      this._buffer += '<span class="grammar-view__symbol">'
+      this._buffer += '<span class="grammar-view__id">'
       this.visitTerminal(child, {closeSpan: true})
     }
   }
@@ -217,7 +229,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
         if (children[i].getText() === '.') {
           this._buffer += '<span class="grammar-view__punct">'
         } else {
-          this._buffer += '<span class="grammar-view__symbol">'
+          this._buffer += '<span class="grammar-view__id">'
         }
         this.visitTerminal(children[i], {closeSpan: true})
       }

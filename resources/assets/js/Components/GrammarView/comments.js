@@ -152,10 +152,10 @@ $(() => {
     let column = -1
     if ($symbolComments.length) {
       $parent = $symbolComments
-      column = $symbolComments.prev().attr('data-column')
-      if (column === undefined) {
-        column = $symbolComments.prev().prev().attr('data-column')
-      }
+      column = $symbolComments
+        .closest('.grammar-view__symbol-wrapper')
+        .children(':first')
+        .attr('data-column')
     }
 
     cancelButtonClicked({$parent, $prev})
@@ -261,7 +261,7 @@ $(() => {
     e.stopPropagation()
   })
 
-  $grammarView.on('click', '.grammar-view__terminal, .grammar-view__rs-nonterminal, .grammar-view__ls-nonterminal', e => {
+  $grammarView.on('click', '.grammar-view__symbol', e => {
     e.stopPropagation()
 
     const $this = $(e.target)
@@ -284,7 +284,7 @@ $(() => {
       commentButton.css('left', 0)
       commentButton.css('display', 'inline-block')
       commentButton.css('z-index', 2)
-      $this.after(commentButton)
+      $this.next('.grammar-view__symbol-icons').after(commentButton)
       $symbolComments = symbolWrapper.find('.grammar-view__symbol-comments')
     } else {
       $symbolComments
@@ -302,5 +302,18 @@ $(() => {
     commentButtonClicked({$parent: $symbolComments, $prev, grammarId, row, column, symbolComments: true})
 
     return false
+  })
+
+  $grammarView.on('click', '.grammar-view__search-symbol-icon', e => {
+    const symbol = $(e.target).parent().prev().text()
+    alert(`search symbol: ${symbol}`)
+  })
+  $grammarView.on('click', '.grammar-view__l-icon', e => {
+    const symbol = $(e.target).parent().prev().text()
+    alert(`l action: ${symbol}`)
+  })
+  $grammarView.on('click', '.grammar-view__r-icon', e => {
+    const symbol = $(e.target).parent().prev().text()
+    alert(`r action: ${symbol}`)
   })
 })

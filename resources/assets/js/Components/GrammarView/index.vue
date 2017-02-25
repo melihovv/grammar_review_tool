@@ -121,7 +121,7 @@
     &__ls-nonterminal,
     &__rs-nonterminal,
     &__terminal,
-    &__symbol
+    &__id
       color #183691
 
     &__ls-nonterminal,
@@ -251,6 +251,28 @@
       border-radius 10px
       position relative
       top -10px
+
+    &__symbol-icons
+      display none
+      position absolute
+      top -15px
+      left 50%
+      transform translateX(-50%)
+
+      &:hover
+        display inline-block
+
+      & span
+        padding 0 2.5px
+        cursor pointer
+
+    &__l-icon, &__r-icon
+      font-size 16px
+
+    &__ls-nonterminal:hover + &__symbol-icons,
+    &__rs-nonterminal:hover + &__symbol-icons,
+    &__terminal:hover + &__symbol-icons
+      display inline-block
 
     &__textarea
       border 1px solid #ddd
