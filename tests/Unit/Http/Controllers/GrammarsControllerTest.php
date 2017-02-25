@@ -796,6 +796,7 @@ NOW;
             'view' => $canParentView,
             'comment' => false,
             'edit' => false,
+            'admin' => false,
         ]);
         factory(Right::class)->create([
             'grammar_id' => $child->id,
@@ -803,6 +804,7 @@ NOW;
             'view' => $canChildView,
             'comment' => false,
             'edit' => false,
+            'admin' => false,
         ]);
 
         $this
