@@ -257,6 +257,10 @@ $(() => {
     return false
   })
 
+  $grammarView.on('click', '.grammar-view__symbol-comments', e => {
+    e.stopPropagation()
+  })
+
   $grammarView.on('click', '.grammar-view__terminal, .grammar-view__rs-nonterminal, .grammar-view__ls-nonterminal', e => {
     e.stopPropagation()
 
