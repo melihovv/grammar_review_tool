@@ -202,6 +202,10 @@
       border 1px solid #eee
       background-color white
 
+      & textarea
+        height 60px
+        min-height 60px
+
     &__comment-holder
       max-width 800px
       margin-bottom 10px
