@@ -187,7 +187,8 @@
 
     &__symbol-comments
       display none
-      max-height 150px
+      max-height 1500px
+      padding 5px
       width 200px
       max-width 200px
       overflow-y auto
