@@ -22,7 +22,7 @@
             </div>
         @empty
             <div class="row">
-                <div class="col-md-12">There are no grammars</div>
+                <div class="col-md-12 well tm10">You have not grammar to view. {{  link_to_route('grammars.create', 'Create') }} one?</div>
             </div>
         @endforelse
 
