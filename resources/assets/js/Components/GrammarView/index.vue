@@ -223,6 +223,7 @@
 
     &__comment-content
       padding 15px
+      white-space pre-wrap
 
     &__info
       padding 5px 10px
