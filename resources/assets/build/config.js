@@ -20,7 +20,7 @@ const productionConfig = {
   index: path.resolve(__dirname, '../../../public/index.html'),
   assetsRoot: path.resolve(__dirname, '../../../public/assets'),
   assetsSubDirectory: '',
-  assetsPublicPath: '/',
+  assetsPublicPath: '/assets/',
   sourceMap: false,
   staticDir: 'resources/assets/static',
   gzip: process.env.ENABLE_GZIP,
