@@ -256,9 +256,11 @@
     &__symbol-icons
       display none
       position absolute
-      top -15px
+      top -20px
       left 50%
       transform translateX(-50%)
+      background-color white
+      border 1px solid #ccc
 
       &:hover
         display inline-block
