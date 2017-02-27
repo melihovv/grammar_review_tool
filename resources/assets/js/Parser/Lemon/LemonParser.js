@@ -1,4 +1,4 @@
-// Generated from D:/Files/Projects/grammar_review_tool/src/parser/Lemon\LemonParser.g4 by ANTLR 4.5.3
+// Generated from /home/melihovv/Projects/edu/grammar_review_tool/resources/assets/js/Parser/Lemon/LemonParser.g4 by ANTLR 4.6
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var LemonParserListener = require('./LemonParserListener').LemonParserListener;
@@ -198,6 +198,7 @@ LemonParser.prototype.file = function() {
         _la = this._input.LA(1);
         do {
             this.state = 20;
+            this._errHandler.sync(this);
             switch(this._input.LA(1)) {
             case LemonParser.NONTERMINAL:
                 this.state = 18;
@@ -366,6 +367,7 @@ LemonParser.prototype.leftSide = function() {
         this.state = 28;
         this.match(LemonParser.NONTERMINAL);
         this.state = 30;
+        this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===LemonParser.LPAREN) {
             this.state = 29;
@@ -469,6 +471,7 @@ LemonParser.prototype.rightSide = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 40;
+        this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===LemonParser.TERMINAL || _la===LemonParser.NONTERMINAL) {
             this.state = 36; 
@@ -478,6 +481,7 @@ LemonParser.prototype.rightSide = function() {
                 this.state = 32;
                 this.symbol();
                 this.state = 34;
+                this._errHandler.sync(this);
                 _la = this._input.LA(1);
                 if(_la===LemonParser.LPAREN) {
                     this.state = 33;
@@ -493,6 +497,7 @@ LemonParser.prototype.rightSide = function() {
         this.state = 42;
         this.match(LemonParser.DOT);
         this.state = 44;
+        this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===LemonParser.LBRACKET) {
             this.state = 43;
@@ -500,6 +505,7 @@ LemonParser.prototype.rightSide = function() {
         }
 
         this.state = 47;
+        this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===LemonParser.BEGIN_CODE) {
             this.state = 46;
@@ -661,6 +667,7 @@ LemonParser.prototype.symbol = function() {
         this._errHandler.recoverInline(this);
         }
         else {
+        	this._errHandler.reportMatch(this);
             this.consume();
         }
     } catch (re) {
