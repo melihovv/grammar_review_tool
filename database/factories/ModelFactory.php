@@ -110,8 +110,7 @@ $factory->define(Right::class, function (Generator $faker) {
         'grammar_id' => function () {
             return factory(Grammar::class)->create()->id;
         },
-        'view' => $faker->boolean(),
-        'comment' => $faker->boolean(),
+        'view_comment' => $faker->boolean(),
         'edit' => $faker->boolean(),
         'admin' => $faker->boolean(),
     ];

@@ -55,8 +55,7 @@ class User extends Authenticatable
         return Grammar::where(function ($q) {
             $q->whereHas('rights', function ($q) {
                 $q
-                    ->where('view', true)
-                    ->orWhere('comment', true)
+                    ->where('view_comment', true)
                     ->orWhere('edit', true)
                     ->orWhere('admin', true);
             })

@@ -12,8 +12,7 @@ class Right extends Model
     protected $fillable = [
         'user_id',
         'grammar_id',
-        'view',
-        'comment',
+        'view_comment',
         'edit',
         'admin',
     ];
@@ -21,8 +20,7 @@ class Right extends Model
     protected $casts = [
         'user_id' => 'integer',
         'grammar_id' => 'integer',
-        'view' => 'boolean',
-        'comment' => 'boolean',
+        'view_comment' => 'boolean',
         'edit' => 'boolean',
         'admin' => 'boolean',
     ];

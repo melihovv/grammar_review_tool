@@ -24,15 +24,13 @@
     },
     data: () => {
       return {
-        rightLevels: ['view', 'comment', 'edit', 'admin'],
+        rightLevels: ['view&comment', 'edit', 'admin'],
       }
     },
     computed: {
       rightLevel: function () {
-        if (this.right.comment) {
-          return 'comment'
-        } else if (this.right.view) {
-          return 'view'
+        if (this.right.view_comment) {
+          return 'view&comment'
         } else if (this.right.edit) {
           return 'edit'
         } else if (this.right.admin) {
@@ -45,8 +43,7 @@
     methods: {
       onChange(rightLevel) {
         const data = {
-          view: rightLevel === 'view' ? 1 : 0,
-          comment: rightLevel === 'comment' ? 1 : 0,
+          view_comment: rightLevel === 'view&comment' ? 1 : 0,
           edit: rightLevel === 'edit' ? 1 : 0,
           admin: rightLevel === 'admin' ? 1 : 0,
           user_id: this.right.user.id,
@@ -73,7 +70,7 @@
 
 <style lang="styl" rel="stylesheet/stylus" scoped>
   .multiselect
-    width 110px
+    width 150px
     display inline-block
 
   .right__delete

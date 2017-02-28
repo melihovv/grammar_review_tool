@@ -83,8 +83,7 @@ class RightsControllerTest extends BrowserKitTestCase
         $this
             ->actingAsApiUser($user)
             ->post($route, [
-                'view' => false,
-                'comment' => true,
+                'view_comment' => false,
                 'edit' => false,
                 'admin' => false,
                 'users' => [$user2->id],
@@ -98,8 +97,7 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => true,
+            'view_comment' => false,
             'edit' => false,
             'admin' => false,
         ]);
@@ -143,8 +141,7 @@ class RightsControllerTest extends BrowserKitTestCase
         $this
             ->actingAsApiUser($user)
             ->post($route, [
-                'view' => false,
-                'comment' => true,
+                'view_comment' => false,
                 'edit' => false,
                 'admin' => false,
                 'users' => [$user2->id, $user3->id],
@@ -159,16 +156,14 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => true,
+            'view_comment' => false,
             'edit' => false,
             'admin' => false,
         ]);
         $this->seeInDatabase('rights', [
             'user_id' => $user3->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => true,
+            'view_comment' => false,
             'edit' => false,
             'admin' => false,
         ]);
@@ -201,8 +196,7 @@ class RightsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => false,
-                        'comment' => false,
+                        'view_comment' => false,
                         'edit' => false,
                         'admin' => true,
                     ]);
@@ -223,8 +217,7 @@ class RightsControllerTest extends BrowserKitTestCase
         $right = factory(Right::class)->create([
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => true,
+            'view_comment' => false,
             'edit' => true,
             'admin' => true,
         ]);
@@ -236,8 +229,7 @@ class RightsControllerTest extends BrowserKitTestCase
             ->actingAsApiUser($user)
             ->put($route, [
                 'user_id' => $user2->id,
-                'view' => false,
-                'comment' => false,
+                'view_comment' => false,
                 'edit' => false,
                 'admin' => false,
             ], $this->headers('v1', $user));
@@ -246,8 +238,7 @@ class RightsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('rights', [
             'user_id' => $user2->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => false,
+            'view_comment' => false,
             'edit' => false,
             'admin' => false,
         ]);

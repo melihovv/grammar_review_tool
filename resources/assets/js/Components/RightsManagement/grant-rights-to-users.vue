@@ -29,8 +29,8 @@
     },
     data: () => {
       return {
-        rightLevels: ['view', 'comment', 'edit', 'admin'],
-        rightLevel: 'view',
+        rightLevels: ['view&comment', 'edit', 'admin'],
+        rightLevel: 'view&comment',
         users: [],
         selectedUsers: [],
         isLoading: false,
@@ -52,8 +52,7 @@
           url: `${Laravel.absPath}/api/grammars/${this.grammarId}/rights`,
           data: {
             users,
-            view: this.rightLevel === 'view' ? 1 : 0,
-            comment: this.rightLevel === 'comment' ? 1 : 0,
+            view_comment: this.rightLevel === 'view&comment' ? 1 : 0,
             edit: this.rightLevel === 'edit' ? 1 : 0,
             admin: this.rightLevel === 'admin' ? 1 : 0,
           },
@@ -95,10 +94,12 @@
 
 <style lang="styl" rel="stylesheet/stylus" scoped>
   .rightLevels
-    width 110px
+    width 25%
     display inline-block
+    box-sizing border-box
 
   .users
-    width 65%
+    width 60%
     display inline-block
+    box-sizing border-box
 </style>

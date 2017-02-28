@@ -27,7 +27,7 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: false,
+            view_comment: false,
           },
         ]),
         user: {id: 1},
@@ -39,7 +39,7 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: true,
+            view_comment: true,
             edit: false,
           },
         ]),
@@ -55,7 +55,7 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: false,
+            view_comment: false,
           },
         ]),
         user: {id: 1},
@@ -93,7 +93,7 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: false,
+            view_comment: false,
           },
         ]),
         user: {id: 1},
@@ -104,7 +104,7 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: true,
+            view_comment: true,
           },
         ]),
         user: {id: 1},
@@ -147,11 +147,11 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 2,
-            comment: true,
+            view_comment: true,
           },
         ]),
         user: {id: 1},
-        ability: 'comment',
+        ability: 'view_comment',
         expected: false,
       },
       'there are rights for user, but he has not requested right': {
@@ -159,11 +159,11 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: false,
+            view_comment: false,
           },
         ]),
         user: {id: 1},
-        ability: 'comment',
+        ability: 'view_comment',
         expected: false,
       },
       'there are rights for user and he has requested right': {
@@ -171,11 +171,11 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: true,
+            view_comment: true,
           },
         ]),
         user: {id: 1},
-        ability: 'comment',
+        ability: 'view_comment',
         expected: true,
       },
       'there are rights for user and he has one of requested rights': {
@@ -183,12 +183,12 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: false,
+            view_comment: false,
             edit: true,
           },
         ]),
         user: {id: 1},
-        ability: ['comment', 'edit'],
+        ability: ['view_comment', 'edit'],
         expected: true,
       },
       'there are rights for user and he has all of requested rights': {
@@ -196,12 +196,12 @@ describe('AccessManager', () => {
           {
             grammar_id: 1,
             user_id: 1,
-            comment: true,
+            view_comment: true,
             edit: true,
           },
         ]),
         user: {id: 1},
-        ability: ['comment', 'edit'],
+        ability: ['view_comment', 'edit'],
         all: true,
         expected: true,
       },

@@ -33,13 +33,13 @@ class GrammarPolicy
     {
         return $grammar->public_view
             || $user->isGrammarOwner($grammar)
-            || $user->hasRight(['view', 'comment', 'edit', 'admin'], $grammar);
+            || $user->hasRight(['view_comment', 'edit', 'admin'], $grammar);
     }
 
     public function comment(User $user, Grammar $grammar)
     {
         return $user->isGrammarOwner($grammar)
-            || $user->hasRight(['comment', 'edit', 'admin'], $grammar);
+            || $user->hasRight(['view_comment', 'edit', 'admin'], $grammar);
     }
 
     public function manageRights(User $user, Grammar $grammar)

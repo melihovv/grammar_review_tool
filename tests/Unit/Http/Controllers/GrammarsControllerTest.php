@@ -638,9 +638,8 @@ NOW;
                     factory(Right::class)->create([
                         'grammar_id' => $grammar->id,
                         'user_id' => $user->id,
-                        'view' => true,
+                        'view_comment' => true,
                         'edit' => false,
-                        'comment' => false,
                     ]);
 
                     return [$user, $grammar];

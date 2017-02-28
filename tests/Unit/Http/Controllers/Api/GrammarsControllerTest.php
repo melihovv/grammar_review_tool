@@ -92,7 +92,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
+                        'view_comment' => true,
                     ]);
                 },
             ],
@@ -106,8 +106,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
         factory(Right::class)->create([
             'user_id' => $user->id,
             'grammar_id' => $grammar->id,
-            'view' => false,
-            'comment' => false,
+            'view_comment' => false,
             'edit' => false,
             'admin' => false,
         ]);

@@ -16,8 +16,7 @@ class UpdateRequest extends Request
                 'min:1',
                 Rule::exists('users', 'id'),
             ],
-            'view' => 'required|boolean',
-            'comment' => 'required|boolean',
+            'view_comment' => 'required|boolean',
             'edit' => 'required|boolean',
             'admin' => 'required|boolean',
         ]);

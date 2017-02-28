@@ -12,8 +12,7 @@ class CreateRightsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('grammar_id');
-            $table->boolean('view');
-            $table->boolean('comment');
+            $table->boolean('view_comment');
             $table->boolean('edit');
             $table->boolean('admin');
             $table->timestamps();
@@ -26,8 +25,7 @@ class CreateRightsTable extends Migration
 
             $table->unique(['user_id', 'grammar_id']);
 
-            $table->index('view');
-            $table->index('comment');
+            $table->index('view_comment');
             $table->index('edit');
             $table->index('admin');
         });

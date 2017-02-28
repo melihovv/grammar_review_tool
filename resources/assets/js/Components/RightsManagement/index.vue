@@ -37,7 +37,6 @@
       return {
         rights: [],
         rightLevel: null,
-        options: ['view', 'comment'],
       }
     },
     mounted() {

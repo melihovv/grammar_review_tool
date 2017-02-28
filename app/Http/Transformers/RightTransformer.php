@@ -16,8 +16,7 @@ class RightTransformer extends Transformer
             $model->id,
             $model->user_id,
             $model->grammar_id,
-            $model->view,
-            $model->comment,
+            $model->view_comment,
             $model->edit,
             $model->admin,
         ]);
@@ -29,8 +28,7 @@ class RightTransformer extends Transformer
             'id',
             'user_id',
             'grammar_id',
-            'view',
-            'comment',
+            'view_comment',
             'edit',
             'admin',
         ];

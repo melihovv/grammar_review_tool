@@ -108,10 +108,10 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => false,
+                        'view_comment' => false,
                     ]);
                 },
-                'view',
+                'view_comment',
                 false,
                 false,
             ],
@@ -120,10 +120,10 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => false,
+                        'view_comment' => false,
                     ]);
                 },
-                'view',
+                'view_comment',
                 true,
                 false,
             ],
@@ -132,10 +132,10 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
+                        'view_comment' => true,
                     ]);
                 },
-                'view',
+                'view_comment',
                 false,
                 true,
             ],
@@ -144,10 +144,10 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
+                        'view_comment' => true,
                     ]);
                 },
-                'view',
+                'view_comment',
                 true,
                 true,
             ],
@@ -156,11 +156,11 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => false,
-                        'comment' => false,
+                        'view_comment' => false,
+                        'edit' => false,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 false,
                 false,
             ],
@@ -169,11 +169,11 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => false,
-                        'comment' => false,
+                        'view_comment' => false,
+                        'edit' => false,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 true,
                 false,
             ],
@@ -182,11 +182,11 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
-                        'comment' => false,
+                        'view_comment' => true,
+                        'edit' => false,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 false,
                 true,
             ],
@@ -195,11 +195,11 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
-                        'comment' => false,
+                        'view_comment' => true,
+                        'edit' => false,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 true,
                 false,
             ],
@@ -208,11 +208,11 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
-                        'comment' => true,
+                        'view_comment' => true,
+                        'edit' => true,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 false,
                 true,
             ],
@@ -221,18 +221,18 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
-                        'view' => true,
-                        'comment' => true,
+                        'view_comment' => true,
+                        'edit' => true,
                     ]);
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 true,
                 true,
             ],
             'several rights, but user does not have any' => [
                 function ($user, $grammar) {
                 },
-                ['view', 'comment'],
+                ['view_comment', 'edit'],
                 false,
                 false,
             ],
@@ -307,8 +307,7 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'grammar_id' => $id,
                         'user_id' => $user->id,
-                        'view' => true,
-                        'comment' => true,
+                        'view_comment' => true,
                     ]);
                 }
 
@@ -329,8 +328,7 @@ class UserTest extends DatabaseTestCase
                     factory(Right::class)->create([
                         'grammar_id' => $id,
                         'user_id' => $user->id,
-                        'view' => true,
-                        'comment' => true,
+                        'view_comment' => true,
                     ]);
                 }
 

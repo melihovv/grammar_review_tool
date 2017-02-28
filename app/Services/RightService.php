@@ -23,8 +23,7 @@ class RightService
             $rightsToCreate[] = [
                 'user_id' => $usersId,
                 'grammar_id' => $grammar->id,
-                'view' => $rights['view'],
-                'comment' => $rights['comment'],
+                'view_comment' => $rights['view_comment'],
                 'edit' => $rights['edit'],
                 'admin' => $rights['admin'],
                 'created_at' => $now,
