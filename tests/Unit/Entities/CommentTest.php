@@ -5,6 +5,7 @@ namespace Tests\Unit\Entities;
 use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\User;
+use App\Entities\Version;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DatabaseTestCase;
 
@@ -20,13 +21,13 @@ class CommentTest extends DatabaseTestCase
         $this->assertEquals($user->toArray(), $comment->user->toArray());
     }
 
-    public function testGrammarRelationship()
+    public function testVersionRelationship()
     {
-        $grammar = factory(Grammar::class)->create();
+        $version = factory(Version::class)->create();
         $comment = factory(Comment::class)->create([
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
         ]);
 
-        $this->assertEquals($grammar->toArray(), $comment->grammar->toArray());
+        $this->assertEquals($version->toArray(), $comment->version->toArray());
     }
 }

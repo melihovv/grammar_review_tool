@@ -320,36 +320,6 @@ class RightsControllerTest extends BrowserKitTestCase
         ];
     }
 
-    public function testDestroyOutdated()
-    {
-        $user = factory(User::class)->create();
-        $parent = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'parent',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'child',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child->makeChildOf($parent);
-        $right = factory(Right::class)->create([
-            'grammar_id' => $parent->id,
-        ]);
-
-        $route = app(UrlGenerator::class)->version('v1')
-            ->route('grammars.rights.destroy', [$parent->id, $right->id]);
-
-        $this
-            ->actingAsApiUser($user)
-            ->delete($route, [], $this->headers('v1', $user));
-
-        $this->assertResponseStatus(403);
-    }
-
     /**
      * @dataProvider unauthorizedProvider
      */

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Grammar;
 use App\Entities\Right;
-use App\Http\Requests\Right\RightStoreRequest;
-use App\Http\Requests\Right\RightUpdateRequest;
+use App\Http\Requests\Right\StoreRequest;
+use App\Http\Requests\Right\UpdateRequest;
 use App\Http\Transformers\RightTransformer;
 use App\Services\RightService;
 
@@ -29,7 +29,7 @@ class RightsController extends ApiController
      */
     public function store(
         Grammar $grammar,
-        RightStoreRequest $request,
+        StoreRequest $request,
         RightService $service
     ) {
         $rights = $service->create(
@@ -47,7 +47,7 @@ class RightsController extends ApiController
     public function update(
         Grammar $grammar,
         Right $right,
-        RightUpdateRequest $request
+        UpdateRequest $request
     ) {
         $right->update($request->all());
 

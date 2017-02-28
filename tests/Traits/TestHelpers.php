@@ -3,6 +3,9 @@
 namespace Tests\Traits;
 
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
+use App\Entities\Grammar;
+use App\Entities\User;
+use Facades\App\Services\GrammarService;
 use BadMethodCallException;
 use Mockery;
 use Mockery\MockInterface;
@@ -11,7 +14,7 @@ trait TestHelpers
 {
     /**
      * @param string $method
-     * @param array  $args
+     * @param array $args
      *
      * @return mixed
      */
@@ -40,9 +43,9 @@ trait TestHelpers
     /**
      * Call protected/private method of a class.
      *
-     * @param object &$object    Instantiated object that we will run method on.
+     * @param object &$object Instantiated object that we will run method on.
      * @param string $methodName Method name to call
-     * @param array  $parameters Array of parameters to pass into method.
+     * @param array $parameters Array of parameters to pass into method.
      *
      * @return mixed Method return.
      */
@@ -71,5 +74,28 @@ trait TestHelpers
             ->andReturn(
                 '<input type="hidden" name="g-recaptcha-response" value="1" />'
             );
+    }
+
+    protected function createGrammar($content = 'content', $grammarAttrs = [])
+    {
+        $grammarAttrs = factory(Grammar::class)->raw($grammarAttrs);
+
+        return GrammarService::create($grammarAttrs + ['content' => $content]);
+    }
+
+    protected function updateGrammar(
+        Grammar $grammar,
+        $content = 'new content',
+        $updater = null
+    ) {
+        if ($updater === null) {
+            $updater = factory(User::class)->create();
+        }
+
+        return GrammarService::update(
+            $grammar,
+            $updater,
+            array_merge($grammar->toArray(), ['content' => $content])
+        );
     }
 }

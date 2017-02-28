@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Grammar;
 
-class GrammarUpdateRequest extends BaseRequest
+class UpdateRequest extends BaseRequest
 {
     public function sanitizers()
     {

@@ -38,7 +38,7 @@ const commentTemplate = comment => {
   )
 }
 
-const commentButtonClicked = ({$parent, $prev, grammarId, row, column, symbolComments = false}) => {
+const commentButtonClicked = ({$parent, $prev, grammarId, versionId, row, column, symbolComments = false}) => {
   $parent.find('.grammar-view__add-comment-button').click(e => {
     const $this = $(e.target)
     const comment = $this.parent().prev().val()
@@ -57,6 +57,7 @@ const commentButtonClicked = ({$parent, $prev, grammarId, row, column, symbolCom
         content: comment,
         row: row,
         column: column,
+        version_id: versionId,
       },
       success: response => {
         const comments = $parent.find('.grammar-view__comment-holder')
@@ -89,6 +90,7 @@ const commentButtonClicked = ({$parent, $prev, grammarId, row, column, symbolCom
 $(() => {
   const $grammarView = $('.grammar-view')
   const grammarId = $grammarView.attr('grammar-id')
+  const versionId = $grammarView.attr('version-id')
 
   $(window).click(e => {
     $('.grammar-view__symbol-comments').hide()
@@ -122,7 +124,7 @@ $(() => {
       $commentsTr.find('textarea').focus()
 
       cancelButtonClicked({$parent: $commentsTr, $prev, remove: $commentsTr.find('.grammar-view__comment-holder').length === 0})
-      commentButtonClicked({$parent: $commentsTr, $prev, grammarId, row, column: -1})
+      commentButtonClicked({$parent: $commentsTr, $prev, grammarId, versionId, row, column: -1})
 
       return false
     }
@@ -159,7 +161,7 @@ $(() => {
     }
 
     cancelButtonClicked({$parent, $prev})
-    commentButtonClicked({$parent, $prev, grammarId, row, column, symbolComments: $symbolComments.length > 0})
+    commentButtonClicked({$parent, $prev, grammarId, versionId, row, column, symbolComments: $symbolComments.length > 0})
 
     return false
   })
@@ -243,6 +245,7 @@ $(() => {
         type: 'PUT',
         data: {
           content: comment,
+          version_id: versionId,
         },
         success: response => {
           $parent
@@ -299,7 +302,7 @@ $(() => {
     $symbolComments.find('textarea').focus()
 
     cancelButtonClicked({$parent: $symbolComments, $prev, remove: $symbolComments.find('.grammar-view__comment-holder').length === 0})
-    commentButtonClicked({$parent: $symbolComments, $prev, grammarId, row, column, symbolComments: true})
+    commentButtonClicked({$parent: $symbolComments, $prev, grammarId, versionId, row, column, symbolComments: true})
 
     return false
   })

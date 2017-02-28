@@ -4,7 +4,7 @@ namespace App\Http\Requests\Grammar;
 
 use App\Http\Requests\Request;
 
-class BaseRequest extends Request
+abstract class BaseRequest extends Request
 {
     public function rules()
     {

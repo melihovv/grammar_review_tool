@@ -24,10 +24,6 @@ class GrammarPolicy
 
     public function delete(User $user, Grammar $grammar)
     {
-        if (!$grammar->isLeaf()) {
-            return false;
-        }
-
         return $user->is_admin
             || $user->isGrammarOwner($grammar)
             || $user->hasRight('admin', $grammar);
@@ -35,10 +31,6 @@ class GrammarPolicy
 
     public function view(User $user, Grammar $grammar)
     {
-        if (!$grammar->isLeaf()) {
-            return $user->can('view', $grammar->leaves()->first());
-        }
-
         return $grammar->public_view
             || $user->isGrammarOwner($grammar)
             || $user->hasRight(['view', 'comment', 'edit', 'admin'], $grammar);
@@ -46,10 +38,6 @@ class GrammarPolicy
 
     public function comment(User $user, Grammar $grammar)
     {
-        if (!$grammar->isLeaf()) {
-            return $user->can('comment', $grammar->leaves()->first());
-        }
-
         return $user->isGrammarOwner($grammar)
             || ($grammar->allow_to_comment
                 && $user->hasRight(['comment', 'edit', 'admin'], $grammar));
@@ -57,10 +45,6 @@ class GrammarPolicy
 
     public function manageRights(User $user, Grammar $grammar)
     {
-        if (!$grammar->isLeaf()) {
-            return false;
-        }
-
         return $user->is_admin
             || $user->isGrammarOwner($grammar)
             || $user->hasRight('admin', $grammar);
@@ -68,10 +52,6 @@ class GrammarPolicy
 
     public function update(User $user, Grammar $grammar)
     {
-        if (!$grammar->isLeaf()) {
-            return false;
-        }
-
         return $user->is_admin
             || $user->isGrammarOwner($grammar)
             || $user->hasRight(['edit', 'admin'], $grammar);

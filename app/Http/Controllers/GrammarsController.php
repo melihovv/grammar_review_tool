@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Entities\Grammar;
 use App\Http\Forms\Grammars\CreateForm;
 use App\Http\Forms\Grammars\EditForm;
-use App\Http\Requests\Grammar\GrammarStoreRequest;
-use App\Http\Requests\Grammar\GrammarUpdateRequest;
+use App\Http\Requests\Grammar\ShowRequest;
+use App\Http\Requests\Grammar\StoreRequest;
+use App\Http\Requests\Grammar\UpdateRequest;
 use App\Services\GrammarService;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,13 +31,24 @@ class GrammarsController extends Controller
         return view('grammars.index', compact('grammars'));
     }
 
-    public function show(Grammar $grammar)
+    public function show(Grammar $grammar, ShowRequest $request)
     {
-        $lastVersion = !$grammar->isLeaf()
-            ? $grammar->leaves()->select(['id'])->first()
-            : null;
+        if ($request->has('version')) {
+            $version = $grammar->version($request->get('version', 0));
+        } else {
+            $version = $grammar->latestVersion();
+        }
 
-        return view('grammars.show', compact('grammar', 'lastVersion'));
+        $version = $version->exclude(['content'])->first();
+        $latestVersion = $version->isLeaf()
+            ? null
+            : $version->leaves()->select(['id'])->first();
+
+        return view('grammars.show', compact(
+            'grammar',
+            'version',
+            'latestVersion'
+        ));
     }
 
     public function create()
@@ -49,22 +61,24 @@ class GrammarsController extends Controller
         return view('grammars.create', compact('form'));
     }
 
-    public function store(GrammarStoreRequest $request)
+    public function store(GrammarService $service, StoreRequest $request)
     {
-        $grammar = Grammar::create($request->all());
+        list($grammar) = $service->create($request->all());
 
         return redirect()->route('grammars.show', $grammar->id);
     }
 
-    public function destroy(Grammar $grammar)
+    public function destroy(Grammar $grammar, GrammarService $service)
     {
-        $grammar->delete();
+        $service->delete($grammar);
 
         return redirect()->route('grammars.index');
     }
 
     public function edit(Grammar $grammar)
     {
+        $grammar->content = $grammar->getLatestVersion()->content;
+
         $form = $this->form(EditForm::class, [
             'method' => 'PUT',
             'url' => route('grammars.update', $grammar),
@@ -75,19 +89,20 @@ class GrammarsController extends Controller
     }
 
     public function update(
-        GrammarUpdateRequest $request,
+        UpdateRequest $request,
         Grammar $grammar,
         GrammarService $service
     ) {
-        $newGrammar = $service->update($grammar, $request);
+        $service->update($grammar, Auth::user(), $request->all());
 
-        return redirect()->route('grammars.show', $newGrammar);
+        return redirect()->route('grammars.show', $grammar->id);
     }
 
     public function history(Grammar $grammar)
     {
-        $latestVersion = $grammar->leaves()->select(['id'])->first()
-            ?: $grammar;
+        $latestVersion = $grammar->latestVersion()
+            ->select(['id', 'depth'])
+            ->first();
 
         return view('grammars.history', compact('grammar', 'latestVersion'));
     }

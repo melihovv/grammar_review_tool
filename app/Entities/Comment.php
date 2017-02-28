@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $fillable = [
         'user_id',
-        'grammar_id',
+        'version_id',
         'content',
         'row',
         'column',
@@ -19,7 +19,7 @@ class Comment extends Model
 
     protected $casts = [
         'user_id' => 'integer',
-        'grammar_id' => 'integer',
+        'version_id' => 'integer',
         'row' => 'integer',
         'column' => 'integer',
     ];
@@ -35,8 +35,8 @@ class Comment extends Model
     /**
      * @return BelongsTo
      */
-    public function grammar()
+    public function version()
     {
-        return $this->belongsTo(Grammar::class);
+        return $this->belongsTo(Version::class);
     }
 }

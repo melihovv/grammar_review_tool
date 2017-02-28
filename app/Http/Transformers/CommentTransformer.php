@@ -15,7 +15,7 @@ class CommentTransformer extends Transformer
         return array_combine(static::attrs(), [
             $model->id,
             $model->user_id,
-            $model->grammar_id,
+            $model->version_id,
             e($model->content),
             $model->row,
             $model->column,
@@ -27,7 +27,7 @@ class CommentTransformer extends Transformer
         return [
             'id',
             'user_id',
-            'grammar_id',
+            'version_id',
             'content',
             'row',
             'column',

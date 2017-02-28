@@ -3,65 +3,37 @@
 namespace App\Entities;
 
 use Baum\Node;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Grammar extends Node
+class Grammar extends Model
 {
     use AdditionalMethods;
 
     protected $columns = [
         'id',
         'user_id',
-        'updater_id',
         'name',
-        'content',
         'public_view',
         'allow_to_comment',
-        'parent_id',
-        'lft',
-        'rgt',
-        'depth',
         'created_at',
         'updated_at',
     ];
 
     protected $fillable = [
         'user_id',
-        'updater_id',
         'name',
-        'content',
         'public_view',
         'allow_to_comment',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
-        'updater_id' => 'integer',
         'public_view' => 'boolean',
         'allow_to_comment' => 'boolean',
-        'parent_id' => 'integer',
-        'lft' => 'integer',
-        'rgt' => 'integer',
-        'depth' => 'integer',
     ];
-
-    protected $guarded = [
-        'id',
-        'parent_id',
-        'lft',
-        'rgt',
-        'depth',
-    ];
-
-    protected $scoped = [
-        'user_id',
-    ];
-
-    public function scopeExclude($query, $columns = [])
-    {
-        return $query->select(array_diff($this->columns, (array) $columns));
-    }
 
     /**
      * @return BelongsTo
@@ -72,19 +44,11 @@ class Grammar extends Node
     }
 
     /**
-     * @return BelongsTo
-     */
-    public function updater()
-    {
-        return $this->belongsTo(User::class, 'updater_id');
-    }
-
-    /**
      * @return HasMany
      */
-    public function comments()
+    public function versions()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Version::class);
     }
 
     /**
@@ -93,5 +57,64 @@ class Grammar extends Node
     public function rights()
     {
         return $this->hasMany(Right::class);
+    }
+
+    /**
+     * @param int $version
+     * @return Builder
+     */
+    public function version($version)
+    {
+        return $this->versions()->where('depth', $version);
+    }
+
+    /**
+     * @param int $version
+     * @return Grammar
+     */
+    public function getVersion($version)
+    {
+        return $this->version($version)->first();
+    }
+
+    /**
+     * @return Builder
+     */
+    public function latestVersion()
+    {
+        return Version::where('grammar_id', $this->id)
+            ->orderBy('depth', 'desc');
+    }
+
+    /**
+     * @return Grammar
+     */
+    public function getLatestVersion()
+    {
+        return $this->latestVersion()->first();
+    }
+
+    /**
+     * Checks that grammar has version with specified id.
+     *
+     * @param $versionId
+     *
+     * @return bool
+     */
+    public function hasVersionWithId($versionId)
+    {
+        return $this->versions()->where('id', $versionId)->first() !== null;
+    }
+
+    /**
+     * Checks that grammar has specified version.
+     *
+     * @param $version
+     *
+     * @return bool
+     */
+    public function hasVersion($version)
+    {
+        return $this->versions()->where('depth', $version)->first() !== null;
     }
 }

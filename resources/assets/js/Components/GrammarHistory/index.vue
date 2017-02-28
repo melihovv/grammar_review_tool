@@ -6,12 +6,12 @@
     <div class="col-md-2">
       <ul class="list-group affix versions-sidebar">
         <li class="list-group-item">History</li>
-        <li v-for="grammar in grammars"
-            :class="{'list-group-item': true, active: grammar.id === activeGrammarId}"
-            @click="onGrammarClickedInSidebar(grammar.id)">
-          {{ grammar.created_at }}<br>
-          {{ grammar.updater.name }}
-          <a :href="urlPrefix + '/grammars/' + grammar.id" class="link"
+        <li v-for="version in versions"
+            :class="{'list-group-item': true, active: version.id === activeVersionId}"
+            @click="onVersionClickedInSidebar(version.version, version.id)">
+          {{ version.created_at }}<br>
+          {{ version.updater.name }}
+          <a :href="urlPrefix + '/grammars/' + grammarId + '?version=' + version.version" class="link"
              onclick="event.stopPropagation()">Show</a>
         </li>
       </ul>
@@ -25,7 +25,7 @@
       grammarId: {
         required: true,
       },
-      latestVersionId: {
+      latestVersion: {
         required: true,
       },
     },
@@ -33,7 +33,7 @@
       return {
         loadingTemplate: '<div class="loader">Loading...</div>',
         diffTemplate: '',
-        grammars: [],
+        versions: [],
         activeGrammarIndex: null,
         loading: true,
         urlPrefix: Laravel.absPath,
@@ -41,27 +41,27 @@
     },
     mounted() {
       $.get({
-        url: `${Laravel.absPath}/api/grammars/${this.grammarId}/all-versions`,
+        url: `${Laravel.absPath}/api/grammars/${this.grammarId}/versions`,
         success: response => {
-          const grammars = response.data
+          const versions = response.data
 
-          for (const grammar of grammars) {
+          for (const grammar of versions) {
             grammar.updater = grammar.updater.data
           }
 
-          this.grammars = grammars
-          this.activeGrammarId = this.grammars[0].id
+          this.versions = versions
+          this.activeVersionId = this.versions[0].id
         },
       })
 
-      this.fetchDiff(this.latestVersionId)
+      this.fetchDiff(this.latestVersion)
     },
     methods: {
-      fetchDiff(grammarId) {
+      fetchDiff(version) {
         this.loading = true
 
         $.get({
-          url: `${Laravel.absPath}/api/grammars/${grammarId}/diff`,
+          url: `${Laravel.absPath}/api/grammars/${this.grammarId}/diff?version=${version}`,
           success: response => {
             this.loading = false
 
@@ -74,13 +74,13 @@
           },
         })
       },
-      onGrammarClickedInSidebar(grammarId) {
-        if (grammarId === this.activeGrammarId) {
+      onVersionClickedInSidebar(version, versionId) {
+        if (versionId === this.activeVersionId) {
           return
         }
 
-        this.fetchDiff(grammarId)
-        this.activeGrammarId = grammarId
+        this.fetchDiff(version)
+        this.activeVersionId = versionId
       },
     },
   }

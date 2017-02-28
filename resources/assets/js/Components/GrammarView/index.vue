@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="grammar-view" v-html="template" :grammar-id="grammarId" v-if="!parseFailed"></div>
+    <div class="grammar-view" v-html="template" :grammar-id="grammarId"
+         :version-id="versionId" v-if="!parseFailed"></div>
     <div v-if="parseFailed" class="grammar-view_parse_failed">
       <h2>Grammar contains syntax errors</h2>
       <ul>
@@ -24,6 +25,12 @@
       grammarId: {
         required: true,
       },
+      version: {
+        required: true,
+      },
+      versionId: {
+        required: true,
+      },
     },
     data: () => {
       return {
@@ -35,17 +42,17 @@
     },
     mounted() {
       $.get({
-        url: `${Laravel.absPath}/api/grammars/${this.grammarId}`,
+        url: `${Laravel.absPath}/api/grammars/${this.grammarId}?version=${this.version}`,
         success: response => {
           this.show(this.handleResponse(response))
         },
       })
     },
     methods: {
-      show({grammar, owner, comments, rights}) {
+      show({grammar, version, owner, comments, rights}) {
         const parser = new Parser()
         try {
-          const tree = parser.parse(grammar.content)
+          const tree = parser.parse(version.content)
           this.template = Tree2Html.convert(
             tree,
             parser.parser._input,
@@ -61,12 +68,13 @@
         }
       },
       handleResponse(response) {
-        const grammar = response.data
+        const version = response.data
+        const grammar = version.grammar.data
 
         const owner = grammar.owner.data
         delete grammar.owner
 
-        const comments = grammar.comments.data
+        const comments = version.comments.data
         delete grammar.comments
         for (const comment of comments) {
           comment.user = comment.user.data
@@ -75,7 +83,7 @@
         const rights = grammar.rights.data
         delete grammar.rights
 
-        return {grammar, owner, comments, rights}
+        return {grammar, version, owner, comments, rights}
       },
     },
   }
@@ -292,8 +300,7 @@
 
       &:focus
         border-color #51a7e8
-        box-shadow:
-          inset 0 1px 2px rgba(0, 0, 0, 0.075),
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075),
           0 0 5px rgba(81, 167, 232, 0.5)
 
     &__actions

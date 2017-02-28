@@ -2,30 +2,13 @@
 
 namespace App\Services;
 
-use App\Entities\Comment;
 use App\Entities\Grammar;
-use App\Http\Requests\Request;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
+use App\Entities\User;
+use App\Entities\Version;
 use Illuminate\Support\Facades\DB;
-use PDOException;
 
 class GrammarService
 {
-    /**
-     * Rows to delete while comments update.
-     *
-     * @var array
-     */
-    protected $deletedRows = [];
-
-    /**
-     * Rows which was added in updated grammar.
-     *
-     * @var array
-     */
-    protected $addedRows = [];
-
     /**
      * Diff between two grammars.
      *
@@ -34,142 +17,98 @@ class GrammarService
     protected $diff = [];
 
     /**
-     * @param Grammar $grammar
-     * @param Request $request
-     *
-     * @return Grammar
+     * @var CommentService
      */
-    public function update(Grammar $grammar, Request $request)
+    protected $commentService;
+
+    /**
+     * @param CommentService $commentService
+     */
+    public function __construct(CommentService $commentService)
     {
-        try {
-            DB::beginTransaction();
-
-            $newGrammar = Grammar::create(array_merge($request->all(), [
-                'updater_id' => Auth::user()->id,
-            ]));
-            $newGrammar->makeChildOf($grammar);
-            $this->updateComments($grammar, $newGrammar);
-
-            DB::commit();
-
-            return $newGrammar;
-        } catch (PDOException $e) {
-            DB::rollback();
-
-            return $grammar;
-        }
+        $this->commentService = $commentService;
     }
 
     /**
-     * @param $oldGrammar
-     * @param $newGrammar
+     * @param array $data
+     * @return array
      */
-    protected function updateComments($oldGrammar, $newGrammar)
+    public function create(array $data)
     {
-        $linesA = explode("\n", $oldGrammar->content);
-        $linesB = explode("\n", $newGrammar->content);
+        $grammar = null;
+        $version = null;
 
-        $this->addedRows = [];
-        $this->deletedRows = [];
-
-        $this->backtrackComments(
-            lcs($linesA, $linesB),
-            $linesA,
-            $linesB,
-            count($linesA) - 1,
-            count($linesB) - 1
-        );
-
-        $this->deletedRows = array_values(array_unique($this->deletedRows));
-        sort($this->deletedRows);
-        $this->addedRows = array_values(array_unique($this->addedRows));
-        sort($this->addedRows);
-
-        $comments = $this->computeNewRows($oldGrammar);
-        $comments = $comments->map(function ($comment) use ($newGrammar) {
-            $comment->grammar_id = $newGrammar->id;
-            $comment->id = null;
-
-            return $comment;
+        DB::transaction(function () use (&$grammar, &$version, $data) {
+            $grammar = Grammar::create($data);
+            $version = Version::create([
+                'grammar_id' => $grammar->id,
+                'content' => $data['content'],
+                'updater_id' => $data['user_id'],
+            ]);
         });
-        Comment::insert($comments->toArray());
+
+        return [$grammar, $version];
     }
 
     /**
-     * Compute new comment rows.
-     *
      * @param Grammar $grammar
+     * @param User $updater
+     * @param array $data
      *
-     * @return Collection
+     * @return Version
      */
-    protected function computeNewRows(Grammar $grammar)
+    public function update(Grammar $grammar, User $updater, array $data)
     {
-        $comments = Comment::where('grammar_id', $grammar->id)
-            ->whereNotIn('row', $this->deletedRows)
-            ->get();
+        $newVersion = null;
 
-        $deletedRows = $this->deletedRows;
-        $addedRows = $this->addedRows;
-        $comments = $comments->map(
-            function ($comment) use ($deletedRows, $addedRows) {
-                foreach ($deletedRows as $row) {
-                    if ($comment->row >= $row) {
-                        --$comment->row;
-                    }
-                }
+        DB::transaction(
+            function () use ($grammar, $data, &$newVersion, $updater) {
+                $grammar->update($data);
+                $prevVersion = $grammar->getLatestVersion();
+                $newVersion = Version::create([
+                    'grammar_id' => $grammar->id,
+                    'updater_id' => $updater->id,
+                    'content' => $data['content'],
+                ]);
+                $newVersion->makeChildOf($prevVersion);
 
-                foreach ($addedRows as $row) {
-                    if ($comment->row >= $row) {
-                        ++$comment->row;
-                    }
-                }
-
-                return $comment;
+                $this->commentService
+                    ->updateComments($prevVersion, $newVersion);
             }
         );
 
-        return $comments;
+        return $newVersion;
     }
 
     /**
-     * Backtrack through lcs matrix to determine which lines were deleted or
-     * added.
-     *
-     * @param array $lcs
-     * @param array $linesA
-     * @param array $linesB
-     * @param int   $i
-     * @param int   $j
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @param Grammar $grammar
+     * @return bool|null
      */
-    protected function backtrackComments($lcs, $linesA, $linesB, $i, $j)
+    public function delete(Grammar $grammar)
     {
-        $lineWasAdded = false;
-        if (isset($lcs[$i][$j - 1], $lcs[$i - 1][$j])) {
-            $lineWasAdded = $lcs[$i][$j - 1] >= $lcs[$i - 1][$j];
-        }
-
-        if ($i >= 0 && $j >= 0 && $linesA[$i] === $linesB[$j]) {
-            $this->backtrackComments($lcs, $linesA, $linesB, $i - 1, $j - 1);
-        } elseif ($j >= 0 && ($i === -1 || $lineWasAdded)) {
-            // Line was added.
-            $this->addedRows[] = $j + 1;
-            $this->backtrackComments($lcs, $linesA, $linesB, $i, $j - 1);
-        } elseif ($i >= 0 && ($j === -1 || !$lineWasAdded)) {
-            // Line was removed.
-            $this->deletedRows[] = $i + 1;
-            $this->backtrackComments($lcs, $linesA, $linesB, $i - 1, $j);
-        }
+        return $grammar->delete();
     }
 
-    public function diff(Grammar $grammar)
+    /**
+     * @param Grammar $grammar
+     *
+     * @return array
+     */
+    public function diff(Grammar $grammar, $version = null)
     {
-        $parent = $grammar->parent()->first();
-        $content = $parent !== null ? $parent->content : $grammar->content;
+        if ($version === null) {
+            $currentVersion = $grammar->getLatestVersion();
+        } else {
+            $currentVersion = $grammar->getVersion($version);
+        }
 
-        $linesA = explode("\n", $content);
-        $linesB = explode("\n", $grammar->content);
+        $prevVersion = $currentVersion->parent()->first();
+        $prevContent = $prevVersion !== null
+            ? $prevVersion->content
+            : $currentVersion->content;
+
+        $linesA = explode("\n", $prevContent);
+        $linesB = explode("\n", $currentVersion->content);
 
         $this->diff = [];
         $this->backtrackDiff(
@@ -189,8 +128,8 @@ class GrammarService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int   $i
-     * @param int   $j
+     * @param int $i
+     * @param int $j
      *
      * @return array
      *

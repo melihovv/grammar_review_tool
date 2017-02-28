@@ -6,10 +6,8 @@ use App\Entities\Grammar;
 
 class GrammarTransformer extends Transformer
 {
-    protected $availableIncludes = [
+    protected $defaultIncludes = [
         'owner',
-        'updater',
-        'comments',
         'rights',
     ];
 
@@ -19,11 +17,8 @@ class GrammarTransformer extends Transformer
             $model->id,
             $model->user_id,
             e($model->name),
-            e($model->content),
             $model->public_view,
             $model->allow_to_comment,
-            $model->created_at->format('I:h') . ' '
-            . $model->created_at->toFormattedDateString(),
         ]);
     }
 
@@ -33,29 +28,14 @@ class GrammarTransformer extends Transformer
             'id',
             'user_id',
             'name',
-            'content',
             'public_view',
             'allow_to_comment',
-            'created_at',
         ];
     }
 
     public function includeOwner(Grammar $model)
     {
         return $this->item($model->owner, new UserTransformer());
-    }
-
-    public function includeUpdater(Grammar $model)
-    {
-        return $this->item(
-            $model->updater_id !== null ? $model->updater : $model->owner,
-            new UserTransformer()
-        );
-    }
-
-    public function includeComments(Grammar $model)
-    {
-        return $this->collection($model->comments, new CommentTransformer());
     }
 
     public function includeRights(Grammar $model)

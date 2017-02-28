@@ -5,7 +5,7 @@ namespace App\Http\Requests\Right;
 use App\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 
-class RightUpdateRequest extends Request
+class UpdateRequest extends Request
 {
     public function rules()
     {

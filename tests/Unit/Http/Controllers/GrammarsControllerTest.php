@@ -36,19 +36,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
     public function testIndexWithVersions(callable $setupCb)
     {
         $user = $setupCb();
-        $parent = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child->makeChildOf($parent);
+        list($grammar) = $this->createGrammar('content',
+            ['user_id' => $user->id]);
+        $this->updateGrammar($grammar, 'content2');
 
         $this
             ->actingAs($user)
@@ -80,40 +70,32 @@ class GrammarsControllerTest extends BrowserKitTestCase
 
     public function testShow()
     {
-        $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        $user = factory(User::class, 'admin')->create();
+        list($grammar) = $this->createGrammar();
 
         $this
             ->actingAs($user)
             ->get(route('grammars.show', $grammar->id));
 
         $this->assertResponseOk();
-        $this->assertViewHas(['grammar', 'lastVersion']);
+        $this->assertViewHas(['grammar', 'version', 'latestVersion']);
     }
 
     public function testShowOutdatedVersion()
     {
-        $user = factory(User::class)->create();
-        $parent = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content',
-            'public_view' => true,
-        ]);
-        $child->makeChildOf($parent);
+        $user = factory(User::class, 'admin')->create();
+        list($grammar) = $this->createGrammar();
+        $this->updateGrammar($grammar, 'content2');
 
         $this
             ->actingAs($user)
-            ->get(route('grammars.show', $parent->id));
+            ->get(route('grammars.show', [
+                'grammar' => $grammar->id,
+                'version' => 0,
+            ]));
 
         $this->assertResponseOk();
-        $this->assertViewHas(['grammar', 'lastVersion']);
+        $this->assertViewHas(['grammar', 'latestVersion']);
 
         $this->see('You are looking at early version of grammar. Click');
         $this->see('here');
@@ -156,9 +138,9 @@ class GrammarsControllerTest extends BrowserKitTestCase
     /**
      * @dataProvider updateProvider
      */
-    public function testUpdate(callable $payloadCb, callable $assertCb)
+    public function testUpdate(callable $payloadCb)
     {
-        list($user, $grammar) = $payloadCb();
+        list($user, $grammar) = $payloadCb($this);
 
         $this
             ->actingAs($user)
@@ -170,63 +152,60 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 'user_id' => 100500,
             ]);
 
-        $assertCb($this, $user, $grammar);
+        $this->assertRedirectedToRoute('grammars.show', 1);
+        $this->seeInDatabase('grammars', [
+            'id' => 1,
+            'user_id' => $user->id,
+            'name' => 'new name',
+            'allow_to_comment' => true,
+            'public_view' => false,
+        ]);
+        $this->seeInDatabase('versions', [
+            'id' => 1,
+            'grammar_id' => $grammar->id,
+            'content' => 'content',
+            'updater_id' => $user->id,
+        ]);
+        $this->seeInDatabase('versions', [
+            'id' => 2,
+            'grammar_id' => $grammar->id,
+            'content' => 'new content',
+            'updater_id' => $user->id,
+        ]);
     }
 
     public function updateProvider()
     {
         return [
             'user is grammar owner' => [
-                function () {
+                function ($testcase) {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    list($grammar) = $testcase->createGrammar('content', [
                         'user_id' => $user->id,
                         'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
 
                     return [$user, $grammar];
-                },
-                function ($testcase, $user, $grammar) {
-                    $testcase->assertRedirectedToRoute('grammars.show', 2);
-                    $testcase->seeInDatabase('grammars', [
-                        'id' => 2,
-                        'user_id' => $user->id,
-                        'content' => 'new content',
-                        'name' => 'new name',
-                        'allow_to_comment' => true,
-                        'public_view' => false,
-                        'updater_id' => $user->id,
-                    ]);
                 },
             ],
             'user is admin' => [
-                function () {
+                function ($testcase) {
                     $user = factory(User::class, 'admin')->create();
-                    $grammar = factory(Grammar::class)->create([
+                    list($grammar) = $testcase->createGrammar('content', [
+                        'user_id' => $user->id,
                         'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
 
                     return [$user, $grammar];
                 },
-                function ($testcase, $user, $grammar) {
-                    $testcase->assertRedirectedToRoute('grammars.show', 2);
-                    $testcase->seeInDatabase('grammars', [
-                        'id' => 2,
-                        'user_id' => $grammar->user_id,
-                        'content' => 'new content',
-                        'name' => 'new name',
-                        'allow_to_comment' => true,
-                        'public_view' => false,
-                        'updater_id' => $user->id,
-                    ]);
-                },
             ],
             'user has right to edit grammar' => [
-                function () {
+                function ($testcase) {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    list($grammar) = $testcase->createGrammar('content', [
+                        'user_id' => $user->id,
                         'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
@@ -238,23 +217,12 @@ class GrammarsControllerTest extends BrowserKitTestCase
 
                     return [$user, $grammar];
                 },
-                function ($testcase, $user, $grammar) {
-                    $testcase->assertRedirectedToRoute('grammars.show', 2);
-                    $testcase->seeInDatabase('grammars', [
-                        'id' => 2,
-                        'user_id' => $grammar->user_id,
-                        'content' => 'new content',
-                        'name' => 'new name',
-                        'allow_to_comment' => true,
-                        'public_view' => false,
-                        'updater_id' => $user->id,
-                    ]);
-                },
             ],
             'user has right to admin grammar' => [
-                function () {
+                function ($testcase) {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    list($grammar) = $testcase->createGrammar('content', [
+                        'user_id' => $user->id,
                         'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
@@ -267,54 +235,8 @@ class GrammarsControllerTest extends BrowserKitTestCase
 
                     return [$user, $grammar];
                 },
-                function ($testcase, $user, $grammar) {
-                    $testcase->assertRedirectedToRoute('grammars.show', 2);
-                    $testcase->seeInDatabase('grammars', [
-                        'id' => 2,
-                        'user_id' => $grammar->user_id,
-                        'content' => 'new content',
-                        'name' => 'new name',
-                        'allow_to_comment' => true,
-                        'public_view' => false,
-                        'updater_id' => $user->id,
-                    ]);
-                },
             ],
         ];
-    }
-
-    public function testUpdateOutdatedGrammar()
-    {
-        $user = factory(User::class, 'admin')->create();
-        $parent = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content1',
-            'public_view' => true,
-        ]);
-        $child = Grammar::create([
-            'user_id' => $user->id,
-            'name' => 'name',
-            'content' => 'content2',
-            'public_view' => true,
-        ]);
-        $child->makeChildOf($parent);
-
-        $this
-            ->actingAs($user)
-            ->put(route('grammars.update', $parent), [
-                'content' => 'new content',
-                'name' => 'new name',
-                'allow_to_comment' => true,
-                'public_view' => false,
-                'user_id' => 100500,
-            ]);
-
-        $this->assertResponseStatus(403);
-        $this->seeInDatabase('grammars', [
-            'id' => $parent->id,
-            'content' => 'content1',
-        ]);
     }
 
     /**
@@ -325,7 +247,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
         callable $assertCb
     ) {
         $user = factory(User::class, 'admin')->create();
-        list($grammar, $content) = $setupCb();
+        list($grammar, $content) = $setupCb($this);
 
         $this
             ->actingAs($user)
@@ -343,30 +265,29 @@ class GrammarsControllerTest extends BrowserKitTestCase
     {
         return [
             'some rows with comments were deleted' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 line3
 line4
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line2
 line4
 NOW;
+                    $version = $grammar->getVersion(0)->first();
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $version->id,
                         'row' => 1,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $version->id,
                         'row' => 3,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $version->id,
                         'row' => 4,
                     ]);
 
@@ -376,42 +297,40 @@ NOW;
                     $testcase->assertCount(4, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 1,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 4,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 4,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 2,
                     ]);
                 },
             ],
             'row was added after last row' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line2
 line3
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
 
@@ -421,32 +340,30 @@ NOW;
                     $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 2,
                     ]);
                 },
             ],
             'row was added before row with comments' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line1.5
 line2
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
 
@@ -456,25 +373,23 @@ NOW;
                     $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 3,
                     ]);
                 },
             ],
             'rows was added before row with comments' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line1.5.1
@@ -482,7 +397,7 @@ line1.5.2
 line2
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
 
@@ -492,26 +407,24 @@ NOW;
                     $testcase->assertCount(2, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 4,
                     ]);
                 },
             ],
             'several rows was added before rows with comments' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 line3
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line1.5
@@ -521,11 +434,11 @@ line2.5.2
 line3
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 3,
                     ]);
 
@@ -535,38 +448,36 @@ NOW;
                     $testcase->assertCount(4, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 4,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 6,
                     ]);
                 },
             ],
             'several rows was added before rows with comments, some rows were deleted' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 line3
 line4
 line5
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line1.5.1
@@ -578,15 +489,15 @@ line4
 line5
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 3,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 4,
                     ]);
 
@@ -596,56 +507,54 @@ NOW;
                     $testcase->assertCount(5, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 4,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 4,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 4,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 5,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 7,
                     ]);
                 },
             ],
             'row with comment was changed' => [
-                function () {
-                    $grammar = factory(Grammar::class)->create([
-                        'content' => <<<'NOW'
+                function ($testcase) {
+                    list($grammar) = $testcase->createGrammar(<<<'NOW'
 line1
 line2
 line3
 NOW
-                        ,
-                    ]);
+                    );
                     $content = <<<'NOW'
 line1
 line22
 line3
 NOW;
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 1,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 2,
                     ]);
                     factory(Comment::class)->create([
-                        'grammar_id' => $grammar->id,
+                        'version_id' => $grammar->id,
                         'row' => 3,
                     ]);
 
@@ -655,27 +564,27 @@ NOW;
                     $testcase->assertCount(5, Comment::all()->toArray());
                     $testcase->seeInDatabase('comments', [
                         'id' => 1,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 1,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 2,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 2,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 3,
-                        'grammar_id' => 1,
+                        'version_id' => 1,
                         'row' => 3,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 4,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 1,
                     ]);
                     $testcase->seeInDatabase('comments', [
                         'id' => 5,
-                        'grammar_id' => 2,
+                        'version_id' => 2,
                         'row' => 3,
                     ]);
                 },
@@ -703,7 +612,7 @@ NOW;
             'user is admin' => [
                 function () {
                     $user = factory(User::class, 'admin')->create();
-                    $grammar = factory(Grammar::class)->create([
+                    $grammar = $this->createGrammar('content', [
                         'public_view' => false,
                     ]);
 
@@ -717,7 +626,7 @@ NOW;
             'user is grammar owner' => [
                 function () {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    $grammar = $this->createGrammar('content', [
                         'user_id' => $user->id,
                         'public_view' => false,
                     ]);
@@ -732,7 +641,7 @@ NOW;
             'user has right to view grammar' => [
                 function () {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    list($grammar) = $this->createGrammar('content', [
                         'public_view' => false,
                     ]);
                     factory(Right::class)->create([
@@ -753,7 +662,7 @@ NOW;
             'user has not right to view grammar' => [
                 function () {
                     $user = factory(User::class)->create();
-                    $grammar = factory(Grammar::class)->create([
+                    $grammar = $this->createGrammar('content', [
                         'public_view' => false,
                     ]);
 
@@ -762,70 +671,6 @@ NOW;
                 function ($testcase) {
                     $testcase->assertResponseStatus(403);
                 },
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider itInheritRightsFromLatestVersionOfGrammarProvider
-     */
-    public function testItInheritRightsFromLatestVersionOfGrammar(
-        $canParentView,
-        $canChildView,
-        $statusCode
-    ) {
-        $user = factory(User::class)->create();
-        $owner = factory(User::class)->create();
-        $parent = Grammar::create([
-            'name' => 'name',
-            'user_id' => $owner->id,
-            'content' => 'content1',
-            'public_view' => false,
-        ]);
-        $child = Grammar::create([
-            'name' => 'name',
-            'user_id' => $owner->id,
-            'content' => 'content2',
-            'public_view' => false,
-        ]);
-        $child->makeChildOf($parent);
-
-        factory(Right::class)->create([
-            'grammar_id' => $parent->id,
-            'user_id' => $user->id,
-            'view' => $canParentView,
-            'comment' => false,
-            'edit' => false,
-            'admin' => false,
-        ]);
-        factory(Right::class)->create([
-            'grammar_id' => $child->id,
-            'user_id' => $user->id,
-            'view' => $canChildView,
-            'comment' => false,
-            'edit' => false,
-            'admin' => false,
-        ]);
-
-        $this
-            ->actingAs($user)
-            ->get(route('grammars.show', $parent));
-
-        $this->assertResponseStatus($statusCode);
-    }
-
-    public function itInheritRightsFromLatestVersionOfGrammarProvider()
-    {
-        return [
-            [
-                false,
-                true,
-                200,
-            ],
-            [
-                false,
-                false,
-                403,
             ],
         ];
     }

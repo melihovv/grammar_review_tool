@@ -10,11 +10,21 @@ class CreateGrammarsTable extends Migration
         Schema::create('grammars', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('updater_id')->nullable();
             $table->string('name');
-            $table->mediumText('content');
             $table->boolean('public_view')->index();
             $table->boolean('allow_to_comment')->default(true);
+
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::create('versions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('grammar_id');
+            $table->unsignedInteger('updater_id')->nullable();
+            $table->mediumText('content');
 
             $table->integer('parent_id')->nullable()->index();
             $table->integer('lft')->nullable()->index();
@@ -23,7 +33,7 @@ class CreateGrammarsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('grammar_id')->references('id')->on('grammars')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('updater_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -32,6 +42,7 @@ class CreateGrammarsTable extends Migration
 
     public function down()
     {
-        Schema::drop('grammars');
+        Schema::dropIfExists('grammars');
+        Schema::dropIfExists('versions');
     }
 }

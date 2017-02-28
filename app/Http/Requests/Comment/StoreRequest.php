@@ -2,16 +2,13 @@
 
 namespace App\Http\Requests\Comment;
 
-class CommentStoreRequest extends CommentRequest
+class StoreRequest extends BaseRequest
 {
     public function sanitizers()
     {
         return array_merge(parent::sanitizers(), [
             'user_id' => [function () {
                 return auth()->user()->id;
-            }],
-            'grammar_id' => [function () {
-                return $this->route('grammar')->id;
             }],
         ]);
     }

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Fadion\Sanitizer\Sanitizer;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,6 +14,21 @@ class AppServiceProvider extends ServiceProvider
         Sanitizer::register('remove_cr', function ($value) {
             return str_replace("\r", '', $value);
         });
+
+        Validator::extend(
+            'belongs_to_grammar',
+            function ($attribute, $value, $params) {
+                $grammar = Request::route('grammar');
+
+                if ($params[0] === 'id') {
+                    return $grammar->hasVersionWithId($value);
+                } elseif ($params[0] === 'version') {
+                    return $grammar->hasVersion($value);
+                }
+
+                return false;
+            }
+        );
     }
 
     public function register()

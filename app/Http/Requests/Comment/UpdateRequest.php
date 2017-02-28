@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Comment;
 
-class CommentUpdateRequest extends CommentRequest
+class UpdateRequest extends BaseRequest
 {
     public function sanitizers()
     {
@@ -22,9 +22,6 @@ class CommentUpdateRequest extends CommentRequest
                 'user_id' => [function () use ($user) {
                     return $user->id;
                 }],
-                'grammar_id' => [function () {
-                    return $this->route('grammar')->id;
-                }],
             ]);
         }
 
@@ -33,9 +30,6 @@ class CommentUpdateRequest extends CommentRequest
         return array_merge(parent::sanitizers(), $sanitizers, [
             'user_id' => [function () use ($grammar) {
                 return $grammar->owner->id;
-            }],
-            'grammar_id' => [function () use ($grammar) {
-                return $grammar->id;
             }],
         ]);
     }

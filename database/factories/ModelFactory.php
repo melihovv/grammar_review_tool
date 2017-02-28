@@ -4,6 +4,7 @@ use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
+use App\Entities\Version;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -54,6 +55,17 @@ $factory->define(Grammar::class, function (Generator $faker) {
             return factory(User::class)->create()->id;
         },
         'name' => $faker->sentence(),
+        'public_view' => $faker->boolean(),
+        'allow_to_comment' => $faker->boolean(),
+    ];
+});
+
+$factory->define(Version::class, function (Generator $faker) {
+    return [
+        'grammar_id' => function () {
+            return factory(Grammar::class)->create()->id;
+        },
+        'updater_id' => null,
         'content' => <<<'HERE'
 %name block_formal_langs_parser_cpp_language
 %declare_class {class block_formal_langs_parser_cpp_language}
@@ -70,16 +82,10 @@ comment_list(R) ::= COMMENT(A) . {
 }
 HERE
         ,
-        'public_view' => $faker->boolean(),
-        'allow_to_comment' => $faker->boolean(),
         'parent_id' => null,
         'lft' => null,
         'rgt' => null,
         'depth' => null,
-        'updater_id' => $faker->boolean() ? function () {
-            return factory(User::class)->create()->id;
-        }
-    : null,
     ];
 });
 
@@ -88,8 +94,8 @@ $factory->define(Comment::class, function (Generator $faker) {
         'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'grammar_id' => function () {
-            return factory(Grammar::class)->create()->id;
+        'version_id' => function () {
+            return factory(Version::class)->create()->id;
         },
         'content' => $faker->paragraph(),
         'row' => random_int(1, 3),

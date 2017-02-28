@@ -22,12 +22,12 @@ $api->version('v1', [
         )->name('grammars.diff');
 
         $api->get(
-            '/grammars/{grammar}/all-versions',
-            'GrammarsController@allVersions'
-        )->name('grammars.all-versions');
+            '/grammars/{grammar}/versions',
+            'GrammarsController@versions'
+        )->name('grammars.versions');
 
         $api->resource('grammars', 'GrammarsController', [
-            'except' => ['create', 'edit', 'update'],
+            'only' => ['store', 'show', 'destroy'],
         ]);
 
         $api->resource('grammars.comments', 'CommentsController', [

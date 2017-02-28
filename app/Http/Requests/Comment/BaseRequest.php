@@ -4,12 +4,13 @@ namespace App\Http\Requests\Comment;
 
 use App\Http\Requests\Request;
 
-abstract class CommentRequest extends Request
+abstract class BaseRequest extends Request
 {
     public function rules()
     {
         return array_merge(parent::rules(), [
             'content' => 'required|string|max:65535',
+            'version_id' => 'required|integer|min:1|belongs_to_grammar:id',
         ]);
     }
 

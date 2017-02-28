@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Entities\Grammar;
-use App\Http\Requests\Grammar\GrammarStoreRequest;
+use App\Http\Requests\Grammar\ShowRequest;
 use App\Http\Transformers\DiffTransformer;
-use App\Http\Transformers\GrammarTransformer;
+use App\Http\Transformers\VersionTransformer;
 use App\Services\GrammarService;
 
 class GrammarsController extends ApiController
@@ -16,45 +16,30 @@ class GrammarsController extends ApiController
         $this->middleware('can:view,grammar', ['only' => ['show']]);
     }
 
-    public function index()
-    {
-        $grammars = $this->auth->user()->availableGrammars()->paginate(10);
-
-        return $this->response->paginator($grammars, new GrammarTransformer());
-    }
-
-    public function store(GrammarStoreRequest $request)
-    {
-        $grammar = Grammar::create($request->all());
-
-        return $this->response->item($grammar, new GrammarTransformer());
-    }
-
     /**
      * @param Grammar $grammar
+     * @param ShowRequest $request
      *
      * @return \Dingo\Api\Http\Response
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function show(Grammar $grammar)
+    public function show(Grammar $grammar, ShowRequest $request)
     {
+        if ($request->has('version')) {
+            $version = $grammar->getVersion($request->get('version', 0));
+        } else {
+            $version = $grammar->getLatestVersion();
+        }
+
         return $this->response->item(
-            $grammar,
-            new GrammarTransformer(),
-            [],
+            $version,
+            new VersionTransformer(),
             function ($resource, $fractal) {
-                $fractal->parseIncludes(['owner', 'comments', 'rights']);
+                $fractal->parseIncludes(['grammar', 'comments']);
             }
         );
     }
 
-    public function destroy(Grammar $grammar)
-    {
-        $grammar->delete();
-
-        return $this->response->noContent();
-    }
-
     /**
      * @param Grammar $grammar
      *
@@ -62,25 +47,28 @@ class GrammarsController extends ApiController
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function allVersions(Grammar $grammar)
+    public function versions(Grammar $grammar)
     {
-        $root = $grammar->getRoot();
-        $allVersions = $root->descendantsAndSelf()->exclude('content')->get();
-        $allVersions = $allVersions->reverse();
+        $grammars = $grammar->versions()
+            ->exclude('content')
+            ->orderBy('id', 'desc')
+            ->get();
 
         return $this->response->collection(
-            $allVersions,
-            new GrammarTransformer(),
-            [],
+            $grammars,
+            new VersionTransformer(),
             function ($resource, $fractal) {
                 $fractal->parseIncludes(['updater']);
             }
         );
     }
 
-    public function diff(Grammar $grammar, GrammarService $service)
-    {
-        $diff = $service->diff($grammar);
+    public function diff(
+        Grammar $grammar,
+        GrammarService $service,
+        ShowRequest $request
+    ) {
+        $diff = $service->diff($grammar, $request->get('version'));
 
         return $this->response->item(
             (object) [

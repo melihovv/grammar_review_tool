@@ -8,7 +8,7 @@
             </div>
         </div>
         <grammar-history grammar-id="{{ $grammar->id }}"
-                         latest-version-id="{{ $latestVersion->id }}">
+                         latest-version="{{ $latestVersion->depth }}">
         </grammar-history>
     </div>
 @endsection

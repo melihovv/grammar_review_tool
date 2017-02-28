@@ -5,7 +5,7 @@ namespace App\Http\Requests\Right;
 use App\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 
-class RightStoreRequest extends Request
+class StoreRequest extends Request
 {
     public function rules()
     {

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Comment;
 use App\Entities\Grammar;
-use App\Http\Requests\Comment\CommentStoreRequest;
-use App\Http\Requests\Comment\CommentUpdateRequest;
+use App\Http\Requests\Comment\StoreRequest;
+use App\Http\Requests\Comment\UpdateRequest;
 use App\Http\Transformers\CommentTransformer;
+use App\Services\CommentService;
 
 class CommentsController extends ApiController
 {
@@ -20,9 +21,12 @@ class CommentsController extends ApiController
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function store(Grammar $grammar, CommentStoreRequest $request)
-    {
-        $comment = Comment::create($request->all());
+    public function store(
+        Grammar $grammar,
+        StoreRequest $request,
+        CommentService $service
+    ) {
+        $comment = $service->create($request->all());
 
         return $this->response->item($comment, new CommentTransformer());
     }
@@ -33,19 +37,23 @@ class CommentsController extends ApiController
     public function update(
         Grammar $grammar,
         Comment $comment,
-        CommentUpdateRequest $request
+        UpdateRequest $request,
+        CommentService $service
     ) {
-        $comment->update($request->all());
+        $updatedComment = $service->update($comment, $request->all());
 
-        return $this->response->item($comment, new CommentTransformer());
+        return $this->response->item($updatedComment, new CommentTransformer());
     }
 
     /**
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function destroy(Grammar $grammar, Comment $comment)
-    {
-        $comment->delete();
+    public function destroy(
+        Grammar $grammar,
+        Comment $comment,
+        CommentService $service
+    ) {
+        $service->delete($comment);
 
         return $this->response->noContent();
     }

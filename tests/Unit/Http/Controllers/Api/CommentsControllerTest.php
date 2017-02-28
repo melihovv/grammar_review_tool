@@ -24,7 +24,7 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testStore($cb)
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar, $version) = $this->createGrammar();
         $cb($user, $grammar);
 
         $route = app(UrlGenerator::class)->version('v1')
@@ -36,12 +36,13 @@ class CommentsControllerTest extends BrowserKitTestCase
                 'content' => 'content1',
                 'row' => 1,
                 'column' => 0,
+                'version_id' => $version->id,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content1',
             'row' => 1,
             'column' => 0,
@@ -104,7 +105,7 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testStoreSanitizers()
     {
         $user = factory(User::class, 'admin')->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar, $version) = $this->createGrammar();
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.store', [$grammar->id]);
@@ -116,17 +117,38 @@ class CommentsControllerTest extends BrowserKitTestCase
                 'row' => 1,
                 'column' => 0,
                 'user_id' => 100500,
-                'grammar_id' => 100500,
+                'version_id' => $version->id,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content1',
             'row' => 1,
             'column' => 0,
         ]);
+    }
+
+    public function testWrongVersion()
+    {
+        $user = factory(User::class, 'admin')->create();
+        list($grammar, $version) = $this->createGrammar();
+
+        $route = app(UrlGenerator::class)->version('v1')
+            ->route('grammars.comments.store', [$grammar->id]);
+
+        $this
+            ->actingAsApiUser($user)
+            ->post($route, [
+                'content' => 'content1  ',
+                'row' => 1,
+                'column' => 0,
+                'user_id' => 100500,
+                'version_id' => 100500,
+            ], $this->headers('v1', $user));
+
+        $this->assertResponseStatus(422);
     }
 
     /**
@@ -199,7 +221,7 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testUpdate($cb)
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar, $version) = $this->createGrammar();
         $comment = factory(Comment::class)->create();
         $cb($user, $grammar, $comment);
 
@@ -210,12 +232,13 @@ class CommentsControllerTest extends BrowserKitTestCase
             ->actingAsApiUser($user)
             ->put($route, [
                 'content' => 'content2',
+                'version_id' => $version->id,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content2',
             'row' => $comment->row,
             'column' => $comment->column,
@@ -253,9 +276,9 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testUpdateSanitizers(callable $setupCb)
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar, $version) = $this->createGrammar();
         $comment = factory(Comment::class)->create();
-        $payload = $setupCb($user, $grammar, $comment);
+        $payload = $setupCb($user, $grammar, $comment, $version);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.update', [$grammar->id, $comment->id]);
@@ -267,7 +290,7 @@ class CommentsControllerTest extends BrowserKitTestCase
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content2',
             'row' => $comment->row,
             'column' => $comment->column,
@@ -278,7 +301,7 @@ class CommentsControllerTest extends BrowserKitTestCase
     {
         return [
             'user is admin' => [
-                function ($user, $grammar, $comment) {
+                function ($user, $grammar, $comment, $version) {
                     $user->update(['is_admin' => true]);
                     $grammar->update(['user_id' => $user->id]);
 
@@ -287,12 +310,12 @@ class CommentsControllerTest extends BrowserKitTestCase
                         'row' => 100500,
                         'column' => 100500,
                         'user_id' => 100500,
-                        'grammar_id' => 100500,
+                        'version_id' => $version->id,
                     ];
                 },
             ],
             'user has right to comment and he is comment owner' => [
-                function ($user, $grammar, $comment) {
+                function ($user, $grammar, $comment, $version) {
                     $grammar->update([
                         'allow_to_comment' => true,
                     ]);
@@ -308,7 +331,7 @@ class CommentsControllerTest extends BrowserKitTestCase
                         'row' => 100500,
                         'column' => 100500,
                         'user_id' => 100500,
-                        'grammar_id' => 100500,
+                        'version_id' => $version->id,
                     ];
                 },
             ],
@@ -321,7 +344,7 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testUpdateUnauthorized($cb)
     {
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar) = $this->createGrammar();
         $comment = factory(Comment::class)->create();
         $cb($user, $grammar, $comment);
 
@@ -376,10 +399,10 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function testUpdateByAdminDoesNotChangeCommentOwnerAndGrammar()
     {
         $user = factory(User::class, 'admin')->create();
-        $grammar = factory(Grammar::class)->create();
+        list($grammar, $version) = $this->createGrammar();
         $comment = factory(Comment::class)->create([
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content1',
             'row' => 1,
             'column' => 0,
@@ -394,14 +417,14 @@ class CommentsControllerTest extends BrowserKitTestCase
                 'content' => 'content2',
                 'row' => 1,
                 'column' => 0,
-                'grammar_id' => 10,
                 'user_id' => 20,
+                'version_id' => $version->id,
             ], $this->headers('v1', $user));
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content2',
             'row' => 1,
             'column' => 0,
@@ -412,10 +435,13 @@ class CommentsControllerTest extends BrowserKitTestCase
     {
         $admin = factory(User::class, 'admin')->create();
         $user = factory(User::class)->create();
-        $grammar = factory(Grammar::class)->create(['user_id' => $user->id]);
+        list($grammar, $version) = $this->createGrammar(
+            'content',
+            ['user_id' => $user->id]
+        );
         $comment = factory(Comment::class)->create([
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $grammar->id,
             'content' => 'content1',
             'row' => 1,
             'column' => 0,
@@ -430,14 +456,14 @@ class CommentsControllerTest extends BrowserKitTestCase
                 'content' => 'content2',
                 'row' => 1,
                 'column' => 0,
-                'grammar_id' => 10,
+                'version_id' => $version->id,
                 'user_id' => 20,
             ], $this->headers('v1', $admin));
 
         $this->seeJsonStructure($this->responseStructure());
         $this->seeInDatabase('comments', [
             'user_id' => $user->id,
-            'grammar_id' => $grammar->id,
+            'version_id' => $version->id,
             'content' => 'content2',
             'row' => 1,
             'column' => 0,
