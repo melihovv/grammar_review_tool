@@ -18,7 +18,6 @@ class GrammarTransformer extends Transformer
             $model->user_id,
             e($model->name),
             $model->public_view,
-            $model->allow_to_comment,
         ]);
     }
 
@@ -29,7 +28,6 @@ class GrammarTransformer extends Transformer
             'user_id',
             'name',
             'public_view',
-            'allow_to_comment',
         ];
     }
 

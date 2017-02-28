@@ -16,7 +16,6 @@ class Grammar extends Model
         'user_id',
         'name',
         'public_view',
-        'allow_to_comment',
         'created_at',
         'updated_at',
     ];
@@ -25,13 +24,11 @@ class Grammar extends Model
         'user_id',
         'name',
         'public_view',
-        'allow_to_comment',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
         'public_view' => 'boolean',
-        'allow_to_comment' => 'boolean',
     ];
 
     /**

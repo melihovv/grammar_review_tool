@@ -56,7 +56,6 @@ $factory->define(Grammar::class, function (Generator $faker) {
         },
         'name' => $faker->sentence(),
         'public_view' => $faker->boolean(),
-        'allow_to_comment' => $faker->boolean(),
     ];
 });
 

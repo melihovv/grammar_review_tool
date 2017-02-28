@@ -22,8 +22,7 @@ class AccessManager {
   canUserUpdateOrDeleteComment(user, comment) {
     return user.is_admin
       || (
-        this.grammar.allow_to_comment
-        && AccessManager.isUserCommentOwner(comment, user)
+        AccessManager.isUserCommentOwner(comment, user)
         && (
           this.isUserGrammarOwner(user)
           || this.hasUserRightTo(['comment', 'edit', 'admin'], user)
@@ -58,10 +57,7 @@ class AccessManager {
   canUserComment(user) {
     return user.is_admin
       || this.isUserGrammarOwner(user)
-      || (
-        this.grammar.allow_to_comment
-        && this.hasUserRightTo(['comment', 'edit', 'admin'], user)
-      )
+      || this.hasUserRightTo(['comment', 'edit', 'admin'], user)
   }
 
   /**

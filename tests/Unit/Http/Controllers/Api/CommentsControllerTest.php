@@ -58,16 +58,7 @@ class CommentsControllerTest extends BrowserKitTestCase
             'user is grammar owner' => [function ($user, $grammar) {
                 $grammar->update(['user_id' => $user->id]);
             }],
-            'user is grammar owner and grammar is not allowed to comment' => [
-                function ($user, $grammar) {
-                    $grammar->update([
-                        'user_id' => $user->id,
-                        'allow_to_comment' => false,
-                    ]);
-                },
-            ],
             'user has right to comment grammar' => [function ($user, $grammar) {
-                $grammar->update(['allow_to_comment' => true]);
                 factory(Right::class)->create([
                     'user_id' => $user->id,
                     'grammar_id' => $grammar->id,
@@ -78,7 +69,6 @@ class CommentsControllerTest extends BrowserKitTestCase
                 ]);
             }],
             'user has right to edit grammar' => [function ($user, $grammar) {
-                $grammar->update(['allow_to_comment' => true]);
                 factory(Right::class)->create([
                     'user_id' => $user->id,
                     'grammar_id' => $grammar->id,
@@ -89,7 +79,6 @@ class CommentsControllerTest extends BrowserKitTestCase
                 ]);
             }],
             'user has right to admin grammar' => [function ($user, $grammar) {
-                $grammar->update(['allow_to_comment' => true]);
                 factory(Right::class)->create([
                     'user_id' => $user->id,
                     'grammar_id' => $grammar->id,
@@ -173,35 +162,8 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function storeUnauthorizedProvider()
     {
         return [
-            'user has right to comment grammar, but grammar is not allowed to be commented' => [
-                function ($user, $grammar) {
-                    $grammar->update(['allow_to_comment' => false]);
-                    factory(Right::class)->create([
-                        'user_id' => $user->id,
-                        'grammar_id' => $grammar->id,
-                        'view' => false,
-                        'comment' => true,
-                        'edit' => false,
-                        'admin' => false,
-                    ]);
-                },
-            ],
-            'user has right to edit grammar, but grammar is not allowed to be commented' => [
-                function ($user, $grammar) {
-                    $grammar->update(['allow_to_comment' => false]);
-                    factory(Right::class)->create([
-                        'user_id' => $user->id,
-                        'grammar_id' => $grammar->id,
-                        'view' => false,
-                        'comment' => false,
-                        'edit' => true,
-                        'admin' => false,
-                    ]);
-                },
-            ],
             'user has not right to comment grammar' => [
                 function ($user, $grammar) {
-                    $grammar->update(['allow_to_comment' => true]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
@@ -254,9 +216,6 @@ class CommentsControllerTest extends BrowserKitTestCase
             }],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update([
-                        'allow_to_comment' => true,
-                    ]);
                     $comment->update(['user_id' => $user->id]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
@@ -316,9 +275,6 @@ class CommentsControllerTest extends BrowserKitTestCase
             ],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment, $version) {
-                    $grammar->update([
-                        'allow_to_comment' => true,
-                    ]);
                     $comment->update(['user_id' => $user->id]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
@@ -363,12 +319,10 @@ class CommentsControllerTest extends BrowserKitTestCase
         return [
             'user has not right to comment' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                 },
             ],
             'user has right to comment, but he is not comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
@@ -381,7 +335,6 @@ class CommentsControllerTest extends BrowserKitTestCase
             ],
             'user has not right to comment, but he is comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                     $comment->update(['user_id' => $user->id]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
@@ -503,7 +456,6 @@ class CommentsControllerTest extends BrowserKitTestCase
             ],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                     $comment->update(['user_id' => $user->id]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
@@ -543,12 +495,10 @@ class CommentsControllerTest extends BrowserKitTestCase
         return [
             'user has not right to comment' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                 },
             ],
             'user has right to comment, but he is not comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
@@ -561,7 +511,6 @@ class CommentsControllerTest extends BrowserKitTestCase
             ],
             'user has not right to comment, but he is comment owner' => [
                 function ($user, $grammar, $comment) {
-                    $grammar->update(['allow_to_comment' => true]);
                     $comment->update(['user_id' => $user->id]);
                     factory(Right::class)->create([
                         'user_id' => $user->id,

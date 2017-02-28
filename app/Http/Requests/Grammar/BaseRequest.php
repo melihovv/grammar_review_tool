@@ -12,7 +12,6 @@ abstract class BaseRequest extends Request
             'name' => 'required|string|max:255',
             'content' => 'required|string|max:16777215',
             'public_view' => 'required|boolean',
-            'allow_to_comment' => 'required|boolean',
         ]);
     }
 

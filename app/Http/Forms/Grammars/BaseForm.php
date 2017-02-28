@@ -21,9 +21,6 @@ abstract class BaseForm extends Form
             ])
             ->add('public_view', 'checkbox', [
                 'label' => 'Visible to everyone',
-            ])
-            ->add('allow_to_comment', 'checkbox', [
-                'label' => 'Allow to comment',
             ]);
     }
 }

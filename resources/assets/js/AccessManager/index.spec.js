@@ -17,13 +17,13 @@ describe('AccessManager', () => {
         expected: true,
       },
       'grammar is allowed to comment, but user is not comment owner': {
-        accessManager: new AccessManager({allow_to_comment: true}, []),
+        accessManager: new AccessManager({}, []),
         user: {id: 1},
         comment: {user_id: 2},
         expected: false,
       },
       'grammar is allowed to comment, user is comment owner, but he has not right to comment': {
-        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+        accessManager: new AccessManager({id: 1}, [
           {
             grammar_id: 1,
             user_id: 1,
@@ -35,7 +35,7 @@ describe('AccessManager', () => {
         expected: false,
       },
       'grammar is allowed to comment, user is comment owner and he has right to comment': {
-        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+        accessManager: new AccessManager({id: 1}, [
           {
             grammar_id: 1,
             user_id: 1,
@@ -50,7 +50,6 @@ describe('AccessManager', () => {
       'grammar is allowed to comment, user is comment and grammar owner and he has not right to comment': {
         accessManager: new AccessManager({
           id: 1,
-          allow_to_comment: true,
           user_id: 1,
         }, [
           {
@@ -89,16 +88,8 @@ describe('AccessManager', () => {
         user: {id: 1},
         expected: true,
       },
-      'grammar is not allowed to comment': {
-        accessManager: new AccessManager({
-          user_id: 1,
-          allow_to_comment: false,
-        }, []),
-        user: {id: 2},
-        expected: false,
-      },
       'grammar is  allowed to comment, but user has not right to comment': {
-        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+        accessManager: new AccessManager({id: 1}, [
           {
             grammar_id: 1,
             user_id: 1,
@@ -109,7 +100,7 @@ describe('AccessManager', () => {
         expected: false,
       },
       'grammar is  allowed to comment and user has right to comment': {
-        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+        accessManager: new AccessManager({id: 1}, [
           {
             grammar_id: 1,
             user_id: 1,
@@ -120,7 +111,7 @@ describe('AccessManager', () => {
         expected: true,
       },
       'grammar is  allowed to comment and user has right to edit grammar': {
-        accessManager: new AccessManager({id: 1, allow_to_comment: true}, [
+        accessManager: new AccessManager({id: 1}, [
           {
             grammar_id: 1,
             user_id: 1,

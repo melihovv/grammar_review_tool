@@ -12,7 +12,6 @@ class CreateGrammarsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->boolean('public_view')->index();
-            $table->boolean('allow_to_comment')->default(true);
 
             $table->timestamps();
 

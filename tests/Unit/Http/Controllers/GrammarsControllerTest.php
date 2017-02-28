@@ -110,7 +110,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->type('title1', 'name')
             ->type('content', 'content')
             ->check('public_view')
-            ->check('allow_to_comment')
             ->press('Create')
             ->seePageIs(route('grammars.show', 1));
 
@@ -118,7 +117,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             'name' => 'title1',
             'content' => 'content',
             'public_view' => 1,
-            'allow_to_comment' => 1,
         ]);
     }
 
@@ -147,7 +145,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->put(route('grammars.update', $grammar), [
                 'content' => 'new content',
                 'name' => 'new name',
-                'allow_to_comment' => true,
                 'public_view' => false,
                 'user_id' => 100500,
             ]);
@@ -157,7 +154,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             'id' => 1,
             'user_id' => $user->id,
             'name' => 'new name',
-            'allow_to_comment' => true,
             'public_view' => false,
         ]);
         $this->seeInDatabase('versions', [
@@ -182,7 +178,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     $user = factory(User::class)->create();
                     list($grammar) = $testcase->createGrammar('content', [
                         'user_id' => $user->id,
-                        'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
 
@@ -194,7 +189,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     $user = factory(User::class, 'admin')->create();
                     list($grammar) = $testcase->createGrammar('content', [
                         'user_id' => $user->id,
-                        'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
 
@@ -206,7 +200,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     $user = factory(User::class)->create();
                     list($grammar) = $testcase->createGrammar('content', [
                         'user_id' => $user->id,
-                        'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
                     factory(Right::class)->create([
@@ -223,7 +216,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
                     $user = factory(User::class)->create();
                     list($grammar) = $testcase->createGrammar('content', [
                         'user_id' => $user->id,
-                        'allow_to_comment' => false,
                         'public_view' => true,
                     ]);
                     factory(Right::class)->create([
@@ -254,7 +246,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->put(route('grammars.update', $grammar), [
                 'content' => $content,
                 'name' => 'new name',
-                'allow_to_comment' => true,
                 'public_view' => false,
             ]);
 
