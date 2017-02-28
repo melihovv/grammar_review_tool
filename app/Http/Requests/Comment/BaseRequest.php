@@ -27,7 +27,7 @@ abstract class BaseRequest extends Request
     public function sanitizers()
     {
         return [
-            'content' => 'trim',
+            'content' => 'trim|remove_cr',
         ];
     }
 }

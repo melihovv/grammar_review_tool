@@ -119,3 +119,17 @@ if (!function_exists('lcs')) {
         return $table;
     }
 }
+
+if (!function_exists('newLine2br')) {
+    /**
+     * Replaces all new lines with <br> tag.
+     *
+     * @param $str
+     *
+     * @return string
+     */
+    function newLine2br($str)
+    {
+        return str_replace(["\r\n", "\r", "\n"], '<br>', $str);
+    }
+}

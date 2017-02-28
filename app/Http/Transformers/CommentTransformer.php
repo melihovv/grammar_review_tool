@@ -16,7 +16,7 @@ class CommentTransformer extends Transformer
             $model->id,
             $model->user_id,
             $model->version_id,
-            e($model->content),
+            newLine2br(e($model->content)),
             $model->row,
             $model->column,
         ]);
