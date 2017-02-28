@@ -17,7 +17,7 @@ class GrammarsController extends ApiController
     }
 
     /**
-     * @param Grammar $grammar
+     * @param Grammar     $grammar
      * @param ShowRequest $request
      *
      * @return \Dingo\Api\Http\Response
