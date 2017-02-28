@@ -5,8 +5,8 @@ namespace Tests\Traits;
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
 use App\Entities\Grammar;
 use App\Entities\User;
-use Facades\App\Services\GrammarService;
 use BadMethodCallException;
+use Facades\App\Services\GrammarService;
 use Mockery;
 use Mockery\MockInterface;
 
@@ -14,7 +14,7 @@ trait TestHelpers
 {
     /**
      * @param string $method
-     * @param array $args
+     * @param array  $args
      *
      * @return mixed
      */
@@ -43,9 +43,9 @@ trait TestHelpers
     /**
      * Call protected/private method of a class.
      *
-     * @param object &$object Instantiated object that we will run method on.
+     * @param object &$object    Instantiated object that we will run method on.
      * @param string $methodName Method name to call
-     * @param array $parameters Array of parameters to pass into method.
+     * @param array  $parameters Array of parameters to pass into method.
      *
      * @return mixed Method return.
      */

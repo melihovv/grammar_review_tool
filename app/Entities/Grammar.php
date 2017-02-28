@@ -2,7 +2,6 @@
 
 namespace App\Entities;
 
-use Baum\Node;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,6 +60,7 @@ class Grammar extends Model
 
     /**
      * @param int $version
+     *
      * @return Builder
      */
     public function version($version)
@@ -70,6 +70,7 @@ class Grammar extends Model
 
     /**
      * @param int $version
+     *
      * @return Grammar
      */
     public function getVersion($version)

@@ -25,6 +25,7 @@ class CommentService
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
@@ -34,6 +35,7 @@ class CommentService
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function update(Comment $comment, array $data)
@@ -45,6 +47,7 @@ class CommentService
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function delete(Comment $comment)
@@ -130,8 +133,8 @@ class CommentService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int $i
-     * @param int $j
+     * @param int   $i
+     * @param int   $j
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */

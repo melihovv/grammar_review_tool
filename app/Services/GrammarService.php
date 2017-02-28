@@ -31,6 +31,7 @@ class GrammarService
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function create(array $data)
@@ -52,8 +53,8 @@ class GrammarService
 
     /**
      * @param Grammar $grammar
-     * @param User $updater
-     * @param array $data
+     * @param User    $updater
+     * @param array   $data
      *
      * @return Version
      */
@@ -82,6 +83,7 @@ class GrammarService
 
     /**
      * @param Grammar $grammar
+     *
      * @return bool|null
      */
     public function delete(Grammar $grammar)
@@ -128,8 +130,8 @@ class GrammarService
      * @param array $lcs
      * @param array $linesA
      * @param array $linesB
-     * @param int $i
-     * @param int $j
+     * @param int   $i
+     * @param int   $j
      *
      * @return array
      *

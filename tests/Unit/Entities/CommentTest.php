@@ -3,7 +3,6 @@
 namespace Tests\Unit\Entities;
 
 use App\Entities\Comment;
-use App\Entities\Grammar;
 use App\Entities\User;
 use App\Entities\Version;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
