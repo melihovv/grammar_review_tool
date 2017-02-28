@@ -43,8 +43,6 @@ class RouteServiceProvider extends SP
      * These routes all receive session state, CSRF protection, etc.
      *
      * @return void
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     protected function mapWebRoutes()
     {

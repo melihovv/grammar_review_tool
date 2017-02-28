@@ -9,6 +9,9 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     */
     public function boot()
     {
         Sanitizer::register('remove_cr', function ($value) {
