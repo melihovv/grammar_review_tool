@@ -66,15 +66,18 @@ class GrammarService
             function () use ($grammar, $data, &$newVersion, $updater) {
                 $grammar->update($data);
                 $prevVersion = $grammar->getLatestVersion();
-                $newVersion = Version::create([
-                    'grammar_id' => $grammar->id,
-                    'updater_id' => $updater->id,
-                    'content' => $data['content'],
-                ]);
-                $newVersion->makeChildOf($prevVersion);
 
-                $this->commentService
-                    ->updateComments($prevVersion, $newVersion);
+                if ($prevVersion->content !== $data['content']) {
+                    $newVersion = Version::create([
+                        'grammar_id' => $grammar->id,
+                        'updater_id' => $updater->id,
+                        'content' => $data['content'],
+                    ]);
+                    $newVersion->makeChildOf($prevVersion);
+
+                    $this->commentService
+                        ->updateComments($prevVersion, $newVersion);
+                }
             }
         );
 

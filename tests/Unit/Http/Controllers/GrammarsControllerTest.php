@@ -6,6 +6,7 @@ use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
+use App\Entities\Version;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\BrowserKitTestCase;
@@ -229,6 +230,26 @@ class GrammarsControllerTest extends BrowserKitTestCase
                 },
             ],
         ];
+    }
+
+    public function testUpdateWithTheSameContent()
+    {
+        $user = factory(User::class)->create();
+        list($grammar) = $this->createGrammar('content', [
+            'user_id' => $user->id,
+            'public_view' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $grammar), [
+                'content' => 'content',
+                'name' => 'new name',
+                'public_view' => false,
+                'user_id' => 100500,
+            ]);
+
+        $this->assertEquals(1, Version::count());
     }
 
     /**
