@@ -62,7 +62,7 @@
             rights
           )
         } catch (e) {
-          this.grammar = grammar.content
+          this.grammar = version.content
           this.parseFailed = true
           this.parseErrors = parser.getErrors()
         }
