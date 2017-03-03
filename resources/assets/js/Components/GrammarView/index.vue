@@ -264,7 +264,7 @@
     &__symbol-icons
       display none
       position absolute
-      top -20px
+      top -18px
       left 50%
       transform translateX(-50%)
       background-color white
