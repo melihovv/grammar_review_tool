@@ -7,7 +7,7 @@ var LemonParserVisitor = require('./LemonParserVisitor').LemonParserVisitor;
 var grammarFileName = "LemonParser.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003\u0014W\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0015W\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0003\u0002\u0003\u0002\u0006\u0002\u0017",
     "\n\u0002\r\u0002\u000e\u0002\u0018\u0003\u0003\u0003\u0003\u0003\u0003",
@@ -52,10 +52,10 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "JL\u0005\u0012\n\u0002K?\u0003\u0002\u0002\u0002KA\u0003\u0002\u0002",
     "\u0002KF\u0003\u0002\u0002\u0002KG\u0003\u0002\u0002\u0002KH\u0003\u0002",
     "\u0002\u0002KI\u0003\u0002\u0002\u0002L\u0011\u0003\u0002\u0002\u0002",
-    "MQ\u0007\u0006\u0002\u0002NP\u0007\u0014\u0002\u0002ON\u0003\u0002\u0002",
+    "MQ\u0007\u0006\u0002\u0002NP\u0007\u0015\u0002\u0002ON\u0003\u0002\u0002",
     "\u0002PS\u0003\u0002\u0002\u0002QO\u0003\u0002\u0002\u0002QR\u0003\u0002",
     "\u0002\u0002RT\u0003\u0002\u0002\u0002SQ\u0003\u0002\u0002\u0002TU\u0007",
-    "\u0013\u0002\u0002U\u0013\u0003\u0002\u0002\u0002\r\u0016\u0018 $(*",
+    "\u0014\u0002\u0002U\u0013\u0003\u0002\u0002\u0002\r\u0016\u0018 $(*",
     ".1CKQ"].join("");
 
 
@@ -70,7 +70,7 @@ var literalNames = [ null, null, null, null, null, "'::='" ];
 var symbolicNames = [ null, "BLOCK_COMMENT", "LINE_COMMENT", "INT", "BEGIN_CODE", 
                       "ASSIGN", "DOT", "LBRACE", "RBRACE", "LBRACKET", "RBRACKET", 
                       "LPAREN", "RPAREN", "PERCENT", "TERMINAL", "NONTERMINAL", 
-                      "WS", "END_CODE", "CODE_CONTENT" ];
+                      "WS", "ERROR_CHARACTER", "END_CODE", "CODE_CONTENT" ];
 
 var ruleNames =  [ "file", "grammarRule", "leftSide", "rightSide", "precedence", 
                    "symbol", "param", "directive", "codeBlock" ];
@@ -110,8 +110,9 @@ LemonParser.PERCENT = 13;
 LemonParser.TERMINAL = 14;
 LemonParser.NONTERMINAL = 15;
 LemonParser.WS = 16;
-LemonParser.END_CODE = 17;
-LemonParser.CODE_CONTENT = 18;
+LemonParser.ERROR_CHARACTER = 17;
+LemonParser.END_CODE = 18;
+LemonParser.CODE_CONTENT = 19;
 
 LemonParser.RULE_file = 0;
 LemonParser.RULE_grammarRule = 1;

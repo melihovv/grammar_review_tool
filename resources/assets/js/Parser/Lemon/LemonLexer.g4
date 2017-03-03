@@ -22,6 +22,8 @@ NONTERMINAL: Lower Alphanum*;
 
 WS: Ws+ -> channel(HIDDEN);
 
+ERROR_CHARACTER: .;
+
 mode Code;
 NESTED_CODE: LBrace -> type(CODE_CONTENT), pushMode(Code);
 BEGIN_SQUOTED_STRING: SQuote ('\\\''|~['])* SQuote -> type(CODE_CONTENT);
