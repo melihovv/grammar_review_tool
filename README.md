@@ -8,4 +8,6 @@
 
 Tool for review formal grammars in Lemon format.
 
+Demo available at http://138.68.75.165.
+
 More info in [wiki](https://github.com/melihovv/grammar_review_tool/wiki).
