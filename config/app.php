@@ -193,6 +193,7 @@ return [
         Melihovv\LaravelEnvValidator\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
+        Laravel\Dusk\DuskServiceProvider::class,
     ],
 
     'local_aliases' => [

@@ -35,7 +35,8 @@
     "barryvdh/laravel-debugbar": "^2.3",
     "melihovv/laravel-env-validator": "^1.0",
     "laravel/tinker": "^1.0",
-    "laravel/browser-kit-testing": "^1.0"
+    "laravel/browser-kit-testing": "^1.0",
+    "laravel/dusk": "^1.0"
   },
   "repositories": [
     {
