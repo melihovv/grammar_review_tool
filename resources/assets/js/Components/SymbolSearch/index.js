@@ -23,7 +23,7 @@ $(() => {
       .find(`tr[data-row=${row}] .grammar-view__ls-nonterminal`)
       .addClass('symbol-search__found-symbol')
     $('html, body').animate({
-      scrollTop: $foundSymbol.offset().top
+      scrollTop: $foundSymbol.offset().top,
     }, 500)
   }
 
