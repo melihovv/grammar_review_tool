@@ -29,19 +29,19 @@ Demo available at http://138.68.75.165.
 
 ## Screenshots
 
-Index page
+### Index page
 ![image](https://cloud.githubusercontent.com/assets/8608721/23574895/6df32690-0095-11e7-81e5-e2a9a716448e.png)
 
-Comments to rows and symbols
+### Comments to rows and symbols
 ![image](https://cloud.githubusercontent.com/assets/8608721/23574914/c4410828-0095-11e7-88d3-b472227f05a0.png)
 
-Structural search
+### Structural search
 ![image](https://cloud.githubusercontent.com/assets/8608721/23574931/f60d1c8e-0095-11e7-8199-096d3c768930.png)
 
-Rights management
+### Rights management
 ![image](https://cloud.githubusercontent.com/assets/8608721/23574967/871c63ce-0096-11e7-80e9-d3ce217478a8.png)
 
-Grammar versions history
+### Grammar versions history
 ![image](https://cloud.githubusercontent.com/assets/8608721/23574975/c2e290d6-0096-11e7-82e1-1ae201af3857.png)
 
 More info in [wiki](https://github.com/melihovv/grammar_review_tool/wiki).
