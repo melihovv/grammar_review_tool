@@ -70,6 +70,10 @@
           })
       },
       searchUsers: debounce(function (query) {
+        if (query.length === 0) {
+          return
+        }
+
         this.isLoading = true
 
         this.xhrs.forEach(xhr => xhr.abort())
