@@ -13,6 +13,7 @@
   @import "~bootstrap/dist/css/bootstrap.css"
   @import "~messenger/build/css/messenger.css"
   @import "~messenger/build/css/messenger-theme-block.css"
+  @import "~vue-multiselect/dist/vue-multiselect.min.css"
 
   *
     box-sizing border-box
