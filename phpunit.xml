@@ -9,10 +9,10 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="unit_suite">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-      <testsuite name="Dusk Test Suite">
+      <testsuite name="dusk_suite">
         <directory suffix="Test.php">./tests/Browser</directory>
       </testsuite>
     </testsuites>

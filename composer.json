@@ -77,7 +77,7 @@
       "php artisan post-update-cmd",
       "php artisan optimize"
     ],
-    "phpunit": "phpunit",
+    "phpunit": "phpunit --testsuite=unit_suite",
     "phpmd": "phpmd app/ text ./phpmd-rules.xml",
     "phpcs": "phpcs --standard=./phpcs-rules.xml --encoding=utf-8 app/",
     "phpcbf": "phpcbf --standard=./phpcs-rules.xml --encoding=utf-8 app/"
