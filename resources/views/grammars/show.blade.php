@@ -17,6 +17,8 @@
                     </p>
                 @endif
 
+                @include('grammars.partials.symbol-search')
+
                 <grammar-view grammar-id="{{ $grammar->id }}"
                               version="{{ $version->depth }}"
                               version-id="{{ $version->id }}"></grammar-view>

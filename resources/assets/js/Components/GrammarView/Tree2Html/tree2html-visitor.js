@@ -63,7 +63,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
     for (const line of lines) {
       this.html += `
-<tr class="grammar-view__row">
+<tr class="grammar-view__row" data-row="${number}">
   <td class="grammar-view__row-number">${number}</td>
   <td class="grammar-view__code">`
 

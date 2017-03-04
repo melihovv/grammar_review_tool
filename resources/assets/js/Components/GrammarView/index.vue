@@ -18,6 +18,8 @@
   import $ from 'jquery'
   import Parser from 'js/Parser'
   import Tree2Html from './Tree2Html'
+  import Finder from 'js/Finder'
+  import 'Components/SymbolSearch'
   import './comments'
 
   export default {
@@ -53,6 +55,7 @@
         const parser = new Parser()
         try {
           const tree = parser.parse(version.content)
+          window.finder = new Finder(tree)
           this.template = Tree2Html.convert(
             tree,
             parser.parser._input,

@@ -306,17 +306,4 @@ $(() => {
 
     return false
   })
-
-  $grammarView.on('click', '.grammar-view__search-symbol-icon', e => {
-    const symbol = $(e.target).parent().prev().text()
-    alert(`search symbol: ${symbol}`)
-  })
-  $grammarView.on('click', '.grammar-view__l-icon', e => {
-    const symbol = $(e.target).parent().prev().text()
-    alert(`l action: ${symbol}`)
-  })
-  $grammarView.on('click', '.grammar-view__r-icon', e => {
-    const symbol = $(e.target).parent().prev().text()
-    alert(`r action: ${symbol}`)
-  })
 })

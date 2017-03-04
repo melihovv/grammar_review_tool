@@ -34,4 +34,5 @@
   @import "../CreateNewButton"
   @import "../AceEditor"
   @import "./helpers"
+  @import "../SymbolSearch"
 </style>

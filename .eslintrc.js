@@ -18,6 +18,7 @@ module.exports = {
     "Laravel": false,
     "Messenger": false,
     "$": false,
-    "Parser": false
+    "Parser": false,
+    "finder": false
   }
 }
