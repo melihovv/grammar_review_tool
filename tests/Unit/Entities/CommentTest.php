@@ -6,9 +6,9 @@ use App\Entities\Comment;
 use App\Entities\User;
 use App\Entities\Version;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\DatabaseTestCase;
+use Tests\TestCase;
 
-class CommentTest extends DatabaseTestCase
+class CommentTest extends TestCase
 {
     use DatabaseMigrations;
 

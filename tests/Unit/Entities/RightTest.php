@@ -6,9 +6,9 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\DatabaseTestCase;
+use Tests\TestCase;
 
-class RightTest extends DatabaseTestCase
+class RightTest extends TestCase
 {
     use DatabaseMigrations;
 

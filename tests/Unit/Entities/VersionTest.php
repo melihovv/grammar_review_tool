@@ -7,9 +7,9 @@ use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\Version;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\DatabaseTestCase;
+use Tests\TestCase;
 
-class VersionTest extends DatabaseTestCase
+class VersionTest extends TestCase
 {
     use DatabaseMigrations;
 
