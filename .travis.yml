@@ -23,8 +23,7 @@ before_install:
 
 install:
     - travis_retry composer install --no-interaction
-    - travis_retry npm install -g yarn
-    - travis_retry yarn
+    - travis_retry npm install
     - cp .env.example .env
     - php artisan key:generate
     - php artisan key:generate --env=dusk.travis
