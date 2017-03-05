@@ -22,15 +22,22 @@ before_install:
     - travis_retry composer self-update
 
 install:
-  - travis_retry composer install --no-interaction
-  - travis_retry npm install
+    - travis_retry composer install --no-interaction
+    - travis_retry npm install
+    - cp .env.example .env
+    - php artisan key:generate
+    - php artisan key:generate --env=dusk.travis
+    - php artisan create:sqlite-db --env=dusk.travis
+    - npm run build
 
 before_script:
     - npm prune
+    - phantomjs --webdriver=127.0.0.1:9515 &
+    - php artisan serve --env=dusk.travis &
+    - sleep 5
 
 script:
-    - cp .env.example .env
-    - php artisan key:generate
+    - php artisan dusk --env=dusk.travis
     - composer run phpunit
     - composer run phpcs
     - composer run phpmd

@@ -39,6 +39,12 @@ return [
             'prefix' => '',
         ],
 
+        'sqlite-travis' => [
+            'driver' => 'sqlite',
+            'database' => database_path('database.sqlite'),
+            'prefix' => '',
+        ],
+
         'sqlite-testing' => [
             'driver' => 'sqlite',
             'database' => ':memory:',
