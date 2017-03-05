@@ -42,10 +42,7 @@ if (!function_exists('asset_tag')) {
      */
     function asset_tag($asset, $tag, $productionOnly)
     {
-        $app = app();
-        if ($app->environment('production')
-            || $app->environment('testing') && env('TRAVIS')
-        ) {
+        if (app()->environment('production', 'testing')) {
             return call_user_func("Html::$tag", path_to_asset($asset));
         }
 
