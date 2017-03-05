@@ -38,7 +38,6 @@ install:
 
 before_script:
     - npm prune
-    - phantomjs --webdriver=127.0.0.1:9515 &
     - php artisan serve --env=dusk.travis &
     - sleep 5
 
