@@ -20,7 +20,7 @@ class HomeTest extends DuskTestCase
             $browser
                 ->loginAs($user)
                 ->visit(new HomePage())
-//                ->assertSee('Grammars')
+                ->assertSee('Grammars')
                 ->assertSee('Create')
                 ->assertSee('You have no grammar to view. Create one?')
                 ->assertSee($user->name)
