@@ -75,27 +75,4 @@ trait TestHelpers
                 '<input type="hidden" name="g-recaptcha-response" value="1" />'
             );
     }
-
-    protected function createGrammar($content = 'content', $grammarAttrs = [])
-    {
-        $grammarAttrs = factory(Grammar::class)->raw($grammarAttrs);
-
-        return GrammarService::create($grammarAttrs + ['content' => $content]);
-    }
-
-    protected function updateGrammar(
-        Grammar $grammar,
-        $content = 'new content',
-        $updater = null
-    ) {
-        if ($updater === null) {
-            $updater = factory(User::class)->create();
-        }
-
-        return GrammarService::update(
-            $grammar,
-            $updater,
-            array_merge($grammar->toArray(), ['content' => $content])
-        );
-    }
 }
