@@ -3,14 +3,16 @@
 namespace Tests\Browser;
 
 use App\Entities\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
+use Tests\Traits\DatabaseMigrations;
+use Tests\Traits\SudoDatabaseTransactions;
 
 class HomeTest extends DuskTestCase
 {
     use DatabaseMigrations;
+    use SudoDatabaseTransactions;
 
     public function testHome()
     {
