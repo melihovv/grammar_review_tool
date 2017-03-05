@@ -33,6 +33,6 @@ class CreateRightsTable extends Migration
 
     public function down()
     {
-        Schema::drop('rights');
+        Schema::dropIfExists('rights');
     }
 }

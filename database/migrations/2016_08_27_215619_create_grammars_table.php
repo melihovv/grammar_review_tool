@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateGrammarsTable extends Migration
 {
@@ -41,7 +42,7 @@ class CreateGrammarsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('grammars');
         Schema::dropIfExists('versions');
+        Schema::dropIfExists('grammars');
     }
 }
