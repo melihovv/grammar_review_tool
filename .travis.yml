@@ -37,8 +37,8 @@ before_script:
     - sleep 5
 
 script:
-    - php artisan dusk --env=dusk.travis
-    - composer run phpunit
+    - php artisan dusk --env=dusk.travis --verbose
+    - composer run phpunit -- --verbose
     - composer run phpcs
     - composer run phpmd
     - npm run unit
