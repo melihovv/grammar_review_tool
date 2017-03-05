@@ -4,6 +4,7 @@ namespace Tests\Traits;
 
 use App\Entities\Grammar;
 use App\Entities\User;
+use App\Entities\Version;
 use Facades\App\Services\GrammarService;
 
 trait DbHelpers
@@ -29,5 +30,14 @@ trait DbHelpers
             $updater,
             array_merge($grammar->toArray(), ['content' => $content])
         );
+    }
+
+    protected function getGrammarContent()
+    {
+        $version = factory(Version::class)->raw([
+            'grammar_id' => 1,
+        ]);
+
+        return $version['content'];
     }
 }
