@@ -3,10 +3,7 @@
 namespace Tests\Traits;
 
 use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
-use App\Entities\Grammar;
-use App\Entities\User;
 use BadMethodCallException;
-use Facades\App\Services\GrammarService;
 use Mockery;
 use Mockery\MockInterface;
 
