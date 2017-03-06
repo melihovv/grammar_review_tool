@@ -4,6 +4,10 @@ namespace Tests\Browser;
 
 use App\Entities\User;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\Grammars\CreatePage;
+use Tests\Browser\Pages\Grammars\EditPage;
+use Tests\Browser\Pages\Grammars\HistoryPage;
+use Tests\Browser\Pages\Grammars\ShowPage;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
 use Tests\Traits\DatabaseMigrations;
@@ -23,11 +27,8 @@ class GrammarsTest extends DuskTestCase
                 ->loginAs($user)
                 ->visit(new HomePage())
                 ->clickLink('Create')
-                ->type('name', 'Grammar Name')
-                ->type('textarea', $this->getGrammarContent())
-                ->press('Create')
-                ->assertRouteIs('grammars.show', 1)
-                ->waitForText('Grammar Name')
+                ->on(new CreatePage())
+                ->create('Grammar Name', $this->getGrammarContent(), 1)
                 ->logout();
         });
     }
@@ -42,11 +43,8 @@ class GrammarsTest extends DuskTestCase
                 ->visit(new HomePage())
                 ->click('@create-new-button')
                 ->clickLink('New grammar')
-                ->type('name', 'Grammar Name')
-                ->type('textarea', $this->getGrammarContent())
-                ->press('Create')
-                ->assertRouteIs('grammars.show', 1)
-                ->waitForText('Grammar Name')
+                ->on(new CreatePage())
+                ->create('Grammar Name', $this->getGrammarContent(), 1)
                 ->logout();
         });
     }
@@ -61,13 +59,10 @@ class GrammarsTest extends DuskTestCase
 
             $browser
                 ->loginAs($user)
-                ->visit(route('grammars.show', $grammar->id))
+                ->visit(new ShowPage($grammar->id))
                 ->clickLink('Edit')
-                ->type('name', 'Grammar Name2')
-                ->type('textarea', '%name name2')
-                ->press('Update')
-                ->assertRouteIs('grammars.show', $grammar->id)
-                ->waitForText('Grammar Name2')
+                ->on(new EditPage($grammar->id))
+                ->update('Grammar Name2', '%name name2', $grammar->id)
                 ->assertSee('%name name2')
                 ->logout();
         });
@@ -79,16 +74,15 @@ class GrammarsTest extends DuskTestCase
             $user = factory(User::class)->create();
             list($grammar) = $this->createGrammar('%name name1', [
                 'user_id' => $user->id,
-                'name' => 'Grammar Name',
             ]);
 
             $browser
                 ->loginAs($user)
-                ->visitRoute('grammars.show', $grammar->id)
-                ->waitForText('Grammar Name')
+                ->visit(new ShowPage($grammar->id))
+                ->waitForText($grammar->name)
                 ->clickLink('Delete')
-                ->assertRouteIs('grammars.index')
-                ->assertDontSee('Grammar Name')
+                ->on(new HomePage())
+                ->assertDontSee($grammar->name)
                 ->logout();
         });
     }
@@ -103,12 +97,10 @@ class GrammarsTest extends DuskTestCase
                 ->loginAs($user1)
                 ->visit(new HomePage())
                 ->clickLink('Create')
-                ->type('name', 'Grammar Name')
-                ->type('textarea', $this->getGrammarContent())
-                ->check('public_view', 1)
-                ->press('Create')
-                ->assertRouteIs('grammars.show', 1)
-                ->waitForText('Grammar Name')
+                ->on(new CreatePage())
+                ->create('Grammar Name', $this->getGrammarContent(), 1, function (Browser $browser) {
+                    $browser->check('public_view', 1);
+                })
                 ->logout();
 
             $browser2
@@ -116,7 +108,7 @@ class GrammarsTest extends DuskTestCase
                 ->visit(new HomePage())
                 ->assertSee('Grammar Name')
                 ->clickLink('Grammar Name')
-                ->assertRouteIs('grammars.show', 1)
+                ->on(new ShowPage(1))
                 ->assertSee('History')
                 ->assertDontSee('Access')
                 ->assertDontSee('Edit')
@@ -135,23 +127,24 @@ class GrammarsTest extends DuskTestCase
 
             $browser
                 ->loginAs($user)
-                ->visit(route('grammars.show', $grammar->id))
+                ->visit(new ShowPage($grammar->id))
                 ->clickLink('History')
-                ->assertRouteIs('grammars.history', $grammar->id)
+                ->on(new HistoryPage($grammar->id))
                 ->waitForText('Show')
                 ->assertSee($user->name)
-                ->click('.list-group-item.active a')
-                ->assertRouteIs('grammars.show', $grammar->id)
+                ->click('@active-version')
+                ->on(new ShowPage($grammar->id))
                 ->assertQueryStringHas('version', 1)
                 ->assertDontSee('You are looking at early version of grammar. Click here to view the latest version.')
                 ->clickLink('History')
                 ->waitForText('Show')
-                ->click('.list-group-item:nth-child(3) a')
-                ->assertRouteIs('grammars.show', $grammar->id)
+                ->on(new HistoryPage($grammar->id))
+                ->clickVersion(0)
+                ->on(new ShowPage($grammar->id))
                 ->assertQueryStringHas('version', 0)
                 ->assertSee('You are looking at early version of grammar. Click here to view the latest version.')
                 ->clickLink('here')
-                ->assertRouteIs('grammars.show', $grammar->id)
+                ->on(new ShowPage($grammar->id))
                 ->assertQueryStringMissing('version')
                 ->logout();
         });
@@ -169,17 +162,17 @@ class GrammarsTest extends DuskTestCase
 
             $browser1
                 ->loginAs($owner)
-                ->visit(route('grammars.show', $grammar->id))
+                ->visit(new ShowPage($grammar->id))
                 ->clickLink('Access')
                 ->whenAvailable(
-                    '#manage-grammar-rights-modal',
+                    '@rights-modal',
                     function (Browser $modal) use ($userWithRight) {
                         $modal
                             ->assertSee('Grammar access')
                             ->assertSee('Grant access')
-                            ->type('input', $userWithRight->name)
+                            ->type('.multiselect__input', $userWithRight->name)
                             ->pause(3000)
-                            ->keys('input', '{enter}')
+                            ->keys('.multiselect__input', '{enter}')
                             ->press('Grant')
                             ->assertSee($userWithRight->name);
                     }

@@ -13,14 +13,8 @@ class HomePage extends Page
 
     public function assert(Browser $browser)
     {
-        $browser->assertSee(config('app.name'));
-    }
+        parent::assert($browser);
 
-    public function elements()
-    {
-        return [
-            '@create-new-button' => '.navbar-right .dropdown:first-child .dropdown-toggle:first-child',
-            '@profile-dropdown' => '.navbar-right .dropdown:nth-child(2) .dropdown-toggle:first-child',
-        ];
+        $browser->assertSee(config('app.name'));
     }
 }
