@@ -131,4 +131,40 @@ class GrammarsTest extends DuskTestCase
                 ->logout();
         });
     }
+
+    public function testUserCanGrantRightsToOtherUsers()
+    {
+        $this->browse(function (Browser $browser1, Browser $browser2) {
+            $owner = factory(User::class)->create();
+            $userWithRight = factory(User::class)->create();
+            list($grammar) = $this->createGrammar('%name name1', [
+                'user_id' => $owner->id,
+                'public_view' => false,
+            ]);
+
+            $browser1
+                ->loginAs($owner)
+                ->visit(route('grammars.show', $grammar->id))
+                ->clickLink('Access')
+                ->whenAvailable(
+                    '#manage-grammar-rights-modal',
+                    function (Browser $modal) use ($userWithRight) {
+                        $modal
+                            ->assertSee('Grammar access')
+                            ->assertSee('Grant access')
+                            ->type('input', $userWithRight->name)
+                            ->pause(3000)
+                            ->keys('input', '{enter}')
+                            ->press('Grant')
+                            ->assertSee($userWithRight->name);
+                    }
+                )
+                ->logout();
+
+            $browser2
+                ->loginAs($userWithRight)
+                ->visit(new HomePage())
+                ->assertSee($grammar->name);
+        });
+    }
 }
