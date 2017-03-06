@@ -11,7 +11,6 @@
                         You are looking at early version of grammar. Click
                         {{ link_to_route('grammars.show', 'here', [
                           'grammar' => $grammar->id,
-                          'version' => $latestVersion->id,
                         ]) }}
                         to view the latest version.
                     </p>

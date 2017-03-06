@@ -98,4 +98,37 @@ class GrammarsTest extends DuskTestCase
                 ->assertSee('Grammar Name');
         });
     }
+
+    public function testUserCanSeeHistoryOfGrammarVersions()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+            list($grammar) = $this->createGrammar('%name name1', [
+                'user_id' => $user->id,
+            ]);
+            $this->updateGrammar($grammar, '%name name2', $user);
+
+            $browser
+                ->loginAs($user)
+                ->visit(route('grammars.show', $grammar->id))
+                ->clickLink('History')
+                ->assertRouteIs('grammars.history', $grammar->id)
+                ->waitForText('Show')
+                ->assertSee($user->name)
+                ->click('.list-group-item.active a')
+                ->assertRouteIs('grammars.show', $grammar->id)
+                ->assertQueryStringHas('version', 1)
+                ->assertDontSee('You are looking at early version of grammar. Click here to view the latest version.')
+                ->clickLink('History')
+                ->waitForText('Show')
+                ->click('.list-group-item:nth-child(3) a')
+                ->assertRouteIs('grammars.show', $grammar->id)
+                ->assertQueryStringHas('version', 0)
+                ->assertSee('You are looking at early version of grammar. Click here to view the latest version.')
+                ->clickLink('here')
+                ->assertRouteIs('grammars.show', $grammar->id)
+                ->assertQueryStringMissing('version')
+                ->logout();
+        });
+    }
 }
