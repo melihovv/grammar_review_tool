@@ -23,4 +23,13 @@ class HistoryPage extends Page
     {
         $browser->click("a[href$='version=$version']");
     }
+
+    public function assert(Browser $browser)
+    {
+        parent::assert($browser);
+
+        if (!$this->modalIsDisplayed($browser)) {
+            $browser->waitForText('Show');
+        }
+    }
 }

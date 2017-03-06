@@ -38,4 +38,11 @@ abstract class Page extends BasePage
             '@profile-dropdown' => '.navbar-right .dropdown:nth-child(2) .dropdown-toggle:first-child',
         ];
     }
+
+    public function modalIsDisplayed(Browser $browser)
+    {
+        $modal = $browser->element('.modal-content');
+
+        return $modal && $modal->isDisplayed();
+    }
 }
