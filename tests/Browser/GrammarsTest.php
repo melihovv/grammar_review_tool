@@ -114,7 +114,13 @@ class GrammarsTest extends DuskTestCase
             $browser2
                 ->loginAs($user2)
                 ->visit(new HomePage())
-                ->assertSee('Grammar Name');
+                ->assertSee('Grammar Name')
+                ->clickLink('Grammar Name')
+                ->assertRouteIs('grammars.show', 1)
+                ->assertSee('History')
+                ->assertDontSee('Access')
+                ->assertDontSee('Edit')
+                ->assertDontSee('Delete');
         });
     }
 
