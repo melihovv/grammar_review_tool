@@ -32,6 +32,25 @@ class GrammarsTest extends DuskTestCase
         });
     }
 
+    public function testUserCanCreateGrammarThroughCreateNewButton()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+
+            $browser
+                ->loginAs($user)
+                ->visit(new HomePage())
+                ->click('@create-new-button')
+                ->clickLink('New grammar')
+                ->type('name', 'Grammar Name')
+                ->type('textarea', $this->getGrammarContent())
+                ->press('Create')
+                ->assertRouteIs('grammars.show', 1)
+                ->waitForText('Grammar Name')
+                ->logout();
+        });
+    }
+
     public function testUserCanUpdateGrammar()
     {
         $this->browse(function (Browser $browser) {
