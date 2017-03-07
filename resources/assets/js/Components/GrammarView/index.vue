@@ -358,6 +358,13 @@
       display inline-block
       padding 0 5px
       opacity 0.5
-      float right
       cursor pointer
+
+    &__comment-crud-actions
+      float right
+      display inline-block
+
+    &__username
+      display inline-block
+      max-width 100px
 </style>
