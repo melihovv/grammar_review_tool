@@ -33,9 +33,9 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this._buffer = ''
     this._newLineRegex = /\r\n|\n|\r/
 
-    this._searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon"></span>'
-    this._leftIcon = '<span class="glyphicon grammar-view__l-icon">L</span>'
-    this._rightIcon = '<span class="glyphicon grammar-view__r-icon">R</span>'
+    this._searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon" title="Search for rules which contain this symbol "></span>'
+    this._leftIcon = '<span class="glyphicon grammar-view__l-icon" title="Search for rules which contain this symbol in the left side">L</span>'
+    this._rightIcon = '<span class="glyphicon grammar-view__r-icon" title="Search for rules with the same right side">R</span>'
     this._terminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}</div>`
     this._nonTerminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}${this._leftIcon}${this._rightIcon}</div>`
   }
