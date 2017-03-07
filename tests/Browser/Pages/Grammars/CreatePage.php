@@ -17,6 +17,7 @@ class CreatePage extends Page
         return [
             '@name' => 'input[name=name]',
             '@content' => 'textarea',
+            '@syntax-errors' => '.alert-danger',
         ];
     }
 
@@ -32,7 +33,6 @@ class CreatePage extends Page
 
         $browser
             ->press('Create')
-            ->assertRouteIs('grammars.show', $id)
-            ->waitForText($name);
+            ->on(new ShowPage($id));
     }
 }

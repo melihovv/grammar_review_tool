@@ -17,6 +17,7 @@ class EditPage extends Page
         return [
             '@name' => 'input[name=name]',
             '@content' => 'textarea',
+            '@syntax-errors' => '.alert-danger',
         ];
     }
 
@@ -26,7 +27,6 @@ class EditPage extends Page
             ->type('@name', $name)
             ->type('@content', $content)
             ->press('Update')
-            ->assertRouteIs('grammars.show', $id)
-            ->waitForText($name);
+            ->on(new ShowPage($id));
     }
 }

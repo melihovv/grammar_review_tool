@@ -33,6 +33,25 @@ class GrammarsTest extends DuskTestCase
         });
     }
 
+    public function testUserCannotCreateGrammarWithSyntaxErrors()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+
+            $browser
+                ->loginAs($user)
+                ->visit(new HomePage())
+                ->clickLink('Create')
+                ->on(new CreatePage())
+                ->type('@content', ',%>WTF<%,')
+                ->press('Create')
+                ->seeElement('@syntax-errors')
+                ->assertSee('mismatched input')
+                ->create('Grammar Name', $this->getGrammarContent(), 1)
+                ->logout();
+        });
+    }
+
     public function testUserCanCreateGrammarThroughCreateNewButton()
     {
         $this->browse(function (Browser $browser) {
@@ -63,7 +82,28 @@ class GrammarsTest extends DuskTestCase
                 ->clickLink('Edit')
                 ->on(new EditPage($grammar->id))
                 ->update('Grammar Name2', '%name name2', $grammar->id)
-                ->assertSee('%name name2')
+                ->logout();
+        });
+    }
+
+    public function testUserCannotUpdateGrammarWithSyntaxErrors()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+            list($grammar) = $this->createGrammar('%name name1', [
+                'user_id' => $user->id,
+            ]);
+
+            $browser
+                ->loginAs($user)
+                ->visit(new ShowPage($grammar->id))
+                ->clickLink('Edit')
+                ->on(new EditPage($grammar->id))
+                ->type('@content', 'fjlskdjflksdfhsf,.')
+                ->press('Update')
+                ->seeElement('@syntax-errors')
+                ->assertSee('mismatched input')
+                ->update('Grammar Name2', '%name name2', $grammar->id)
                 ->logout();
         });
     }
