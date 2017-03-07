@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
 
         Browser::macro('seeElement', function ($selector) {
             $this->resolver->findOrFail($selector);
+
             return $this;
         });
     }

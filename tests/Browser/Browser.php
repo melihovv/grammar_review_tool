@@ -12,8 +12,8 @@ class Browser extends \Laravel\Dusk\Browser
     protected $insideWith = false;
 
     /**
-     * @param  \Facebook\WebDriver\Remote\RemoteWebDriver $driver
-     * @param  ElementResolver $resolver
+     * @param \Facebook\WebDriver\Remote\RemoteWebDriver $driver
+     * @param ElementResolver                            $resolver
      */
     public function __construct($driver, $resolver = null)
     {
