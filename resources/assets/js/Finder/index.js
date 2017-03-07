@@ -37,7 +37,8 @@ class Finder {
   findRulesWhichContains(symbol) {
     const finder = new FinderListener({symbolToFind: symbol})
     tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
-    return finder.rulesWhichContainsSymbol
+    const rules = finder.rulesWhichContainsSymbol
+    return rules.filter((v, i, a) => a.indexOf(v) === i)
   }
 
   /**
