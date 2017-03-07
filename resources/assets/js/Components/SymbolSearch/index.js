@@ -54,8 +54,11 @@ $(() => {
   })
 
   $grammarView.on('click', '.grammar-view__r-icon', e => {
-    const symbol = $(e.target).parent().prev().text()
-    rules = finder.findRulesWithTheSameRightSide(symbol)
+    const $this = $(e.target)
+    const symbol = $this.parent().prev().text()
+    const row = $this.closest('.grammar-view__row').attr('data-row')
+
+    rules = finder.findRulesWithTheSameRightSide(symbol, row)
     initSearch()
   })
 

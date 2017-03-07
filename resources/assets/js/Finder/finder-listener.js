@@ -3,21 +3,18 @@
 import {LemonParserListener} from '../Parser/Lemon/LemonParserListener'
 import {LemonParser} from '../Parser/Lemon/LemonParser'
 
-/**
- * @extends LemonParserListener
- */
 class FinderListener extends LemonParserListener {
   /**
    * @param {string} [nonterminalToFindOnTheLeftSide]
    * @param {string} [symbolToFind]
-   * @param {string} [ruleToCompare]
+   * @param {string} [rightSideSymbols]
    * @returns {FinderListener}
    * @constructor
    */
   constructor({
     nonterminalToFindOnTheLeftSide,
     symbolToFind,
-    ruleToCompare,
+    rightSideSymbols,
   }) {
     super()
 
@@ -27,7 +24,7 @@ class FinderListener extends LemonParserListener {
     this.symbolToFind = symbolToFind
     this.rulesWhichContainsSymbol = []
 
-    this.ruleToCompare = ruleToCompare
+    this.rightSideSymbols = rightSideSymbols
     this.rulesWithTheSameRightSides = []
   }
 
@@ -58,20 +55,16 @@ class FinderListener extends LemonParserListener {
       }
     }
 
-    if (this.ruleToCompare !== undefined
-      && ctx.parentCtx.leftSide() !== this.ruleToCompare.rule) {
-      let symbols = []
+    let symbols = []
 
-      for (const child of ctx.children) {
-        if (child instanceof LemonParser.SymbolContext) {
-          symbols.push(child.children[0].getText())
-        }
+    for (const child of ctx.children) {
+      if (child instanceof LemonParser.SymbolContext) {
+        symbols.push(child.children[0].getText())
       }
+    }
 
-      if (JSON.stringify(symbols)
-        === JSON.stringify(this.ruleToCompare.symbols)) {
-        this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide())
-      }
+    if (JSON.stringify(symbols) === JSON.stringify(this.rightSideSymbols)) {
+      this.rulesWithTheSameRightSides.push(ctx.parentCtx.leftSide())
     }
   }
 }

@@ -28,6 +28,8 @@ describe('finder', () => {
 
   it('should find rules with the same right side', () => {
     const tree = parser.parse(`
+      a ::= a.
+      a ::= a.
       a ::= b c.
       d ::= b c. [NOT]
       e ::= b.
@@ -36,7 +38,7 @@ describe('finder', () => {
       h ::= .
     `)
     const finder = new Finder(tree)
-    finder.findRulesWithTheSameRightSide('a').length.should.equal(2)
+    finder.findRulesWithTheSameRightSide('a', 4).length.should.equal(3)
   })
 
   it('should find rules with the same right side', () => {
@@ -49,6 +51,6 @@ describe('finder', () => {
       h ::= .
     `)
     const finder = new Finder(tree)
-    finder.findRulesWithTheSameRightSide('g').length.should.equal(2)
+    finder.findRulesWithTheSameRightSide('g', 6).length.should.equal(3)
   })
 })

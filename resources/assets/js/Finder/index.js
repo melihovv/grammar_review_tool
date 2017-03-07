@@ -42,23 +42,34 @@ class Finder {
 
   /**
    * Find rules, which have the same right side.
-   * @param {string} rule
+   * @param {string} ruleName
+   * @param row
    * @returns {Array}
    */
-  findRulesWithTheSameRightSide(rule) {
-    const rules = this.findRulesWhereOnTheLeft(rule)
-    const ruleToCompare = {
-      rule: rules[0],
-      symbols: [],
-    }
+  findRulesWithTheSameRightSide(ruleName, row) {
+    const rules = this.findRulesWhereOnTheLeft(ruleName)
+    let rule = null
 
-    for (const child of ruleToCompare.rule.parentCtx.rightSide().children) {
-      if (child instanceof LemonParser.SymbolContext) {
-        ruleToCompare.symbols.push(child.children[0].getText())
+    for (const r of rules) {
+      if (r.children[0].getSymbol().line === +row) {
+        rule = r
+        break
       }
     }
 
-    const finder = new FinderListener({ruleToCompare})
+    if (rule === null) {
+      return []
+    }
+
+    let rightSideSymbols = []
+
+    for (const child of rule.parentCtx.rightSide().children) {
+      if (child instanceof LemonParser.SymbolContext) {
+        rightSideSymbols.push(child.children[0].getText())
+      }
+    }
+
+    const finder = new FinderListener({rightSideSymbols})
     tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
 
     return finder.rulesWithTheSameRightSides
