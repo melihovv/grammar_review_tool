@@ -97,9 +97,14 @@ class GrammarsTest extends DuskTestCase
                 ->visit(new HomePage())
                 ->clickLink('Create')
                 ->on(new CreatePage())
-                ->create('Grammar Name', $this->getGrammarContent(), 1, function (Browser $browser) {
-                    $browser->check('public_view', 1);
-                })
+                ->create(
+                    'Grammar Name',
+                    $this->getGrammarContent(),
+                    1,
+                    function (Browser $browser) {
+                        $browser->check('public_view', 1);
+                    }
+                )
                 ->logout();
 
             $browser2
@@ -180,6 +185,25 @@ class GrammarsTest extends DuskTestCase
                 ->loginAs($userWithRight)
                 ->visit(new HomePage())
                 ->assertSee($grammar->name);
+        });
+    }
+
+    public function testUserCanComment()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+            list($grammar) = $this->createGrammar($this->getGrammarContent(), [
+                'user_id' => $user->id,
+            ]);
+
+            $browser
+                ->loginAs($user)
+                ->visit(new ShowPage($grammar->id))
+                ->commentRow(1, 'Comment1', $user)
+                ->commentRow(1, 'Comment2', $user)
+                ->commentSymbol(6, 'COMMENT', 'Comment3', $user)
+                ->commentSymbol(6, 'COMMENT', 'Comment4', $user)
+                ->logout();
         });
     }
 }

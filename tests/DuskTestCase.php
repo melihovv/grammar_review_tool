@@ -5,6 +5,7 @@ namespace Tests;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Laravel\Dusk\TestCase as BaseTestCase;
+use Tests\Browser\Browser;
 use Tests\Traits\CreatesApplication;
 use Tests\Traits\DbHelpers;
 
@@ -23,6 +24,11 @@ abstract class DuskTestCase extends BaseTestCase
     public static function prepare()
     {
         static::startChromeDriver();
+    }
+
+    protected function newBrowser($driver)
+    {
+        return new Browser($driver);
     }
 
     protected function setUp()

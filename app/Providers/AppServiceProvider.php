@@ -6,6 +6,7 @@ use Fadion\Sanitizer\Sanitizer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Dusk\Browser;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             }
         );
+
+        Browser::macro('seeElement', function ($selector) {
+            $this->resolver->findOrFail($selector);
+            return $this;
+        });
     }
 
     public function register()
