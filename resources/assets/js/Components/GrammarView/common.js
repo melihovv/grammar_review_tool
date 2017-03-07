@@ -8,6 +8,6 @@ export default {
     commentId = -1,
     updateOrDelete = true
   ) {
-    return `<div class="grammar-view__comment-holder" ${commentId !== -1 ? 'comment-id="' + commentId + '"' : ''}><div class="grammar-view__comment-header"><span class="grammar-view__username">${userName}</span> ${updateOrDelete ? '<div class="grammar-view__comment-crud-actions">' + this.svgEditComment + this.svgDeleteComment  + '</div>' : ''}</div><div class="grammar-view__comment-content">${commentContent}</div></div>`
+    return `<div class="grammar-view__comment-holder" ${commentId !== -1 ? 'comment-id="' + commentId + '"' : ''}><div class="grammar-view__comment-header"><span class="grammar-view__username">${userName}</span> ${updateOrDelete ? '<div class="grammar-view__comment-crud-actions">' + this.svgEditComment + this.svgDeleteComment + '</div>' : ''}</div><div class="grammar-view__comment-content">${commentContent}</div></div>`
   },
 }
