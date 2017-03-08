@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         Browser::macro('assertHighlightedLineIs', function ($line) {
             $this->ensurejQueryIsAvailable();
 
-            $script = <<<HERE
+            $script = <<<'HERE'
                 return jQuery('.symbol-search__found-symbol').closest('.grammar-view__row').attr('data-row');
 HERE;
 
