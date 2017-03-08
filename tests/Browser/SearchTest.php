@@ -20,7 +20,7 @@ class SearchTest extends DuskTestCase
 
     /**
      * @param callable $setupCb
-     * @dataProvider commentsProvider
+     * @dataProvider searchProvider
      */
     public function testUserCanSearchSymbols(callable $setupCb)
     {
@@ -61,7 +61,7 @@ class SearchTest extends DuskTestCase
         });
     }
 
-    public function commentsProvider()
+    public function searchProvider()
     {
         return [
             'grammar owner' => [
