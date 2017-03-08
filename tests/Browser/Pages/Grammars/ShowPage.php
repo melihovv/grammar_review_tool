@@ -53,8 +53,12 @@ class ShowPage extends Page
             );
     }
 
-    public function commentSymbol(Browser $browser, $row, $symbol, $comment, $user)
-    {
+    public function commentSymbol(Browser $browser,
+        $row,
+        $symbol,
+        $comment,
+        $user
+    ) {
         $symbolXpath = "//tr[@data-row='$row']//span[contains(@class, 'grammar-view__symbol') and text()='$symbol']";
         $symbolCommentsXpath = "$symbolXpath/following-sibling::div[contains(@class, 'grammar-view__symbol-comments')]";
         $addedCommentHolderXpath = "($symbolCommentsXpath/div[contains(@class, 'grammar-view__comment-holder')])[last()]";
@@ -73,5 +77,33 @@ class ShowPage extends Page
             ->waitFor(WebDriverBy::xpath($commentButtonXpath))
             ->seeElement(WebDriverBy::xpath("$addedCommentHolderXpath/div[contains(@class, 'grammar-view__comment-content') and text()='$comment']"))
             ->seeElement(WebDriverBy::xpath("$addedCommentHolderXpath/div[contains(@class, 'grammar-view__comment-header') and contains(text(), '$user->name')]"));
+    }
+
+    public function findRulesWhichContainSymbol(Browser $browser, $row, $symbol)
+    {
+        $symbolXpath = "//tr[@data-row='$row']//span[contains(@class, 'grammar-view__symbol') and text()='$symbol']";
+
+        $browser
+            ->mouseover(WebDriverBy::xpath($symbolXpath))
+            ->click('.grammar-view__search-symbol-icon');
+    }
+
+    public function findRulesWhichContainSymbolInLeftSide(Browser $browser, $row, $symbol)
+    {
+        $symbolXpath = "//tr[@data-row='$row']//span[contains(@class, 'grammar-view__symbol') and text()='$symbol']";
+
+        $browser
+            ->mouseover(WebDriverBy::xpath($symbolXpath))
+            ->click('.grammar-view__l-icon');
+    }
+
+    public function findRulesWithTheSameRightSide(Browser $browser, $row, $symbol)
+    {
+        $symbolXpath = "//tr[@data-row='$row']//span[contains(@class, 'grammar-view__symbol') and text()='$symbol']";
+
+        $browser
+            ->mouseover(WebDriverBy::xpath($symbolXpath))
+            // I changed selector to xpath, because with css select browser cannot find such element. Funny, yeah?
+            ->click(WebDriverBy::xpath("$symbolXpath/following-sibling::div/span[contains(@class, 'grammar-view__r-icon')]"));
     }
 }

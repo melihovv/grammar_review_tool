@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\Browser;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,24 @@ class AppServiceProvider extends ServiceProvider
 
         Browser::macro('seeElement', function ($selector) {
             $this->resolver->findOrFail($selector);
+
+            return $this;
+        });
+
+        Browser::macro('assertHighlightedLineIs', function ($line) {
+            $this->ensurejQueryIsAvailable();
+
+            $script = <<<HERE
+                return jQuery('.symbol-search__found-symbol').closest('.grammar-view__row').attr('data-row');
+HERE;
+
+            $actualLine = $this->driver->executeScript($script);
+
+            PHPUnit::assertEquals(
+                $line,
+                $actualLine,
+                "Highlited line [$actualLine], but expected [$line]."
+            );
 
             return $this;
         });

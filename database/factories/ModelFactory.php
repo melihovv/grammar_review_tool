@@ -79,6 +79,10 @@ comment_list(R) ::= comment_list(A) COMMENT(B) .  {
 comment_list(R) ::= COMMENT(A) . {
      R = $this->create_node('comment_list', array( A ));
 }
+comment_list(R) ::= COMMENT(A) . {
+     R = $this->create_node('comment_list', array( A ));
+}
+a ::= b.
 HERE
         ,
         'parent_id' => null,
