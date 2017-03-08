@@ -5,10 +5,8 @@ namespace Tests\Browser;
 use App\Entities\Right;
 use App\Entities\User;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Grammars\CreatePage;
 use Tests\Browser\Pages\Grammars\EditPage;
 use Tests\Browser\Pages\Grammars\ShowPage;
-use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
 use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
@@ -77,6 +75,7 @@ class UpdateGrammarTest extends DuskTestCase
 
     /**
      * @dataProvider usersCanProvider
+     *
      * @param callable $setupCb
      */
     public function testUserCanUpdateGrammar(callable $setupCb)
@@ -96,6 +95,7 @@ class UpdateGrammarTest extends DuskTestCase
 
     /**
      * @dataProvider usersCanProvider
+     *
      * @param callable $setupCb
      */
     public function testUserCannotUpdateGrammarWithSyntaxErrors(callable $setupCb)
