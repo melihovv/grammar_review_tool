@@ -98,6 +98,16 @@ class SearchTest extends DuskTestCase
                     return [$user, $grammar];
                 },
             ],
+            'public grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    list($grammar) = $this->createGrammar($this->getGrammarContent(), [
+                        'public_view' => true,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+            ],
         ];
     }
 }
