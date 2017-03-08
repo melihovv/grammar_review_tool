@@ -11,9 +11,9 @@ use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
 /**
- * @group comments
+ * @group grammars comments
  */
-class CommentsTest extends DuskTestCase
+class CommentGrammarTest extends DuskTestCase
 {
     use DatabaseMigrations;
     use SudoDatabaseTransactions;

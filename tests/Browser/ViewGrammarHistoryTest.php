@@ -12,9 +12,9 @@ use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
 /**
- * @group grammar-history
+ * @group grammars grammar-history
  */
-class HistoryTest extends DuskTestCase
+class ViewGrammarHistoryTest extends DuskTestCase
 {
     use DatabaseMigrations;
     use SudoDatabaseTransactions;

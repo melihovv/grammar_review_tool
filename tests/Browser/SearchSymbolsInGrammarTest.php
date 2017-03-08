@@ -11,9 +11,9 @@ use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
 /**
- * @group symbols-search
+ * @group grammars symbols-search
  */
-class SearchTest extends DuskTestCase
+class SearchSymbolsInGrammarTest extends DuskTestCase
 {
     use DatabaseMigrations;
     use SudoDatabaseTransactions;

@@ -9,6 +9,9 @@ use Tests\DuskTestCase;
 use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
+/**
+ * @group auth
+ */
 class AuthTest extends DuskTestCase
 {
     use DatabaseMigrations;

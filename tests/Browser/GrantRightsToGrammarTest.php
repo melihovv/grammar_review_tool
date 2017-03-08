@@ -12,9 +12,9 @@ use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
 /**
- * @group rights
+ * @group grammars rights
  */
-class RightsTest extends DuskTestCase
+class GrantRightsToGrammarTest extends DuskTestCase
 {
     use DatabaseMigrations;
     use SudoDatabaseTransactions;

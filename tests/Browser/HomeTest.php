@@ -9,6 +9,9 @@ use Tests\DuskTestCase;
 use Tests\Traits\DatabaseMigrations;
 use Tests\Traits\SudoDatabaseTransactions;
 
+/**
+ * @group home
+ */
 class HomeTest extends DuskTestCase
 {
     use DatabaseMigrations;
