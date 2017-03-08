@@ -10,7 +10,6 @@ const utils = require('../../build/utils')
 
 const projectRoot = path.resolve(__dirname, '../../../..')
 const isTravis = process.env.TRAVIS === 'true'
-const isWebStorm = process.env.WEBSTORM === 'true'
 
 const webpackConfig = merge(baseConfig, {
   module: {
@@ -47,12 +46,12 @@ module.exports = config => {
       './resources/assets/test/unit/tests.js': ['webpack', 'sourcemap'],
     },
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: isWebStorm ? [] : ['spec', 'coverage'],
+    reporters: ['spec', 'coverage'],
     webpack: webpackConfig,
     webpackMiddleware: {
       noInfo: true,
     },
-    coverageReporter: isWebStorm ? {} : {
+    coverageReporter: {
       dir: path.join(__dirname, '/coverage'),
       reporters: [
         {type: 'lcov', subdir: '.'},

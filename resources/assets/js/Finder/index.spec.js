@@ -53,4 +53,17 @@ describe('finder', () => {
     const finder = new Finder(tree)
     finder.findRulesWithTheSameRightSide('g', 6).length.should.equal(3)
   })
+
+  it('should return empty array if there is no rule on specified line', () => {
+    const tree = parser.parse(`
+      a ::= b c. [POWER]
+      d ::= b c. [NOT]
+      e ::= b.
+      f ::= b c d.
+      g ::= b c.
+      h ::= .
+    `)
+    const finder = new Finder(tree)
+    finder.findRulesWithTheSameRightSide('g', 100500).length.should.equal(0)
+  })
 })
