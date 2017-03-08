@@ -175,4 +175,21 @@ class GrammarsTest extends DuskTestCase
                 ->assertDontSee('Delete');
         });
     }
+
+    public function testUserCannotViewNotPublicGrammars()
+    {
+        $this->browse(function (Browser $browser) {
+            $owner = factory(User::class)->create();
+            list($grammar) = $this->createGrammar('%name name1', [
+                'user_id' => $owner->id,
+            ]);
+            $user = factory(User::class)->create();
+
+            $browser
+                ->loginAs($user)
+                ->visit(new HomePage())
+                ->assertDontSee($grammar->name)
+                ->logout();
+        });
+    }
 }
