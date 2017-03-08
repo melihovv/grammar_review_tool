@@ -117,7 +117,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
         $this->seeInDatabase('grammars', [
             'name' => 'title1',
             'content' => 'content',
-            'public_view' => 1,
+            'public_view' => true,
         ]);
     }
 
@@ -245,7 +245,6 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->put(route('grammars.update', $grammar), [
                 'content' => 'content',
                 'name' => 'new name',
-                'public_view' => false,
                 'user_id' => 100500,
             ]);
 
@@ -624,9 +623,7 @@ NOW;
             'user is admin' => [
                 function () {
                     $user = factory(User::class, 'admin')->create();
-                    $grammar = $this->createGrammar('content', [
-                        'public_view' => false,
-                    ]);
+                    $grammar = $this->createGrammar('content');
 
                     return [$user, $grammar];
                 },
@@ -640,7 +637,6 @@ NOW;
                     $user = factory(User::class)->create();
                     $grammar = $this->createGrammar('content', [
                         'user_id' => $user->id,
-                        'public_view' => false,
                     ]);
 
                     return [$user, $grammar];
@@ -653,9 +649,7 @@ NOW;
             'user has right to view grammar' => [
                 function () {
                     $user = factory(User::class)->create();
-                    list($grammar) = $this->createGrammar('content', [
-                        'public_view' => false,
-                    ]);
+                    list($grammar) = $this->createGrammar('content');
                     factory(Right::class)->create([
                         'grammar_id' => $grammar->id,
                         'user_id' => $user->id,
@@ -673,9 +667,7 @@ NOW;
             'user has not right to view grammar' => [
                 function () {
                     $user = factory(User::class)->create();
-                    $grammar = $this->createGrammar('content', [
-                        'public_view' => false,
-                    ]);
+                    $grammar = $this->createGrammar('content');
 
                     return [$user, $grammar];
                 },

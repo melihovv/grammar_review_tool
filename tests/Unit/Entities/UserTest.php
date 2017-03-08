@@ -298,9 +298,7 @@ class UserTest extends TestCase
                 factory(Grammar::class, 10)->create(['public_view' => true]);
             }, 10],
             'user has rights to view or comment grammars' => [function ($user) {
-                $grammars = factory(Grammar::class, 5)->create([
-                    'public_view' => false,
-                ]);
+                $grammars = factory(Grammar::class, 5)->create();
 
                 $ids = $grammars->pluck('id')->toArray();
                 foreach ($ids as $id) {
@@ -311,17 +309,13 @@ class UserTest extends TestCase
                     ]);
                 }
 
-                factory(Grammar::class, 10)->create([
-                    'public_view' => false,
-                ]);
+                factory(Grammar::class, 10)->create();
             }, 5],
             'compound example' => [function ($user) {
                 factory(Grammar::class, 3)->create([
                     'public_view' => true,
                 ]);
-                $grammars = factory(Grammar::class, 5)->create([
-                    'public_view' => false,
-                ]);
+                $grammars = factory(Grammar::class, 5)->create();
 
                 $ids = $grammars->pluck('id')->toArray();
                 foreach ($ids as $id) {
@@ -334,12 +328,9 @@ class UserTest extends TestCase
 
                 factory(Grammar::class, 7)->create([
                     'user_id' => $user->id,
-                    'public_view' => false,
                 ]);
 
-                factory(Grammar::class, 10)->create([
-                    'public_view' => false,
-                ]);
+                factory(Grammar::class, 10)->create();
             }, 15],
         ];
     }

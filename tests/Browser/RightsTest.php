@@ -22,7 +22,6 @@ class RightsTest extends DuskTestCase
             $userWithRight = factory(User::class)->create();
             list($grammar) = $this->createGrammar('%name name1', [
                 'user_id' => $owner->id,
-                'public_view' => false,
             ]);
 
             $browser1

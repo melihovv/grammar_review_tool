@@ -55,7 +55,7 @@ $factory->define(Grammar::class, function (Generator $faker) {
             return factory(User::class)->create()->id;
         },
         'name' => $faker->sentence(),
-        'public_view' => $faker->boolean(),
+        'public_view' => false,
     ];
 });
 
