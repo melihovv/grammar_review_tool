@@ -214,6 +214,9 @@
       border 1px solid #eee
       background-color white
 
+      .grammar-view__username
+          max-width 100px
+
       & textarea
         height 60px
         min-height 60px
@@ -366,5 +369,4 @@
 
     &__username
       display inline-block
-      max-width 100px
 </style>
