@@ -247,9 +247,6 @@ class GrammarsTest extends DuskTestCase
         });
     }
 
-    /**
-     * @group wip
-     */
     public function testUserCanSearchSymbols()
     {
         $this->browse(function (Browser $browser) {

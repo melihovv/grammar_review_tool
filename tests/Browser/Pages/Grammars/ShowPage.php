@@ -53,12 +53,8 @@ class ShowPage extends Page
             );
     }
 
-    public function commentSymbol(Browser $browser,
-        $row,
-        $symbol,
-        $comment,
-        $user
-    ) {
+    public function commentSymbol(Browser $browser, $row, $symbol, $comment, $user)
+    {
         $symbolXpath = "//tr[@data-row='$row']//span[contains(@class, 'grammar-view__symbol') and text()='$symbol']";
         $symbolCommentsXpath = "$symbolXpath/following-sibling::div[contains(@class, 'grammar-view__symbol-comments')]";
         $addedCommentHolderXpath = "($symbolCommentsXpath/div[contains(@class, 'grammar-view__comment-holder')])[last()]";
@@ -76,7 +72,7 @@ class ShowPage extends Page
             ->click('.grammar-view__comment-form .grammar-view__add-comment-button')
             ->waitFor(WebDriverBy::xpath($commentButtonXpath))
             ->seeElement(WebDriverBy::xpath("$addedCommentHolderXpath/div[contains(@class, 'grammar-view__comment-content') and text()='$comment']"))
-            ->seeElement(WebDriverBy::xpath("$addedCommentHolderXpath/div[contains(@class, 'grammar-view__comment-header') and contains(text(), '$user->name')]"));
+            ->seeElement(WebDriverBy::xpath("$addedCommentHolderXpath//span[contains(@class, 'grammar-view__username') and contains(text(), '$user->name')]"));
     }
 
     public function findRulesWhichContainSymbol(Browser $browser, $row, $symbol)
@@ -103,7 +99,7 @@ class ShowPage extends Page
 
         $browser
             ->mouseover(WebDriverBy::xpath($symbolXpath))
-            // I changed selector to xpath, because with css select browser cannot find such element. Funny, yeah?
+            // I changed selector to xpath, because with css selector browser couldn't find such element. Funny, yeah?
             ->click(WebDriverBy::xpath("$symbolXpath/following-sibling::div/span[contains(@class, 'grammar-view__r-icon')]"));
     }
 }
