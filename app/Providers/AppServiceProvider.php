@@ -45,7 +45,9 @@ class AppServiceProvider extends ServiceProvider
             $this->ensurejQueryIsAvailable();
 
             $script = <<<'HERE'
-                return jQuery('.symbol-search__found-symbol').closest('.grammar-view__row').attr('data-row');
+                return jQuery('.symbol-search__found-symbol')
+                    .closest('.grammar-view__row')
+                    .attr('data-row');
 HERE;
 
             $actualLine = $this->driver->executeScript($script);
