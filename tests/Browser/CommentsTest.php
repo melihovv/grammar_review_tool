@@ -51,7 +51,7 @@ class CommentsTest extends DuskTestCase
                 ->loginAs($user)
                 ->visit(new ShowPage($grammar->id))
                 ->commentRow(1, '', $user)
-                ->dontSeeElement('.grammar-view__comment-holder')
+                ->dontSeeElement('@comment-holder')
                 ->logout();
         });
     }
@@ -69,11 +69,11 @@ class CommentsTest extends DuskTestCase
                 ->loginAs($user)
                 ->visit(new ShowPage($grammar->id))
                 ->commentRow(1, 'Comment1', $user)
-                ->click('.grammar-view__edit-comment')
+                ->click('@edit-comment-btn')
                 ->type('textarea', 'Comment1Updated')
                 ->clickLink('Update')
                 ->pause(1000)
-                ->waitFor('.grammar-view__comment-holder')
+                ->waitFor('@comment-holder')
                 ->assertSee('Comment1Updated')
                 ->logout();
         });
@@ -93,7 +93,7 @@ class CommentsTest extends DuskTestCase
                 ->loginAs($user)
                 ->visit(new ShowPage($grammar->id))
                 ->commentRow(1, 'Comment1', $user)
-                ->click('.grammar-view__delete-comment')
+                ->click('@delete-comment-btn')
                 ->pause(1000)
                 ->assertDontSee('Comment1')
                 ->logout();
@@ -165,8 +165,8 @@ class CommentsTest extends DuskTestCase
             $browser3
                 ->loginAs($user2)
                 ->visit(new ShowPage($grammar->id))
-                ->dontSeeElement('.grammar-view__edit-comment')
-                ->dontSeeElement('.grammar-view__delete-comment')
+                ->dontSeeElement('@edit-comment-btn')
+                ->dontSeeElement('@delete-comment-btn')
                 ->logout();
         });
     }
@@ -249,7 +249,8 @@ class CommentsTest extends DuskTestCase
             $browser3
                 ->loginAs($admin)
                 ->visit(new ShowPage($grammar->id))
-                ->assertElementsCount('.grammar-view__edit-comment', 2)
+                ->assertElementsCount('@edit-comment-btn', 2)
+                ->assertElementsCount('@delete-comment-btn', 2)
                 ->logout();
         });
     }

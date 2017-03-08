@@ -18,6 +18,9 @@ class ShowPage extends Page
         return [
             '@rights-modal' => '#manage-grammar-rights-modal',
             '@parse-failed' => '.grammar-view_parse_failed',
+            '@comment-holder' => '.grammar-view__comment-holder',
+            '@edit-comment-btn' => '.grammar-view__edit-comment',
+            '@delete-comment-btn' => '.grammar-view__delete-comment',
         ];
     }
 
