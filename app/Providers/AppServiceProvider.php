@@ -41,6 +41,17 @@ class AppServiceProvider extends ServiceProvider
             return $this;
         });
 
+        Browser::macro('dontSeeElement', function ($selector) {
+            $elem = $this->resolver->find($selector);
+
+            PHPUnit::assertNull(
+                $elem,
+                "Element with select [$selector] is presented on the page"
+            );
+
+            return $this;
+        });
+
         Browser::macro('assertHighlightedLineIs', function ($line) {
             $this->ensurejQueryIsAvailable();
 
@@ -57,6 +68,14 @@ HERE;
                 $actualLine,
                 "Highlited line [$actualLine], but expected [$line]."
             );
+
+            return $this;
+        });
+
+        Browser::macro('assertElementsCount', function ($selector, $count) {
+            $elems = $this->elements($selector);
+
+            PHPUnit::assertCount($count, $elems);
 
             return $this;
         });
