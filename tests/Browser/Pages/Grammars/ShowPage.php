@@ -36,22 +36,28 @@ class ShowPage extends Page
             ->mouseover("tr[data-row='$row'] .grammar-view__add-comment-to-row-leftside-button")
             ->click("tr[data-row='$row'] .grammar-view__add-comment-to-row-leftside-button")
             ->keys('.grammar-view__comment-form textarea', $comment)
-            ->click('.grammar-view__comment-form .grammar-view__add-comment-button')
-            ->waitUntilMissing("tr[data-row='$row'] + tr .grammar-view__cancel-button")
-            ->with(
-                "tr[data-row='$row'] + tr",
-                function (Browser $browser) use ($user, $comment, $row) {
-                    $count = count($browser->elements('.grammar-view__comment-holder'));
-                    $browser->with(
-                        ".grammar-view__comment-holder:nth-child($count)",
-                        function (Browser $browser) use ($user, $comment) {
-                            $browser
-                                ->assertSee($user->name)
-                                ->assertSee($comment);
-                        }
-                    );
-                }
-            );
+            ->click('.grammar-view__comment-form .grammar-view__add-comment-button');
+
+        if (!empty($comment)) {
+            $browser
+                ->waitUntilMissing("tr[data-row='$row'] + tr .grammar-view__cancel-button")
+                ->with(
+                    "tr[data-row='$row'] + tr",
+                    function (Browser $browser) use ($user, $comment, $row) {
+                        $count = count($browser->elements('.grammar-view__comment-holder'));
+                        $browser->with(
+                            ".grammar-view__comment-holder:nth-child($count)",
+                            function (Browser $browser) use ($user, $comment) {
+                                $browser
+                                    ->assertSee($user->name)
+                                    ->assertSee($comment);
+                            }
+                        );
+                    }
+                );
+        } else {
+            $browser->assertSee('Comment is empty');
+        }
     }
 
     public function commentSymbol(Browser $browser, $row, $symbol, $comment, $user)

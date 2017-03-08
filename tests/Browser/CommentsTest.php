@@ -42,6 +42,24 @@ class CommentsTest extends DuskTestCase
      * @param callable $setupCb
      * @dataProvider commentsProvider
      */
+    public function testUserCannotAddEmptyComment(callable $setupCb)
+    {
+        $this->browse(function (Browser $browser) use ($setupCb) {
+            list($user, $grammar) = $setupCb();
+
+            $browser
+                ->loginAs($user)
+                ->visit(new ShowPage($grammar->id))
+                ->commentRow(1, '', $user)
+                ->dontSeeElement('.grammar-view__comment-holder')
+                ->logout();
+        });
+    }
+
+    /**
+     * @param callable $setupCb
+     * @dataProvider commentsProvider
+     */
     public function testUserCanUpdateComment(callable $setupCb)
     {
         $this->browse(function (Browser $browser) use ($setupCb) {
@@ -197,9 +215,6 @@ class CommentsTest extends DuskTestCase
         ];
     }
 
-    /**
-     * @group wip
-     */
     public function testAdminCanUpdateOrDeleteAnyOtherUserComment()
     {
         $this->browse(function (Browser $browser1, Browser $browser2, Browser $browser3) {
