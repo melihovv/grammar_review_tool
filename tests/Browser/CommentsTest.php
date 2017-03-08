@@ -63,6 +63,7 @@ class CommentsTest extends DuskTestCase
 
     /**
      * @dataProvider commentsProvider
+     *
      * @param callable $setupCb
      */
     public function testUserCanDeleteComment(callable $setupCb)
