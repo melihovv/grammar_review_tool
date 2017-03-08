@@ -17,6 +17,7 @@ class ShowPage extends Page
     {
         return [
             '@rights-modal' => '#manage-grammar-rights-modal',
+            '@parse-failed' => '.grammar-view_parse_failed',
         ];
     }
 

@@ -108,6 +108,23 @@ class GrammarsTest extends DuskTestCase
         });
     }
 
+    public function testUserCanViewGrammarWithSyntaxErrors()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = factory(User::class)->create();
+            list($grammar) = $this->createGrammar(',..WTF?', [
+                'user_id' => $user->id,
+            ]);
+
+            $browser
+                ->loginAs($user)
+                ->visit(new ShowPage($grammar->id))
+                ->seeElement('@parse-failed')
+                ->assertSee('Grammar contains syntax errors')
+                ->logout();
+        });
+    }
+
     public function testUserCanDeleteGrammar()
     {
         $this->browse(function (Browser $browser) {
