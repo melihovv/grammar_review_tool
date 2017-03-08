@@ -4,9 +4,6 @@ namespace Tests\Browser;
 
 use App\Entities\User;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\Grammars\CreatePage;
-use Tests\Browser\Pages\Grammars\EditPage;
-use Tests\Browser\Pages\Grammars\HistoryPage;
 use Tests\Browser\Pages\Grammars\ShowPage;
 use Tests\Browser\Pages\HomePage;
 use Tests\DuskTestCase;
