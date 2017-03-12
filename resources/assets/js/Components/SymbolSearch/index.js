@@ -54,9 +54,9 @@ $(() => {
   })
 
   $grammarView.on('click', '.grammar-view__r-icon', e => {
-    const $this = $(e.target)
-    const symbol = $this.parent().prev().text()
-    const row = $this.closest('.grammar-view__row').attr('data-row')
+    const $code = $(e.target).closest('.grammar-view__code')
+    const symbol = $code.find('.grammar-view__ls-nonterminal').first().text()
+    const row = $code.closest('.grammar-view__row').attr('data-row')
 
     rules = finder.findRulesWithTheSameRightSide(symbol, row)
     initSearch()
