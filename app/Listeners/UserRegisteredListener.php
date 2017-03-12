@@ -12,6 +12,6 @@ class UserRegisteredListener
     {
         $email = new EmailConfirmation($event->user);
 
-        Mail::to($event->user->email)->send($email);
+        Mail::to($event->user->email)->queue($email);
     }
 }
