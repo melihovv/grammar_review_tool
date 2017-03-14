@@ -141,7 +141,6 @@ class UpdateGrammarTest extends DuskTestCase
     /**
      * @param callable $setupCb
      * @dataProvider usersCannotProvider
-     * @group wip
      */
     public function testUserCannotUpdateGrammar(callable $setupCb)
     {

@@ -21,6 +21,7 @@
   import Finder from 'js/Finder'
   import 'Components/SymbolSearch'
   import './comments'
+  import './references'
 
   export default {
     props: {
@@ -122,12 +123,17 @@
       padding-right 10px
       padding-left 10px
       color rgba(0, 0, 0, 0.3)
+      cursor pointer
 
     &__row-number:hover
       color rgba(0, 0, 0, 0.6)
 
     &__code
       color #333
+
+      &.highlighted
+        background-color #f8eec7
+
 
     &__ls-nonterminal,
     &__rs-nonterminal,

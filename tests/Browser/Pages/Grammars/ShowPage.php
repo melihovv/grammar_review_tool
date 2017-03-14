@@ -21,6 +21,7 @@ class ShowPage extends Page
             '@comment-holder' => '.grammar-view__comment-holder',
             '@edit-comment-btn' => '.grammar-view__edit-comment',
             '@delete-comment-btn' => '.grammar-view__delete-comment',
+            '@highlighted' => '.highlighted',
         ];
     }
 
@@ -31,6 +32,12 @@ class ShowPage extends Page
         if (!$this->modalIsDisplayed($browser)) {
             $browser->waitUntilMissing('.loader');
         }
+    }
+
+    public function clickLineNumber(Browser $browser, $line)
+    {
+        $browser
+            ->click("tr[data-row='$line'] .grammar-view__row-number");
     }
 
     public function commentRow(Browser $browser, $row, $comment, $user)

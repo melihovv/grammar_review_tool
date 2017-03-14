@@ -79,6 +79,14 @@ HERE;
 
             return $this;
         });
+
+        Browser::macro('assertHashIs', function ($hash) {
+            PHPUnit::assertEquals($hash, parse_url(
+                $this->driver->getCurrentURL()
+            )['fragment']);
+
+            return $this;
+        });
     }
 
     public function register()
