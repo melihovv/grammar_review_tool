@@ -131,10 +131,6 @@
     &__code
       color #333
 
-      &.highlighted
-        background-color #f8eec7
-
-
     &__ls-nonterminal,
     &__rs-nonterminal,
     &__terminal,
@@ -375,4 +371,12 @@
 
     &__username
       display inline-block
+
+  .highlighted
+    animation highlight 3s ease 0s 1 alternate
+
+  @keyframes highlight {
+    from {background-color: #f8eec7;}
+    to {background-color: transparent;}
+  }
 </style>
