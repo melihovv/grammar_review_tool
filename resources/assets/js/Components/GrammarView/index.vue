@@ -373,7 +373,7 @@
       display inline-block
 
   .highlighted
-    animation highlight 3s ease 0s 1 alternate
+    animation highlight 5s ease 0s 1 alternate
 
   @keyframes highlight {
     from {background-color: #f8eec7;}

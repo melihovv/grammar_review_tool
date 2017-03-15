@@ -87,6 +87,12 @@ HERE;
 
             return $this;
         });
+
+        Browser::macro('doubleClick', function ($element) {
+            $this->driver->getMouse()->doubleClick($element->getCoordinates());
+
+            return $this;
+        });
     }
 
     public function register()
