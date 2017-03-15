@@ -35,9 +35,6 @@ class ReferencesTest extends DuskTestCase
         });
     }
 
-    /**
-     * @group wip
-     */
     public function testUserCanReferenceTheComment()
     {
         $this->browse(function (Browser $browser) {
