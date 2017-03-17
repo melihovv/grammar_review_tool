@@ -25,7 +25,7 @@ class CommentService
     protected $addedRows = [];
 
     /**
-     * @param array $data
+     * @param array   $data
      * @param Grammar $grammar
      *
      * @return Comment

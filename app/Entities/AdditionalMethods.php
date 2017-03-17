@@ -22,10 +22,11 @@ trait AdditionalMethods
     /**
      * Smarter version of whereIn method.
      *
-     * @param  string  $column
-     * @param  mixed   $values
-     * @param  string  $boolean
-     * @param  bool    $not
+     * @param string $column
+     * @param mixed  $values
+     * @param string $boolean
+     * @param bool   $not
+     *
      * @return $this
      */
     public static function smarterWhereIn(

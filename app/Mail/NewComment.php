@@ -51,7 +51,7 @@ class NewComment extends Mailable
         return $this
             ->markdown('emails.new-comment')
             ->from(config('mail.noreply'), $this->user->name)
-            ->subject("New comment in " . $this->grammar->name)
+            ->subject('New comment in ' . $this->grammar->name)
             ->withUser($this->user)
             ->withComment($this->comment)
             ->withGrammar($this->grammar)
