@@ -8,10 +8,10 @@ User {{ $user->name }} commented on {{ $grammar->name }}
 @endcomponent
 
 @component('mail::button', [
-    'url' => config('app.url') . route('grammars.show', [
+    'url' => route('grammars.show', [
       'grammar' => $grammar->id,
       'version' => $version->depth,
-    ], false) . "#comment-$comment->id",
+    ]) . "#comment-$comment->id",
     'color' => 'blue',
 ])
 View in service
