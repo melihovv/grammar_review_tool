@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Entities;
 
+use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Right;
 use App\Entities\User;
@@ -37,6 +38,42 @@ class GrammarTest extends TestCase
         factory(Right::class, 10)->create();
 
         $this->assertEquals(5, $grammar->rights->count());
+    }
+
+    public function testCommentsRelationship()
+    {
+        list($grammar, $parent) = $this->createGrammar('content1');
+        $child = $this->updateGrammar($grammar, 'content2');
+        factory(Comment::class, 5)->create([
+            'version_id' => $parent->id,
+        ]);
+        factory(Comment::class, 4)->create([
+            'version_id' => $child->id,
+        ]);
+        factory(Comment::class, 10)->create();
+
+        $this->assertEquals(9, $grammar->comments->count());
+    }
+
+    public function testUsersWithRights()
+    {
+        $grammar = factory(Grammar::class)->create();
+        factory(Right::class, 5)->create(['grammar_id' => $grammar->id]);
+        factory(Right::class, 10)->create();
+
+        $this->assertEquals(5, $grammar->usersWithRights()->count());
+        $this->assertEquals(6, $grammar->usersWithRights([$grammar->user_id])->count());
+    }
+
+    public function testUsersWithAtLeastOneComment()
+    {
+        list($grammar, $parent) = $this->createGrammar('content1');
+        factory(Comment::class, 5)->create([
+            'version_id' => $parent->id,
+        ]);
+
+        $this->assertEquals(5, $grammar->usersWithAtLeastOneComment()->count());
+        $this->assertEquals(6, $grammar->usersWithAtLeastOneComment([$grammar->user_id])->count());
     }
 
     public function testGetVersion()

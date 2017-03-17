@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\NewComment;
+use App\Listeners\NewCommentListener;
 use App\Listeners\UserRegisteredListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as SP;
@@ -16,6 +18,9 @@ class EventServiceProvider extends SP
     protected $listen = [
         Registered::class => [
             UserRegisteredListener::class,
+        ],
+        NewComment::class => [
+            NewCommentListener::class,
         ],
     ];
 

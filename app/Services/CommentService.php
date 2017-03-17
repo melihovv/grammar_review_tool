@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entities\Comment;
 use App\Entities\Grammar;
 use App\Entities\Version;
+use App\Events\NewComment;
 use Illuminate\Database\Eloquent\Collection;
 
 class CommentService
@@ -25,18 +26,29 @@ class CommentService
 
     /**
      * @param array $data
+     * @param Grammar $grammar
      *
-     * @return mixed
+     * @return Comment
      */
-    public function create(array $data)
+    public function create(array $data, Grammar $grammar)
     {
-        return Comment::create($data);
+        $comment = Comment::create($data);
+        $version = Version::exclude(['content'])->find($data['version_id']);
+
+        event(new NewComment(
+            auth()->user(),
+            $comment,
+            $grammar,
+            $version
+        ));
+
+        return $comment;
     }
 
     /**
      * @param array $data
      *
-     * @return mixed
+     * @return Comment
      */
     public function update(Comment $comment, array $data)
     {
@@ -48,7 +60,7 @@ class CommentService
     /**
      * @param array $data
      *
-     * @return mixed
+     * @return bool
      */
     public function delete(Comment $comment)
     {

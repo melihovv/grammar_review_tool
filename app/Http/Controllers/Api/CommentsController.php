@@ -26,7 +26,7 @@ class CommentsController extends ApiController
         StoreRequest $request,
         CommentService $service
     ) {
-        $comment = $service->create($request->all());
+        $comment = $service->create($request->all(), $grammar);
 
         return $this->response->item($comment, new CommentTransformer());
     }

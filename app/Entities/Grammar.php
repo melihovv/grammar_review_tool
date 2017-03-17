@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Grammar extends Model
 {
@@ -53,6 +54,42 @@ class Grammar extends Model
     public function rights()
     {
         return $this->hasMany(Right::class);
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Version::class);
+    }
+
+    /**
+     * @param array $extraUsersIds
+     *
+     * @return Builder
+     */
+    public function usersWithRights(array $extraUsersIds = [])
+    {
+        $usersIds = $this->rights()->get(['user_id'])->pluck('user_id')
+            ->toArray();
+        $usersIds = array_merge($usersIds, $extraUsersIds);
+
+        return User::smarterWhereIn('id', $usersIds);
+    }
+
+    /**
+     * @param array $extraUsersIds
+     *
+     * @return Builder
+     */
+    public function usersWithAtLeastOneComment(array $extraUsersIds = [])
+    {
+        $usersIds = $this->comments()->get(['user_id'])->pluck('user_id')
+            ->toArray();
+        $usersIds = array_merge($usersIds, $extraUsersIds);
+
+        return User::smarterWhereIn('id', $usersIds);
     }
 
     /**

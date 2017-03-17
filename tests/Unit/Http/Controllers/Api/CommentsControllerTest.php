@@ -8,8 +8,10 @@ use App\Entities\Right;
 use App\Entities\User;
 use App\Http\Transformers\CommentTransformer;
 use App\Http\Transformers\UserTransformer;
+use App\Mail\NewComment;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Mail;
 use Tests\BrowserKitTestCase;
 use Tests\Traits\ApiHelpers;
 
@@ -21,11 +23,13 @@ class CommentsControllerTest extends BrowserKitTestCase
     /**
      * @dataProvider storeProvider
      */
-    public function testStore($cb)
+    public function testStore(callable $setupCb, callable $assertCb)
     {
+        Mail::fake();
+
         $user = factory(User::class)->create();
         list($grammar, $version) = $this->createGrammar();
-        $cb($user, $grammar);
+        $setupCb($user, $grammar);
 
         $route = app(UrlGenerator::class)->version('v1')
             ->route('grammars.comments.store', [$grammar->id]);
@@ -47,44 +51,89 @@ class CommentsControllerTest extends BrowserKitTestCase
             'row' => 1,
             'column' => 0,
         ]);
+
+        Mail::assertSent(NewComment::class, function ($mail) use ($assertCb, $grammar) {
+            return $mail->hasTo(config('mail.noreply'))
+                && $assertCb($mail, $grammar);
+        });
     }
 
     public function storeProvider()
     {
         return [
-            'user is admin' => [function ($user, $grammar) {
-                $user->update(['is_admin' => true]);
-            }],
-            'user is grammar owner' => [function ($user, $grammar) {
-                $grammar->update(['user_id' => $user->id]);
-            }],
-            'user has right to comment grammar' => [function ($user, $grammar) {
-                factory(Right::class)->create([
-                    'user_id' => $user->id,
-                    'grammar_id' => $grammar->id,
-                    'view_comment' => false,
-                    'edit' => true,
-                    'admin' => false,
-                ]);
-            }],
-            'user has right to edit grammar' => [function ($user, $grammar) {
-                factory(Right::class)->create([
-                    'user_id' => $user->id,
-                    'grammar_id' => $grammar->id,
-                    'view_comment' => false,
-                    'edit' => true,
-                    'admin' => false,
-                ]);
-            }],
-            'user has right to admin grammar' => [function ($user, $grammar) {
-                factory(Right::class)->create([
-                    'user_id' => $user->id,
-                    'grammar_id' => $grammar->id,
-                    'view_comment' => false,
-                    'edit' => false,
-                    'admin' => true,
-                ]);
-            }],
+            'user is admin' => [
+                function ($user, $grammar) {
+                    $user->update(['is_admin' => true]);
+                },
+                function ($mail, $grammar) {
+                    return $mail->hasBcc($grammar->owner->email);
+                },
+            ],
+            'user is grammar owner' => [
+                function ($user, $grammar) {
+                    $grammar->update(['user_id' => $user->id]);
+                },
+                function ($mail, $grammar) {
+                    return true;
+                },
+            ],
+            'user is grammar owner, there is user with right' => [
+                function ($user, $grammar) {
+                    $grammar->update(['user_id' => $user->id]);
+
+                    factory(Right::class)->create([
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => true,
+                        'admin' => false,
+                    ]);
+                },
+                function ($mail, $grammar) {
+                    return $mail->hasBcc(User::last()->email);
+                },
+            ],
+            'user has right to comment grammar' => [
+                function ($user, $grammar) {
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => true,
+                        'admin' => false,
+                    ]);
+                },
+                function ($mail, $grammar) {
+                    return $mail->hasBcc($grammar->owner->email);
+                },
+            ],
+            'user has right to edit grammar' => [
+                function ($user, $grammar) {
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => true,
+                        'admin' => false,
+                    ]);
+                },
+                function ($mail, $grammar) {
+                    return $mail->hasBcc($grammar->owner->email);
+                },
+            ],
+            'user has right to admin grammar' => [
+                function ($user, $grammar) {
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => false,
+                        'admin' => true,
+                    ]);
+                },
+                function ($mail, $grammar) {
+                    return $mail->hasBcc($grammar->owner->email);
+                },
+            ],
         ];
     }
 
@@ -206,10 +255,12 @@ class CommentsControllerTest extends BrowserKitTestCase
     public function updateProvider()
     {
         return [
-            'user is admin' => [function ($user, $grammar, $comment) {
-                $user->update(['is_admin' => true]);
-                $grammar->update(['user_id' => $user->id]);
-            }],
+            'user is admin' => [
+                function ($user, $grammar, $comment) {
+                    $user->update(['is_admin' => true]);
+                    $grammar->update(['user_id' => $user->id]);
+                },
+            ],
             'user has right to comment and he is comment owner' => [
                 function ($user, $grammar, $comment) {
                     $comment->update(['user_id' => $user->id]);

@@ -18,7 +18,7 @@ abstract class BaseRequest extends Request
     {
         return array_merge(parent::extraData(), [
             'user_id' => 0,
-            'grammar_id' => 0,
+            'version_id' => 0,
             'row' => 0,
             'column' => 0,
         ]);
