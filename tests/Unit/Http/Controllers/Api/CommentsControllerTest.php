@@ -9,8 +9,10 @@ use App\Entities\User;
 use App\Http\Transformers\CommentTransformer;
 use App\Http\Transformers\UserTransformer;
 use App\Mail\NewComment;
+use App\Events\NewComment as NewCommentEvent;
 use Dingo\Api\Routing\UrlGenerator;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Tests\BrowserKitTestCase;
 use Tests\Traits\ApiHelpers;
@@ -139,6 +141,8 @@ class CommentsControllerTest extends BrowserKitTestCase
 
     public function testStoreSanitizers()
     {
+        Event::fake();
+
         $user = factory(User::class, 'admin')->create();
         list($grammar, $version) = $this->createGrammar();
 
@@ -163,6 +167,10 @@ class CommentsControllerTest extends BrowserKitTestCase
             'row' => 1,
             'column' => 0,
         ]);
+
+        Event::assertDispatched(NewCommentEvent::class, function ($e) use ($user) {
+            return $e->user->id === $user->id;
+        });
     }
 
     public function testWrongVersion()
