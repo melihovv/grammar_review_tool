@@ -92,7 +92,7 @@ module.exports = {
           {
             loader: 'expose-loader',
             options: '$',
-          }
+          },
         ],
       },
       {
