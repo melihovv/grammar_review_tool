@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\Browser;
 use PHPUnit_Framework_Assert as PHPUnit;
+use Sentry\SentryLaravel\SentryLaravelServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -97,6 +98,10 @@ HERE;
 
     public function register()
     {
+        if ($this->app->environment('production') && config('sentry.dsn')) {
+            $this->app->register(SentryLaravelServiceProvider::class);
+        }
+
         if (!$this->app->environment('production')) {
             $localProviders = config('app.local_providers', []);
             foreach ($localProviders as $provider) {
