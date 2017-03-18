@@ -74,6 +74,7 @@ class Grammar extends Model
         $usersIds = $this->rights()->get(['user_id'])->pluck('user_id')
             ->toArray();
         $usersIds = array_merge($usersIds, $extraUsersIds);
+        $usersIds = array_unique($usersIds);
 
         return User::smarterWhereIn('id', $usersIds);
     }
@@ -88,6 +89,7 @@ class Grammar extends Model
         $usersIds = $this->comments()->get(['user_id'])->pluck('user_id')
             ->toArray();
         $usersIds = array_merge($usersIds, $extraUsersIds);
+        $usersIds = array_unique($usersIds);
 
         return User::smarterWhereIn('id', $usersIds);
     }
