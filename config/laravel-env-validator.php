@@ -21,6 +21,7 @@ return [
         'MAIL_ENCRYPTION' => 'required|nullable',
         'MAIL_FROM_ADDRESS' => 'required|email',
         'MAIL_FROM_NAME' => 'required',
+        'MAIL_NOREPLY' => 'required',
 
         'NOCAPTCHA_SECRET' => 'required',
         'NOCAPTCHA_SITEKEY' => 'required',
