@@ -26,6 +26,7 @@ Demo available at http://138.68.75.165.
   - edit (the one above + user can edit grammar)
   - admin (the one above + user can grant rights to other users)
 - user with admin role, which can almost everything 
+- email notifications about new comments
 
 ## Screenshots
 
