@@ -18,67 +18,99 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['', '.js', '.vue', '.styl'],
-    fallback: [path.join(__dirname, '../../../node_modules')],
+    extensions: ['.js', '.vue', '.styl'],
     alias: {
       js: path.resolve(__dirname, '../js'),
       Components: path.resolve(__dirname, '../js/Components'),
-      vue: 'vue/dist/vue.js',
+      vue$: 'vue/dist/vue.common.js',
     },
   },
-  resolveLoader: {
-    fallback: [path.join(__dirname, '../../../node_modules')],
-  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'vue',
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        include: path.resolve(__dirname, '../'),
-        exclude: /node_modules/,
-        query: {
-          cacheDirectory: true,
+        use: {
+          loader: 'vue-loader',
+          options: {
+            loaders: utils.cssLoaders({
+              extract: NODE_ENV === 'production',
+              sourceMap: config[NODE_ENV].sourceMap,
+            }),
+          },
         },
       },
       {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
+        },
+        include: path.resolve(__dirname, '../'),
+        exclude: /node_modules/,
+      },
+      {
         test: /\.y$/,
-        loader: 'raw',
+        use: {
+          loader: 'raw-loader',
+        },
       },
       {
         test: /\.html$/,
-        loader: 'vue-html',
+        use: {
+          loader: 'vue-html-loader',
+        },
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+          },
         },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
+          },
         },
       },
       {
         test: require.resolve('jquery'),
-        loader: 'expose?jQuery!expose?$',
+        use: [
+          {
+            loader: 'expose-loader',
+            options: 'jQuery',
+          },
+          {
+            loader: 'expose-loader',
+            options: '$',
+          }
+        ],
       },
       {
         test: require.resolve(path.join(__dirname, '../js/Parser')),
-        loader: 'expose?Parser!babel',
+        use: [
+          {
+            loader: 'expose-loader',
+            options: 'Parser',
+          },
+          {
+            loader: 'babel-loader',
+          },
+        ],
       },
       {
         test: require.resolve('brace'),
-        loader: 'expose?ace',
+        loader: 'expose-loader',
+        options: 'ace',
       },
     ],
   },
@@ -90,12 +122,8 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
     }),
-    new webpack.NoErrorsPlugin(),
   ],
   node: {
     fs: 'empty',
-  },
-  vue: {
-    loaders: utils.cssLoaders(),
   },
 }

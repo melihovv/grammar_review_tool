@@ -17,11 +17,10 @@ Object.keys(baseWebpackConfig.entry).forEach(name => {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    loaders: utils.styleLoaders({sourceMap: config.development.cssSourceMap}),
+    rules: utils.styleLoaders({sourceMap: config.development.cssSourceMap}),
   },
   devtool: '#inline-source-map',
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
