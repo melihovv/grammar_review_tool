@@ -3,11 +3,7 @@
 namespace Tests\Unit\Http\Controllers\Auth;
 
 use App\Entities\User;
-use App\Mail\EmailConfirmation;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Mail;
 use Tests\BrowserKitTestCase;
 
 /**
