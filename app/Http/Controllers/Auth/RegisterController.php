@@ -64,24 +64,17 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($this->create($request->only([
+        $payload = $request->only([
             'name',
             'email',
             'password',
-        ]))));
-
-        return redirect()->back()
-            ->with(
-                'info',
-                'Thanks for signing up. We have sent you confirmation email'
-            );
-    }
-
-    public function confirm($token)
-    {
-        User::where('email_token', $token)->firstOrFail()->confirmed();
+        ]);
+        event(new Registered($this->create($payload)));
 
         return redirect('login')
-            ->with('success', 'Email was successfully confirmed');
+            ->with(
+                'info',
+                'Thanks for signing up. We have sent you confirmation email.'
+            );
     }
 }

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\BrowserKitTestCase;
 
+/**
+ * @group auth
+ */
 class ForgotPasswordControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;

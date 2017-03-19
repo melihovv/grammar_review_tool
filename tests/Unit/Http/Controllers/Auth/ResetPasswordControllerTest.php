@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Password;
 use Tests\BrowserKitTestCase;
 
+/**
+ * @group auth
+ */
 class ResetPasswordControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;

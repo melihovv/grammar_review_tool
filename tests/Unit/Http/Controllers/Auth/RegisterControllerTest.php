@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Tests\BrowserKitTestCase;
 
+/**
+ * @group auth
+ */
 class RegisterControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;
@@ -28,7 +31,7 @@ class RegisterControllerTest extends BrowserKitTestCase
             ->type('password', 'password')
             ->type('password', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/register');
+            ->seePageIs('/login');
 
         Mail::assertSent(EmailConfirmation::class, function ($mail) {
             return $mail->hasTo(User::first()->email);
@@ -51,7 +54,7 @@ class RegisterControllerTest extends BrowserKitTestCase
             'HTTP_REFERER' => url('/register'),
         ]);
 
-        $this->assertRedirectedTo('/register');
+        $this->assertRedirectedTo('/login');
 
         $user = User::first();
         $this->assertFalse($user->is_admin);
@@ -81,18 +84,5 @@ class RegisterControllerTest extends BrowserKitTestCase
             ->press('Register')
             ->seePageIs('/register')
             ->see(Lang::get('validation.unique', ['attribute' => 'name']));
-    }
-
-    public function testConfirm()
-    {
-        $user = factory(User::class, 'unconfirmed')->create();
-
-        $this->get(route('register.confirm', $user->email_token));
-
-        $this->assertRedirectedTo('/login');
-
-        $user = User::first();
-        $this->assertTrue($user->confirmed);
-        $this->assertNull($user->email_token);
     }
 }

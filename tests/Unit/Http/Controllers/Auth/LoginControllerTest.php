@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Lang;
 use Tests\BrowserKitTestCase;
 
+/**
+ * @group auth
+ */
 class LoginControllerTest extends BrowserKitTestCase
 {
     use DatabaseMigrations;

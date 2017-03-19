@@ -4,7 +4,7 @@
 Click on the below link to confirm your email address
 
 @component('mail::button', [
-    'url' => url("register/confirm/$user->email_token"),
+    'url' => route('auth.confirm', ['token' => $user->email_token]),
     'color' => 'blue',
 ])
 Confirm
