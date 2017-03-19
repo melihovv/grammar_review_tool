@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Forms\Auth\RegisterForm;
 use Facades\App\Services\UserService;
