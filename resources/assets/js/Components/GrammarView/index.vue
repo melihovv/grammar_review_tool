@@ -5,7 +5,7 @@
     <div v-if="parseFailed" class="grammar-view_parse_failed">
       <h2>Grammar contains syntax errors</h2>
       <ul>
-        <li v-for="error in parseErrors">
+        <li v-for="error in parseErrors" :key="error">
           {{ error }}
         </li>
       </ul>

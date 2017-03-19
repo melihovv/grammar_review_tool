@@ -6,7 +6,7 @@
     <div class="col-md-2">
       <ul class="list-group affix versions-sidebar">
         <li class="list-group-item">History</li>
-        <li v-for="version in versions"
+        <li v-for="version in versions" :key="version.id"
             :class="{'list-group-item': true, active: version.id === activeVersionId}"
             @click="onVersionClickedInSidebar(version.version, version.id)">
           {{ version.created_at }}<br>

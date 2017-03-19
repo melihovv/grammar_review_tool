@@ -10,7 +10,7 @@
       </thead>
       <tbody>
       <right :right="right" :grammar-id="grammarId"
-             v-for="(right, index) in rights"
+             v-for="(right, index) in rights" :key="right.id"
              v-on:remove="rights.splice(index, 1)"></right>
       </tbody>
     </table>
