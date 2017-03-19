@@ -12,19 +12,15 @@
     {!! Form::hidden($name, 0) !!}
     {!! Form::checkbox($name, $options['value'], $options['checked'], $options['attr']) !!}
 
-    @if (isset($rightWrapperClass))
-        {{ $options['label'] }}
-    @endif
-
     @include('laravel-form-builder::help_block')
+
+    @if ($showLabel && $options['label'] !== false && $options['label_show'])
+        {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
+    @endif
 
     @if (isset($rightWrapperClass))
         </div>
     @endif
-@endif
-
-@if ($showLabel && $options['label'] !== false && $options['label_show'] && !isset($rightWrapperClass))
-    {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
 @endif
 
 @include('laravel-form-builder::errors')
