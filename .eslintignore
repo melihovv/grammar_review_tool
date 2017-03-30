@@ -1,6 +1,8 @@
 /node_modules
 /docs
-/resources/assets/js/Parser/Lemon
+*.tokens
+*.g4
+/resources/assets/js/Parser/Lemon/Lemon*.js
 /resources/assets/test/unit/coverage
 /public
 /vendor
