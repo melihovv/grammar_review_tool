@@ -37,7 +37,7 @@ install:
 before_script:
     - npm prune
     - ./vendor/laravel/dusk/bin/chromedriver-linux &
-    - php artisan serve --env=travis &
+    - php artisan serve --env=travis --quite &
     - sleep 5
 
 script:
