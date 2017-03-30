@@ -44,8 +44,7 @@ END_CODE: RBrace {
 CODE_CONTENT: ~['"{}/]+;
 
 fragment Digit: [0-9];
-fragment Digit19: [1-9];
-fragment Int: Digit19 Digit*;
+fragment Int: Digit+;
 fragment Upper: [A-Z];
 fragment Lower: [a-z];
 fragment Alpha: Upper|Lower|'_';

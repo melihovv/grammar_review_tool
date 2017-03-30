@@ -89,4 +89,11 @@ NOW;
       }
     `).should.not.throw()
   })
+
+  it('should understand numbers', () => {
+    parser.parse.bind(parser, `
+      %stack_size 0
+      %stack_size 123
+    `).should.not.throw()
+  })
 })
