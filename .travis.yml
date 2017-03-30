@@ -1,8 +1,12 @@
+sudo: required
+dist: trusty
+
 language: php
 php:
   - 5.6
   - 7.0
   - 7.1
+services: mysql
 
 branches:
     only:
@@ -20,20 +24,25 @@ before_install:
     - sh -e /etc/init.d/xvfb start
     - travis_retry nvm install node
     - travis_retry composer self-update
+    - mysql -e 'CREATE DATABASE grt_dusk;'
 
 install:
     - travis_retry composer install --no-interaction
     - travis_retry npm install
     - cp .env.example .env
     - php artisan key:generate
+    - php artisan key:generate --env=travis
     - npm run build
 
 before_script:
     - npm prune
+    - ./vendor/laravel/dusk/bin/chromedriver-linux &
+    - php artisan serve --env=travis &
     - sleep 5
 
 script:
     - composer run phpunit -- --verbose
+    - php artisan dusk --env=travis
     - composer run phpcs
     - composer run phpmd
     - npm run unit
