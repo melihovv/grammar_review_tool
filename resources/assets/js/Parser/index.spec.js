@@ -156,6 +156,14 @@ NOW;
         %union ID {code}
         %union {code}
 `
+    let grammarDeclarationWithSemicolons = ''
+    for (const line of grammarDeclaration.split(/(\r|\n)+/)) {
+      if (line.trim() === '') {
+        continue
+      }
+
+      grammarDeclarationWithSemicolons += `${line};\n`
+    }
 
     it('should allow prologue declarations', () => {
       parser.parse.bind(parser, `
@@ -204,6 +212,14 @@ NOW;
         ;
         %%
         a: b c;
+    `).should.not.throw()
+    })
+
+    it('should allow grammarDeclaration inside grammar part', () => {
+      parser.parse.bind(parser, `
+        %%
+        a: b c;
+        ${grammarDeclarationWithSemicolons}
     `).should.not.throw()
     })
 
