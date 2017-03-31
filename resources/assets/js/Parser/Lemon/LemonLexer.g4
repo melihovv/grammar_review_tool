@@ -26,8 +26,8 @@ ERROR_CHARACTER: .;
 
 mode Code;
 NESTED_CODE: LBrace -> type(CODE_CONTENT), pushMode(Code);
-BEGIN_SQUOTED_STRING: SQuote ('\\\''|~['])* SQuote -> type(CODE_CONTENT);
-BEGIN_DQUOTED_STRING: DQuote ('\\"'|~["])* DQuote -> type(CODE_CONTENT);
+SQUOTED_STRING: SQuote (~[\\']|'\\'[\\']?)* SQuote -> type(CODE_CONTENT);
+DQUOTED_STRING: DQuote (~[\\"]|'\\'[\\"]?)* DQuote -> type(CODE_CONTENT);
 // Without the following line string containing slash, for example,
 // "require_once('/a/b/c')" will be not properly parsed.
 CODE_SLASH: '/' . -> type(CODE_CONTENT);

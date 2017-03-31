@@ -27,10 +27,13 @@ describe('parser', () => {
       %destructor {'\\'}'}
       %destructor {'
 }'}
+      %declare_class {'a\\\\b\\ac\\'de' 'a'}
       %syntax_error {"}"}
       %syntax_error {"\\"}"}
       %syntax_error {"
 }"}
+      %declare_class {"a\\\\b\\ac\\"de" "a"}
+
       %declare_class {{{}}}
     `).should.not.throw()
   })
