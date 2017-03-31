@@ -12,4 +12,11 @@ class StoreRequest extends BaseRequest
             }],
         ]);
     }
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            'type' => 'required|string|in:lemon,bison',
+        ]);
+    }
 }

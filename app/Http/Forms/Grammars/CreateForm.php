@@ -9,6 +9,13 @@ class CreateForm extends BaseForm
         parent::buildForm();
 
         $this
+            ->addBefore('name', 'type', 'select', [
+                'choices' => [
+                    'lemon' => 'Lemon',
+                    'bison' => 'Bison',
+                ],
+                'label' => 'Format',
+            ])
             ->add('submit', 'submit', [
                 'label' => 'Create',
                 'attr' => [

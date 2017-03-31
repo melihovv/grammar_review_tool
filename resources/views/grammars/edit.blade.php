@@ -15,5 +15,6 @@
     ])
     @include('grammars.partials.validate-grammar-before-submit', [
         'inputName' => 'content',
+        'type' => $grammar->type,
     ])
 @endsection

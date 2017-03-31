@@ -44,6 +44,7 @@ class GrammarService
             $version = Version::create([
                 'grammar_id' => $grammar->id,
                 'content' => $data['content'],
+                'type' => $data['type'],
                 'updater_id' => $data['user_id'],
             ]);
         });
@@ -64,7 +65,9 @@ class GrammarService
 
         DB::transaction(
             function () use ($grammar, $data, &$newVersion, $updater) {
+                unset($data['type']);
                 $grammar->update($data);
+
                 $prevVersion = $grammar->getLatestVersion();
 
                 if ($prevVersion->content !== $data['content']) {

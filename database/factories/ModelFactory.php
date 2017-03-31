@@ -56,8 +56,17 @@ $factory->define(Grammar::class, function (Generator $faker) {
         },
         'name' => $faker->sentence(),
         'public_view' => false,
+        'type' => 'lemon',
     ];
 });
+
+$factory->defineAs(
+    Grammar::class,
+    'lemon',
+    function (Generator $faker) use ($factory) {
+        return $factory->raw(Grammar::class);
+    }
+);
 
 $factory->define(Version::class, function (Generator $faker) {
     return [
@@ -91,6 +100,14 @@ HERE
         'depth' => null,
     ];
 });
+
+$factory->defineAs(
+    Version::class,
+    'lemon',
+    function (Generator $faker) use ($factory) {
+        return $factory->raw(Version::class);
+    }
+);
 
 $factory->define(Comment::class, function (Generator $faker) {
     return [

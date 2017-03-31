@@ -16,6 +16,7 @@ class Grammar extends Model
         'id',
         'user_id',
         'name',
+        'type',
         'public_view',
         'created_at',
         'updated_at',
@@ -24,6 +25,7 @@ class Grammar extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'type',
         'public_view',
     ];
 

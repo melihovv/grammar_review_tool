@@ -1,7 +1,16 @@
 <script>
     $(() => {
         $('form').submit(e => {
-            const parser = new Parser.default()
+            const type = @php echo isset($type) ? "'$type'" : "$('select[name=type]').val()" @endphp
+
+            let parser = null
+            try {
+                parser = new Parser.default(type)
+            } catch (e) {
+              console.error(e)
+              return false
+            }
+
             const $input = $('input[name={{ $inputName }}]')
             const $syntaxErrors = $('.syntax-errors')
 

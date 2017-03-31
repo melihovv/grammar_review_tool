@@ -28,7 +28,7 @@ abstract class DuskTestCase extends BaseTestCase
 
     protected function newBrowser($driver)
     {
-        return new Browser($driver);
+        return (new Browser($driver))->maximize();
     }
 
     protected function setUp()

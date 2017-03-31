@@ -5,7 +5,7 @@
 import Parser from './index'
 
 describe('parser', () => {
-  const parser = new Parser()
+  const parser = new Parser('lemon')
 
   it('should understand directives', () => {
     parser.parse.bind(parser, `

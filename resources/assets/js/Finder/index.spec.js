@@ -6,7 +6,7 @@ import Parser from '../Parser'
 import Finder from './index'
 
 describe('finder', () => {
-  const parser = new Parser()
+  const parser = new Parser('lemon')
 
   it('should find rules with specific nonterminal on the left side', () => {
     const tree = parser.parse(`

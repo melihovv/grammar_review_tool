@@ -12,6 +12,9 @@ class UpdateRequest extends BaseRequest
             'user_id' => [function () use ($grammar) {
                 return $grammar->user_id;
             }],
+            'type' => [function () use ($grammar) {
+                return $grammar->type;
+            }],
         ]);
     }
 }

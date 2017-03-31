@@ -7,26 +7,36 @@ import {LemonParser} from './Lemon/LemonParser'
 import ErrorListener from './error-listener'
 
 /**
- * Lemon grammar parser.
+ * Grammar parser.
  */
 class Parser {
-  constructor() {
+  static types = [
+    'lemon',
+  ]
+
+  constructor(type) {
+    debugger
+    if (Parser.types.indexOf(type) === -1) {
+      throw new Error('Unsupported grammar format')
+    }
+
     this.tree = null
     this.parser = null
+    this.type = type
     this.errorListener = new ErrorListener()
   }
 
   /**
-   * Parse lemon grammar.
+   * Parse grammar.
    * @param {string} input
    * @returns {FileContext}
    */
   parse(input) {
     const chars = new InputStream(input)
-    const lexer = new LemonLexer(chars)
+    const lexer = this.lexerFactory(chars)
     const tokens = new CommonTokenStream(lexer)
 
-    this.parser = new LemonParser(tokens)
+    this.parser = this.parserFactory(tokens)
     this.parser.buildParseTrees = true
 
     this.parser.removeErrorListeners()
@@ -48,6 +58,20 @@ class Parser {
    */
   getErrors() {
     return this.errorListener.getErrors()
+  }
+
+  lexerFactory(input) {
+    switch (this.type) {
+      case 'lemon': return new LemonLexer(input)
+      case 'bison': throw new Error('Not implemented yet')
+    }
+  }
+
+  parserFactory(tokens) {
+    switch (this.type) {
+      case 'lemon': return new LemonParser(tokens)
+      case 'bison': throw new Error('Not implemented yet')
+    }
   }
 }
 

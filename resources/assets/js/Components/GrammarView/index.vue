@@ -53,7 +53,7 @@
     },
     methods: {
       show({grammar, version, owner, comments, rights}) {
-        const parser = new Parser()
+        const parser = new Parser(grammar.type)
         try {
           const tree = parser.parse(version.content)
           window.finder = new Finder(tree)

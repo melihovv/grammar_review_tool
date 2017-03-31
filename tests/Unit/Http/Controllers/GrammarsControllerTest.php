@@ -110,6 +110,7 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ->visit(route('grammars.create'))
             ->type('title1', 'name')
             ->type('content', 'content')
+            ->select('lemon', 'type')
             ->check('public_view')
             ->press('Create')
             ->seePageIs(route('grammars.show', 1));
@@ -249,6 +250,32 @@ class GrammarsControllerTest extends BrowserKitTestCase
             ]);
 
         $this->assertEquals(1, Version::count());
+    }
+
+    public function testCannotUpdateTypeOfGrammar()
+    {
+        $user = factory(User::class, 'admin')->create();
+        list($grammar) = $this->createGrammar('content', [
+            'user_id' => $user->id,
+            'public_view' => true,
+            'type' => 'lemon',
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('grammars.update', $grammar), [
+                'content' => 'new content',
+                'name' => 'new name',
+                'public_view' => false,
+                'user_id' => 100500,
+                'type' => 'bison',
+            ]);
+
+        $this->assertRedirectedToRoute('grammars.show', 1);
+        $this->seeInDatabase('grammars', [
+            'id' => 1,
+            'type' => 'lemon',
+        ]);
     }
 
     /**
