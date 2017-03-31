@@ -15,7 +15,6 @@ class Parser {
   ]
 
   constructor(type) {
-    debugger
     if (Parser.types.indexOf(type) === -1) {
       throw new Error('Unsupported grammar format')
     }

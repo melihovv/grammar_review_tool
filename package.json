@@ -30,6 +30,7 @@
   "homepage": "https://github.com/melihovv/grammar_review_tool",
   "devDependencies": {
     "babel-core": "^6.13.2",
+    "babel-eslint": "^7.2.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-istanbul": "^2.0.0",
     "babel-plugin-transform-runtime": "^6.12.0",
