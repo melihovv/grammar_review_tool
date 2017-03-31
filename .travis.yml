@@ -32,7 +32,7 @@ install:
     - cp .env.example .env
     - php artisan key:generate
 #    - php artisan key:generate --env=travis
-#    - npm run build
+    - npm run build
 
 before_script:
     - npm prune
