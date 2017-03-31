@@ -1,11 +1,12 @@
 /* eslint-env mocha */
+/* eslint-disable no-new */
 
 'use strict'
 
 import Parser from './index'
 
 describe('parser', () => {
-  it ('should understand only predefined format of grammar', () => {
+  it('should understand only predefined format of grammar', () => {
     try {
       new Parser('lemon')
       new Parser('bison')

@@ -3,6 +3,7 @@
 *.tokens
 *.g4
 /resources/assets/js/Parser/Lemon/Lemon*.js
+/resources/assets/js/Parser/Bison/Bison*.js
 /resources/assets/test/unit/coverage
 /public
 /vendor

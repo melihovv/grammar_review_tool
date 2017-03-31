@@ -20,6 +20,7 @@ module.exports = {
     "Messenger": false,
     "$": false,
     "Parser": false,
-    "finder": false
+    "finder": false,
+    "expect": false
   }
 }
