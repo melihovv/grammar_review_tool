@@ -4,14 +4,14 @@ import {InputStream} from 'antlr4/InputStream'
 import {CommonTokenStream} from 'antlr4/CommonTokenStream'
 import {LemonLexer} from './Lemon/LemonLexer'
 import {LemonParser} from './Lemon/LemonParser'
+import {BisonLexer} from './Bison/BisonLexer'
+import {BisonParser} from './Bison/BisonParser'
 import ErrorListener from './error-listener'
 
-/**
- * Grammar parser.
- */
 class Parser {
   static types = [
     'lemon',
+    'bison',
   ]
 
   constructor(type) {
@@ -62,14 +62,14 @@ class Parser {
   lexerFactory(input) {
     switch (this.type) {
       case 'lemon': return new LemonLexer(input)
-      case 'bison': throw new Error('Not implemented yet')
+      case 'bison': return new BisonLexer(input)
     }
   }
 
   parserFactory(tokens) {
     switch (this.type) {
       case 'lemon': return new LemonParser(tokens)
-      case 'bison': throw new Error('Not implemented yet')
+      case 'bison': return new BisonParser(tokens)
     }
   }
 }
