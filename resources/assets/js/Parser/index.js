@@ -38,7 +38,9 @@ class Parser {
     this.parser = this.parserFactory(tokens)
     this.parser.buildParseTrees = true
 
-    this.parser.removeErrorListeners()
+    if (process.env.NODE_ENV !== 'testing') {
+      this.parser.removeErrorListeners()
+    }
     this.parser.addErrorListener(this.errorListener)
 
     this.tree = this.parser.file()
