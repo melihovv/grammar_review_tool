@@ -36,50 +36,14 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
   }
 
   visit(ctx) {
-    if (Array.isArray(ctx)) {
-      return ctx.map(function (child) {
-        return child.accept(this);
-      }, this);
-    } else {
-      return ctx.accept(this);
-    }
+    Helper.visit(ctx, this)
   }
 
   /**
    * @param {FileContext} ctx
    */
   visitFile(ctx) {
-    this._buffer += this.helper.textOfHiddenTokensToLeft(
-      ctx.children[0].start.tokenIndex
-    )
-
-    this.visitChildren(ctx)
-
-    this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`
-    this.html += '<table class="grammar-view__table">'
-
-    let number = 1
-    const lines = Helper.split(this._buffer)
-
-    for (const line of lines) {
-      this.html += `
-<tr class="grammar-view__row" data-row="${number}" id="L${number}">
-  <td class="grammar-view__row-number">${number}</td>
-  <td class="grammar-view__code">`
-
-      if (this.accessManager.canUserComment(this.user)) {
-        this.html += `<a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
-                         href="#">+</a>`
-      }
-
-      this.html += `${line}</td></tr>`
-
-      this.html += this.helper.outputRowComments(number)
-
-      ++number
-    }
-
-    this.html += '</table>'
+    this.helper.visitFile(ctx, this)
   }
 
   /**

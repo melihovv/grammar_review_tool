@@ -185,4 +185,56 @@ export default class Helper {
   static split(string) {
     return string.split(/\r\n|\n|\r/)
   }
+
+  /**
+   * @param {Object} ctx
+   * @param {Object} _this
+   */
+  static visit(ctx, _this) {
+    if (Array.isArray(ctx)) {
+      return ctx.map(function (child) {
+        return child.accept(_this);
+      }, _this);
+    } else {
+      return ctx.accept(_this);
+    }
+  }
+
+  /**
+   * @param {Object} ctx
+   * @param {Object} _this
+   */
+  visitFile(ctx, _this) {
+    _this._buffer += this.textOfHiddenTokensToLeft(
+      ctx.children[0].start.tokenIndex
+    )
+
+    _this.visitChildren(ctx)
+
+    _this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`
+    _this.html += '<table class="grammar-view__table">'
+
+    let number = 1
+    const lines = Helper.split(_this._buffer)
+
+    for (const line of lines) {
+      _this.html += `
+<tr class="grammar-view__row" data-row="${number}" id="L${number}">
+  <td class="grammar-view__row-number">${number}</td>
+  <td class="grammar-view__code">`
+
+      if (this.accessManager.canUserComment(this.user)) {
+        _this.html += `<a class="button button_type_link button_theme_simple grammar-view__add-comment-to-row-leftside-button"
+                         href="#">+</a>`
+      }
+
+      _this.html += `${line}</td></tr>`
+
+      _this.html += this.outputRowComments(number)
+
+      ++number
+    }
+
+    _this.html += '</table>'
+  }
 }
