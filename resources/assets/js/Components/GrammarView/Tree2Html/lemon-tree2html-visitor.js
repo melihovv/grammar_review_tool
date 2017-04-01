@@ -218,14 +218,9 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
 
   /**
    * @param {TerminalNodeImpl} ctx
-   * @param {bool} [closeSpan=false]
+   * @param {Object} params
    */
-  visitTerminal(ctx, {closeSpan = false} = {}) {
-    this._buffer += ctx.symbol.text
-    if (closeSpan) {
-      this._buffer += '</span>'
-    }
-
-    this._buffer += this.helper.textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
+  visitTerminal(ctx, params = {}) {
+    this.helper.visitTerminal(ctx, this, params)
   }
 }

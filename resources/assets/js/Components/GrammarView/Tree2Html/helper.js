@@ -237,4 +237,18 @@ export default class Helper {
 
     _this.html += '</table>'
   }
+
+  /**
+   * @param {TerminalNodeImpl} ctx
+   * @param _this
+   * @param {bool} [closeSpan=false]
+   */
+  visitTerminal(ctx, _this, {closeSpan = false} = {}) {
+    _this._buffer += ctx.symbol.text
+    if (closeSpan) {
+      _this._buffer += '</span>'
+    }
+
+    _this._buffer += this.textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
+  }
 }
