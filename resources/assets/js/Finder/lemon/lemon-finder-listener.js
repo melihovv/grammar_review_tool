@@ -1,14 +1,14 @@
 'use strict'
 
-import {LemonParserListener} from '../Parser/Lemon/LemonParserListener'
-import {LemonParser} from '../Parser/Lemon/LemonParser'
+import {LemonParserListener} from 'js/Parser/Lemon/LemonParserListener'
+import {LemonParser} from 'js/Parser/Lemon/LemonParser'
 
-class FinderListener extends LemonParserListener {
+class LemonFinderListener extends LemonParserListener {
   /**
    * @param {string} [nonterminalToFindOnTheLeftSide]
    * @param {string} [symbolToFind]
    * @param {string} [rightSideSymbols]
-   * @returns {FinderListener}
+   * @returns {LemonFinderListener}
    * @constructor
    */
   constructor({
@@ -69,4 +69,4 @@ class FinderListener extends LemonParserListener {
   }
 }
 
-export default FinderListener
+export default LemonFinderListener

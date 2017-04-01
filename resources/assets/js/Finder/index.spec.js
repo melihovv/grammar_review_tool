@@ -2,32 +2,34 @@
 
 'use strict'
 
-import Parser from '../Parser'
+import Parser from 'js/Parser'
 import Finder from './index'
 
 describe('finder', () => {
-  const parser = new Parser('lemon')
+  describe('lemon', () => {
+    const type = 'lemon'
+    const parser = new Parser(type)
 
-  it('should find rules with specific nonterminal on the left side', () => {
-    const tree = parser.parse(`
+    it('should find rules with specific nonterminal on the left side', () => {
+      const tree = parser.parse(`
       a ::= b c.
     `)
-    const finder = new Finder(tree)
-    finder.findRulesWhereOnTheLeft('a').length.should.equal(1)
-  })
+      const finder = new Finder(tree, type)
+      finder.findRulesWhereOnTheLeft('a').length.should.equal(1)
+    })
 
-  it('should find rules which contains specific symbol', () => {
-    const tree = parser.parse(`
+    it('should find rules which contains specific symbol', () => {
+      const tree = parser.parse(`
       a(pa) ::= b(pb) c(pc). [NOT] {}
       b ::= d.
       c ::= b.
     `)
-    const finder = new Finder(tree)
-    finder.findRulesWhichContains('b').length.should.equal(3)
-  })
+      const finder = new Finder(tree, type)
+      finder.findRulesWhichContains('b').length.should.equal(3)
+    })
 
-  it('should find rules with the same right side', () => {
-    const tree = parser.parse(`
+    it('should find rules with the same right side', () => {
+      const tree = parser.parse(`
       a ::= a.
       a ::= a.
       a ::= b c.
@@ -37,12 +39,12 @@ describe('finder', () => {
       g ::= b c.
       h ::= .
     `)
-    const finder = new Finder(tree)
-    finder.findRulesWithTheSameRightSide('a', 4).length.should.equal(3)
-  })
+      const finder = new Finder(tree, type)
+      finder.findRulesWithTheSameRightSide('a', 4).length.should.equal(3)
+    })
 
-  it('should find rules with the same right side', () => {
-    const tree = parser.parse(`
+    it('should find rules with the same right side', () => {
+      const tree = parser.parse(`
       a ::= b c. [POWER]
       d ::= b c. [NOT]
       e ::= b.
@@ -50,12 +52,12 @@ describe('finder', () => {
       g ::= b c.
       h ::= .
     `)
-    const finder = new Finder(tree)
-    finder.findRulesWithTheSameRightSide('g', 6).length.should.equal(3)
-  })
+      const finder = new Finder(tree, type)
+      finder.findRulesWithTheSameRightSide('g', 6).length.should.equal(3)
+    })
 
-  it('should return empty array if there is no rule on specified line', () => {
-    const tree = parser.parse(`
+    it('should return empty array if there is no rule on specified line', () => {
+      const tree = parser.parse(`
       a ::= b c. [POWER]
       d ::= b c. [NOT]
       e ::= b.
@@ -63,7 +65,8 @@ describe('finder', () => {
       g ::= b c.
       h ::= .
     `)
-    const finder = new Finder(tree)
-    finder.findRulesWithTheSameRightSide('g', 100500).length.should.equal(0)
+      const finder = new Finder(tree, type)
+      finder.findRulesWithTheSameRightSide('g', 100500).length.should.equal(0)
+    })
   })
 })

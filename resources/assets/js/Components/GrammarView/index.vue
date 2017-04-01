@@ -56,7 +56,7 @@
         const parser = new Parser(grammar.type)
         try {
           const tree = parser.parse(version.content)
-          window.finder = new Finder(tree)
+          window.finder = new Finder(tree, grammar.type)
           this.template = Tree2Html.convert(
             tree,
             parser.parser._input,

@@ -1,19 +1,30 @@
 'use strict'
 
-import tree from 'antlr4/tree/index'
-import FinderListener from './finder-listener'
-import {LemonParser} from '../Parser/Lemon/LemonParser'
+import LemonFinder from './lemon/lemon-finder'
+import BisonFinder from './bison/bison-finder'
+import AbstractFinder from './abstract-finder'
 
 /**
  * Class to find symbols in tree.
  */
 class Finder {
+  static types = [
+    'lemon',
+    'bison',
+  ]
+
   /**
    * Create a finder.
    * @param {FileContext} tree
+   * @param {string} type
    */
-  constructor(tree) {
+  constructor(tree, type) {
+    if (Finder.types.indexOf(type) === -1) {
+      throw new Error('Unsupported grammar format')
+    }
+
     this.tree = tree
+    this.type = type
   }
 
   /**
@@ -22,11 +33,7 @@ class Finder {
    * @returns {Array}
    */
   findRulesWhereOnTheLeft(nonterminal) {
-    const finder = new FinderListener({
-      nonterminalToFindOnTheLeftSide: nonterminal,
-    })
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
-    return finder.nonterminalsOnTheLeftSide
+    return this.finderFactory(this.tree).findRulesWhereOnTheLeft(nonterminal)
   }
 
   /**
@@ -35,10 +42,7 @@ class Finder {
    * @returns {Array}
    */
   findRulesWhichContains(symbol) {
-    const finder = new FinderListener({symbolToFind: symbol})
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
-    const rules = finder.rulesWhichContainsSymbol
-    return rules.filter((v, i, a) => a.indexOf(v) === i)
+    return this.finderFactory(this.tree).findRulesWhichContains(symbol)
   }
 
   /**
@@ -48,32 +52,19 @@ class Finder {
    * @returns {Array}
    */
   findRulesWithTheSameRightSide(ruleName, row) {
-    const rules = this.findRulesWhereOnTheLeft(ruleName)
-    let rule = null
+    return this.finderFactory(this.tree)
+      .findRulesWithTheSameRightSide(ruleName, row)
+  }
 
-    for (const r of rules) {
-      if (r.children[0].getSymbol().line === +row) {
-        rule = r
-        break
-      }
+  /**
+   * @param tree
+   * @returns {AbstractFinder}
+   */
+  finderFactory(tree) {
+    switch (this.type) {
+      case 'lemon': return new LemonFinder(tree)
+      case 'bison': return new BisonFinder(tree)
     }
-
-    if (rule === null) {
-      return []
-    }
-
-    let rightSideSymbols = []
-
-    for (const child of rule.parentCtx.rightSide().children) {
-      if (child instanceof LemonParser.SymbolContext) {
-        rightSideSymbols.push(child.children[0].getText())
-      }
-    }
-
-    const finder = new FinderListener({rightSideSymbols})
-    tree.ParseTreeWalker.DEFAULT.walk(finder, this.tree)
-
-    return finder.rulesWithTheSameRightSides
   }
 }
 
