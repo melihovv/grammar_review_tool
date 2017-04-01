@@ -35,6 +35,16 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
     )
   }
 
+  visit(ctx) {
+    if (Array.isArray(ctx)) {
+      return ctx.map(function (child) {
+        return child.accept(this);
+      }, this);
+    } else {
+      return ctx.accept(this);
+    }
+  }
+
   /**
    * @param {FileContext} ctx
    */
@@ -43,13 +53,7 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
       ctx.children[0].start.tokenIndex
     )
 
-    ctx.children.forEach(child => {
-      if (child instanceof LemonParser.GrammarRuleContext) {
-        this.visitGrammarRule(child)
-      } else {
-        this.visitDirective(child)
-      }
-    })
+    this.visitChildren(ctx)
 
     this.html += `<div class="grammar-view__info">${this.grammar.name}</div>`
     this.html += '<table class="grammar-view__table">'

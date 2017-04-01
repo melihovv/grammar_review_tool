@@ -68,6 +68,7 @@
           )
           this.template = converter.convert()
         } catch (e) {
+          console.error(e)
           this.grammar = version.content
           this.parseFailed = true
           this.parseErrors = parser.getErrors()
