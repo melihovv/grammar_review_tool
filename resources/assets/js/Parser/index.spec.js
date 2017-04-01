@@ -142,7 +142,7 @@ NOW;
         %start 'a'
         %start "a"
 
-        %destructor {code} symbol "symbol" 's' <tag<tag>>
+        %destructor {code} symbol "symbol" 's' '\\n' <tag<tag>>
         %printer {code} symbol "symbol" 's' <tag<tag>>
         %printer {code} symbol "symbol" 's' <*>
         %printer {code} symbol "symbol" 's' <>
@@ -195,6 +195,7 @@ NOW;
         %yacc
 
         %file-prefix "prefix"
+        %file-prefix "a\\"b\\\\c"
         %language "java"
         %name-prefix "prefix"
         %output "output"
@@ -211,6 +212,11 @@ NOW;
         %parse-param {someCode();} {} {moreCode();}
 
         ;
+
+        // Line comment
+        /*
+         Block comment.
+         */
         %%
         a: b c;
     `).should.not.throw()
@@ -260,6 +266,23 @@ NOW;
         a: b c;
         %%
         someCode();
+    `).should.not.throw()
+    })
+
+    it('should properly handle closing braces in code sections', () => {
+      parser.parse.bind(parser, `
+        %code {'}'}
+        %code {'\\'}'}
+        %code {'}'}
+        %code {'a\\\\b\\ac\\'de' 'a'}
+        %code {"}"}
+        %code {"\\"}"}
+        %code {"}"}
+        %code {"a\\\\b\\ac\\"de" "a"}
+
+        %code {{{}}}
+        %%
+        a: b c;
     `).should.not.throw()
     })
   })
