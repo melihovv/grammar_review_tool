@@ -3,22 +3,16 @@
 import {TerminalNodeImpl} from 'antlr4/tree/Tree'
 import {LemonParserVisitor} from 'js/Parser/Lemon/LemonParserVisitor'
 import {LemonParser} from 'js/Parser/Lemon/LemonParser'
-import common from '../common'
+import Helper from './helper'
 
-/**
- * @extends LemonParserVisitor
- */
-class Tree2HtmlVisitor extends LemonParserVisitor {
+export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
   /**
-   * Create Tree2HtmlVisitor.
    * @param {CommonTokenStream} tokens
    * @param {Object} grammar
    * @param {Object} owner
    * @param {Array} comments
    * @param {AccessManager} accessManager
-   * @param user
-   * @returns {Tree2HtmlVisitor}
-   * @constructor
+   * @param {Object} user
    */
   constructor(tokens, grammar, owner, comments, accessManager, user) {
     super()
@@ -31,21 +25,23 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this.user = user
     this.html = ''
     this._buffer = ''
-    this._newLineRegex = /\r\n|\n|\r/
-
-    this._searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon" title="Search for rules which contain this symbol "></span>'
-    this._leftIcon = '<span class="glyphicon grammar-view__l-icon" title="Search for rules which contain this symbol in the left side">L</span>'
-    this._rightIcon = '<span class="glyphicon grammar-view__r-icon" title="Search for rules with the same right side">R</span>'
-    this._terminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}</div>`
-    this._nonTerminalIcons = `<div class="grammar-view__symbol-icons">${this._searchIcon}${this._leftIcon}${this._rightIcon}</div>`
+    this.helper = new Helper(
+      tokens,
+      grammar,
+      owner,
+      comments,
+      accessManager,
+      user
+    )
   }
 
   /**
    * @param {FileContext} ctx
    */
   visitFile(ctx) {
-    this._buffer
-      += this._textOfHiddenTokensToLeft(ctx.children[0].start.tokenIndex)
+    this._buffer += this.helper.textOfHiddenTokensToLeft(
+      ctx.children[0].start.tokenIndex
+    )
 
     ctx.children.forEach(child => {
       if (child instanceof LemonParser.GrammarRuleContext) {
@@ -59,7 +55,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this.html += '<table class="grammar-view__table">'
 
     let number = 1
-    const lines = this._buffer.split(this._newLineRegex)
+    const lines = Helper.split(this._buffer)
 
     for (const line of lines) {
       this.html += `
@@ -74,7 +70,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
 
       this.html += `${line}</td></tr>`
 
-      this._outputRowComments(number)
+      this.html += this.helper.outputRowComments(number)
 
       ++number
     }
@@ -108,7 +104,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
     this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
     this._buffer += this._nonTerminalIcons
 
-    this._outputSymbolComments(symbol.line, symbol.column)
+    this._buffer = this.helper.outputSymbolComments(symbol.line, symbol.column)
 
     this._buffer += '</div>'
 
@@ -186,7 +182,7 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
         this._buffer += this._nonTerminalIcons
       }
 
-      this._outputSymbolComments(symbol.line, symbol.column)
+      this._buffer = this.helper.outputSymbolComments(symbol.line, symbol.column)
 
       this._buffer += '</div>'
     } else if (fromDirective) {
@@ -262,158 +258,6 @@ class Tree2HtmlVisitor extends LemonParserVisitor {
       this._buffer += '</span>'
     }
 
-    this._buffer += this._textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
-  }
-
-  /**
-   * @param {number} index
-   * @returns {string}
-   * @private
-   */
-  _textOfHiddenTokensToLeft(index) {
-    return this._tokensText(this.tokens.getHiddenTokensToLeft(index))
-  }
-
-  /**
-   * @param {number} index
-   * @returns {string}
-   * @private
-   */
-  _textOfHiddenTokensToRight(index) {
-    return this._tokensText(this.tokens.getHiddenTokensToRight(index))
-  }
-
-  /**
-   * @param {Array} tokens
-   * @returns {string}
-   * @private
-   */
-  _tokensText(tokens) {
-    tokens = tokens || []
-    let result = ''
-    for (const token of tokens) {
-      result += token.text
-    }
-    return result
-  }
-
-  /**
-   * Checks if there are any comments on passed line and column.
-   * @param {int} row
-   * @param {int} column
-   * @returns {boolean}
-   * @private
-   */
-  _isAnySymbolCommentsOnLine(row, column) {
-    return this.comments.some(comment => {
-      return comment.row === row && comment.column === column
-    })
-  }
-
-  /**
-   * Returns all symbol comments on passed line and column.
-   * @param {int} row
-   * @param {int} column
-   * @returns {Array}
-   * @private
-   */
-  _allSymbolCommentsOn(row, column) {
-    return this.comments.filter(comment => {
-      return comment.row === row && comment.column === column
-    })
-  }
-
-  /**
-   * Checks if there are any row comments on passed line.
-   * @param {int} row
-   * @returns {boolean}
-   * @private
-   */
-  _isAnyRowCommentsOnLine(row) {
-    return this.comments.some(comment => {
-      return comment.row === row && comment.column === -1
-    })
-  }
-
-  /**
-   * Returns all row comments on passed line.
-   * @param {int} row
-   * @returns {Array}
-   * @private
-   */
-  _allRowCommentsOn(row) {
-    return this.comments.filter(comment => {
-      return comment.row === row && comment.column === -1
-    })
-  }
-
-  /**
-   * Outputs all symbol comments.
-   * @param {int} row
-   * @param {int} column
-   * @private
-   */
-  _outputSymbolComments(row, column) {
-    if (this._isAnySymbolCommentsOnLine(row, column)) {
-      const comments = this._allSymbolCommentsOn(row, column)
-
-      this._buffer += `<span class="grammar-view__amount-of-comments">${comments.length}</span>`
-      this._buffer += '<div class="grammar-view__symbol-comments">'
-
-      this._buffer += this._commentsTemplate(comments)
-
-      this._buffer += '</div>'
-    }
-  }
-
-  /**
-   * Outputs all symbol comments.
-   * @param {int} row
-   * @private
-   */
-  _outputRowComments(row) {
-    if (this._isAnyRowCommentsOnLine(row)) {
-      this.html += '<tr><td class="grammar-view__line-comments" colspan="2">'
-
-      const comments = this._allRowCommentsOn(row)
-      this.html += this._commentsTemplate(comments)
-
-      this.html += `</td></tr>`
-    }
-  }
-
-  /**
-   * Comments template.
-   * @param {Array} comments
-   * @private
-   */
-  _commentsTemplate(comments) {
-    let buffer = ''
-
-    for (const comment of comments) {
-      buffer += this._commentTemplate(comment)
-    }
-
-    if (this.accessManager.canUserComment(this.user)) {
-      buffer += `${common.addCommentToRowButton}`
-    }
-
-    return buffer
-  }
-
-  /**
-   * Comment template.
-   * @param {Object} comment
-   * @private
-   */
-  _commentTemplate(comment) {
-    return common.commentTemplate(
-      comment.user.name,
-      comment.content,
-      comment.id,
-      this.accessManager.canUserUpdateOrDeleteComment(this.user, comment)
-    )
+    this._buffer += this.helper.textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
   }
 }
-
-export default Tree2HtmlVisitor

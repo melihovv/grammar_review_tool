@@ -57,7 +57,8 @@
         try {
           const tree = parser.parse(version.content)
           window.finder = new Finder(tree, grammar.type)
-          this.template = Tree2Html.convert(
+          const converter = new Tree2Html(
+            grammar.type,
             tree,
             parser.parser._input,
             grammar,
@@ -65,6 +66,7 @@
             comments,
             rights
           )
+          this.template = converter.convert()
         } catch (e) {
           this.grammar = version.content
           this.parseFailed = true
