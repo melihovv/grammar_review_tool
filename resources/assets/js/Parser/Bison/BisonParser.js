@@ -7,193 +7,196 @@ var BisonParserVisitor = require('./BisonParserVisitor').BisonParserVisitor;
 var grammarFileName = "BisonParser.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003=\u0111\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003>\u0115\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
     "\b\t\b\u0004\t\t\t\u0004\n\t\n\u0004\u000b\t\u000b\u0004\f\t\f\u0004",
     "\r\t\r\u0004\u000e\t\u000e\u0004\u000f\t\u000f\u0004\u0010\t\u0010\u0004",
     "\u0011\t\u0011\u0004\u0012\t\u0012\u0004\u0013\t\u0013\u0004\u0014\t",
     "\u0014\u0004\u0015\t\u0015\u0004\u0016\t\u0016\u0004\u0017\t\u0017\u0004",
-    "\u0018\t\u0018\u0003\u0002\u0005\u00022\n\u0002\u0003\u0002\u0003\u0002",
-    "\u0003\u0002\u0005\u00027\n\u0002\u0003\u0003\u0006\u0003:\n\u0003\r",
-    "\u0003\u000e\u0003;\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0005\u0004",
-    "G\n\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0006\u0004R\n\u0004",
-    "\r\u0004\u000e\u0004S\u0003\u0004\u0005\u0004W\n\u0004\u0003\u0005\u0003",
-    "\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003",
-    "\u0005\u0006\u0005a\n\u0005\r\u0005\u000e\u0005b\u0003\u0005\u0003\u0005",
-    "\u0003\u0005\u0005\u0005h\n\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
-    "\u0005\u0005m\n\u0005\u0003\u0005\u0005\u0005p\n\u0005\u0003\u0006\u0003",
-    "\u0006\u0007\u0006t\n\u0006\f\u0006\u000e\u0006w\u000b\u0006\u0003\u0006",
-    "\u0003\u0006\u0003\u0007\u0003\u0007\u0007\u0007}\n\u0007\f\u0007\u000e",
-    "\u0007\u0080\u000b\u0007\u0003\u0007\u0003\u0007\u0003\b\u0003\b\u0007",
-    "\b\u0086\n\b\f\b\u000e\b\u0089\u000b\b\u0003\b\u0003\b\u0003\t\u0003",
-    "\t\u0006\t\u008f\n\t\r\t\u000e\t\u0090\u0003\t\u0003\t\u0003\n\u0003",
-    "\n\u0006\n\u0097\n\n\r\n\u000e\n\u0098\u0003\n\u0003\n\u0006\n\u009d",
-    "\n\n\r\n\u000e\n\u009e\u0003\n\u0003\n\u0003\n\u0006\n\u00a4\n\n\r\n",
-    "\u000e\n\u00a5\u0005\n\u00a8\n\n\u0003\u000b\u0003\u000b\u0005\u000b",
-    "\u00ac\n\u000b\u0003\u000b\u0003\u000b\u0006\u000b\u00b0\n\u000b\r\u000b",
-    "\u000e\u000b\u00b1\u0003\f\u0003\f\u0003\r\u0003\r\u0003\r\u0005\r\u00b9",
-    "\n\r\u0003\u000e\u0003\u000e\u0003\u000e\u0003\u000e\u0005\u000e\u00bf",
-    "\n\u000e\u0003\u000e\u0005\u000e\u00c2\n\u000e\u0005\u000e\u00c4\n\u000e",
-    "\u0003\u000f\u0006\u000f\u00c7\n\u000f\r\u000f\u000e\u000f\u00c8\u0003",
-    "\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0005\u0010\u00cf\n\u0010",
-    "\u0003\u0011\u0003\u0011\u0003\u0011\u0005\u0011\u00d4\n\u0011\u0003",
-    "\u0011\u0003\u0011\u0003\u0012\u0007\u0012\u00d9\n\u0012\f\u0012\u000e",
-    "\u0012\u00dc\u000b\u0012\u0003\u0012\u0003\u0012\u0007\u0012\u00e0\n",
-    "\u0012\f\u0012\u000e\u0012\u00e3\u000b\u0012\u0007\u0012\u00e5\n\u0012",
-    "\f\u0012\u000e\u0012\u00e8\u000b\u0012\u0003\u0012\u0005\u0012\u00eb",
-    "\n\u0012\u0003\u0013\u0003\u0013\u0005\u0013\u00ef\n\u0013\u0003\u0013",
-    "\u0003\u0013\u0005\u0013\u00f3\n\u0013\u0003\u0013\u0003\u0013\u0003",
-    "\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0005",
-    "\u0013\u00fd\n\u0013\u0003\u0014\u0003\u0014\u0003\u0015\u0003\u0015",
-    "\u0003\u0015\u0003\u0015\u0005\u0015\u0105\n\u0015\u0003\u0016\u0003",
-    "\u0016\u0003\u0017\u0003\u0017\u0005\u0017\u010b\n\u0017\u0003\u0018",
-    "\u0003\u0018\u0005\u0018\u010f\n\u0018\u0003\u0018\u0002\u0002\u0019",
-    "\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c",
-    "\u001e \"$&(*,.\u0002\u0006\u0004\u0002\u000e\u000e\u0019\u0019\u0006",
-    "\u0002\u0012\u0012\u0014\u0014\u0018\u0018\u001a\u001a\u0004\u0002!",
-    "!$$\u0004\u0002!!##\u0138\u00021\u0003\u0002\u0002\u0002\u00049\u0003",
-    "\u0002\u0002\u0002\u0006V\u0003\u0002\u0002\u0002\bo\u0003\u0002\u0002",
-    "\u0002\nq\u0003\u0002\u0002\u0002\fz\u0003\u0002\u0002\u0002\u000e\u0083",
-    "\u0003\u0002\u0002\u0002\u0010\u008c\u0003\u0002\u0002\u0002\u0012\u00a7",
-    "\u0003\u0002\u0002\u0002\u0014\u00a9\u0003\u0002\u0002\u0002\u0016\u00b3",
-    "\u0003\u0002\u0002\u0002\u0018\u00b8\u0003\u0002\u0002\u0002\u001a\u00c3",
-    "\u0003\u0002\u0002\u0002\u001c\u00c6\u0003\u0002\u0002\u0002\u001e\u00ce",
-    "\u0003\u0002\u0002\u0002 \u00d0\u0003\u0002\u0002\u0002\"\u00da\u0003",
-    "\u0002\u0002\u0002$\u00fc\u0003\u0002\u0002\u0002&\u00fe\u0003\u0002",
-    "\u0002\u0002(\u0104\u0003\u0002\u0002\u0002*\u0106\u0003\u0002\u0002",
-    "\u0002,\u010a\u0003\u0002\u0002\u0002.\u010c\u0003\u0002\u0002\u0002",
-    "02\u0005\u0004\u0003\u000210\u0003\u0002\u0002\u000212\u0003\u0002\u0002",
-    "\u000223\u0003\u0002\u0002\u000234\u0007&\u0002\u000246\u0005\u001c",
-    "\u000f\u000257\u0005.\u0018\u000265\u0003\u0002\u0002\u000267\u0003",
-    "\u0002\u0002\u00027\u0003\u0003\u0002\u0002\u00028:\u0005\u0006\u0004",
-    "\u000298\u0003\u0002\u0002\u0002:;\u0003\u0002\u0002\u0002;9\u0003\u0002",
-    "\u0002\u0002;<\u0003\u0002\u0002\u0002<\u0005\u0003\u0002\u0002\u0002",
-    "=W\u0005\b\u0005\u0002>W\u0005\n\u0006\u0002?W\u0007\u0010\u0002\u0002",
-    "@A\u0007\u000b\u0002\u0002AB\u0005&\u0014\u0002BC\u0005(\u0015\u0002",
-    "CW\u0003\u0002\u0002\u0002DF\u0007\f\u0002\u0002EG\u0007$\u0002\u0002",
-    "FE\u0003\u0002\u0002\u0002FG\u0003\u0002\u0002\u0002GW\u0003\u0002\u0002",
-    "\u0002HW\u0007\u0007\u0002\u0002IJ\u0007\b\u0002\u0002JW\u0007$\u0002",
-    "\u0002KL\u0007\t\u0002\u0002LW\u0007\"\u0002\u0002MN\u0007\u0011\u0002",
-    "\u0002NW\u0005\f\u0007\u0002OQ\u0007\u0016\u0002\u0002PR\u0005\f\u0007",
-    "\u0002QP\u0003\u0002\u0002\u0002RS\u0003\u0002\u0002\u0002SQ\u0003\u0002",
-    "\u0002\u0002ST\u0003\u0002\u0002\u0002TW\u0003\u0002\u0002\u0002UW\u0007",
-    " \u0002\u0002V=\u0003\u0002\u0002\u0002V>\u0003\u0002\u0002\u0002V?",
-    "\u0003\u0002\u0002\u0002V@\u0003\u0002\u0002\u0002VD\u0003\u0002\u0002",
-    "\u0002VH\u0003\u0002\u0002\u0002VI\u0003\u0002\u0002\u0002VK\u0003\u0002",
-    "\u0002\u0002VM\u0003\u0002\u0002\u0002VO\u0003\u0002\u0002\u0002VU\u0003",
-    "\u0002\u0002\u0002W\u0007\u0003\u0002\u0002\u0002Xp\u0005\u0014\u000b",
-    "\u0002Yp\u0005\u0012\n\u0002Z[\u0007\u001b\u0002\u0002[p\u0005,\u0017",
-    "\u0002\\]\t\u0002\u0002\u0002]`\u0005\f\u0007\u0002^a\u0005,\u0017\u0002",
-    "_a\u0005\u0018\r\u0002`^\u0003\u0002\u0002\u0002`_\u0003\u0002\u0002",
-    "\u0002ab\u0003\u0002\u0002\u0002b`\u0003\u0002\u0002\u0002bc\u0003\u0002",
-    "\u0002\u0002cp\u0003\u0002\u0002\u0002dp\u0007\u0006\u0002\u0002eg\u0007",
-    "\n\u0002\u0002fh\u0007!\u0002\u0002gf\u0003\u0002\u0002\u0002gh\u0003",
-    "\u0002\u0002\u0002hi\u0003\u0002\u0002\u0002ip\u0005\f\u0007\u0002j",
-    "l\u0007\u001e\u0002\u0002km\u0007!\u0002\u0002lk\u0003\u0002\u0002\u0002",
-    "lm\u0003\u0002\u0002\u0002mn\u0003\u0002\u0002\u0002np\u0005\f\u0007",
-    "\u0002oX\u0003\u0002\u0002\u0002oY\u0003\u0002\u0002\u0002oZ\u0003\u0002",
-    "\u0002\u0002o\\\u0003\u0002\u0002\u0002od\u0003\u0002\u0002\u0002oe",
-    "\u0003\u0002\u0002\u0002oj\u0003\u0002\u0002\u0002p\t\u0003\u0002\u0002",
-    "\u0002qu\u0007%\u0002\u0002rt\u00074\u0002\u0002sr\u0003\u0002\u0002",
-    "\u0002tw\u0003\u0002\u0002\u0002us\u0003\u0002\u0002\u0002uv\u0003\u0002",
-    "\u0002\u0002vx\u0003\u0002\u0002\u0002wu\u0003\u0002\u0002\u0002xy\u0007",
-    "3\u0002\u0002y\u000b\u0003\u0002\u0002\u0002z~\u0007\'\u0002\u0002{",
-    "}\u00077\u0002\u0002|{\u0003\u0002\u0002\u0002}\u0080\u0003\u0002\u0002",
-    "\u0002~|\u0003\u0002\u0002\u0002~\u007f\u0003\u0002\u0002\u0002\u007f",
-    "\u0081\u0003\u0002\u0002\u0002\u0080~\u0003\u0002\u0002\u0002\u0081",
-    "\u0082\u00076\u0002\u0002\u0082\r\u0003\u0002\u0002\u0002\u0083\u0087",
-    "\u0007(\u0002\u0002\u0084\u0086\u00079\u0002\u0002\u0085\u0084\u0003",
-    "\u0002\u0002\u0002\u0086\u0089\u0003\u0002\u0002\u0002\u0087\u0085\u0003",
-    "\u0002\u0002\u0002\u0087\u0088\u0003\u0002\u0002\u0002\u0088\u008a\u0003",
-    "\u0002\u0002\u0002\u0089\u0087\u0003\u0002\u0002\u0002\u008a\u008b\u0007",
-    "8\u0002\u0002\u008b\u000f\u0003\u0002\u0002\u0002\u008c\u008e\u0007",
-    "+\u0002\u0002\u008d\u008f\u0007;\u0002\u0002\u008e\u008d\u0003\u0002",
-    "\u0002\u0002\u008f\u0090\u0003\u0002\u0002\u0002\u0090\u008e\u0003\u0002",
-    "\u0002\u0002\u0090\u0091\u0003\u0002\u0002\u0002\u0091\u0092\u0003\u0002",
-    "\u0002\u0002\u0092\u0093\u0007:\u0002\u0002\u0093\u0011\u0003\u0002",
-    "\u0002\u0002\u0094\u0096\u0007\u0015\u0002\u0002\u0095\u0097\u0005\u001a",
-    "\u000e\u0002\u0096\u0095\u0003\u0002\u0002\u0002\u0097\u0098\u0003\u0002",
-    "\u0002\u0002\u0098\u0096\u0003\u0002\u0002\u0002\u0098\u0099\u0003\u0002",
-    "\u0002\u0002\u0099\u00a8\u0003\u0002\u0002\u0002\u009a\u009c\u0007\u001c",
-    "\u0002\u0002\u009b\u009d\u0005\u001a\u000e\u0002\u009c\u009b\u0003\u0002",
-    "\u0002\u0002\u009d\u009e\u0003\u0002\u0002\u0002\u009e\u009c\u0003\u0002",
-    "\u0002\u0002\u009e\u009f\u0003\u0002\u0002\u0002\u009f\u00a8\u0003\u0002",
-    "\u0002\u0002\u00a0\u00a1\u0007\u001d\u0002\u0002\u00a1\u00a3\u0005\u0010",
-    "\t\u0002\u00a2\u00a4\u0005,\u0017\u0002\u00a3\u00a2\u0003\u0002\u0002",
-    "\u0002\u00a4\u00a5\u0003\u0002\u0002\u0002\u00a5\u00a3\u0003\u0002\u0002",
-    "\u0002\u00a5\u00a6\u0003\u0002\u0002\u0002\u00a6\u00a8\u0003\u0002\u0002",
-    "\u0002\u00a7\u0094\u0003\u0002\u0002\u0002\u00a7\u009a\u0003\u0002\u0002",
-    "\u0002\u00a7\u00a0\u0003\u0002\u0002\u0002\u00a8\u0013\u0003\u0002\u0002",
-    "\u0002\u00a9\u00ab\u0005\u0016\f\u0002\u00aa\u00ac\u0005\u0010\t\u0002",
-    "\u00ab\u00aa\u0003\u0002\u0002\u0002\u00ab\u00ac\u0003\u0002\u0002\u0002",
-    "\u00ac\u00af\u0003\u0002\u0002\u0002\u00ad\u00b0\u0005,\u0017\u0002",
-    "\u00ae\u00b0\u0007\"\u0002\u0002\u00af\u00ad\u0003\u0002\u0002\u0002",
-    "\u00af\u00ae\u0003\u0002\u0002\u0002\u00b0\u00b1\u0003\u0002\u0002\u0002",
-    "\u00b1\u00af\u0003\u0002\u0002\u0002\u00b1\u00b2\u0003\u0002\u0002\u0002",
-    "\u00b2\u0015\u0003\u0002\u0002\u0002\u00b3\u00b4\t\u0003\u0002\u0002",
-    "\u00b4\u0017\u0003\u0002\u0002\u0002\u00b5\u00b9\u0005\u0010\t\u0002",
-    "\u00b6\u00b9\u0007)\u0002\u0002\u00b7\u00b9\u0007*\u0002\u0002\u00b8",
-    "\u00b5\u0003\u0002\u0002\u0002\u00b8\u00b6\u0003\u0002\u0002\u0002\u00b8",
-    "\u00b7\u0003\u0002\u0002\u0002\u00b9\u0019\u0003\u0002\u0002\u0002\u00ba",
-    "\u00c4\u0005\u0010\t\u0002\u00bb\u00c1\u0005*\u0016\u0002\u00bc\u00be",
-    "\u0007\"\u0002\u0002\u00bd\u00bf\u0007$\u0002\u0002\u00be\u00bd\u0003",
-    "\u0002\u0002\u0002\u00be\u00bf\u0003\u0002\u0002\u0002\u00bf\u00c2\u0003",
-    "\u0002\u0002\u0002\u00c0\u00c2\u0007$\u0002\u0002\u00c1\u00bc\u0003",
-    "\u0002\u0002\u0002\u00c1\u00c0\u0003\u0002\u0002\u0002\u00c1\u00c2\u0003",
-    "\u0002\u0002\u0002\u00c2\u00c4\u0003\u0002\u0002\u0002\u00c3\u00ba\u0003",
-    "\u0002\u0002\u0002\u00c3\u00bb\u0003\u0002\u0002\u0002\u00c4\u001b\u0003",
-    "\u0002\u0002\u0002\u00c5\u00c7\u0005\u001e\u0010\u0002\u00c6\u00c5\u0003",
-    "\u0002\u0002\u0002\u00c7\u00c8\u0003\u0002\u0002\u0002\u00c8\u00c6\u0003",
-    "\u0002\u0002\u0002\u00c8\u00c9\u0003\u0002\u0002\u0002\u00c9\u001d\u0003",
-    "\u0002\u0002\u0002\u00ca\u00cf\u0005 \u0011\u0002\u00cb\u00cc\u0005",
-    "\b\u0005\u0002\u00cc\u00cd\u0007 \u0002\u0002\u00cd\u00cf\u0003\u0002",
-    "\u0002\u0002\u00ce\u00ca\u0003\u0002\u0002\u0002\u00ce\u00cb\u0003\u0002",
-    "\u0002\u0002\u00cf\u001f\u0003\u0002\u0002\u0002\u00d0\u00d1\u0007!",
-    "\u0002\u0002\u00d1\u00d3\u00071\u0002\u0002\u00d2\u00d4\u00070\u0002",
-    "\u0002\u00d3\u00d2\u0003\u0002\u0002\u0002\u00d3\u00d4\u0003\u0002\u0002",
-    "\u0002\u00d4\u00d5\u0003\u0002\u0002\u0002\u00d5\u00d6\u0005\"\u0012",
-    "\u0002\u00d6!\u0003\u0002\u0002\u0002\u00d7\u00d9\u0005$\u0013\u0002",
-    "\u00d8\u00d7\u0003\u0002\u0002\u0002\u00d9\u00dc\u0003\u0002\u0002\u0002",
-    "\u00da\u00d8\u0003\u0002\u0002\u0002\u00da\u00db\u0003\u0002\u0002\u0002",
-    "\u00db\u00e6\u0003\u0002\u0002\u0002\u00dc\u00da\u0003\u0002\u0002\u0002",
-    "\u00dd\u00e1\u0007\u001f\u0002\u0002\u00de\u00e0\u0005$\u0013\u0002",
-    "\u00df\u00de\u0003\u0002\u0002\u0002\u00e0\u00e3\u0003\u0002\u0002\u0002",
-    "\u00e1\u00df\u0003\u0002\u0002\u0002\u00e1\u00e2\u0003\u0002\u0002\u0002",
-    "\u00e2\u00e5\u0003\u0002\u0002\u0002\u00e3\u00e1\u0003\u0002\u0002\u0002",
-    "\u00e4\u00dd\u0003\u0002\u0002\u0002\u00e5\u00e8\u0003\u0002\u0002\u0002",
-    "\u00e6\u00e4\u0003\u0002\u0002\u0002\u00e6\u00e7\u0003\u0002\u0002\u0002",
-    "\u00e7\u00ea\u0003\u0002\u0002\u0002\u00e8\u00e6\u0003\u0002\u0002\u0002",
-    "\u00e9\u00eb\u0007 \u0002\u0002\u00ea\u00e9\u0003\u0002\u0002\u0002",
-    "\u00ea\u00eb\u0003\u0002\u0002\u0002\u00eb#\u0003\u0002\u0002\u0002",
-    "\u00ec\u00ee\u0005,\u0017\u0002\u00ed\u00ef\u00070\u0002\u0002\u00ee",
-    "\u00ed\u0003\u0002\u0002\u0002\u00ee\u00ef\u0003\u0002\u0002\u0002\u00ef",
-    "\u00fd\u0003\u0002\u0002\u0002\u00f0\u00f2\u0005\f\u0007\u0002\u00f1",
-    "\u00f3\u00070\u0002\u0002\u00f2\u00f1\u0003\u0002\u0002\u0002\u00f2",
-    "\u00f3\u0003\u0002\u0002\u0002\u00f3\u00fd\u0003\u0002\u0002\u0002\u00f4",
-    "\u00fd\u0005\u000e\b\u0002\u00f5\u00fd\u0007\u000f\u0002\u0002\u00f6",
-    "\u00f7\u0007\u0017\u0002\u0002\u00f7\u00fd\u0005,\u0017\u0002\u00f8",
-    "\u00f9\u0007\r\u0002\u0002\u00f9\u00fd\u0007\"\u0002\u0002\u00fa\u00fb",
-    "\u0007\u0013\u0002\u0002\u00fb\u00fd\u0005\u0010\t\u0002\u00fc\u00ec",
-    "\u0003\u0002\u0002\u0002\u00fc\u00f0\u0003\u0002\u0002\u0002\u00fc\u00f4",
-    "\u0003\u0002\u0002\u0002\u00fc\u00f5\u0003\u0002\u0002\u0002\u00fc\u00f6",
-    "\u0003\u0002\u0002\u0002\u00fc\u00f8\u0003\u0002\u0002\u0002\u00fc\u00fa",
-    "\u0003\u0002\u0002\u0002\u00fd%\u0003\u0002\u0002\u0002\u00fe\u00ff",
-    "\t\u0004\u0002\u0002\u00ff\'\u0003\u0002\u0002\u0002\u0100\u0105\u0003",
-    "\u0002\u0002\u0002\u0101\u0105\u0007!\u0002\u0002\u0102\u0105\u0007",
-    "$\u0002\u0002\u0103\u0105\u0005\f\u0007\u0002\u0104\u0100\u0003\u0002",
-    "\u0002\u0002\u0104\u0101\u0003\u0002\u0002\u0002\u0104\u0102\u0003\u0002",
-    "\u0002\u0002\u0104\u0103\u0003\u0002\u0002\u0002\u0105)\u0003\u0002",
-    "\u0002\u0002\u0106\u0107\t\u0005\u0002\u0002\u0107+\u0003\u0002\u0002",
-    "\u0002\u0108\u010b\u0005*\u0016\u0002\u0109\u010b\u0007$\u0002\u0002",
-    "\u010a\u0108\u0003\u0002\u0002\u0002\u010a\u0109\u0003\u0002\u0002\u0002",
-    "\u010b-\u0003\u0002\u0002\u0002\u010c\u010e\u0007&\u0002\u0002\u010d",
-    "\u010f\u00075\u0002\u0002\u010e\u010d\u0003\u0002\u0002\u0002\u010e",
-    "\u010f\u0003\u0002\u0002\u0002\u010f/\u0003\u0002\u0002\u0002)16;FS",
-    "V`bglou~\u0087\u0090\u0098\u009e\u00a5\u00a7\u00ab\u00af\u00b1\u00b8",
-    "\u00be\u00c1\u00c3\u00c8\u00ce\u00d3\u00da\u00e1\u00e6\u00ea\u00ee\u00f2",
-    "\u00fc\u0104\u010a\u010e"].join("");
+    "\u0018\t\u0018\u0004\u0019\t\u0019\u0003\u0002\u0005\u00024\n\u0002",
+    "\u0003\u0002\u0003\u0002\u0003\u0002\u0005\u00029\n\u0002\u0003\u0003",
+    "\u0006\u0003<\n\u0003\r\u0003\u000e\u0003=\u0003\u0004\u0003\u0004\u0003",
+    "\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003",
+    "\u0004\u0005\u0004I\n\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003",
+    "\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0006",
+    "\u0004T\n\u0004\r\u0004\u000e\u0004U\u0003\u0004\u0005\u0004Y\n\u0004",
+    "\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005\u0003\u0005",
+    "\u0003\u0005\u0003\u0005\u0006\u0005c\n\u0005\r\u0005\u000e\u0005d\u0003",
+    "\u0005\u0003\u0005\u0003\u0005\u0005\u0005j\n\u0005\u0003\u0005\u0003",
+    "\u0005\u0003\u0005\u0005\u0005o\n\u0005\u0003\u0005\u0005\u0005r\n\u0005",
+    "\u0003\u0006\u0003\u0006\u0007\u0006v\n\u0006\f\u0006\u000e\u0006y\u000b",
+    "\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0007\u0007\u007f",
+    "\n\u0007\f\u0007\u000e\u0007\u0082\u000b\u0007\u0003\u0007\u0003\u0007",
+    "\u0003\b\u0003\b\u0007\b\u0088\n\b\f\b\u000e\b\u008b\u000b\b\u0003\b",
+    "\u0003\b\u0003\t\u0003\t\u0006\t\u0091\n\t\r\t\u000e\t\u0092\u0003\t",
+    "\u0003\t\u0003\n\u0003\n\u0006\n\u0099\n\n\r\n\u000e\n\u009a\u0003\n",
+    "\u0003\n\u0006\n\u009f\n\n\r\n\u000e\n\u00a0\u0003\n\u0003\n\u0003\n",
+    "\u0006\n\u00a6\n\n\r\n\u000e\n\u00a7\u0005\n\u00aa\n\n\u0003\u000b\u0003",
+    "\u000b\u0005\u000b\u00ae\n\u000b\u0003\u000b\u0003\u000b\u0006\u000b",
+    "\u00b2\n\u000b\r\u000b\u000e\u000b\u00b3\u0003\f\u0003\f\u0003\r\u0003",
+    "\r\u0003\r\u0005\r\u00bb\n\r\u0003\u000e\u0003\u000e\u0003\u000e\u0003",
+    "\u000e\u0005\u000e\u00c1\n\u000e\u0003\u000e\u0005\u000e\u00c4\n\u000e",
+    "\u0005\u000e\u00c6\n\u000e\u0003\u000f\u0006\u000f\u00c9\n\u000f\r\u000f",
+    "\u000e\u000f\u00ca\u0003\u0010\u0003\u0010\u0003\u0010\u0003\u0010\u0005",
+    "\u0010\u00d1\n\u0010\u0003\u0011\u0003\u0011\u0003\u0011\u0005\u0011",
+    "\u00d6\n\u0011\u0003\u0011\u0003\u0011\u0003\u0012\u0007\u0012\u00db",
+    "\n\u0012\f\u0012\u000e\u0012\u00de\u000b\u0012\u0003\u0012\u0003\u0012",
+    "\u0007\u0012\u00e2\n\u0012\f\u0012\u000e\u0012\u00e5\u000b\u0012\u0007",
+    "\u0012\u00e7\n\u0012\f\u0012\u000e\u0012\u00ea\u000b\u0012\u0003\u0012",
+    "\u0005\u0012\u00ed\n\u0012\u0003\u0013\u0003\u0013\u0005\u0013\u00f1",
+    "\n\u0013\u0003\u0013\u0003\u0013\u0005\u0013\u00f5\n\u0013\u0003\u0013",
+    "\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013\u0003\u0013",
+    "\u0003\u0013\u0005\u0013\u00ff\n\u0013\u0003\u0014\u0003\u0014\u0003",
+    "\u0015\u0003\u0015\u0003\u0015\u0003\u0015\u0005\u0015\u0107\n\u0015",
+    "\u0003\u0016\u0003\u0016\u0003\u0017\u0003\u0017\u0005\u0017\u010d\n",
+    "\u0017\u0003\u0018\u0003\u0018\u0003\u0019\u0003\u0019\u0005\u0019\u0113",
+    "\n\u0019\u0003\u0019\u0002\u0002\u001a\u0002\u0004\u0006\b\n\f\u000e",
+    "\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e \"$&(*,.0\u0002\u0007",
+    "\u0004\u0002\u000e\u000e\u0019\u0019\u0006\u0002\u0012\u0012\u0014\u0014",
+    "\u0018\u0018\u001a\u001a\u0004\u0002!!$$\u0004\u0002!!##\u0004\u0002",
+    ",,11\u013b\u00023\u0003\u0002\u0002\u0002\u0004;\u0003\u0002\u0002\u0002",
+    "\u0006X\u0003\u0002\u0002\u0002\bq\u0003\u0002\u0002\u0002\ns\u0003",
+    "\u0002\u0002\u0002\f|\u0003\u0002\u0002\u0002\u000e\u0085\u0003\u0002",
+    "\u0002\u0002\u0010\u008e\u0003\u0002\u0002\u0002\u0012\u00a9\u0003\u0002",
+    "\u0002\u0002\u0014\u00ab\u0003\u0002\u0002\u0002\u0016\u00b5\u0003\u0002",
+    "\u0002\u0002\u0018\u00ba\u0003\u0002\u0002\u0002\u001a\u00c5\u0003\u0002",
+    "\u0002\u0002\u001c\u00c8\u0003\u0002\u0002\u0002\u001e\u00d0\u0003\u0002",
+    "\u0002\u0002 \u00d2\u0003\u0002\u0002\u0002\"\u00dc\u0003\u0002\u0002",
+    "\u0002$\u00fe\u0003\u0002\u0002\u0002&\u0100\u0003\u0002\u0002\u0002",
+    "(\u0106\u0003\u0002\u0002\u0002*\u0108\u0003\u0002\u0002\u0002,\u010c",
+    "\u0003\u0002\u0002\u0002.\u010e\u0003\u0002\u0002\u00020\u0110\u0003",
+    "\u0002\u0002\u000224\u0005\u0004\u0003\u000232\u0003\u0002\u0002\u0002",
+    "34\u0003\u0002\u0002\u000245\u0003\u0002\u0002\u000256\u0007&\u0002",
+    "\u000268\u0005\u001c\u000f\u000279\u00050\u0019\u000287\u0003\u0002",
+    "\u0002\u000289\u0003\u0002\u0002\u00029\u0003\u0003\u0002\u0002\u0002",
+    ":<\u0005\u0006\u0004\u0002;:\u0003\u0002\u0002\u0002<=\u0003\u0002\u0002",
+    "\u0002=;\u0003\u0002\u0002\u0002=>\u0003\u0002\u0002\u0002>\u0005\u0003",
+    "\u0002\u0002\u0002?Y\u0005\b\u0005\u0002@Y\u0005\n\u0006\u0002AY\u0007",
+    "\u0010\u0002\u0002BC\u0007\u000b\u0002\u0002CD\u0005&\u0014\u0002DE",
+    "\u0005(\u0015\u0002EY\u0003\u0002\u0002\u0002FH\u0007\f\u0002\u0002",
+    "GI\u0007$\u0002\u0002HG\u0003\u0002\u0002\u0002HI\u0003\u0002\u0002",
+    "\u0002IY\u0003\u0002\u0002\u0002JY\u0007\u0007\u0002\u0002KL\u0007\b",
+    "\u0002\u0002LY\u0007$\u0002\u0002MN\u0007\t\u0002\u0002NY\u0007\"\u0002",
+    "\u0002OP\u0007\u0011\u0002\u0002PY\u0005\f\u0007\u0002QS\u0007\u0016",
+    "\u0002\u0002RT\u0005\f\u0007\u0002SR\u0003\u0002\u0002\u0002TU\u0003",
+    "\u0002\u0002\u0002US\u0003\u0002\u0002\u0002UV\u0003\u0002\u0002\u0002",
+    "VY\u0003\u0002\u0002\u0002WY\u0007 \u0002\u0002X?\u0003\u0002\u0002",
+    "\u0002X@\u0003\u0002\u0002\u0002XA\u0003\u0002\u0002\u0002XB\u0003\u0002",
+    "\u0002\u0002XF\u0003\u0002\u0002\u0002XJ\u0003\u0002\u0002\u0002XK\u0003",
+    "\u0002\u0002\u0002XM\u0003\u0002\u0002\u0002XO\u0003\u0002\u0002\u0002",
+    "XQ\u0003\u0002\u0002\u0002XW\u0003\u0002\u0002\u0002Y\u0007\u0003\u0002",
+    "\u0002\u0002Zr\u0005\u0014\u000b\u0002[r\u0005\u0012\n\u0002\\]\u0007",
+    "\u001b\u0002\u0002]r\u0005,\u0017\u0002^_\t\u0002\u0002\u0002_b\u0005",
+    "\f\u0007\u0002`c\u0005,\u0017\u0002ac\u0005\u0018\r\u0002b`\u0003\u0002",
+    "\u0002\u0002ba\u0003\u0002\u0002\u0002cd\u0003\u0002\u0002\u0002db\u0003",
+    "\u0002\u0002\u0002de\u0003\u0002\u0002\u0002er\u0003\u0002\u0002\u0002",
+    "fr\u0007\u0006\u0002\u0002gi\u0007\n\u0002\u0002hj\u0007!\u0002\u0002",
+    "ih\u0003\u0002\u0002\u0002ij\u0003\u0002\u0002\u0002jk\u0003\u0002\u0002",
+    "\u0002kr\u0005\f\u0007\u0002ln\u0007\u001e\u0002\u0002mo\u0007!\u0002",
+    "\u0002nm\u0003\u0002\u0002\u0002no\u0003\u0002\u0002\u0002op\u0003\u0002",
+    "\u0002\u0002pr\u0005\f\u0007\u0002qZ\u0003\u0002\u0002\u0002q[\u0003",
+    "\u0002\u0002\u0002q\\\u0003\u0002\u0002\u0002q^\u0003\u0002\u0002\u0002",
+    "qf\u0003\u0002\u0002\u0002qg\u0003\u0002\u0002\u0002ql\u0003\u0002\u0002",
+    "\u0002r\t\u0003\u0002\u0002\u0002sw\u0007%\u0002\u0002tv\u00075\u0002",
+    "\u0002ut\u0003\u0002\u0002\u0002vy\u0003\u0002\u0002\u0002wu\u0003\u0002",
+    "\u0002\u0002wx\u0003\u0002\u0002\u0002xz\u0003\u0002\u0002\u0002yw\u0003",
+    "\u0002\u0002\u0002z{\u00074\u0002\u0002{\u000b\u0003\u0002\u0002\u0002",
+    "|\u0080\u0007\'\u0002\u0002}\u007f\u00078\u0002\u0002~}\u0003\u0002",
+    "\u0002\u0002\u007f\u0082\u0003\u0002\u0002\u0002\u0080~\u0003\u0002",
+    "\u0002\u0002\u0080\u0081\u0003\u0002\u0002\u0002\u0081\u0083\u0003\u0002",
+    "\u0002\u0002\u0082\u0080\u0003\u0002\u0002\u0002\u0083\u0084\u00077",
+    "\u0002\u0002\u0084\r\u0003\u0002\u0002\u0002\u0085\u0089\u0007(\u0002",
+    "\u0002\u0086\u0088\u0007:\u0002\u0002\u0087\u0086\u0003\u0002\u0002",
+    "\u0002\u0088\u008b\u0003\u0002\u0002\u0002\u0089\u0087\u0003\u0002\u0002",
+    "\u0002\u0089\u008a\u0003\u0002\u0002\u0002\u008a\u008c\u0003\u0002\u0002",
+    "\u0002\u008b\u0089\u0003\u0002\u0002\u0002\u008c\u008d\u00079\u0002",
+    "\u0002\u008d\u000f\u0003\u0002\u0002\u0002\u008e\u0090\u0007+\u0002",
+    "\u0002\u008f\u0091\u0007<\u0002\u0002\u0090\u008f\u0003\u0002\u0002",
+    "\u0002\u0091\u0092\u0003\u0002\u0002\u0002\u0092\u0090\u0003\u0002\u0002",
+    "\u0002\u0092\u0093\u0003\u0002\u0002\u0002\u0093\u0094\u0003\u0002\u0002",
+    "\u0002\u0094\u0095\u0007;\u0002\u0002\u0095\u0011\u0003\u0002\u0002",
+    "\u0002\u0096\u0098\u0007\u0015\u0002\u0002\u0097\u0099\u0005\u001a\u000e",
+    "\u0002\u0098\u0097\u0003\u0002\u0002\u0002\u0099\u009a\u0003\u0002\u0002",
+    "\u0002\u009a\u0098\u0003\u0002\u0002\u0002\u009a\u009b\u0003\u0002\u0002",
+    "\u0002\u009b\u00aa\u0003\u0002\u0002\u0002\u009c\u009e\u0007\u001c\u0002",
+    "\u0002\u009d\u009f\u0005\u001a\u000e\u0002\u009e\u009d\u0003\u0002\u0002",
+    "\u0002\u009f\u00a0\u0003\u0002\u0002\u0002\u00a0\u009e\u0003\u0002\u0002",
+    "\u0002\u00a0\u00a1\u0003\u0002\u0002\u0002\u00a1\u00aa\u0003\u0002\u0002",
+    "\u0002\u00a2\u00a3\u0007\u001d\u0002\u0002\u00a3\u00a5\u0005\u0010\t",
+    "\u0002\u00a4\u00a6\u0005,\u0017\u0002\u00a5\u00a4\u0003\u0002\u0002",
+    "\u0002\u00a6\u00a7\u0003\u0002\u0002\u0002\u00a7\u00a5\u0003\u0002\u0002",
+    "\u0002\u00a7\u00a8\u0003\u0002\u0002\u0002\u00a8\u00aa\u0003\u0002\u0002",
+    "\u0002\u00a9\u0096\u0003\u0002\u0002\u0002\u00a9\u009c\u0003\u0002\u0002",
+    "\u0002\u00a9\u00a2\u0003\u0002\u0002\u0002\u00aa\u0013\u0003\u0002\u0002",
+    "\u0002\u00ab\u00ad\u0005\u0016\f\u0002\u00ac\u00ae\u0005\u0010\t\u0002",
+    "\u00ad\u00ac\u0003\u0002\u0002\u0002\u00ad\u00ae\u0003\u0002\u0002\u0002",
+    "\u00ae\u00b1\u0003\u0002\u0002\u0002\u00af\u00b2\u0005,\u0017\u0002",
+    "\u00b0\u00b2\u0007\"\u0002\u0002\u00b1\u00af\u0003\u0002\u0002\u0002",
+    "\u00b1\u00b0\u0003\u0002\u0002\u0002\u00b2\u00b3\u0003\u0002\u0002\u0002",
+    "\u00b3\u00b1\u0003\u0002\u0002\u0002\u00b3\u00b4\u0003\u0002\u0002\u0002",
+    "\u00b4\u0015\u0003\u0002\u0002\u0002\u00b5\u00b6\t\u0003\u0002\u0002",
+    "\u00b6\u0017\u0003\u0002\u0002\u0002\u00b7\u00bb\u0005\u0010\t\u0002",
+    "\u00b8\u00bb\u0007)\u0002\u0002\u00b9\u00bb\u0007*\u0002\u0002\u00ba",
+    "\u00b7\u0003\u0002\u0002\u0002\u00ba\u00b8\u0003\u0002\u0002\u0002\u00ba",
+    "\u00b9\u0003\u0002\u0002\u0002\u00bb\u0019\u0003\u0002\u0002\u0002\u00bc",
+    "\u00c6\u0005\u0010\t\u0002\u00bd\u00c3\u0005*\u0016\u0002\u00be\u00c0",
+    "\u0007\"\u0002\u0002\u00bf\u00c1\u0007$\u0002\u0002\u00c0\u00bf\u0003",
+    "\u0002\u0002\u0002\u00c0\u00c1\u0003\u0002\u0002\u0002\u00c1\u00c4\u0003",
+    "\u0002\u0002\u0002\u00c2\u00c4\u0007$\u0002\u0002\u00c3\u00be\u0003",
+    "\u0002\u0002\u0002\u00c3\u00c2\u0003\u0002\u0002\u0002\u00c3\u00c4\u0003",
+    "\u0002\u0002\u0002\u00c4\u00c6\u0003\u0002\u0002\u0002\u00c5\u00bc\u0003",
+    "\u0002\u0002\u0002\u00c5\u00bd\u0003\u0002\u0002\u0002\u00c6\u001b\u0003",
+    "\u0002\u0002\u0002\u00c7\u00c9\u0005\u001e\u0010\u0002\u00c8\u00c7\u0003",
+    "\u0002\u0002\u0002\u00c9\u00ca\u0003\u0002\u0002\u0002\u00ca\u00c8\u0003",
+    "\u0002\u0002\u0002\u00ca\u00cb\u0003\u0002\u0002\u0002\u00cb\u001d\u0003",
+    "\u0002\u0002\u0002\u00cc\u00d1\u0005 \u0011\u0002\u00cd\u00ce\u0005",
+    "\b\u0005\u0002\u00ce\u00cf\u0007 \u0002\u0002\u00cf\u00d1\u0003\u0002",
+    "\u0002\u0002\u00d0\u00cc\u0003\u0002\u0002\u0002\u00d0\u00cd\u0003\u0002",
+    "\u0002\u0002\u00d1\u001f\u0003\u0002\u0002\u0002\u00d2\u00d3\u0007!",
+    "\u0002\u0002\u00d3\u00d5\u00072\u0002\u0002\u00d4\u00d6\u0005.\u0018",
+    "\u0002\u00d5\u00d4\u0003\u0002\u0002\u0002\u00d5\u00d6\u0003\u0002\u0002",
+    "\u0002\u00d6\u00d7\u0003\u0002\u0002\u0002\u00d7\u00d8\u0005\"\u0012",
+    "\u0002\u00d8!\u0003\u0002\u0002\u0002\u00d9\u00db\u0005$\u0013\u0002",
+    "\u00da\u00d9\u0003\u0002\u0002\u0002\u00db\u00de\u0003\u0002\u0002\u0002",
+    "\u00dc\u00da\u0003\u0002\u0002\u0002\u00dc\u00dd\u0003\u0002\u0002\u0002",
+    "\u00dd\u00e8\u0003\u0002\u0002\u0002\u00de\u00dc\u0003\u0002\u0002\u0002",
+    "\u00df\u00e3\u0007\u001f\u0002\u0002\u00e0\u00e2\u0005$\u0013\u0002",
+    "\u00e1\u00e0\u0003\u0002\u0002\u0002\u00e2\u00e5\u0003\u0002\u0002\u0002",
+    "\u00e3\u00e1\u0003\u0002\u0002\u0002\u00e3\u00e4\u0003\u0002\u0002\u0002",
+    "\u00e4\u00e7\u0003\u0002\u0002\u0002\u00e5\u00e3\u0003\u0002\u0002\u0002",
+    "\u00e6\u00df\u0003\u0002\u0002\u0002\u00e7\u00ea\u0003\u0002\u0002\u0002",
+    "\u00e8\u00e6\u0003\u0002\u0002\u0002\u00e8\u00e9\u0003\u0002\u0002\u0002",
+    "\u00e9\u00ec\u0003\u0002\u0002\u0002\u00ea\u00e8\u0003\u0002\u0002\u0002",
+    "\u00eb\u00ed\u0007 \u0002\u0002\u00ec\u00eb\u0003\u0002\u0002\u0002",
+    "\u00ec\u00ed\u0003\u0002\u0002\u0002\u00ed#\u0003\u0002\u0002\u0002",
+    "\u00ee\u00f0\u0005,\u0017\u0002\u00ef\u00f1\u0005.\u0018\u0002\u00f0",
+    "\u00ef\u0003\u0002\u0002\u0002\u00f0\u00f1\u0003\u0002\u0002\u0002\u00f1",
+    "\u00ff\u0003\u0002\u0002\u0002\u00f2\u00f4\u0005\f\u0007\u0002\u00f3",
+    "\u00f5\u0005.\u0018\u0002\u00f4\u00f3\u0003\u0002\u0002\u0002\u00f4",
+    "\u00f5\u0003\u0002\u0002\u0002\u00f5\u00ff\u0003\u0002\u0002\u0002\u00f6",
+    "\u00ff\u0005\u000e\b\u0002\u00f7\u00ff\u0007\u000f\u0002\u0002\u00f8",
+    "\u00f9\u0007\u0017\u0002\u0002\u00f9\u00ff\u0005,\u0017\u0002\u00fa",
+    "\u00fb\u0007\r\u0002\u0002\u00fb\u00ff\u0007\"\u0002\u0002\u00fc\u00fd",
+    "\u0007\u0013\u0002\u0002\u00fd\u00ff\u0005\u0010\t\u0002\u00fe\u00ee",
+    "\u0003\u0002\u0002\u0002\u00fe\u00f2\u0003\u0002\u0002\u0002\u00fe\u00f6",
+    "\u0003\u0002\u0002\u0002\u00fe\u00f7\u0003\u0002\u0002\u0002\u00fe\u00f8",
+    "\u0003\u0002\u0002\u0002\u00fe\u00fa\u0003\u0002\u0002\u0002\u00fe\u00fc",
+    "\u0003\u0002\u0002\u0002\u00ff%\u0003\u0002\u0002\u0002\u0100\u0101",
+    "\t\u0004\u0002\u0002\u0101\'\u0003\u0002\u0002\u0002\u0102\u0107\u0003",
+    "\u0002\u0002\u0002\u0103\u0107\u0007!\u0002\u0002\u0104\u0107\u0007",
+    "$\u0002\u0002\u0105\u0107\u0005\f\u0007\u0002\u0106\u0102\u0003\u0002",
+    "\u0002\u0002\u0106\u0103\u0003\u0002\u0002\u0002\u0106\u0104\u0003\u0002",
+    "\u0002\u0002\u0106\u0105\u0003\u0002\u0002\u0002\u0107)\u0003\u0002",
+    "\u0002\u0002\u0108\u0109\t\u0005\u0002\u0002\u0109+\u0003\u0002\u0002",
+    "\u0002\u010a\u010d\u0005*\u0016\u0002\u010b\u010d\u0007$\u0002\u0002",
+    "\u010c\u010a\u0003\u0002\u0002\u0002\u010c\u010b\u0003\u0002\u0002\u0002",
+    "\u010d-\u0003\u0002\u0002\u0002\u010e\u010f\t\u0006\u0002\u0002\u010f",
+    "/\u0003\u0002\u0002\u0002\u0110\u0112\u0007&\u0002\u0002\u0111\u0113",
+    "\u00076\u0002\u0002\u0112\u0111\u0003\u0002\u0002\u0002\u0112\u0113",
+    "\u0003\u0002\u0002\u0002\u01131\u0003\u0002\u0002\u0002)38=HUXbdinq",
+    "w\u0080\u0089\u0092\u009a\u00a0\u00a7\u00a9\u00ad\u00b1\u00b3\u00ba",
+    "\u00c0\u00c3\u00c5\u00ca\u00d0\u00d5\u00dc\u00e3\u00e8\u00ec\u00f0\u00f4",
+    "\u00fe\u0106\u010c\u0112"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -210,7 +213,7 @@ var literalNames = [ null, null, null, null, null, null, null, null, "'%code'",
                      "'%union'", null, null, null, null, null, null, null, 
                      "'%%'", "'{'", null, "'<*>'", "'<>'", "'<'", null, 
                      null, null, null, null, null, null, null, null, null, 
-                     null, null, null, null, "'>'", null, null, "'?'" ];
+                     null, null, null, null, null, "'>'", null, null, "'?'" ];
 
 var symbolicNames = [ null, "WS", "BLOCK_COMMENT", "LINE_COMMENT", "PERCENT_GRAMMAR_NO_PARAM", 
                       "PERCENT_NO_PARAM", "PERCENT_STRING_PARAM", "PERCENT_INT_PARAM", 
@@ -224,7 +227,7 @@ var symbolicNames = [ null, "WS", "BLOCK_COMMENT", "LINE_COMMENT", "PERCENT_GRAM
                       "PIPE", "SEMICOLON", "ID", "INT", "CHAR", "STRING", 
                       "PROLOGUE_START", "PERCENT_PERCENT", "BRACED_CODE_START", 
                       "PREDICATE_START", "TAG_ANY", "TAG_NONE", "TAG_START", 
-                      "ERROR_CHARACTER", "AFTER_ID_WS", "AFTER_ID_BLOCK_COMMENT", 
+                      "REF", "ERROR_CHARACTER", "AFTER_ID_WS", "AFTER_ID_BLOCK_COMMENT", 
                       "AFTER_ID_LINE_COMMENT", "AFTER_ID_OPEN_BRACKET", 
                       "AFTER_ID_COLON", "AFTER_ID_ANY", "PROLOGUE_CLOSE", 
                       "PROLOGUE_CONTENT", "EPILOGUE_CONTENT", "BRACED_CODE_CLOSE", 
@@ -236,7 +239,7 @@ var ruleNames =  [ "file", "prologueDeclarations", "prologueDeclaration",
                    "tagRule", "symbolDeclaration", "precedenceDeclaration", 
                    "precedenceDeclarator", "tag", "symbolDef", "grammarRule", 
                    "rulesOrGrammarDeclaration", "rules", "rhses", "rhs", 
-                   "variable", "value", "id", "symbol", "epilogue" ];
+                   "variable", "value", "id", "symbol", "ref", "epilogue" ];
 
 function BisonParser (input) {
 	antlr4.Parser.call(this, input);
@@ -298,24 +301,25 @@ BisonParser.PREDICATE_START = 38;
 BisonParser.TAG_ANY = 39;
 BisonParser.TAG_NONE = 40;
 BisonParser.TAG_START = 41;
-BisonParser.ERROR_CHARACTER = 42;
-BisonParser.AFTER_ID_WS = 43;
-BisonParser.AFTER_ID_BLOCK_COMMENT = 44;
-BisonParser.AFTER_ID_LINE_COMMENT = 45;
-BisonParser.AFTER_ID_OPEN_BRACKET = 46;
-BisonParser.AFTER_ID_COLON = 47;
-BisonParser.AFTER_ID_ANY = 48;
-BisonParser.PROLOGUE_CLOSE = 49;
-BisonParser.PROLOGUE_CONTENT = 50;
-BisonParser.EPILOGUE_CONTENT = 51;
-BisonParser.BRACED_CODE_CLOSE = 52;
-BisonParser.BRACED_CODE_CONTENT = 53;
-BisonParser.PREDICATE_CLOSE = 54;
-BisonParser.PREDICATE_CONTENT = 55;
-BisonParser.TAG_CLOSE = 56;
-BisonParser.TAG_CONTENT = 57;
-BisonParser.PROLOGUE_PERCENT = 58;
-BisonParser.PREDICATE_QUESTION = 59;
+BisonParser.REF = 42;
+BisonParser.ERROR_CHARACTER = 43;
+BisonParser.AFTER_ID_WS = 44;
+BisonParser.AFTER_ID_BLOCK_COMMENT = 45;
+BisonParser.AFTER_ID_LINE_COMMENT = 46;
+BisonParser.AFTER_ID_OPEN_BRACKET = 47;
+BisonParser.AFTER_ID_COLON = 48;
+BisonParser.AFTER_ID_ANY = 49;
+BisonParser.PROLOGUE_CLOSE = 50;
+BisonParser.PROLOGUE_CONTENT = 51;
+BisonParser.EPILOGUE_CONTENT = 52;
+BisonParser.BRACED_CODE_CLOSE = 53;
+BisonParser.BRACED_CODE_CONTENT = 54;
+BisonParser.PREDICATE_CLOSE = 55;
+BisonParser.PREDICATE_CONTENT = 56;
+BisonParser.TAG_CLOSE = 57;
+BisonParser.TAG_CONTENT = 58;
+BisonParser.PROLOGUE_PERCENT = 59;
+BisonParser.PREDICATE_QUESTION = 60;
 
 BisonParser.RULE_file = 0;
 BisonParser.RULE_prologueDeclarations = 1;
@@ -339,7 +343,8 @@ BisonParser.RULE_variable = 18;
 BisonParser.RULE_value = 19;
 BisonParser.RULE_id = 20;
 BisonParser.RULE_symbol = 21;
-BisonParser.RULE_epilogue = 22;
+BisonParser.RULE_ref = 22;
+BisonParser.RULE_epilogue = 23;
 
 function FileContext(parser, parent, invokingState) {
 	if(parent===undefined) {
@@ -405,23 +410,23 @@ BisonParser.prototype.file = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 47;
+        this.state = 49;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(((((_la - 4)) & ~0x1f) == 0 && ((1 << (_la - 4)) & ((1 << (BisonParser.PERCENT_GRAMMAR_NO_PARAM - 4)) | (1 << (BisonParser.PERCENT_NO_PARAM - 4)) | (1 << (BisonParser.PERCENT_STRING_PARAM - 4)) | (1 << (BisonParser.PERCENT_INT_PARAM - 4)) | (1 << (BisonParser.PERCENT_CODE - 4)) | (1 << (BisonParser.PERCENT_DEFINE - 4)) | (1 << (BisonParser.PERCENT_DEFINES - 4)) | (1 << (BisonParser.PERCENT_DESTRUCTOR - 4)) | (1 << (BisonParser.PERCENT_FLAG - 4)) | (1 << (BisonParser.PERCENT_INITIAL_ACTION - 4)) | (1 << (BisonParser.PERCENT_LEFT - 4)) | (1 << (BisonParser.PERCENT_NONASSOC - 4)) | (1 << (BisonParser.PERCENT_NTERM - 4)) | (1 << (BisonParser.PERCENT_PARAM - 4)) | (1 << (BisonParser.PERCENT_PRECEDENCE - 4)) | (1 << (BisonParser.PERCENT_PRINTER - 4)) | (1 << (BisonParser.PERCENT_RIGHT - 4)) | (1 << (BisonParser.PERCENT_START - 4)) | (1 << (BisonParser.PERCENT_TOKEN - 4)) | (1 << (BisonParser.PERCENT_TYPE - 4)) | (1 << (BisonParser.PERCENT_UNION - 4)) | (1 << (BisonParser.SEMICOLON - 4)) | (1 << (BisonParser.PROLOGUE_START - 4)))) !== 0)) {
-            this.state = 46;
+            this.state = 48;
             this.prologueDeclarations();
         }
 
-        this.state = 49;
+        this.state = 51;
         this.match(BisonParser.PERCENT_PERCENT);
-        this.state = 50;
-        this.grammarRule();
         this.state = 52;
+        this.grammarRule();
+        this.state = 54;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===BisonParser.PERCENT_PERCENT) {
-            this.state = 51;
+            this.state = 53;
             this.epilogue();
         }
 
@@ -498,13 +503,13 @@ BisonParser.prototype.prologueDeclarations = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 55; 
+        this.state = 57; 
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         do {
-            this.state = 54;
+            this.state = 56;
             this.prologueDeclaration();
-            this.state = 57; 
+            this.state = 59; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         } while(((((_la - 4)) & ~0x1f) == 0 && ((1 << (_la - 4)) & ((1 << (BisonParser.PERCENT_GRAMMAR_NO_PARAM - 4)) | (1 << (BisonParser.PERCENT_NO_PARAM - 4)) | (1 << (BisonParser.PERCENT_STRING_PARAM - 4)) | (1 << (BisonParser.PERCENT_INT_PARAM - 4)) | (1 << (BisonParser.PERCENT_CODE - 4)) | (1 << (BisonParser.PERCENT_DEFINE - 4)) | (1 << (BisonParser.PERCENT_DEFINES - 4)) | (1 << (BisonParser.PERCENT_DESTRUCTOR - 4)) | (1 << (BisonParser.PERCENT_FLAG - 4)) | (1 << (BisonParser.PERCENT_INITIAL_ACTION - 4)) | (1 << (BisonParser.PERCENT_LEFT - 4)) | (1 << (BisonParser.PERCENT_NONASSOC - 4)) | (1 << (BisonParser.PERCENT_NTERM - 4)) | (1 << (BisonParser.PERCENT_PARAM - 4)) | (1 << (BisonParser.PERCENT_PRECEDENCE - 4)) | (1 << (BisonParser.PERCENT_PRINTER - 4)) | (1 << (BisonParser.PERCENT_RIGHT - 4)) | (1 << (BisonParser.PERCENT_START - 4)) | (1 << (BisonParser.PERCENT_TOKEN - 4)) | (1 << (BisonParser.PERCENT_TYPE - 4)) | (1 << (BisonParser.PERCENT_UNION - 4)) | (1 << (BisonParser.SEMICOLON - 4)) | (1 << (BisonParser.PROLOGUE_START - 4)))) !== 0));
@@ -640,7 +645,7 @@ BisonParser.prototype.prologueDeclaration = function() {
     this.enterRule(localctx, 4, BisonParser.RULE_prologueDeclaration);
     var _la = 0; // Token type
     try {
-        this.state = 84;
+        this.state = 86;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.PERCENT_GRAMMAR_NO_PARAM:
@@ -657,85 +662,85 @@ BisonParser.prototype.prologueDeclaration = function() {
         case BisonParser.PERCENT_TYPE:
         case BisonParser.PERCENT_UNION:
             this.enterOuterAlt(localctx, 1);
-            this.state = 59;
+            this.state = 61;
             this.grammarDeclaration();
             break;
         case BisonParser.PROLOGUE_START:
             this.enterOuterAlt(localctx, 2);
-            this.state = 60;
+            this.state = 62;
             this.prologue();
             break;
         case BisonParser.PERCENT_FLAG:
             this.enterOuterAlt(localctx, 3);
-            this.state = 61;
+            this.state = 63;
             this.match(BisonParser.PERCENT_FLAG);
             break;
         case BisonParser.PERCENT_DEFINE:
             this.enterOuterAlt(localctx, 4);
-            this.state = 62;
-            this.match(BisonParser.PERCENT_DEFINE);
-            this.state = 63;
-            this.variable();
             this.state = 64;
+            this.match(BisonParser.PERCENT_DEFINE);
+            this.state = 65;
+            this.variable();
+            this.state = 66;
             this.value();
             break;
         case BisonParser.PERCENT_DEFINES:
             this.enterOuterAlt(localctx, 5);
-            this.state = 66;
-            this.match(BisonParser.PERCENT_DEFINES);
             this.state = 68;
+            this.match(BisonParser.PERCENT_DEFINES);
+            this.state = 70;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             if(_la===BisonParser.STRING) {
-                this.state = 67;
+                this.state = 69;
                 this.match(BisonParser.STRING);
             }
 
             break;
         case BisonParser.PERCENT_NO_PARAM:
             this.enterOuterAlt(localctx, 6);
-            this.state = 70;
+            this.state = 72;
             this.match(BisonParser.PERCENT_NO_PARAM);
             break;
         case BisonParser.PERCENT_STRING_PARAM:
             this.enterOuterAlt(localctx, 7);
-            this.state = 71;
+            this.state = 73;
             this.match(BisonParser.PERCENT_STRING_PARAM);
-            this.state = 72;
+            this.state = 74;
             this.match(BisonParser.STRING);
             break;
         case BisonParser.PERCENT_INT_PARAM:
             this.enterOuterAlt(localctx, 8);
-            this.state = 73;
+            this.state = 75;
             this.match(BisonParser.PERCENT_INT_PARAM);
-            this.state = 74;
+            this.state = 76;
             this.match(BisonParser.INT);
             break;
         case BisonParser.PERCENT_INITIAL_ACTION:
             this.enterOuterAlt(localctx, 9);
-            this.state = 75;
+            this.state = 77;
             this.match(BisonParser.PERCENT_INITIAL_ACTION);
-            this.state = 76;
+            this.state = 78;
             this.code();
             break;
         case BisonParser.PERCENT_PARAM:
             this.enterOuterAlt(localctx, 10);
-            this.state = 77;
+            this.state = 79;
             this.match(BisonParser.PERCENT_PARAM);
-            this.state = 79; 
+            this.state = 81; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 78;
+                this.state = 80;
                 this.code();
-                this.state = 81; 
+                this.state = 83; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(_la===BisonParser.BRACED_CODE_START);
             break;
         case BisonParser.SEMICOLON:
             this.enterOuterAlt(localctx, 11);
-            this.state = 83;
+            this.state = 85;
             this.match(BisonParser.SEMICOLON);
             break;
         default:
@@ -864,7 +869,7 @@ BisonParser.prototype.grammarDeclaration = function() {
     this.enterRule(localctx, 6, BisonParser.RULE_grammarDeclaration);
     var _la = 0; // Token type
     try {
-        this.state = 109;
+        this.state = 111;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.PERCENT_LEFT:
@@ -872,27 +877,27 @@ BisonParser.prototype.grammarDeclaration = function() {
         case BisonParser.PERCENT_PRECEDENCE:
         case BisonParser.PERCENT_RIGHT:
             this.enterOuterAlt(localctx, 1);
-            this.state = 86;
+            this.state = 88;
             this.precedenceDeclaration();
             break;
         case BisonParser.PERCENT_NTERM:
         case BisonParser.PERCENT_TOKEN:
         case BisonParser.PERCENT_TYPE:
             this.enterOuterAlt(localctx, 2);
-            this.state = 87;
+            this.state = 89;
             this.symbolDeclaration();
             break;
         case BisonParser.PERCENT_START:
             this.enterOuterAlt(localctx, 3);
-            this.state = 88;
+            this.state = 90;
             this.match(BisonParser.PERCENT_START);
-            this.state = 89;
+            this.state = 91;
             this.symbol();
             break;
         case BisonParser.PERCENT_DESTRUCTOR:
         case BisonParser.PERCENT_PRINTER:
             this.enterOuterAlt(localctx, 4);
-            this.state = 90;
+            this.state = 92;
             _la = this._input.LA(1);
             if(!(_la===BisonParser.PERCENT_DESTRUCTOR || _la===BisonParser.PERCENT_PRINTER)) {
             this._errHandler.recoverInline(this);
@@ -901,68 +906,68 @@ BisonParser.prototype.grammarDeclaration = function() {
             	this._errHandler.reportMatch(this);
                 this.consume();
             }
-            this.state = 91;
+            this.state = 93;
             this.code();
-            this.state = 94; 
+            this.state = 96; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 94;
+                this.state = 96;
                 this._errHandler.sync(this);
                 switch(this._input.LA(1)) {
                 case BisonParser.ID:
                 case BisonParser.CHAR:
                 case BisonParser.STRING:
-                    this.state = 92;
+                    this.state = 94;
                     this.symbol();
                     break;
                 case BisonParser.TAG_ANY:
                 case BisonParser.TAG_NONE:
                 case BisonParser.TAG_START:
-                    this.state = 93;
+                    this.state = 95;
                     this.tag();
                     break;
                 default:
                     throw new antlr4.error.NoViableAltException(this);
                 }
-                this.state = 96; 
+                this.state = 98; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(((((_la - 31)) & ~0x1f) == 0 && ((1 << (_la - 31)) & ((1 << (BisonParser.ID - 31)) | (1 << (BisonParser.CHAR - 31)) | (1 << (BisonParser.STRING - 31)) | (1 << (BisonParser.TAG_ANY - 31)) | (1 << (BisonParser.TAG_NONE - 31)) | (1 << (BisonParser.TAG_START - 31)))) !== 0));
             break;
         case BisonParser.PERCENT_GRAMMAR_NO_PARAM:
             this.enterOuterAlt(localctx, 5);
-            this.state = 98;
+            this.state = 100;
             this.match(BisonParser.PERCENT_GRAMMAR_NO_PARAM);
             break;
         case BisonParser.PERCENT_CODE:
             this.enterOuterAlt(localctx, 6);
-            this.state = 99;
-            this.match(BisonParser.PERCENT_CODE);
             this.state = 101;
+            this.match(BisonParser.PERCENT_CODE);
+            this.state = 103;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             if(_la===BisonParser.ID) {
-                this.state = 100;
+                this.state = 102;
                 this.match(BisonParser.ID);
             }
 
-            this.state = 103;
+            this.state = 105;
             this.code();
             break;
         case BisonParser.PERCENT_UNION:
             this.enterOuterAlt(localctx, 7);
-            this.state = 104;
-            this.match(BisonParser.PERCENT_UNION);
             this.state = 106;
+            this.match(BisonParser.PERCENT_UNION);
+            this.state = 108;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             if(_la===BisonParser.ID) {
-                this.state = 105;
+                this.state = 107;
                 this.match(BisonParser.ID);
             }
 
-            this.state = 108;
+            this.state = 110;
             this.code();
             break;
         default:
@@ -1050,19 +1055,19 @@ BisonParser.prototype.prologue = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 111;
+        this.state = 113;
         this.match(BisonParser.PROLOGUE_START);
-        this.state = 115;
+        this.state = 117;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===BisonParser.PROLOGUE_CONTENT) {
-            this.state = 112;
+            this.state = 114;
             this.match(BisonParser.PROLOGUE_CONTENT);
-            this.state = 117;
+            this.state = 119;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 118;
+        this.state = 120;
         this.match(BisonParser.PROLOGUE_CLOSE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1146,19 +1151,19 @@ BisonParser.prototype.code = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 120;
+        this.state = 122;
         this.match(BisonParser.BRACED_CODE_START);
-        this.state = 124;
+        this.state = 126;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===BisonParser.BRACED_CODE_CONTENT) {
-            this.state = 121;
+            this.state = 123;
             this.match(BisonParser.BRACED_CODE_CONTENT);
-            this.state = 126;
+            this.state = 128;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 127;
+        this.state = 129;
         this.match(BisonParser.BRACED_CODE_CLOSE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1242,19 +1247,19 @@ BisonParser.prototype.predicate = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 129;
+        this.state = 131;
         this.match(BisonParser.PREDICATE_START);
-        this.state = 133;
+        this.state = 135;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===BisonParser.PREDICATE_CONTENT) {
-            this.state = 130;
+            this.state = 132;
             this.match(BisonParser.PREDICATE_CONTENT);
-            this.state = 135;
+            this.state = 137;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 136;
+        this.state = 138;
         this.match(BisonParser.PREDICATE_CLOSE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1338,19 +1343,19 @@ BisonParser.prototype.tagRule = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 138;
+        this.state = 140;
         this.match(BisonParser.TAG_START);
-        this.state = 140; 
+        this.state = 142; 
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         do {
-            this.state = 139;
+            this.state = 141;
             this.match(BisonParser.TAG_CONTENT);
-            this.state = 142; 
+            this.state = 144; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         } while(_la===BisonParser.TAG_CONTENT);
-        this.state = 144;
+        this.state = 146;
         this.match(BisonParser.TAG_CLOSE);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -1451,52 +1456,52 @@ BisonParser.prototype.symbolDeclaration = function() {
     this.enterRule(localctx, 16, BisonParser.RULE_symbolDeclaration);
     var _la = 0; // Token type
     try {
-        this.state = 165;
+        this.state = 167;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.PERCENT_NTERM:
             this.enterOuterAlt(localctx, 1);
-            this.state = 146;
+            this.state = 148;
             this.match(BisonParser.PERCENT_NTERM);
-            this.state = 148; 
+            this.state = 150; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 147;
+                this.state = 149;
                 this.symbolDef();
-                this.state = 150; 
+                this.state = 152; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(((((_la - 31)) & ~0x1f) == 0 && ((1 << (_la - 31)) & ((1 << (BisonParser.ID - 31)) | (1 << (BisonParser.CHAR - 31)) | (1 << (BisonParser.TAG_START - 31)))) !== 0));
             break;
         case BisonParser.PERCENT_TOKEN:
             this.enterOuterAlt(localctx, 2);
-            this.state = 152;
+            this.state = 154;
             this.match(BisonParser.PERCENT_TOKEN);
-            this.state = 154; 
+            this.state = 156; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 153;
+                this.state = 155;
                 this.symbolDef();
-                this.state = 156; 
+                this.state = 158; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(((((_la - 31)) & ~0x1f) == 0 && ((1 << (_la - 31)) & ((1 << (BisonParser.ID - 31)) | (1 << (BisonParser.CHAR - 31)) | (1 << (BisonParser.TAG_START - 31)))) !== 0));
             break;
         case BisonParser.PERCENT_TYPE:
             this.enterOuterAlt(localctx, 3);
-            this.state = 158;
+            this.state = 160;
             this.match(BisonParser.PERCENT_TYPE);
-            this.state = 159;
+            this.state = 161;
             this.tagRule();
-            this.state = 161; 
+            this.state = 163; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
             do {
-                this.state = 160;
+                this.state = 162;
                 this.symbol();
-                this.state = 163; 
+                this.state = 165; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
             } while(((((_la - 31)) & ~0x1f) == 0 && ((1 << (_la - 31)) & ((1 << (BisonParser.ID - 31)) | (1 << (BisonParser.CHAR - 31)) | (1 << (BisonParser.STRING - 31)))) !== 0));
@@ -1597,37 +1602,37 @@ BisonParser.prototype.precedenceDeclaration = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 167;
-        this.precedenceDeclarator();
         this.state = 169;
+        this.precedenceDeclarator();
+        this.state = 171;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===BisonParser.TAG_START) {
-            this.state = 168;
+            this.state = 170;
             this.tagRule();
         }
 
-        this.state = 173; 
+        this.state = 175; 
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         do {
-            this.state = 173;
+            this.state = 175;
             this._errHandler.sync(this);
             switch(this._input.LA(1)) {
             case BisonParser.ID:
             case BisonParser.CHAR:
             case BisonParser.STRING:
-                this.state = 171;
+                this.state = 173;
                 this.symbol();
                 break;
             case BisonParser.INT:
-                this.state = 172;
+                this.state = 174;
                 this.match(BisonParser.INT);
                 break;
             default:
                 throw new antlr4.error.NoViableAltException(this);
             }
-            this.state = 175; 
+            this.state = 177; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         } while(((((_la - 31)) & ~0x1f) == 0 && ((1 << (_la - 31)) & ((1 << (BisonParser.ID - 31)) | (1 << (BisonParser.INT - 31)) | (1 << (BisonParser.CHAR - 31)) | (1 << (BisonParser.STRING - 31)))) !== 0));
@@ -1709,7 +1714,7 @@ BisonParser.prototype.precedenceDeclarator = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 177;
+        this.state = 179;
         _la = this._input.LA(1);
         if(!((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << BisonParser.PERCENT_LEFT) | (1 << BisonParser.PERCENT_NONASSOC) | (1 << BisonParser.PERCENT_PRECEDENCE) | (1 << BisonParser.PERCENT_RIGHT))) !== 0))) {
         this._errHandler.recoverInline(this);
@@ -1790,22 +1795,22 @@ BisonParser.prototype.tag = function() {
     var localctx = new TagContext(this, this._ctx, this.state);
     this.enterRule(localctx, 22, BisonParser.RULE_tag);
     try {
-        this.state = 182;
+        this.state = 184;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.TAG_START:
             this.enterOuterAlt(localctx, 1);
-            this.state = 179;
+            this.state = 181;
             this.tagRule();
             break;
         case BisonParser.TAG_ANY:
             this.enterOuterAlt(localctx, 2);
-            this.state = 180;
+            this.state = 182;
             this.match(BisonParser.TAG_ANY);
             break;
         case BisonParser.TAG_NONE:
             this.enterOuterAlt(localctx, 3);
-            this.state = 181;
+            this.state = 183;
             this.match(BisonParser.TAG_NONE);
             break;
         default:
@@ -1888,36 +1893,36 @@ BisonParser.prototype.symbolDef = function() {
     this.enterRule(localctx, 24, BisonParser.RULE_symbolDef);
     var _la = 0; // Token type
     try {
-        this.state = 193;
+        this.state = 195;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.TAG_START:
             this.enterOuterAlt(localctx, 1);
-            this.state = 184;
+            this.state = 186;
             this.tagRule();
             break;
         case BisonParser.ID:
         case BisonParser.CHAR:
             this.enterOuterAlt(localctx, 2);
-            this.state = 185;
+            this.state = 187;
             this.id();
-            this.state = 191;
+            this.state = 193;
             this._errHandler.sync(this);
             switch (this._input.LA(1)) {
             case BisonParser.INT:
-            	this.state = 186;
-            	this.match(BisonParser.INT);
             	this.state = 188;
+            	this.match(BisonParser.INT);
+            	this.state = 190;
             	this._errHandler.sync(this);
             	_la = this._input.LA(1);
             	if(_la===BisonParser.STRING) {
-            	    this.state = 187;
+            	    this.state = 189;
             	    this.match(BisonParser.STRING);
             	}
 
             	break;
             case BisonParser.STRING:
-            	this.state = 190;
+            	this.state = 192;
             	this.match(BisonParser.STRING);
             	break;
             case BisonParser.PERCENT_GRAMMAR_NO_PARAM:
@@ -2028,13 +2033,13 @@ BisonParser.prototype.grammarRule = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 196; 
+        this.state = 198; 
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         do {
-            this.state = 195;
+            this.state = 197;
             this.rulesOrGrammarDeclaration();
-            this.state = 198; 
+            this.state = 200; 
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << BisonParser.PERCENT_GRAMMAR_NO_PARAM) | (1 << BisonParser.PERCENT_CODE) | (1 << BisonParser.PERCENT_DESTRUCTOR) | (1 << BisonParser.PERCENT_LEFT) | (1 << BisonParser.PERCENT_NONASSOC) | (1 << BisonParser.PERCENT_NTERM) | (1 << BisonParser.PERCENT_PRECEDENCE) | (1 << BisonParser.PERCENT_PRINTER) | (1 << BisonParser.PERCENT_RIGHT) | (1 << BisonParser.PERCENT_START) | (1 << BisonParser.PERCENT_TOKEN) | (1 << BisonParser.PERCENT_TYPE) | (1 << BisonParser.PERCENT_UNION) | (1 << BisonParser.ID))) !== 0));
@@ -2110,12 +2115,12 @@ BisonParser.prototype.rulesOrGrammarDeclaration = function() {
     var localctx = new RulesOrGrammarDeclarationContext(this, this._ctx, this.state);
     this.enterRule(localctx, 28, BisonParser.RULE_rulesOrGrammarDeclaration);
     try {
-        this.state = 204;
+        this.state = 206;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.ID:
             this.enterOuterAlt(localctx, 1);
-            this.state = 200;
+            this.state = 202;
             this.rules();
             break;
         case BisonParser.PERCENT_GRAMMAR_NO_PARAM:
@@ -2132,9 +2137,9 @@ BisonParser.prototype.rulesOrGrammarDeclaration = function() {
         case BisonParser.PERCENT_TYPE:
         case BisonParser.PERCENT_UNION:
             this.enterOuterAlt(localctx, 2);
-            this.state = 201;
+            this.state = 203;
             this.grammarDeclaration();
-            this.state = 202;
+            this.state = 204;
             this.match(BisonParser.SEMICOLON);
             break;
         default:
@@ -2182,8 +2187,8 @@ RulesContext.prototype.rhses = function() {
     return this.getTypedRuleContext(RhsesContext,0);
 };
 
-RulesContext.prototype.AFTER_ID_OPEN_BRACKET = function() {
-    return this.getToken(BisonParser.AFTER_ID_OPEN_BRACKET, 0);
+RulesContext.prototype.ref = function() {
+    return this.getTypedRuleContext(RefContext,0);
 };
 
 RulesContext.prototype.enterRule = function(listener) {
@@ -2218,19 +2223,19 @@ BisonParser.prototype.rules = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 206;
+        this.state = 208;
         this.match(BisonParser.ID);
-        this.state = 207;
-        this.match(BisonParser.AFTER_ID_COLON);
         this.state = 209;
+        this.match(BisonParser.AFTER_ID_COLON);
+        this.state = 211;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
-        if(_la===BisonParser.AFTER_ID_OPEN_BRACKET) {
-            this.state = 208;
-            this.match(BisonParser.AFTER_ID_OPEN_BRACKET);
+        if(_la===BisonParser.REF || _la===BisonParser.AFTER_ID_OPEN_BRACKET) {
+            this.state = 210;
+            this.ref();
         }
 
-        this.state = 211;
+        this.state = 213;
         this.rhses();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2321,47 +2326,47 @@ BisonParser.prototype.rhses = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 216;
+        this.state = 218;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,29,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
             if(_alt===1) {
-                this.state = 213;
+                this.state = 215;
                 this.rhs(); 
             }
-            this.state = 218;
+            this.state = 220;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,29,this._ctx);
         }
 
-        this.state = 228;
+        this.state = 230;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         while(_la===BisonParser.PIPE) {
-            this.state = 219;
+            this.state = 221;
             this.match(BisonParser.PIPE);
-            this.state = 223;
+            this.state = 225;
             this._errHandler.sync(this);
             var _alt = this._interp.adaptivePredict(this._input,30,this._ctx)
             while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
                 if(_alt===1) {
-                    this.state = 220;
+                    this.state = 222;
                     this.rhs(); 
                 }
-                this.state = 225;
+                this.state = 227;
                 this._errHandler.sync(this);
                 _alt = this._interp.adaptivePredict(this._input,30,this._ctx);
             }
 
-            this.state = 230;
+            this.state = 232;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
         }
-        this.state = 232;
+        this.state = 234;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===BisonParser.SEMICOLON) {
-            this.state = 231;
+            this.state = 233;
             this.match(BisonParser.SEMICOLON);
         }
 
@@ -2399,8 +2404,8 @@ RhsContext.prototype.symbol = function() {
     return this.getTypedRuleContext(SymbolContext,0);
 };
 
-RhsContext.prototype.AFTER_ID_OPEN_BRACKET = function() {
-    return this.getToken(BisonParser.AFTER_ID_OPEN_BRACKET, 0);
+RhsContext.prototype.ref = function() {
+    return this.getTypedRuleContext(RefContext,0);
 };
 
 RhsContext.prototype.code = function() {
@@ -2466,66 +2471,66 @@ BisonParser.prototype.rhs = function() {
     this.enterRule(localctx, 34, BisonParser.RULE_rhs);
     var _la = 0; // Token type
     try {
-        this.state = 250;
+        this.state = 252;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.ID:
         case BisonParser.CHAR:
         case BisonParser.STRING:
             this.enterOuterAlt(localctx, 1);
-            this.state = 234;
-            this.symbol();
             this.state = 236;
+            this.symbol();
+            this.state = 238;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            if(_la===BisonParser.AFTER_ID_OPEN_BRACKET) {
-                this.state = 235;
-                this.match(BisonParser.AFTER_ID_OPEN_BRACKET);
+            if(_la===BisonParser.REF || _la===BisonParser.AFTER_ID_OPEN_BRACKET) {
+                this.state = 237;
+                this.ref();
             }
 
             break;
         case BisonParser.BRACED_CODE_START:
             this.enterOuterAlt(localctx, 2);
-            this.state = 238;
-            this.code();
             this.state = 240;
+            this.code();
+            this.state = 242;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            if(_la===BisonParser.AFTER_ID_OPEN_BRACKET) {
-                this.state = 239;
-                this.match(BisonParser.AFTER_ID_OPEN_BRACKET);
+            if(_la===BisonParser.REF || _la===BisonParser.AFTER_ID_OPEN_BRACKET) {
+                this.state = 241;
+                this.ref();
             }
 
             break;
         case BisonParser.PREDICATE_START:
             this.enterOuterAlt(localctx, 3);
-            this.state = 242;
+            this.state = 244;
             this.predicate();
             break;
         case BisonParser.PERCENT_EMPTY:
             this.enterOuterAlt(localctx, 4);
-            this.state = 243;
+            this.state = 245;
             this.match(BisonParser.PERCENT_EMPTY);
             break;
         case BisonParser.PERCENT_PREC:
             this.enterOuterAlt(localctx, 5);
-            this.state = 244;
+            this.state = 246;
             this.match(BisonParser.PERCENT_PREC);
-            this.state = 245;
+            this.state = 247;
             this.symbol();
             break;
         case BisonParser.PERCENT_DPREC:
             this.enterOuterAlt(localctx, 6);
-            this.state = 246;
+            this.state = 248;
             this.match(BisonParser.PERCENT_DPREC);
-            this.state = 247;
+            this.state = 249;
             this.match(BisonParser.INT);
             break;
         case BisonParser.PERCENT_MERGE:
             this.enterOuterAlt(localctx, 7);
-            this.state = 248;
+            this.state = 250;
             this.match(BisonParser.PERCENT_MERGE);
-            this.state = 249;
+            this.state = 251;
             this.tagRule();
             break;
         default:
@@ -2601,7 +2606,7 @@ BisonParser.prototype.variable = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 252;
+        this.state = 254;
         _la = this._input.LA(1);
         if(!(_la===BisonParser.ID || _la===BisonParser.STRING)) {
         this._errHandler.recoverInline(this);
@@ -2682,7 +2687,7 @@ BisonParser.prototype.value = function() {
     var localctx = new ValueContext(this, this._ctx, this.state);
     this.enterRule(localctx, 38, BisonParser.RULE_value);
     try {
-        this.state = 258;
+        this.state = 260;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.PERCENT_GRAMMAR_NO_PARAM:
@@ -2714,17 +2719,17 @@ BisonParser.prototype.value = function() {
             break;
         case BisonParser.ID:
             this.enterOuterAlt(localctx, 2);
-            this.state = 255;
+            this.state = 257;
             this.match(BisonParser.ID);
             break;
         case BisonParser.STRING:
             this.enterOuterAlt(localctx, 3);
-            this.state = 256;
+            this.state = 258;
             this.match(BisonParser.STRING);
             break;
         case BisonParser.BRACED_CODE_START:
             this.enterOuterAlt(localctx, 4);
-            this.state = 257;
+            this.state = 259;
             this.code();
             break;
         default:
@@ -2800,7 +2805,7 @@ BisonParser.prototype.id = function() {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 260;
+        this.state = 262;
         _la = this._input.LA(1);
         if(!(_la===BisonParser.ID || _la===BisonParser.CHAR)) {
         this._errHandler.recoverInline(this);
@@ -2877,22 +2882,101 @@ BisonParser.prototype.symbol = function() {
     var localctx = new SymbolContext(this, this._ctx, this.state);
     this.enterRule(localctx, 42, BisonParser.RULE_symbol);
     try {
-        this.state = 264;
+        this.state = 266;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case BisonParser.ID:
         case BisonParser.CHAR:
             this.enterOuterAlt(localctx, 1);
-            this.state = 262;
+            this.state = 264;
             this.id();
             break;
         case BisonParser.STRING:
             this.enterOuterAlt(localctx, 2);
-            this.state = 263;
+            this.state = 265;
             this.match(BisonParser.STRING);
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
+        }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+function RefContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = BisonParser.RULE_ref;
+    return this;
+}
+
+RefContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+RefContext.prototype.constructor = RefContext;
+
+RefContext.prototype.AFTER_ID_OPEN_BRACKET = function() {
+    return this.getToken(BisonParser.AFTER_ID_OPEN_BRACKET, 0);
+};
+
+RefContext.prototype.REF = function() {
+    return this.getToken(BisonParser.REF, 0);
+};
+
+RefContext.prototype.enterRule = function(listener) {
+    if(listener instanceof BisonParserListener ) {
+        listener.enterRef(this);
+	}
+};
+
+RefContext.prototype.exitRule = function(listener) {
+    if(listener instanceof BisonParserListener ) {
+        listener.exitRef(this);
+	}
+};
+
+RefContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof BisonParserVisitor ) {
+        return visitor.visitRef(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+
+
+BisonParser.RefContext = RefContext;
+
+BisonParser.prototype.ref = function() {
+
+    var localctx = new RefContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 44, BisonParser.RULE_ref);
+    var _la = 0; // Token type
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 268;
+        _la = this._input.LA(1);
+        if(!(_la===BisonParser.REF || _la===BisonParser.AFTER_ID_OPEN_BRACKET)) {
+        this._errHandler.recoverInline(this);
+        }
+        else {
+        	this._errHandler.reportMatch(this);
+            this.consume();
         }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -2960,17 +3044,17 @@ BisonParser.EpilogueContext = EpilogueContext;
 BisonParser.prototype.epilogue = function() {
 
     var localctx = new EpilogueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 44, BisonParser.RULE_epilogue);
+    this.enterRule(localctx, 46, BisonParser.RULE_epilogue);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 266;
+        this.state = 270;
         this.match(BisonParser.PERCENT_PERCENT);
-        this.state = 268;
+        this.state = 272;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
         if(_la===BisonParser.EPILOGUE_CONTENT) {
-            this.state = 267;
+            this.state = 271;
             this.match(BisonParser.EPILOGUE_CONTENT);
         }
 

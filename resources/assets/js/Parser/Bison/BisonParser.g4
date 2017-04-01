@@ -88,7 +88,7 @@ rulesOrGrammarDeclaration
     ;
 
 rules
-    : ID AFTER_ID_COLON AFTER_ID_OPEN_BRACKET? rhses
+    : ID AFTER_ID_COLON ref? rhses
     ;
 
 rhses
@@ -96,8 +96,8 @@ rhses
     ;
 
 rhs
-    : symbol AFTER_ID_OPEN_BRACKET?
-    | code AFTER_ID_OPEN_BRACKET?
+    : symbol ref?
+    | code ref?
     | predicate
     | PERCENT_EMPTY
     | PERCENT_PREC symbol
@@ -126,6 +126,11 @@ symbol
     : id
     | STRING
     ;
+
+ref
+  : AFTER_ID_OPEN_BRACKET
+  | REF
+  ;
 
 epilogue
     : PERCENT_PERCENT EPILOGUE_CONTENT?

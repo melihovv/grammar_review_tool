@@ -88,14 +88,16 @@ TAG_ANY: '<*>';
 TAG_NONE: '<>';
 TAG_START: '<' -> pushMode(TAG);
 
+REF: LBracket Id RBracket;
+
 ERROR_CHARACTER: .;
 
 mode AFTER_ID;
 AFTER_ID_WS: Ws+ -> channel(HIDDEN);
 AFTER_ID_BLOCK_COMMENT: BlockComment -> channel(HIDDEN);
 AFTER_ID_LINE_COMMENT: LineComment -> channel(HIDDEN);
-AFTER_ID_OPEN_BRACKET: LBracket Id RBracket -> popMode;
-AFTER_ID_COLON: Colon -> popMode;
+AFTER_ID_OPEN_BRACKET: LBracket Id RBracket;
+AFTER_ID_COLON: Colon;
 // This is implementation of missing "less" command.
 // See https://github.com/antlr/antlr4/issues/212#issuecomment-269515905.
 AFTER_ID_ANY: ~[/:[] {

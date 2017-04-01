@@ -209,6 +209,15 @@ BisonParserListener.prototype.exitSymbol = function(ctx) {
 };
 
 
+// Enter a parse tree produced by BisonParser#ref.
+BisonParserListener.prototype.enterRef = function(ctx) {
+};
+
+// Exit a parse tree produced by BisonParser#ref.
+BisonParserListener.prototype.exitRef = function(ctx) {
+};
+
+
 // Enter a parse tree produced by BisonParser#epilogue.
 BisonParserListener.prototype.enterEpilogue = function(ctx) {
 };

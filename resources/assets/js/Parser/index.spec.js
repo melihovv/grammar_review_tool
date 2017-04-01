@@ -179,6 +179,7 @@ NOW;
         
         %define VAR VAL
         %define "VAR" "VAL"
+        %define VAR {code}
 
         %defines "WHATEVER"
         %defines
@@ -220,6 +221,29 @@ NOW;
         %%
         a: b c;
         ${grammarDeclarationWithSemicolons}
+    `).should.not.throw()
+    })
+
+    it('should allow rules inside grammar part', () => {
+      parser.parse.bind(parser, `
+        %%
+        a: b c;
+        a:[alias] b c;
+        empty:
+        a: b c
+        a: b c;
+        a: b[alias] c[alias] d;
+        a: {code}[alias];
+        a: %?{predicate()} b c;
+        empty: %empty;
+        a: %prec symbol
+        a: %dprec 10
+        a: %merge <tag>
+        complex
+          : b c
+          | d e
+          |
+          ;
     `).should.not.throw()
     })
 

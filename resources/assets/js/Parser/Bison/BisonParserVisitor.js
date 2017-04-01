@@ -144,6 +144,12 @@ BisonParserVisitor.prototype.visitSymbol = function(ctx) {
 };
 
 
+// Visit a parse tree produced by BisonParser#ref.
+BisonParserVisitor.prototype.visitRef = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by BisonParser#epilogue.
 BisonParserVisitor.prototype.visitEpilogue = function(ctx) {
   return this.visitChildren(ctx);
