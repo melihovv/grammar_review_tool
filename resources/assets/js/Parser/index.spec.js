@@ -57,7 +57,7 @@ describe('parser', () => {
     `).should.not.throw()
     })
 
-    it('should not properly handle closing braces in nowdoc and heredoc', () => {
+    it('should not properly handle closing braces in heredoc', () => {
       parser.parse.bind(parser, `
         %destructor {
             <<<HERE
@@ -65,6 +65,10 @@ describe('parser', () => {
 HERE;
         }
     `).should.throw()
+
+      parser.getErrors().should.have.length.above(0)
+    })
+    it('should not properly handle closing braces in nowdoc', () => {
       parser.parse.bind(parser, `
         %destructor {
             <<<'NOW'
