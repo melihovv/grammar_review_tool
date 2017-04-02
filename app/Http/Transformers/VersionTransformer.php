@@ -18,7 +18,7 @@ class VersionTransformer extends Transformer
             $model->id,
             $model->grammar_id,
             $model->updater_id,
-            e($model->content),
+            htmlspecialchars($model->content, ENT_NOQUOTES, 'UTF-8', false),
             $model->depth,
             $model->created_at->format('I:h') . ' '
             . $model->created_at->toFormattedDateString(),

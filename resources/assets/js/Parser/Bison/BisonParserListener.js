@@ -101,15 +101,6 @@ BisonParserListener.prototype.exitPrecedenceDeclaration = function(ctx) {
 };
 
 
-// Enter a parse tree produced by BisonParser#tag.
-BisonParserListener.prototype.enterTag = function(ctx) {
-};
-
-// Exit a parse tree produced by BisonParser#tag.
-BisonParserListener.prototype.exitTag = function(ctx) {
-};
-
-
 // Enter a parse tree produced by BisonParser#symbolDef.
 BisonParserListener.prototype.enterSymbolDef = function(ctx) {
 };

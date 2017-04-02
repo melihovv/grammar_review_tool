@@ -20,7 +20,7 @@ directive
 grammarDeclaration
     : precedenceDeclaration
     | symbolDeclaration
-    | directive (symbol|code (symbol|tag)+|ID? code)?
+    | directive (symbol|code (symbol|tagRule)+|ID? code)?
     ;
 
 prologue
@@ -36,7 +36,7 @@ predicate
     ;
 
 tagRule
-    : TAG_START TAG_CONTENT+ TAG_CLOSE
+    : TAG_START TAG_CONTENT* TAG_CLOSE
     ;
 
 symbolDeclaration
@@ -45,12 +45,6 @@ symbolDeclaration
 
 precedenceDeclaration
     : directive tagRule? (symbol|INT)+
-    ;
-
-tag
-    : tagRule
-    | TAG_ANY
-    | TAG_NONE
     ;
 
 symbolDef

@@ -293,6 +293,8 @@ NOW;
     it('should understand special html symbols', () => {
       parser.parse.bind(parser, `
         %type &lt;abc&gt;
+        %type &lt;&gt;
+        %type &lt;*&gt;
 
         %%
 

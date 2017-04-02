@@ -72,12 +72,6 @@ BisonParserVisitor.prototype.visitPrecedenceDeclaration = function(ctx) {
 };
 
 
-// Visit a parse tree produced by BisonParser#tag.
-BisonParserVisitor.prototype.visitTag = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by BisonParser#symbolDef.
 BisonParserVisitor.prototype.visitSymbolDef = function(ctx) {
   return this.visitChildren(ctx);

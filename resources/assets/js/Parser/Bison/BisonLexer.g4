@@ -28,8 +28,6 @@ PERCENT_PERCENT: '%%' {
 BRACED_CODE_START: '{' -> pushMode(BRACED_CODE);
 PREDICATE_START: OpenPredicate -> pushMode(PREDICATE);
 
-TAG_ANY: '<*>';
-TAG_NONE: '<>';
 TAG_START: ('<'|'&lt;') -> pushMode(TAG);
 
 REF: LBracket Id RBracket;
@@ -115,7 +113,7 @@ PREDICATE_CLOSE: ClosePredicate {
 PREDICATE_CONTENT: ~['"{}/%?]+;
 
 mode TAG;
-TAG_OPEN: '<' -> type(TAG_CONTENT), pushMode(TAG);
+TAG_OPEN: ('<'|'&lt;') -> type(TAG_CONTENT), pushMode(TAG);
 TAG_CLOSE: ('>'|'&gt;') {
     this.popMode();
 
@@ -123,6 +121,7 @@ TAG_CLOSE: ('>'|'&gt;') {
         this.type = BisonLexer.TAG_CONTENT;
     }
 };
+TAG_APOSTROPH: '&' -> type(TAG_CONTENT);
 TAG_CONTENT: ~[<>&]+;
 
 fragment Digit: [0-9];
