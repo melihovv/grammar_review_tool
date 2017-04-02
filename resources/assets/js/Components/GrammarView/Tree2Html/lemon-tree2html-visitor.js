@@ -63,18 +63,7 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
    */
   visitLeftSide(ctx) {
     const symbol = ctx.children[0].getSymbol()
-    let attrs = `class="grammar-view__ls-nonterminal grammar-view__symbol"`
-    attrs += `data-column="${symbol.column}"`
-
-    this._buffer += '<div class="grammar-view__symbol-wrapper">'
-    this._buffer += `<span ${attrs}>`
-
-    this.visitTerminal(ctx.NONTERMINAL(), {closeSpan: true})
-    this._buffer += this._nonTerminalIcons
-
-    this._buffer = this.helper.outputSymbolComments(symbol.line, symbol.column)
-
-    this._buffer += '</div>'
+    this.helper.outputLeftSideSymbol(symbol, this, ctx.NONTERMINAL())
 
     if (ctx.children.length > 1) {
       this.visitParam(ctx.param())
@@ -142,15 +131,15 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
         const className = 'class="grammar-view__terminal grammar-view__symbol"'
         this._buffer += `<span ${className} ${column}>`
         this.visitTerminal(child, {closeSpan: true})
-        this._buffer += this._terminalIcons
+        this._buffer += Helper.rightSideIcons
       } else { // Nonterminal.
         const className = 'class="grammar-view__rs-nonterminal grammar-view__symbol"'
         this._buffer += `<span ${className} ${column}>`
         this.visitTerminal(child, {closeSpan: true})
-        this._buffer += this._nonTerminalIcons
+        this._buffer += Helper.leftSideIcons
       }
 
-      this._buffer = this.helper.outputSymbolComments(symbol.line, symbol.column)
+      this._buffer += this.helper.outputSymbolComments(symbol.line, symbol.column)
 
       this._buffer += '</div>'
     } else if (fromDirective) {

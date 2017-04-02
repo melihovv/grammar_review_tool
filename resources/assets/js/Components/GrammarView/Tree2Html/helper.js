@@ -6,8 +6,8 @@ export default class Helper {
   static searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon" title="Search for rules which contain this symbol "></span>'
   static leftIcon = '<span class="glyphicon grammar-view__l-icon" title="Search for rules which contain this symbol in the left side">L</span>'
   static rightIcon = '<span class="glyphicon grammar-view__r-icon" title="Search for rules with the same right side">R</span>'
-  static terminalIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}</div>`
-  static nonTerminalIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}${Helper.leftIcon}${Helper.rightIcon}</div>`
+  static rightSideIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}</div>`
+  static leftSideIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}${Helper.leftIcon}${Helper.rightIcon}</div>`
 
   /**
    * @param {CommonTokenStream} tokens
@@ -146,6 +146,26 @@ export default class Helper {
   }
 
   /**
+   * @param {CommonToken} symbol
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
+   * @param terminal
+   */
+  outputLeftSideSymbol(symbol, _this, terminal) {
+    let attrs = `class="grammar-view__ls-nonterminal grammar-view__symbol"`
+    attrs += `data-column="${symbol.column}"`
+
+    _this._buffer += '<div class="grammar-view__symbol-wrapper">'
+    _this._buffer += `<span ${attrs}>`
+
+    _this.visitTerminal(terminal, {closeSpan: true})
+    _this._buffer += Helper.leftSideIcons
+
+    _this._buffer += this.outputSymbolComments(symbol.line, symbol.column)
+
+    _this._buffer += '</div>'
+  }
+
+  /**
    * Comments template.
    * @param {Array} comments
    * @returns {String}
@@ -188,7 +208,7 @@ export default class Helper {
 
   /**
    * @param {Object} ctx
-   * @param {Object} _this
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
    */
   static visit(ctx, _this) {
     if (Array.isArray(ctx)) {
@@ -240,7 +260,7 @@ export default class Helper {
 
   /**
    * @param {TerminalNodeImpl} ctx
-   * @param _this
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
    * @param {bool} [closeSpan=false]
    * @param {String} [beforeHiddenText='']
    */
