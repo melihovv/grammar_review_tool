@@ -35,6 +35,8 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
       accessManager,
       user
     )
+
+    this.nonterminals = {}
   }
 
   visit(ctx) {
@@ -59,6 +61,14 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     // TerminalNodeImpl.
     const text = ctx.children[0].symbol.text
     ctx.children[0].symbol.text = text.substr(1)
+
+    // Save nonterminals.
+    if (text === '%type') {
+      ctx.parentCtx.getTypedRuleContexts(BisonParser.SymbolContext)
+        .forEach(symbol => {
+          this.nonterminals[symbol.getText()] = true
+        })
+    }
 
     this.visitTerminal(ctx.children[0], {closeSpan: true})
 
@@ -139,22 +149,51 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
         this._buffer += '<span class="grammar-view__punct">'
         this.visitTerminal(child, {closeSpan: true})
       } else if (child instanceof BisonParser.RawIdContext) {
-        this.helper.outputLeftSideSymbol(child.ID(), this)
+        this.helper.outputLeftSideNonterminal(child.ID(), this)
       } else {
         this.visit(child)
       }
     })
   }
 
-  // TODO
-  // visitRhses(ctx) {
-  //
-  // }
+  /**
+   * @param {RhsesContext} ctx
+   */
+  visitRhses(ctx) {
+    ctx.children.forEach(child => {
+      if (child instanceof TerminalNodeImpl) {
+        this._buffer += '<span class="grammar-view__punct">'
+        this.visitTerminal(child, {closeSpan: true})
+      } else {
+        this.visit(child)
+      }
+    })
+  }
 
-  // TODO
-  // visitRhs(ctx) {
-  //
-  // }
+  /**
+   * @param {RhsContext} ctx
+   */
+  visitRhs(ctx) {
+    ctx.children.forEach(child => {
+      if (child instanceof BisonParser.SymbolContext
+        && !(child.parentCtx.children[0] instanceof BisonParser.DirectiveContext)) {
+        const text = child.getText().replace(/['"]/, '')
+        let terminal = child
+
+        while (!(terminal instanceof TerminalNodeImpl)) {
+          terminal = terminal.children[0]
+        }
+
+        if (this.nonterminals[text]) { // Nonterminal.
+          this.helper.outputRightSideNonterminal(terminal, this)
+        } else { // Terminal.
+          this.helper.outputRightSideTerminal(terminal, this)
+        }
+      } else {
+        this.visit(child)
+      }
+    })
+  }
 
   /**
    * @param {IdContext} ctx
