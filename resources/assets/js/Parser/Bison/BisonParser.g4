@@ -3,35 +3,24 @@ parser grammar BisonParser;
 options {tokenVocab = BisonLexer;}
 
 file
-    : prologueDeclarations? PERCENT_PERCENT grammarRule epilogue?
-    ;
-
-prologueDeclarations
-    : prologueDeclaration+
+    : prologueDeclaration* PERCENT_PERCENT grammarRule epilogue?
     ;
 
 prologueDeclaration
     : grammarDeclaration
     | prologue
-    | PERCENT_FLAG
-    | PERCENT_DEFINE variable value
-    | PERCENT_DEFINES STRING?
-    | PERCENT_NO_PARAM
-    | PERCENT_STRING_PARAM STRING
-    | PERCENT_INT_PARAM INT
-    | PERCENT_INITIAL_ACTION code
-    | PERCENT_PARAM code+
+    | directive (variable value|STRING|INT|code+)?
     | SEMICOLON
+    ;
+
+directive
+    : DIRECTIVE
     ;
 
 grammarDeclaration
     : precedenceDeclaration
     | symbolDeclaration
-    | PERCENT_START symbol
-    | (PERCENT_DESTRUCTOR|PERCENT_PRINTER) code (symbol|tag)+
-    | PERCENT_GRAMMAR_NO_PARAM
-    | PERCENT_CODE ID? code
-    | PERCENT_UNION ID? code
+    | directive (symbol|code (symbol|tag)+|ID? code)?
     ;
 
 prologue
@@ -51,20 +40,11 @@ tagRule
     ;
 
 symbolDeclaration
-    : PERCENT_NTERM symbolDef+
-    | PERCENT_TOKEN symbolDef+
-    | PERCENT_TYPE tagRule symbol+
+    : directive (symbolDef+|tagRule symbol+)
     ;
 
 precedenceDeclaration
-    : precedenceDeclarator tagRule? (symbol|INT)+
-    ;
-
-precedenceDeclarator
-    : PERCENT_LEFT
-    | PERCENT_RIGHT
-    | PERCENT_NONASSOC
-    | PERCENT_PRECEDENCE
+    : directive tagRule? (symbol|INT)+
     ;
 
 tag
@@ -99,10 +79,7 @@ rhs
     : symbol ref?
     | code ref?
     | predicate
-    | PERCENT_EMPTY
-    | PERCENT_PREC symbol
-    | PERCENT_DPREC INT
-    | PERCENT_MERGE tagRule
+    | directive (symbol|INT|tagRule)?
     ;
 
 variable

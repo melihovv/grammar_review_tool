@@ -18,14 +18,14 @@ BisonParserVisitor.prototype.visitFile = function(ctx) {
 };
 
 
-// Visit a parse tree produced by BisonParser#prologueDeclarations.
-BisonParserVisitor.prototype.visitPrologueDeclarations = function(ctx) {
+// Visit a parse tree produced by BisonParser#prologueDeclaration.
+BisonParserVisitor.prototype.visitPrologueDeclaration = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by BisonParser#prologueDeclaration.
-BisonParserVisitor.prototype.visitPrologueDeclaration = function(ctx) {
+// Visit a parse tree produced by BisonParser#directive.
+BisonParserVisitor.prototype.visitDirective = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -68,12 +68,6 @@ BisonParserVisitor.prototype.visitSymbolDeclaration = function(ctx) {
 
 // Visit a parse tree produced by BisonParser#precedenceDeclaration.
 BisonParserVisitor.prototype.visitPrecedenceDeclaration = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by BisonParser#precedenceDeclarator.
-BisonParserVisitor.prototype.visitPrecedenceDeclarator = function(ctx) {
   return this.visitChildren(ctx);
 };
 

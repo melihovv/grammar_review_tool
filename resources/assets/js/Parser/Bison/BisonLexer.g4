@@ -4,72 +4,16 @@ WS: Ws+ -> channel(HIDDEN);
 BLOCK_COMMENT: BlockComment -> channel(HIDDEN);
 LINE_COMMENT: LineComment -> channel(HIDDEN);
 
-PERCENT_GRAMMAR_NO_PARAM
-    : '%' (
-          'default-prec'
-        | 'no-default-prec'
-    );
-
-PERCENT_NO_PARAM
-    : '%' (
-          'error-verbose'
-        | 'fixed-output-files'
-        | 'glr-parser'
-        | 'no-default-prec'
-        | 'no-lines'
-        | 'nondeterministic-parser'
-        | 'token-table'
-        | 'verbose'
-        | 'yacc'
-    );
-
-PERCENT_STRING_PARAM
-    : '%' (
-          'file-prefix'
-        | 'language'
-        | 'name-prefix'
-        | 'output'
-        | 'require'
-        | 'skeleton'
-    );
-
-PERCENT_INT_PARAM
-    : '%' (
-          'expect-rr'
-        | 'expect'
-    );
-
-PERCENT_CODE: '%code';
-PERCENT_DEFINE: '%define';
-PERCENT_DEFINES: '%defines';
-PERCENT_DPREC: '%dprec';
-PERCENT_DESTRUCTOR: '%destructor';
-PERCENT_EMPTY: '%empty';
-PERCENT_FLAG: '%' ('debug'|'locations'|'pure-parser');
-PERCENT_INITIAL_ACTION: '%initial-action';
-PERCENT_LEFT: '%left';
-PERCENT_MERGE: '%merge';
-PERCENT_NONASSOC: ('%binary'|'%nonassoc');
-PERCENT_NTERM: '%nterm';
-PERCENT_PARAM: '%' ('param'|'lex-param'|'parse-param');
-PERCENT_PREC: '%prec';
-PERCENT_PRECEDENCE: '%precedence';
-PERCENT_PRINTER: '%printer';
-PERCENT_RIGHT: '%right';
-PERCENT_START: '%start';
-PERCENT_TOKEN: ('%term'|'%token');
-PERCENT_TYPE: '%type';
-PERCENT_UNION: '%union';
-
 PIPE: Pipe;
 SEMICOLON: Semicolon;
+DIRECTIVE: Percent Id;
 
 ID: Id -> pushMode(AFTER_ID);
 
 INT: Int|HexInt;
 
-CHAR: SQuote ('\\\\'|'\\\''|~['\r\n])* SQuote;
-STRING: DQuote ('\\\\'|'\\"'|~["\r\n])* DQuote;
+CHAR: SQuoteString;
+STRING: DQuoteString;
 
 PROLOGUE_START: OpenPrologue -> pushMode(PROLOGUE);
 PERCENT_PERCENT: '%%' {
@@ -108,14 +52,14 @@ AFTER_ID_ANY: ~[/:[] {
 mode PROLOGUE;
 PROLOGUE_OPEN: OpenPrologue -> type(PROLOGUE_CONTENT), pushMode(PROLOGUE);
 
-PROLOGUE_SQUOTED_STRING: SQuote ('\\\\'|'\\\''|~['\r\n])* SQuote -> type(PROLOGUE_CONTENT);
-PROLOGUE_DQUOTED_STRING: DQuote ('\\\\'|'\\"'|~["\r\n])* DQuote -> type(PROLOGUE_CONTENT);
+PROLOGUE_SQUOTED_STRING: SQuoteString -> type(PROLOGUE_CONTENT);
+PROLOGUE_DQUOTED_STRING: DQuoteString -> type(PROLOGUE_CONTENT);
 
 PROLOGUE_SLASH: '/' . -> type(PROLOGUE_CONTENT);
 PROLOGUE_BLOCK_COMMENT: BlockComment -> type(PROLOGUE_CONTENT);
 PROLOGUE_LINE_COMMENT: LineComment -> type(PROLOGUE_CONTENT);
 
-PROLOGUE_PERCENT: '%' -> type(PROLOGUE_CONTENT);
+PROLOGUE_PERCENT: Percent -> type(PROLOGUE_CONTENT);
 
 PROLOGUE_CLOSE: ClosePrologue {
     this.popMode();
@@ -132,8 +76,8 @@ EPILOGUE_CONTENT: .+;
 mode BRACED_CODE;
 BRACED_CODE_OPEN: LBrace -> type(BRACED_CODE_CONTENT), pushMode(BRACED_CODE);
 
-BRACED_CODE_SQUOTED_STRING: SQuote ('\\\\'|'\\\''|~['\r\n])* SQuote -> type(BRACED_CODE_CONTENT);
-BRACED_CODE_DQUOTED_STRING: DQuote ('\\\\'|'\\"'|~["\r\n])* DQuote -> type(BRACED_CODE_CONTENT);
+BRACED_CODE_SQUOTED_STRING: SQuoteString -> type(BRACED_CODE_CONTENT);
+BRACED_CODE_DQUOTED_STRING: DQuoteString -> type(BRACED_CODE_CONTENT);
 
 BRACED_CODE_SLASH: '/' . -> type(BRACED_CODE_CONTENT);
 BRACED_CODE_BLOCK_COMMENT: BlockComment -> type(BRACED_CODE_CONTENT);
@@ -151,16 +95,15 @@ BRACED_CODE_CONTENT: ~['"{}/]+;
 mode PREDICATE;
 PREDICATE_OPEN: OpenPredicate -> type(PREDICATE_CONTENT), pushMode(PREDICATE);
 
-// TODO extract to fragment.
-PREDICATE_SQUOTED_STRING: SQuote ('\\\\'|'\\\''|~['\r\n])* SQuote -> type(PREDICATE_CONTENT);
-PREDICATE_DQUOTED_STRING: DQuote ('\\\\'|'\\"'|~["\r\n])* DQuote -> type(PREDICATE_CONTENT);
+PREDICATE_SQUOTED_STRING: SQuoteString -> type(PREDICATE_CONTENT);
+PREDICATE_DQUOTED_STRING: DQuoteString -> type(PREDICATE_CONTENT);
 
 PREDICATE_SLASH: '/' . -> type(PREDICATE_CONTENT);
 PREDICATE_BLOCK_COMMENT: BlockComment -> type(PREDICATE_CONTENT);
 PREDICATE_LINE_COMMENT: LineComment -> type(PREDICATE_CONTENT);
 
 PREDICATE_QUESTION: '?' -> type(PREDICATE_CONTENT);
-PREDICATE_PERCENT: '%' -> type(PREDICATE_CONTENT);
+PREDICATE_PERCENT: Percent -> type(PREDICATE_CONTENT);
 
 PREDICATE_CLOSE: ClosePredicate {
     this.popMode();
@@ -202,10 +145,13 @@ fragment Vws: [\r\n\f\u000B]; // \u000B is \v
 fragment BlockComment: '/*' .*? '*/';
 fragment LineComment: DSlash ~[\r\n]*;
 fragment SQuote: '\'';
+fragment SQuoteString: SQuote ('\\\\'|'\\\''|~['\r\n])* SQuote;
 fragment DQuote: '"';
+fragment DQuoteString: DQuote ('\\\\'|'\\"'|~["\r\n])* DQuote;
 fragment OpenPredicate: '%?' Ws* '{';
 fragment ClosePredicate: '}';
 fragment OpenPrologue: '%{';
 fragment ClosePrologue: '%}';
 fragment Colon: ':';
 fragment Id: Letter (Letter|[-0-9])*;
+fragment Percent: '%';

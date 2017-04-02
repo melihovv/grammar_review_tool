@@ -20,21 +20,21 @@ BisonParserListener.prototype.exitFile = function(ctx) {
 };
 
 
-// Enter a parse tree produced by BisonParser#prologueDeclarations.
-BisonParserListener.prototype.enterPrologueDeclarations = function(ctx) {
-};
-
-// Exit a parse tree produced by BisonParser#prologueDeclarations.
-BisonParserListener.prototype.exitPrologueDeclarations = function(ctx) {
-};
-
-
 // Enter a parse tree produced by BisonParser#prologueDeclaration.
 BisonParserListener.prototype.enterPrologueDeclaration = function(ctx) {
 };
 
 // Exit a parse tree produced by BisonParser#prologueDeclaration.
 BisonParserListener.prototype.exitPrologueDeclaration = function(ctx) {
+};
+
+
+// Enter a parse tree produced by BisonParser#directive.
+BisonParserListener.prototype.enterDirective = function(ctx) {
+};
+
+// Exit a parse tree produced by BisonParser#directive.
+BisonParserListener.prototype.exitDirective = function(ctx) {
 };
 
 
@@ -98,15 +98,6 @@ BisonParserListener.prototype.enterPrecedenceDeclaration = function(ctx) {
 
 // Exit a parse tree produced by BisonParser#precedenceDeclaration.
 BisonParserListener.prototype.exitPrecedenceDeclaration = function(ctx) {
-};
-
-
-// Enter a parse tree produced by BisonParser#precedenceDeclarator.
-BisonParserListener.prototype.enterPrecedenceDeclarator = function(ctx) {
-};
-
-// Exit a parse tree produced by BisonParser#precedenceDeclarator.
-BisonParserListener.prototype.exitPrecedenceDeclarator = function(ctx) {
 };
 
 
