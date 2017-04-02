@@ -6,8 +6,8 @@ export default class Helper {
   static searchIcon = '<span class="glyphicon glyphicon-search grammar-view__search-symbol-icon" title="Search for rules which contain this symbol "></span>'
   static leftIcon = '<span class="glyphicon grammar-view__l-icon" title="Search for rules which contain this symbol in the left side">L</span>'
   static rightIcon = '<span class="glyphicon grammar-view__r-icon" title="Search for rules with the same right side">R</span>'
-  static rightSideIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}</div>`
-  static leftSideIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}${Helper.leftIcon}${Helper.rightIcon}</div>`
+  static terminalIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}</div>`
+  static nonterminalIcons = `<div class="grammar-view__symbol-icons">${Helper.searchIcon}${Helper.leftIcon}${Helper.rightIcon}</div>`
 
   /**
    * @param {CommonTokenStream} tokens
@@ -146,18 +146,64 @@ export default class Helper {
   }
 
   /**
-   * @param terminal
+   * @param nonterminal
    * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
    */
-  outputLeftSideSymbol(terminal, _this) {
-    const symbol = terminal.getSymbol()
+  outputLeftSideNonterminal(nonterminal, _this) {
+    const symbol = nonterminal.getSymbol()
     let attrs = `class="grammar-view__ls-nonterminal grammar-view__symbol"`
     attrs += `data-column="${symbol.column}"`
 
     _this._buffer += '<div class="grammar-view__symbol-wrapper">'
     _this._buffer += `<span ${attrs}>`
 
-    let beforeHiddenText = Helper.leftSideIcons
+    let beforeHiddenText = Helper.nonterminalIcons
+    beforeHiddenText += this.outputSymbolComments(symbol.line, symbol.column)
+
+    _this.visitTerminal(nonterminal, {
+      closeSpan: true,
+      beforeHiddenText,
+    })
+
+    _this._buffer += '</div>'
+  }
+
+  /**
+   * @param nonterminal
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
+   */
+  outputRightSideNonterminal(nonterminal, _this) {
+    const symbol = nonterminal.getSymbol()
+    let attrs = `class="grammar-view__rs-nonterminal grammar-view__symbol"`
+    attrs += `data-column="${symbol.column}"`
+
+    _this._buffer += '<div class="grammar-view__symbol-wrapper">'
+    _this._buffer += `<span ${attrs}>`
+
+    let beforeHiddenText = Helper.nonterminalIcons
+    beforeHiddenText += this.outputSymbolComments(symbol.line, symbol.column)
+
+    _this.visitTerminal(nonterminal, {
+      closeSpan: true,
+      beforeHiddenText,
+    })
+
+    _this._buffer += '</div>'
+  }
+
+  /**
+   * @param terminal
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
+   */
+  outputRightSideTerminal(terminal, _this) {
+    const symbol = terminal.getSymbol()
+    let attrs = `class="grammar-view__terminal grammar-view__symbol"`
+    attrs += `data-column="${symbol.column}"`
+
+    _this._buffer += '<div class="grammar-view__symbol-wrapper">'
+    _this._buffer += `<span ${attrs}>`
+
+    let beforeHiddenText = Helper.terminalIcons
     beforeHiddenText += this.outputSymbolComments(symbol.line, symbol.column)
 
     _this.visitTerminal(terminal, {

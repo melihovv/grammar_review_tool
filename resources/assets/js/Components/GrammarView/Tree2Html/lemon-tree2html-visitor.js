@@ -62,7 +62,7 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
    * @param {LeftSideContext} ctx
    */
   visitLeftSide(ctx) {
-    this.helper.outputLeftSideSymbol(ctx.NONTERMINAL(), this)
+    this.helper.outputLeftSideNonterminal(ctx.NONTERMINAL(), this)
 
     if (ctx.children.length > 1) {
       this.visitParam(ctx.param())
@@ -124,23 +124,11 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
     } else if (fromRightSide) {
       const text = child.getText()
 
-      this._buffer += '<div class="grammar-view__symbol-wrapper">'
-
       if (text[0] === text[0].toUpperCase()) { // Terminal.
-        const className = 'class="grammar-view__terminal grammar-view__symbol"'
-        this._buffer += `<span ${className} ${column}>`
-        this.visitTerminal(child, {closeSpan: true})
-        this._buffer += Helper.rightSideIcons
+        this.helper.outputRightSideTerminal(child, this)
       } else { // Nonterminal.
-        const className = 'class="grammar-view__rs-nonterminal grammar-view__symbol"'
-        this._buffer += `<span ${className} ${column}>`
-        this.visitTerminal(child, {closeSpan: true})
-        this._buffer += Helper.leftSideIcons
+        this.helper.outputRightSideNonterminal(child, this)
       }
-
-      this._buffer += this.helper.outputSymbolComments(symbol.line, symbol.column)
-
-      this._buffer += '</div>'
     } else if (fromDirective) {
       this._buffer += '<span class="grammar-view__id">'
       this.visitTerminal(child, {closeSpan: true})
