@@ -63,10 +63,22 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
   // visitGrammarDeclaration(ctx) {
   //
   // }
-  //
-  // visitPrologue(ctx) {
-  //
-  // }
+
+  /**
+   * @param {PrologueContext} ctx
+   */
+  visitPrologue(ctx) {
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PROLOGUE_START(), {closeSpan: true})
+
+    const children = ctx.children
+    for (let i = 1; i < children.length - 1; ++i) {
+      this.visitTerminal(children[i])
+    }
+
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PROLOGUE_CLOSE(), {closeSpan: true})
+  }
 
   /**
    * @param {CodeContext} ctx
@@ -84,14 +96,38 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     this.visitTerminal(ctx.BRACED_CODE_CLOSE(), {closeSpan: true})
   }
 
-  // visitPredicate(ctx) {
-  //
-  // }
-  //
-  // visitTagRule(ctx) {
-  //
-  // }
-  //
+  /**
+   * @param {PredicateContext} ctx
+   */
+  visitPredicate(ctx) {
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PREDICATE_START(), {closeSpan: true})
+
+    const children = ctx.children
+    for (let i = 1; i < children.length - 1; ++i) {
+      this.visitTerminal(children[i])
+    }
+
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PREDICATE_CLOSE(), {closeSpan: true})
+  }
+
+  /**
+   * @param {TagRuleContext} ctx
+   */
+  visitTagRule(ctx) {
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.TAG_START(), {closeSpan: true})
+
+    const children = ctx.children
+    for (let i = 1; i < children.length - 1; ++i) {
+      this.visitTerminal(children[i])
+    }
+
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.TAG_CLOSE(), {closeSpan: true})
+  }
+
   // visitSymbolDeclaration(ctx) {
   //
   // }

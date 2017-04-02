@@ -30,7 +30,7 @@ PREDICATE_START: OpenPredicate -> pushMode(PREDICATE);
 
 TAG_ANY: '<*>';
 TAG_NONE: '<>';
-TAG_START: '<' -> pushMode(TAG);
+TAG_START: ('<'|'&lt;') -> pushMode(TAG);
 
 REF: LBracket Id RBracket;
 
@@ -116,14 +116,14 @@ PREDICATE_CONTENT: ~['"{}/%?]+;
 
 mode TAG;
 TAG_OPEN: '<' -> type(TAG_CONTENT), pushMode(TAG);
-TAG_CLOSE: '>' {
+TAG_CLOSE: ('>'|'&gt;') {
     this.popMode();
 
     if (this._modeStack.length) {
         this.type = BisonLexer.TAG_CONTENT;
     }
 };
-TAG_CONTENT: ~[<>]+;
+TAG_CONTENT: ~[<>&]+;
 
 fragment Digit: [0-9];
 fragment Int: Digit+;

@@ -289,5 +289,15 @@ NOW;
         a: b c;
     `).should.not.throw()
     })
+
+    it('should understand special html symbols', () => {
+      parser.parse.bind(parser, `
+        %type &lt;abc&gt;
+
+        %%
+
+        a: b c;
+    `).should.not.throw()
+    })
   })
 })

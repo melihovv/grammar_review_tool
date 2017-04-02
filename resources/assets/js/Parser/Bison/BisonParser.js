@@ -185,8 +185,8 @@ var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, null, null, null, null, null, null, null, null, 
                      null, null, null, "'%%'", "'{'", null, "'<*>'", "'<>'", 
-                     "'<'", null, null, null, null, null, null, null, null, 
-                     null, null, null, null, null, null, null, "'>'", null, 
+                     null, null, null, null, null, null, null, null, null, 
+                     null, null, null, null, null, null, null, null, null, 
                      "'?'" ];
 
 var symbolicNames = [ null, "WS", "BLOCK_COMMENT", "LINE_COMMENT", "PIPE", 
