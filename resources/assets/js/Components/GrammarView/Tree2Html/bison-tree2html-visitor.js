@@ -130,10 +130,21 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     this.visitTerminal(ctx.TAG_CLOSE(), {closeSpan: true})
   }
 
-  // TODO
-  // visitRules(ctx) {
-  //
-  // }
+  /**
+   * @param {RulesContext} ctx
+   */
+  visitRules(ctx) {
+    ctx.children.forEach(child => {
+      if (child instanceof TerminalNodeImpl) {
+        this._buffer += '<span class="grammar-view__punct">'
+        this.visitTerminal(child, {closeSpan: true})
+      } else if (child instanceof BisonParser.RawIdContext) {
+        this.helper.outputLeftSideSymbol(child.ID(), this)
+      } else {
+        this.visit(child)
+      }
+    })
+  }
 
   // TODO
   // visitRhses(ctx) {

@@ -146,21 +146,24 @@ export default class Helper {
   }
 
   /**
-   * @param {CommonToken} symbol
-   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
    * @param terminal
+   * @param {BisonTree2HtmlVisitor|LemonTree2HtmlVisitor} _this
    */
-  outputLeftSideSymbol(symbol, _this, terminal) {
+  outputLeftSideSymbol(terminal, _this) {
+    const symbol = terminal.getSymbol()
     let attrs = `class="grammar-view__ls-nonterminal grammar-view__symbol"`
     attrs += `data-column="${symbol.column}"`
 
     _this._buffer += '<div class="grammar-view__symbol-wrapper">'
     _this._buffer += `<span ${attrs}>`
 
-    _this.visitTerminal(terminal, {closeSpan: true})
-    _this._buffer += Helper.leftSideIcons
+    let beforeHiddenText = Helper.leftSideIcons
+    beforeHiddenText += this.outputSymbolComments(symbol.line, symbol.column)
 
-    _this._buffer += this.outputSymbolComments(symbol.line, symbol.column)
+    _this.visitTerminal(terminal, {
+      closeSpan: true,
+      beforeHiddenText,
+    })
 
     _this._buffer += '</div>'
   }

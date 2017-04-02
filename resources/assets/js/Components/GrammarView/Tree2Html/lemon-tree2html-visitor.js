@@ -62,8 +62,7 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
    * @param {LeftSideContext} ctx
    */
   visitLeftSide(ctx) {
-    const symbol = ctx.children[0].getSymbol()
-    this.helper.outputLeftSideSymbol(symbol, this, ctx.NONTERMINAL())
+    this.helper.outputLeftSideSymbol(ctx.NONTERMINAL(), this)
 
     if (ctx.children.length > 1) {
       this.visitParam(ctx.param())
