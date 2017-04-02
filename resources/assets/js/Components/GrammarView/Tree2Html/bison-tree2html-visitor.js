@@ -48,21 +48,23 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     this.helper.visitFile(ctx, this, this._buffer, this.html)
   }
 
-  // visitPrologueDeclaration(ctx) {
-  //   console.log(ctx)
-  // }
-
   /**
    * @param {DirectiveContext} ctx
    */
   visitDirective(ctx) {
+    this._buffer += '<span class="grammar-view__punct">%</span>'
     this._buffer += '<span class="grammar-view__directive">'
-    this.visitTerminal(ctx.children[0], {closeSpan: true})
-  }
 
-  // visitGrammarDeclaration(ctx) {
-  //
-  // }
+    // Cause we have percent sign and directive name inside one
+    // TerminalNodeImpl.
+    const text = ctx.children[0].symbol.text
+    ctx.children[0].symbol.text = text.substr(1)
+
+    this.visitTerminal(ctx.children[0], {closeSpan: true})
+
+    // Restore original text.
+    ctx.children[0].symbol.text = text
+  }
 
   /**
    * @param {PrologueContext} ctx
@@ -128,69 +130,109 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     this.visitTerminal(ctx.TAG_CLOSE(), {closeSpan: true})
   }
 
-  // visitSymbolDeclaration(ctx) {
-  //
-  // }
-  //
-  // visitPrecedenceDeclaration(ctx) {
-  //
-  // }
-  //
-  // visitPrecedenceDeclarator(ctx) {
-  //
-  // }
-  //
-  // visitTag(ctx) {
-  //
-  // }
-  //
-  // visitSymbolDef(ctx) {
-  //
-  // }
-  //
-  // visitGrammarRule(ctx) {
-  //
-  // }
-  //
-  // visitRulesOrGrammarDeclaration(ctx) {
-  //
-  // }
-  //
+  // TODO
   // visitRules(ctx) {
   //
   // }
-  //
+
+  // TODO
   // visitRhses(ctx) {
   //
   // }
-  //
+
+  // TODO
   // visitRhs(ctx) {
   //
   // }
-  //
-  // visitVariable(ctx) {
-  //
-  // }
-  //
-  // visitValue(ctx) {
-  //
-  // }
-  //
-  // visitId(ctx) {
-  //
-  // }
-  //
-  // visitSymbol(ctx) {
-  //
-  // }
-  //
-  // visitRef(ctx) {
-  //
-  // }
-  //
-  // visitEpilogue(ctx) {
-  //
-  // }
+
+  /**
+   * @param {IdContext} ctx
+   */
+  visitId(ctx) {
+    if (ctx.CHAR()) {
+      const quote = '<span class="grammar-view__punct">\'</span>'
+      this._buffer += quote
+
+      const text = ctx.children[0].symbol.text
+      ctx.children[0].symbol.text = text.substr(1, text.length - 2)
+
+      this._buffer += '<span class="grammar-view__id">'
+      this.visitTerminal(ctx.children[0], {
+        closeSpan: true,
+        beforeHiddenText: quote,
+      })
+
+      ctx.children[0].symbol.text = text
+    } else {
+      this.visitChildren(ctx)
+    }
+  }
+
+  /**
+   * @param {RawIdContext} ctx
+   */
+  visitRawId(ctx) {
+    this._buffer += '<span class="grammar-view__id">'
+    this.visitTerminal(ctx.ID(), {closeSpan: true})
+  }
+
+  /**
+   * @param {StringContext} ctx
+   */
+  visitString(ctx) {
+    const quote = '<span class="grammar-view__punct">"</span>'
+    this._buffer += quote
+
+    const text = ctx.children[0].symbol.text
+    ctx.children[0].symbol.text = text.substr(1, text.length - 2)
+
+    this._buffer += '<span class="grammar-view__id">'
+    this.visitTerminal(ctx.STRING(), {closeSpan: true, beforeHiddenText: quote})
+
+    ctx.children[0].symbol.text = text
+  }
+
+  /**
+   * @param {IntRuleContext} ctx
+   */
+  visitIntRule(ctx) {
+    this._buffer += '<span class="grammar-view__id">'
+    this.visitTerminal(ctx.INT(), {closeSpan: true})
+  }
+
+  /**
+   * @param {SemicolonContext} ctx
+   */
+  visitSemicolon(ctx) {
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.SEMICOLON(), {closeSpan: true})
+  }
+
+  /**
+   * @param {DoublePercentContext} ctx
+   */
+  visitDoublePercent(ctx) {
+    this._buffer += '<span class="grammar-view__punct">'
+    this.visitTerminal(ctx.PERCENT_PERCENT(), {closeSpan: true})
+  }
+
+  /**
+   * @param {RefContext} ctx
+   */
+  visitRef(ctx) {
+    this._buffer += '<span class="grammar-view__punct">[</span>'
+
+    const text = ctx.children[0].symbol.text
+    ctx.children[0].symbol.text = text.substr(1, text.length - 2)
+
+    this._buffer += '<span class="grammar-view__id">'
+    this.visitTerminal(ctx.children[0], {
+      closeSpan: true,
+      beforeHiddenText: '<span class="grammar-view__punct">]</span>'
+    })
+
+    ctx.children[0].symbol.text = text
+  }
 
   /**
    * @param {TerminalNodeImpl} ctx

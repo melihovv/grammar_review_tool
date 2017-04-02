@@ -3,14 +3,14 @@ parser grammar BisonParser;
 options {tokenVocab = BisonLexer;}
 
 file
-    : prologueDeclaration* PERCENT_PERCENT grammarRule epilogue?
+    : prologueDeclaration* doublePercent grammarRule epilogue?
     ;
 
 prologueDeclaration
     : grammarDeclaration
     | prologue
-    | directive (variable value|STRING|INT|code+)?
-    | SEMICOLON
+    | directive (variable value|string|intRule|code+)?
+    | semicolon
     ;
 
 directive
@@ -20,7 +20,7 @@ directive
 grammarDeclaration
     : precedenceDeclaration
     | symbolDeclaration
-    | directive (symbol|code (symbol|tagRule)+|ID? code)?
+    | directive (symbol|code (symbol|tagRule)+|rawId? code)?
     ;
 
 prologue
@@ -44,12 +44,12 @@ symbolDeclaration
     ;
 
 precedenceDeclaration
-    : directive tagRule? (symbol|INT)+
+    : directive tagRule? (symbol|intRule)+
     ;
 
 symbolDef
     : tagRule
-    | id (INT STRING?|STRING)?
+    | id (intRule string?|string)?
     ;
 
 grammarRule
@@ -58,44 +58,48 @@ grammarRule
 
 rulesOrGrammarDeclaration
     : rules
-    | grammarDeclaration SEMICOLON
+    | grammarDeclaration semicolon
     ;
 
 rules
-    : ID AFTER_ID_COLON ref? rhses
+    : rawId AFTER_ID_COLON ref? rhses
     ;
 
 rhses
-    : rhs* (PIPE rhs*)* SEMICOLON?
+    : rhs* (PIPE rhs*)* semicolon?
     ;
 
 rhs
     : symbol ref?
     | code ref?
     | predicate
-    | directive (symbol|INT|tagRule)?
+    | directive (symbol|intRule|tagRule)?
     ;
 
 variable
-    : ID
-    | STRING
+    : rawId
+    | string
     ;
 
 value
     :
-    | ID
-    | STRING
+    | rawId
+    | string
     | code
     ;
 
 id
-    : ID
+    : rawId
     | CHAR
+    ;
+
+rawId
+    : ID
     ;
 
 symbol
     : id
-    | STRING
+    | string
     ;
 
 ref
@@ -103,6 +107,22 @@ ref
   | REF
   ;
 
+string
+  : STRING
+  ;
+
+intRule
+  : INT
+  ;
+
+semicolon
+  : SEMICOLON
+  ;
+
+doublePercent
+  : PERCENT_PERCENT
+  ;
+
 epilogue
-    : PERCENT_PERCENT EPILOGUE_CONTENT?
+    : doublePercent EPILOGUE_CONTENT?
     ;

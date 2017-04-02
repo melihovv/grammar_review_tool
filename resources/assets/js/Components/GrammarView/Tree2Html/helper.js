@@ -242,12 +242,16 @@ export default class Helper {
    * @param {TerminalNodeImpl} ctx
    * @param _this
    * @param {bool} [closeSpan=false]
+   * @param {String} [beforeHiddenText='']
    */
-  visitTerminal(ctx, _this, {closeSpan = false} = {}) {
+  visitTerminal(ctx, _this, {closeSpan = false, beforeHiddenText = ''} = {}) {
     _this._buffer += ctx.symbol.text
+
     if (closeSpan) {
       _this._buffer += '</span>'
     }
+
+    _this._buffer += beforeHiddenText
 
     _this._buffer += this.textOfHiddenTokensToRight(ctx.symbol.tokenIndex)
   }

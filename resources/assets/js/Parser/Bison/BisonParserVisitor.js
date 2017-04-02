@@ -126,6 +126,12 @@ BisonParserVisitor.prototype.visitId = function(ctx) {
 };
 
 
+// Visit a parse tree produced by BisonParser#rawId.
+BisonParserVisitor.prototype.visitRawId = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by BisonParser#symbol.
 BisonParserVisitor.prototype.visitSymbol = function(ctx) {
   return this.visitChildren(ctx);
@@ -134,6 +140,30 @@ BisonParserVisitor.prototype.visitSymbol = function(ctx) {
 
 // Visit a parse tree produced by BisonParser#ref.
 BisonParserVisitor.prototype.visitRef = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by BisonParser#string.
+BisonParserVisitor.prototype.visitString = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by BisonParser#intRule.
+BisonParserVisitor.prototype.visitIntRule = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by BisonParser#semicolon.
+BisonParserVisitor.prototype.visitSemicolon = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by BisonParser#doublePercent.
+BisonParserVisitor.prototype.visitDoublePercent = function(ctx) {
   return this.visitChildren(ctx);
 };
 
