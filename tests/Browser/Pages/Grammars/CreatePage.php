@@ -21,9 +21,10 @@ class CreatePage extends Page
         ];
     }
 
-    public function create(Browser $browser, $name, $content, $id, callable $cb = null)
+    public function create(Browser $browser, $name, $content, $type, $id, callable $cb = null)
     {
         $browser
+            ->select('type', $type)
             ->type('@name', $name)
             ->type('@content', $content);
 

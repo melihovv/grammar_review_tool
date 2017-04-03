@@ -20,11 +20,12 @@ class CreateGrammarTest extends DuskTestCase
 
     /**
      * @param callable $setupCb
+     * @param string $type
      * @dataProvider usersProvider
      */
-    public function testUserCanCreateGrammar(callable $setupCb)
+    public function testUserCanCreateGrammar(callable $setupCb, $type)
     {
-        $this->browse(function (Browser $browser) use ($setupCb) {
+        $this->browse(function (Browser $browser) use ($setupCb, $type) {
             list($user) = $setupCb();
 
             $browser
@@ -32,7 +33,7 @@ class CreateGrammarTest extends DuskTestCase
                 ->visit(new HomePage())
                 ->clickLink('Create')
                 ->on(new CreatePage())
-                ->create('Grammar Name', $this->getGrammarContent(), 1)
+                ->create('Grammar Name', $this->getGrammarContent($type), $type, 1)
                 ->logout();
         });
     }
@@ -40,19 +41,37 @@ class CreateGrammarTest extends DuskTestCase
     public function usersProvider()
     {
         return [
-            'regular user' => [
+            'lemon, regular user' => [
                 function () {
                     $user = factory(User::class)->create();
 
                     return [$user];
                 },
+                'lemon',
             ],
-            'admin' => [
+            'lemon, admin' => [
                 function () {
                     $admin = factory(User::class, 'admin')->create();
 
                     return [$admin];
                 },
+                'lemon',
+            ],
+            'bison, regular user' => [
+                function () {
+                    $user = factory(User::class)->create();
+
+                    return [$user];
+                },
+                'bison',
+            ],
+            'bison, admin' => [
+                function () {
+                    $admin = factory(User::class, 'admin')->create();
+
+                    return [$admin];
+                },
+                'bison',
             ],
         ];
     }

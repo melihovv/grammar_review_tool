@@ -17,13 +17,21 @@ class ViewGrammarTest extends DuskTestCase
     use DatabaseMigrations;
     use SudoDatabaseTransactions;
 
-    public function testUserCanViewGrammarWithSyntaxErrors()
+    /**
+     * @param string $type
+     * @dataProvider provider
+     */
+    public function testUserCanViewGrammarWithSyntaxErrors($type)
     {
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $browser) use ($type) {
             $user = factory(User::class)->create();
-            list($grammar) = $this->createGrammar(',..WTF?', [
-                'user_id' => $user->id,
-            ]);
+            list($grammar) = $this->createGrammar(
+                ',..WTF?',
+                 [
+                     'user_id' => $user->id,
+                 ],
+                 $type
+            );
 
             $browser
                 ->loginAs($user)
@@ -32,5 +40,17 @@ class ViewGrammarTest extends DuskTestCase
                 ->assertSee('Grammar contains syntax errors')
                 ->logout();
         });
+    }
+
+    public function provider()
+    {
+        return [
+            [
+                'lemon',
+            ],
+            [
+                'bison',
+            ],
+        ];
     }
 }
