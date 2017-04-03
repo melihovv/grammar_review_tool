@@ -21,6 +21,7 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
     /**
      * @param callable $setupCb
      * @dataProvider searchProvider
+     * @group wip
      */
     public function testUserCanSearchSymbols(callable $setupCb)
     {

@@ -1,5 +1,6 @@
 /* eslint-env browser */
 import $ from 'jquery'
+import {TerminalNodeImpl} from 'antlr4/tree/Tree'
 
 $(() => {
   const $grammarView = $('.grammar-view')
@@ -15,7 +16,15 @@ $(() => {
   }
 
   const highlightFoundSymbol = () => {
-    const row = rules[currentRuleIndex].children[0].start.line
+    let row = -1
+
+    const child = rules[currentRuleIndex].children[0]
+    if (child instanceof TerminalNodeImpl) {
+      row = child.getSymbol().line
+    } else {
+      row = child.start.line
+    }
+
     $grammarView
       .find('.symbol-search__found-symbol')
       .removeClass('symbol-search__found-symbol')
