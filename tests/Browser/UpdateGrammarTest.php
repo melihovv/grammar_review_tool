@@ -137,7 +137,7 @@ class UpdateGrammarTest extends DuskTestCase
      * @dataProvider usersCanProvider
      *
      * @param callable $setupCb
-     * @param string $type
+     * @param string   $type
      */
     public function testUserCanUpdateGrammar(callable $setupCb, $type)
     {
