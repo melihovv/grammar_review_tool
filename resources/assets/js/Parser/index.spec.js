@@ -65,7 +65,7 @@ describe('parser', () => {
               }
 HERE;
           }
-      `).should.throw()
+        `).should.throw()
 
         parser.getErrors().should.have.length.above(0)
       })
@@ -77,11 +77,16 @@ HERE;
               }
 NOW;
             }
-      `).should.throw()
+        `).should.throw()
 
         parser.getErrors().should.have.length.above(0)
       })
     }
+
+    it('should throw an error if grammar contains syntax errors', () => {
+      parser.parse.bind(parser, `^&<fififi>`).should.throw()
+      parser.getErrors().should.have.length.above(0)
+    })
 
     it('should understand grammar rules', () => {
       parser.parse.bind(parser, `
