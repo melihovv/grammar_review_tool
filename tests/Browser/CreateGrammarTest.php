@@ -20,7 +20,7 @@ class CreateGrammarTest extends DuskTestCase
 
     /**
      * @param callable $setupCb
-     * @param string $type
+     * @param string   $type
      * @dataProvider usersProvider
      */
     public function testUserCanCreateGrammar(callable $setupCb, $type)
