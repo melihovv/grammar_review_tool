@@ -15,7 +15,7 @@ $(() => {
   }
 
   const highlightFoundSymbol = () => {
-    const row = rules[currentRuleIndex].children[0].getSymbol().line
+    const row = rules[currentRuleIndex].children[0].start.line
     $grammarView
       .find('.symbol-search__found-symbol')
       .removeClass('symbol-search__found-symbol')
