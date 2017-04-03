@@ -51,6 +51,19 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
   }
 
   /**
+   * @param {GrammarRuleContext} ctx
+   */
+  visitGrammarRule(ctx) {
+    ctx.children.forEach(child => {
+      child.getTypedRuleContexts(BisonParser.RulesContext).forEach(rule => {
+        this.nonterminals[rule.rawId().getText()] = true
+      })
+    })
+
+    this.visitChildren(ctx)
+  }
+
+  /**
    * @param {DirectiveContext} ctx
    */
   visitDirective(ctx) {
@@ -61,14 +74,6 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     // TerminalNodeImpl.
     const text = ctx.children[0].symbol.text
     ctx.children[0].symbol.text = text.substr(1)
-
-    // Save nonterminals.
-    if (text === '%type') {
-      ctx.parentCtx.getTypedRuleContexts(BisonParser.SymbolContext)
-        .forEach(symbol => {
-          this.nonterminals[symbol.getText()] = true
-        })
-    }
 
     this.visitTerminal(ctx.children[0], {closeSpan: true})
 
