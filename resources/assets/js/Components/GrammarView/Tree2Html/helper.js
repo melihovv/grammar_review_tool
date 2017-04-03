@@ -262,10 +262,10 @@ export default class Helper {
   static visit(ctx, _this) {
     if (Array.isArray(ctx)) {
       return ctx.map(function (child) {
-        return child.accept(_this);
-      }, _this);
+        return child.accept(_this)
+      }, _this)
     } else {
-      return ctx.accept(_this);
+      return ctx.accept(_this)
     }
   }
 

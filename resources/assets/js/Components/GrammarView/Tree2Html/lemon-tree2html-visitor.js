@@ -115,8 +115,6 @@ export default class LemonTree2HtmlVisitor extends LemonParserVisitor {
     fromDirective = false,
   } = {}) {
     const child = ctx.children[0]
-    const symbol = child.getSymbol()
-    const column = `data-column="${symbol.column}"`
 
     if (fromParam) {
       this._buffer += '<span class="grammar-view__param">'

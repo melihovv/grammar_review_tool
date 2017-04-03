@@ -2,7 +2,6 @@
 
 import LemonFinder from './lemon/lemon-finder'
 import BisonFinder from './bison/bison-finder'
-import AbstractFinder from './abstract-finder'
 
 /**
  * Class to find symbols in tree.

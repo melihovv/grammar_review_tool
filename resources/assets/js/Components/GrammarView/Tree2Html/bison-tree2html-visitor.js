@@ -283,7 +283,7 @@ export default class BisonTree2HtmlVisitor extends BisonParserVisitor {
     this._buffer += '<span class="grammar-view__id">'
     this.visitTerminal(ctx.children[0], {
       closeSpan: true,
-      beforeHiddenText: '<span class="grammar-view__punct">]</span>'
+      beforeHiddenText: '<span class="grammar-view__punct">]</span>',
     })
 
     ctx.children[0].symbol.text = text
