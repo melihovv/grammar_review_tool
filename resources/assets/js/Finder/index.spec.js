@@ -1,11 +1,47 @@
 /* eslint-env mocha */
+/* eslint-disable no-new */
 
 'use strict'
 
 import Parser from 'js/Parser'
 import Finder from './index'
+import AbstractFinder from './abstract-finder'
 
 describe('finder', () => {
+  it('should understand only predefined format of grammar', () => {
+    try {
+      new Finder({}, 'lemon')
+      new Finder({}, 'bison')
+      expect(1).equal(1)
+    } catch (e) {
+      expect(1).equal(0)
+    }
+
+    try {
+      new Finder({}, 'antlr4')
+      expect(1).equal(0)
+    } catch (e) {
+      expect(1).equal(1)
+    }
+  })
+
+  describe('abstract finder', () => {
+    it('should find rules with specific nonterminal on the left side', () => {
+      const finder = new AbstractFinder()
+      finder.findRulesWhereOnTheLeft('a').length.should.equal(0)
+    })
+
+    it('should find rules which contains specific symbol', () => {
+      const finder = new AbstractFinder()
+      finder.findRulesWhichContains('a').length.should.equal(0)
+    })
+
+    it('should find rules with the same right side', () => {
+      const finder = new AbstractFinder()
+      finder.findRulesWithTheSameRightSide('a', 4).length.should.equal(0)
+    })
+  })
+
   describe('lemon', () => {
     const type = 'lemon'
     const parser = new Parser(type)

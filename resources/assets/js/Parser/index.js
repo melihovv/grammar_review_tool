@@ -38,6 +38,7 @@ class Parser {
     this.parser = this.parserFactory(tokens)
     this.parser.buildParseTrees = true
 
+    /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'testing') {
       this.parser.removeErrorListeners()
     }
