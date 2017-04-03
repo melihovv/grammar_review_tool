@@ -123,7 +123,6 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
     /**
      * @param callable $setupCb
      * @dataProvider bisonSearchProvider
-     * @group wip
      */
     public function testUserCanSearchSymbolsInBisonGrammar(callable $setupCb)
     {

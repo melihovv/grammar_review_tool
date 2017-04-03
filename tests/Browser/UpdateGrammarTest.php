@@ -22,7 +22,7 @@ class UpdateGrammarTest extends DuskTestCase
     public function usersCanProvider()
     {
         return [
-            'grammar owner' => [
+            'lemon, grammar owner' => [
                 function () {
                     $owner = factory(User::class)->create();
                     list($grammar) = $this->createGrammar('%name name1', [
@@ -31,16 +31,18 @@ class UpdateGrammarTest extends DuskTestCase
 
                     return [$owner, $grammar];
                 },
+                'lemon',
             ],
-            'admin' => [
+            'lemon, admin' => [
                 function () {
                     $admin = factory(User::class, 'admin')->create();
                     list($grammar) = $this->createGrammar('%name name1');
 
                     return [$admin, $grammar];
                 },
+                'lemon',
             ],
-            'user with edit right' => [
+            'lemon, user with edit right' => [
                 function () {
                     list($grammar) = $this->createGrammar('%name name1');
                     $user = factory(User::class)->create();
@@ -54,8 +56,9 @@ class UpdateGrammarTest extends DuskTestCase
 
                     return [$user, $grammar];
                 },
+                'lemon',
             ],
-            'user with admin right' => [
+            'lemon, user with admin right' => [
                 function () {
                     list($grammar) = $this->createGrammar('%name name1');
                     $user = factory(User::class)->create();
@@ -69,6 +72,63 @@ class UpdateGrammarTest extends DuskTestCase
 
                     return [$user, $grammar];
                 },
+                'lemon',
+            ],
+            'bison, grammar owner' => [
+                function () {
+                    $owner = factory(User::class)->create();
+                    list($grammar) = $this->createGrammar(
+                         $this->getGrammarContent('bison'),
+                         [
+                            'user_id' => $owner->id,
+                         ],
+                         'bison'
+                    );
+
+                    return [$owner, $grammar];
+                },
+                'bison',
+            ],
+            'bison, admin' => [
+                function () {
+                    $admin = factory(User::class, 'admin')->create();
+                    list($grammar) = $this->createGrammar($this->getGrammarContent('bison'), [], 'bison');
+
+                    return [$admin, $grammar];
+                },
+                'bison',
+            ],
+            'bison, user with edit right' => [
+                function () {
+                    list($grammar) = $this->createGrammar($this->getGrammarContent('bison'), [], 'bison');
+                    $user = factory(User::class)->create();
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => true,
+                        'admin' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                'bison',
+            ],
+            'bison, user with admin right' => [
+                function () {
+                    list($grammar) = $this->createGrammar($this->getGrammarContent('bison'), [], 'bison');
+                    $user = factory(User::class)->create();
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => false,
+                        'edit' => false,
+                        'admin' => true,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+                'bison',
             ],
         ];
     }
@@ -77,10 +137,11 @@ class UpdateGrammarTest extends DuskTestCase
      * @dataProvider usersCanProvider
      *
      * @param callable $setupCb
+     * @param string $type
      */
-    public function testUserCanUpdateGrammar(callable $setupCb)
+    public function testUserCanUpdateGrammar(callable $setupCb, $type)
     {
-        $this->browse(function (Browser $browser) use ($setupCb) {
+        $this->browse(function (Browser $browser) use ($setupCb, $type) {
             list($user, $grammar) = $setupCb();
 
             $browser
@@ -88,7 +149,7 @@ class UpdateGrammarTest extends DuskTestCase
                 ->visit(new ShowPage($grammar->id))
                 ->clickLink('Edit')
                 ->on(new EditPage($grammar->id))
-                ->update('Grammar Name2', '%name name2', $grammar->id)
+                ->update('Grammar Name2', $this->getGrammarContent($type), $grammar->id)
                 ->logout();
         });
     }
@@ -97,10 +158,11 @@ class UpdateGrammarTest extends DuskTestCase
      * @dataProvider usersCanProvider
      *
      * @param callable $setupCb
+     * @param $type
      */
-    public function testUserCannotUpdateGrammarWithSyntaxErrors(callable $setupCb)
+    public function testUserCannotUpdateGrammarWithSyntaxErrors(callable $setupCb, $type)
     {
-        $this->browse(function (Browser $browser) use ($setupCb) {
+        $this->browse(function (Browser $browser) use ($setupCb, $type) {
             list($user, $grammar) = $setupCb();
 
             $browser
@@ -112,7 +174,7 @@ class UpdateGrammarTest extends DuskTestCase
                 ->press('Update')
                 ->seeElement('@syntax-errors')
                 ->assertSee('mismatched input')
-                ->update('Grammar Name2', '%name name2', $grammar->id)
+                ->update('Grammar Name2', $this->getGrammarContent($type), $grammar->id)
                 ->logout();
         });
     }
