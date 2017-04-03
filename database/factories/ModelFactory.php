@@ -68,10 +68,20 @@ $factory->defineAs(
     }
 );
 
+$factory->defineAs(
+    Grammar::class,
+    'bison',
+    function (Generator $faker) use ($factory) {
+        return array_merge($factory->raw(Grammar::class), [
+            'type' => 'bison',
+        ]);
+    }
+);
+
 $factory->define(Version::class, function (Generator $faker) {
     return [
         'grammar_id' => function () {
-            return factory(Grammar::class)->create()->id;
+            return factory(Grammar::class, 'lemon')->create()->id;
         },
         'updater_id' => null,
         'content' => <<<'HERE'
@@ -106,6 +116,34 @@ $factory->defineAs(
     'lemon',
     function (Generator $faker) use ($factory) {
         return $factory->raw(Version::class);
+    }
+);
+
+$factory->defineAs(
+    Version::class,
+    'bison',
+    function (Generator $faker) use ($factory) {
+        return array_merge($factory->raw(Version::class), [
+            'content' => <<<'HERE'
+%%
+
+a
+  : bbbb c
+  | d e
+  ;
+bbbb
+  : d a
+  | d e
+  ;
+c
+  : bbbb c
+  ;
+HERE
+            ,
+            'grammar_id' => function () {
+                return factory(Grammar::class, 'bison')->create()->id;
+            },
+        ]);
     }
 );
 

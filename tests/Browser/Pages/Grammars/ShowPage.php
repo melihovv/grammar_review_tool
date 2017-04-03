@@ -107,7 +107,7 @@ class ShowPage extends Page
 
         $browser
             ->mouseover(WebDriverBy::xpath($symbolXpath))
-            ->click('.grammar-view__l-icon');
+            ->click(WebDriverBy::xpath("$symbolXpath/following-sibling::div/span[contains(@class, 'grammar-view__l-icon')]"));
     }
 
     public function findRulesWithTheSameRightSide(Browser $browser, $row, $symbol)
@@ -116,7 +116,6 @@ class ShowPage extends Page
 
         $browser
             ->mouseover(WebDriverBy::xpath($symbolXpath))
-            // I changed selector to xpath, because with css selector browser couldn't find such element. Funny, yeah?
             ->click(WebDriverBy::xpath("$symbolXpath/following-sibling::div/span[contains(@class, 'grammar-view__r-icon')]"));
     }
 }

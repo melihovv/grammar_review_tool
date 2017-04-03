@@ -20,10 +20,9 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
 
     /**
      * @param callable $setupCb
-     * @dataProvider searchProvider
-     * @group wip
+     * @dataProvider lemonSearchProvider
      */
-    public function testUserCanSearchSymbols(callable $setupCb)
+    public function testUserCanSearchSymbolsInLemonGrammar(callable $setupCb)
     {
         $this->browse(function (Browser $browser) use ($setupCb) {
             list($user, $grammar) = $setupCb();
@@ -62,16 +61,18 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
         });
     }
 
-    public function searchProvider()
+    public function lemonSearchProvider()
     {
         return [
             'grammar owner' => [
                 function () {
                     $user = factory(User::class)->create();
-                    list($grammar) = $this->createGrammar($this->getGrammarContent(),
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('lemon'),
                         [
                             'user_id' => $user->id,
-                        ]);
+                        ]
+                    );
 
                     return [$user, $grammar];
                 },
@@ -79,7 +80,9 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
             'admin' => [
                 function () {
                     $user = factory(User::class, 'admin')->create();
-                    list($grammar) = $this->createGrammar($this->getGrammarContent());
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('lemon')
+                    );
 
                     return [$user, $grammar];
                 },
@@ -87,7 +90,9 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
             'user with comment right' => [
                 function () {
                     $user = factory(User::class)->create();
-                    list($grammar) = $this->createGrammar($this->getGrammarContent());
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('lemon')
+                    );
                     factory(Right::class)->create([
                         'user_id' => $user->id,
                         'grammar_id' => $grammar->id,
@@ -102,13 +107,120 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
             'public grammar' => [
                 function () {
                     $user = factory(User::class)->create();
-                    list($grammar) = $this->createGrammar($this->getGrammarContent(), [
-                        'public_view' => true,
-                    ]);
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('lemon'),
+                        [
+                            'public_view' => true,
+                        ]
+                    );
 
                     return [$user, $grammar];
                 },
             ],
+        ];
+    }
+
+    /**
+     * @param callable $setupCb
+     * @dataProvider bisonSearchProvider
+     * @group wip
+     */
+    public function testUserCanSearchSymbolsInBisonGrammar(callable $setupCb)
+    {
+        $this->browse(function (Browser $browser) use ($setupCb) {
+            list($user, $grammar) = $setupCb();
+
+            $browser
+                ->loginAs($user)
+                ->visit(new ShowPage($grammar->id))
+                ->findRulesWhichContainSymbol(3, 'a')
+                ->assertSee('1 of 2')
+                ->assertHighlightedLineIs(3)
+                ->clickLink('Next')
+                ->assertSee('2 of 2')
+                ->assertHighlightedLineIs(7)
+                ->clickLink('Prev')
+                ->assertSee('1 of 2')
+                ->assertHighlightedLineIs(3)
+                ->clickLink('Prev')
+                ->assertSee('2 of 2')
+                ->assertHighlightedLineIs(7)
+                ->findRulesWhichContainSymbolInLeftSide(7, 'bbbb')
+                ->assertSee('1 of 1')
+                ->assertHighlightedLineIs(7)
+                ->clickLink('Next')
+                ->assertSee('1 of 1')
+                ->assertHighlightedLineIs(7)
+                ->findRulesWithTheSameRightSide(3, 'a')
+                ->assertSee('1 of 3')
+                ->assertHighlightedLineIs(3)
+                ->clickLink('Next')
+                ->assertSee('2 of 3')
+                ->assertHighlightedLineIs(7)
+                ->clickLink('Next')
+                ->assertSee('3 of 3')
+                ->assertHighlightedLineIs(11)
+                ->logout();
+        });
+    }
+
+    public function bisonSearchProvider()
+    {
+        return [
+            'grammar owner' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('bison'),
+                        [
+                            'user_id' => $user->id,
+                        ],
+                        'bison'
+                    );
+
+                    return [$user, $grammar];
+                },
+            ],
+//            'admin' => [
+//                function () {
+//                    $user = factory(User::class, 'admin')->create();
+//                    list($grammar) = $this->createGrammar(
+//                        $this->getGrammarContent('bison')
+//                    );
+//
+//                    return [$user, $grammar];
+//                },
+//            ],
+//            'user with comment right' => [
+//                function () {
+//                    $user = factory(User::class)->create();
+//                    list($grammar) = $this->createGrammar(
+//                        $this->getGrammarContent('bison')
+//                    );
+//                    factory(Right::class)->create([
+//                        'user_id' => $user->id,
+//                        'grammar_id' => $grammar->id,
+//                        'view_comment' => true,
+//                        'edit' => false,
+//                        'admin' => false,
+//                    ]);
+//
+//                    return [$user, $grammar];
+//                },
+//            ],
+//            'public grammar' => [
+//                function () {
+//                    $user = factory(User::class)->create();
+//                    list($grammar) = $this->createGrammar(
+//                        $this->getGrammarContent('bison'),
+//                        [
+//                            'public_view' => true,
+//                        ]
+//                    );
+//
+//                    return [$user, $grammar];
+//                },
+//            ],
         ];
     }
 }
