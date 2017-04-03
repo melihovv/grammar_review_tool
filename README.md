@@ -12,7 +12,7 @@ Demo available at http://138.68.75.165.
 
 ## Features
 - login/registration with email confirmation and captcha verification + password restore
-- support for [Lemon](http://www.hwaci.com/sw/lemon/) grammar format (support for Bison in near future)
+- support for [Bison](https://www.gnu.org/software/bison/) and [Lemon](http://www.hwaci.com/sw/lemon/) grammar format
 - syntax highlighting
 - comment any row or symbol (terminal or nonterminal)
 - grammar versions history (with diff between versions)
