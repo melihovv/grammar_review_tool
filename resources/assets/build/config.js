@@ -13,6 +13,7 @@ const devEnv = merge(prodEnv, {
 
 const testEnv = merge(devEnv, {
   NODE_ENV: '"testing"',
+  TRAVIS: process.env.TRAVIS,
 })
 
 const productionConfig = {
