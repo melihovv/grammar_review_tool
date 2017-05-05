@@ -1,0 +1,51 @@
+@startuml
+
+package "Frontend" {
+  [GrammarHistory]
+  [RightsManagement]
+  package "Parser" {
+    [antlr]
+    [BisonParser]
+    [LemonParser]
+  }
+  [GrammarView]
+  [Tree2Html]
+  [Finder]
+  [Ace editor]
+}
+
+cloud Backend {
+  [Notification]
+  [GrammarService]
+  [CommentService]
+  [RightService]
+  [UserService]
+}
+
+database "MySQL" {
+}
+
+Frontend --> Backend
+Backend --> MySQL
+
+'Frontend
+[BisonParser] --> [antlr]
+[LemonParser] --> [antlr]
+[GrammarView] --> Parser
+[GrammarView] --> [Tree2Html]
+[Finder] --> [GrammarView]
+[Finder] --> Parser
+[Ace editor] -> Parser
+
+'Backend
+[GrammarService] --> [CommentService]
+[CommentService] --> [Notification]
+
+'Frontend&Backend
+[RightsManagement] --> [RightService]
+[RightsManagement] --> [UserService]
+[GrammarHistory] --> [GrammarService]
+[GrammarView] --> [GrammarService]
+[GrammarView] --> [CommentService]
+
+@enduml
