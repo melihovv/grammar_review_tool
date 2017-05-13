@@ -180,46 +180,51 @@ class SearchSymbolsInGrammarTest extends DuskTestCase
                     return [$user, $grammar];
                 },
             ],
-//            'admin' => [
-//                function () {
-//                    $user = factory(User::class, 'admin')->create();
-//                    list($grammar) = $this->createGrammar(
-//                        $this->getGrammarContent('bison')
-//                    );
-//
-//                    return [$user, $grammar];
-//                },
-//            ],
-//            'user with comment right' => [
-//                function () {
-//                    $user = factory(User::class)->create();
-//                    list($grammar) = $this->createGrammar(
-//                        $this->getGrammarContent('bison')
-//                    );
-//                    factory(Right::class)->create([
-//                        'user_id' => $user->id,
-//                        'grammar_id' => $grammar->id,
-//                        'view_comment' => true,
-//                        'edit' => false,
-//                        'admin' => false,
-//                    ]);
-//
-//                    return [$user, $grammar];
-//                },
-//            ],
-//            'public grammar' => [
-//                function () {
-//                    $user = factory(User::class)->create();
-//                    list($grammar) = $this->createGrammar(
-//                        $this->getGrammarContent('bison'),
-//                        [
-//                            'public_view' => true,
-//                        ]
-//                    );
-//
-//                    return [$user, $grammar];
-//                },
-//            ],
+            'admin' => [
+                function () {
+                    $user = factory(User::class, 'admin')->create();
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('bison'),
+                        [],
+                        'bison'
+                    );
+
+                    return [$user, $grammar];
+                },
+            ],
+            'user with comment right' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('bison'),
+                        [],
+                        'bison'
+                    );
+                    factory(Right::class)->create([
+                        'user_id' => $user->id,
+                        'grammar_id' => $grammar->id,
+                        'view_comment' => true,
+                        'edit' => false,
+                        'admin' => false,
+                    ]);
+
+                    return [$user, $grammar];
+                },
+            ],
+            'public grammar' => [
+                function () {
+                    $user = factory(User::class)->create();
+                    list($grammar) = $this->createGrammar(
+                        $this->getGrammarContent('bison'),
+                        [
+                            'public_view' => true,
+                        ],
+                        'bison'
+                    );
+
+                    return [$user, $grammar];
+                },
+            ],
         ];
     }
 }
