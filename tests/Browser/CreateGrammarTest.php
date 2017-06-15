@@ -94,7 +94,7 @@ class CreateGrammarTest extends DuskTestCase
                 ->press('Create')
                 ->seeElement('@syntax-errors')
                 ->assertSee('mismatched input')
-                ->create('Grammar Name', $this->getGrammarContent(), 1)
+                ->create('Grammar Name', $this->getGrammarContent(), 'lemon', 1)
                 ->logout();
         });
     }
@@ -114,7 +114,7 @@ class CreateGrammarTest extends DuskTestCase
                 ->click('@create-new-button')
                 ->clickLink('New grammar')
                 ->on(new CreatePage())
-                ->create('Grammar Name', $this->getGrammarContent(), 1)
+                ->create('Grammar Name', $this->getGrammarContent(), 'lemon', 1)
                 ->logout();
         });
     }
