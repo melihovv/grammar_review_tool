@@ -33,6 +33,7 @@ class PublicGrammarsTest extends DuskTestCase
                 ->create(
                     'Grammar Name',
                     $this->getGrammarContent(),
+                    'lemon',
                     1,
                     function (Browser $browser) {
                         $browser->check('public_view', 1);
