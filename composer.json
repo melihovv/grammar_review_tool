@@ -41,8 +41,8 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/melihovv/Sanitizer"
+      "type": "git",
+      "url": "https://github.com/melihovv/InputSanitizer.git"
     }
   ],
   "autoload": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6aa6fb946644d914e0c64f0e1b06503f",
+    "content-hash": "c5dbee2b15150533bd1fe1b67e81eaec",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -477,14 +477,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/melihovv/Sanitizer.git",
+                "url": "https://github.com/melihovv/InputSanitizer.git",
                 "reference": "c4366f0eef56457622eae5ce55056469f790c0fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/melihovv/Sanitizer/zipball/c4366f0eef56457622eae5ce55056469f790c0fa",
-                "reference": "c4366f0eef56457622eae5ce55056469f790c0fa",
-                "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
@@ -514,10 +508,7 @@
                 "laravel",
                 "sanitizer"
             ],
-            "support": {
-                "source": "https://github.com/melihovv/Sanitizer/tree/master"
-            },
-            "time": "2017-02-10T10:00:28+00:00"
+            "time": "2017-02-10 10:00:28"
         },
         {
             "name": "gazsp/baum",
@@ -3944,12 +3935,12 @@
             "version": "0.9.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/mockery.git",
+                "url": "https://github.com/mockery/mockery.git",
                 "reference": "1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855",
                 "reference": "1e5e2ffdc4d71d7358ed58a6fdd30a4a0c506855",
                 "shasum": ""
             },
