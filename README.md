@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/melihovv/grammar_review_tool/branch/master/graph/badge.svg)](https://codecov.io/gh/melihovv/grammar_review_tool)
 [![styleci](https://styleci.io/repos/61077062/shield)](https://styleci.io/repos/61077062)
 
-Tool for review formal grammars in Lemon format.
+Tool for review formal grammars in Bison/Lemon format.
 
 ## Features
 - login/registration with email confirmation and captcha verification + password restore
