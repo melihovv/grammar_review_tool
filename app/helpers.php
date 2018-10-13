@@ -97,14 +97,14 @@ if (!function_exists('lcs')) {
         $amountOfLinesB = count($linesB);
         $table = [];
 
-        for ($i = -1; $i < $amountOfLinesA; ++$i) {
-            for ($j = -1; $j < $amountOfLinesB; ++$j) {
+        for ($i = -1; $i < $amountOfLinesA; $i++) {
+            for ($j = -1; $j < $amountOfLinesB; $j++) {
                 $table[$i][$j] = 0;
             }
         }
 
-        for ($i = 0; $i < $amountOfLinesA; ++$i) {
-            for ($j = 0; $j < $amountOfLinesB; ++$j) {
+        for ($i = 0; $i < $amountOfLinesA; $i++) {
+            for ($j = 0; $j < $amountOfLinesB; $j++) {
                 if ($linesA[$i] === $linesB[$j]) {
                     $table[$i][$j] = $table[$i - 1][$j - 1] + 1;
                 } else {

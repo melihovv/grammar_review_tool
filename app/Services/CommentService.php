@@ -121,13 +121,13 @@ class CommentService
             function ($comment) use ($deletedRows, $addedRows) {
                 foreach ($deletedRows as $row) {
                     if ($comment->row >= $row) {
-                        --$comment->row;
+                        $comment->row--;
                     }
                 }
 
                 foreach ($addedRows as $row) {
                     if ($comment->row >= $row) {
-                        ++$comment->row;
+                        $comment->row++;
                     }
                 }
 
