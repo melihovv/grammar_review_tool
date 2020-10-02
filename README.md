@@ -12,18 +12,18 @@ Tool for review formal grammars in Bison/Lemon format.
 - login/registration with email confirmation and captcha verification + password restore
 - support for [Bison](https://www.gnu.org/software/bison/) and [Lemon](http://www.hwaci.com/sw/lemon/) grammar format
 - syntax highlighting
-- comment any row or symbol (terminal or nonterminal)
+- comment on any row or symbol (terminal or nonterminal)
 - grammar versions history (with diff between versions)
 - updated grammar preserve comments from previous version (comments to changed or deleted lines are removed, comments to other lines are preserved)
 - structural search
   - find rules with the same right side
-  - find rules which contains specified symbol
-  - find rules which have specified symbol in left side of rule
+  - find rules which contains specified symbol.
+  - find rules which have specified symbol on left side of rule
 - ability to grant rights to users with the following access levels
   - view and comment (user can view grammar and comment it)
   - edit (the one above + user can edit grammar)
   - admin (the one above + user can grant rights to other users)
-- user with admin role, which can almost everything 
+- user with the admin role, which can do almost everything 
 - email notifications about new comments
 
 ## Screenshots
